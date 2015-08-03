@@ -1,0 +1,42 @@
+{
+  "name": "bitballs",
+  "version": "0.0.1",
+  "description": "",
+  "homepage": "",
+  "author": "Bitovi",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "index.stache!done-autorender",
+  "files": [
+    "."
+  ],
+  "keywords": [],
+  "system": {
+    "npmIgnore": [
+      "documentjs",
+      "testee"
+    ]
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "can": "^2.3.0-pre.2",
+    "can-connect": "0.1.0",
+    "can-ssr": "^0.3.3",
+    "done-autorender": "^0.2.1",
+    "done-component": "^0.1.0",
+    "done-css": "^1.0.0",
+    "generator-donejs": "0.0.4",
+    "jquery": "^2.1.4",
+    "steal": "^0.10.5",
+    "yeoman-environment": "^1.2.7"
+  },
+  "devDependencies": {
+    "documentjs": "^0.3.0-pre.5",
+    "funcunit": "^3.0.0",
+    "steal-qunit": "^0.1.0",
+    "steal-tools": "^0.11.0-pre.3",
+    "testee": "^0.2.0"
+  }
+}

@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    {{asset "css"}}
+  </head>
+  <body>
+    <can-import from="bitballs/styles.less!" />
+    <can-import from="bitballs/app" [.]="{value}" />
+
+    <h1>{{message}}</h1>
+    
+    {{#if players.isResolved}}
+    	{{players.value.length}}
+    {{/if}}
+
+    {{asset "inline-cache"}}
+
+    {{#isProduction}}
+      <script src="/node_modules/steal/steal.production.js"
+        main="bitballs/index.stache!done-autorender"></script>
+    {{else}}
+      <script src="/node_modules/steal/steal.js"></script>
+    {{/isProduction}}
+  </body>
+</html>

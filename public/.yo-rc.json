@@ -1,0 +1,6 @@
+{
+  "generator-donejs": {
+    "short": "app",
+    "folder": "."
+  }
+}
