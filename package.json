@@ -4,9 +4,11 @@
   "description": "A sample Node.js app using Express 4",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "install": "./node_modules/.bin/db-migrate up -e prod && cd public/ && npm install"
   },
   "dependencies": {
+    "async": "^1.4.0",
     "body-parser": "^1.13.3",
     "bookshelf": "^0.8.1",
     "db-migrate": "^0.9.18",

@@ -7,7 +7,11 @@ app.set('port', (process.env.PORT || 5000));
 
 app.use( express.static(__dirname + '/public') );
 
+require('./services/games');
 require('./services/players');
+require('./services/stats');
+require('./services/teams');
+require('./services/tournaments');
 
 app.use("/", require('./public/service'));
 

@@ -5,12 +5,12 @@ var tag = require('can-connect/can/tag/');
 var Player = Map.extend({
 	
 });
-var PlayerList = can.List.extend({Map: Player},{});
+Player.List = can.List.extend({Map: Player},{});
 
 var playerConnection = superMap({
   Map: Player,
-  List: PlayerList,
-  url: "/players",
+  List: Player.List,
+  url: "/services/players",
   name: "player"
 });
 
