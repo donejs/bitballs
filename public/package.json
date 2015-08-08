@@ -35,10 +35,5 @@
     "yeoman-environment": "^1.2.7",
     "steal-tools": "^0.11.0-pre.8"
   },
-  "devDependencies": {
-    "documentjs": "^0.3.0-pre.5",
-    "funcunit": "^3.0.0",
-    "steal-qunit": "^0.1.0",
-    "testee": "^0.2.0"
-  }
+  "devDependencies": {}
 }
