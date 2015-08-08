@@ -1,0 +1,4 @@
+<ul class="nav nav-pills">
+  <li role="presentation" class="active"><a can-href="{page='tournaments'}">Tournaments</a></li>
+  <li role="presentation"><a can-href="{page='players'}">Players</a></li>
+</ul>

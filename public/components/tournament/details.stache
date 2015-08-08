@@ -1,0 +1,52 @@
+
+
+<h2>Teams</h2>
+<table  class="table">
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Color</th>
+		<th>Player 1</th>
+		<th>Player 2</th>
+		<th>Player 3</th>
+		<th>Player 4</th>
+		{{#if appState.user.isAdmin}}
+		<th></th>
+		{{/if}}
+	</tr>
+</thead>
+<tbody>
+{{#each teams}}
+	<tr>
+		<td>{{name}}</td>
+		<td>{{color}}</td>
+		<td>{{#playerById player1Id}}{{name}}{{/playerById}}</td>
+		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
+		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
+		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
+		<td>
+			<button type="button" class="btn btn-danger" 
+				(click)="{destroy}"
+				{{#isDestroying}}disabled{{/isDestroying}}>
+					<span class='glyphicon glyphicon-remove'/>
+			</button>
+		</td>
+	</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if appState.user.isAdmin}}
+<h4>New Team</h4>
+<form (submit)="{createTeam @event}" action="">
+	
+	<div class="form-group">
+	    <label for="team-name">Name</label>
+	    <input type="text" class="form-control" id="team-name" placeholder="team name" can-value="{team.name}"/>
+	  </div>
+	
+	
+	
+	<button type="submit" class="btn btn-default" >Create</button>
+</form>
+{{/if}}

@@ -1,0 +1,46 @@
+
+<h2>{{#player.isNew}}Create{{else}}Edit{{/player.isNew}} player</h2>
+{{#if player}}
+	<form (submit)="{savePlayer @event}" action="">
+	  <div class="form-group">
+	    <label for="player-name">Name</label>
+	    <input type="text" class="form-control" id="player-name" placeholder="fullname" can-value="{player.name}"/>
+	  </div>
+	  <div class="form-group">
+	    <label for="player-weight">Weight</label>
+	    <input 
+	    	type="number" 
+	    	class="form-control" 
+	    	id="player-weight" 
+	    	placeholder="weight in pounds" 
+	    	can-value="{player.weight}"/>
+	  </div>
+	  <div class="form-group">
+	    <label for="player-height">Height</label>
+	    <input 
+	    	type="number" 
+	    	class="form-control" 
+	    	id="player-height" 
+	    	placeholder="height in inches (Ex: 71)" 
+	    	can-value="{player.height}"/>
+	  </div>
+	  <div class="form-group">
+	    <label for="player-birthday">Birthday</label>
+	    <input 
+	    	type="date" 
+	    	class="form-control" 
+	    	id="player-birthday" 
+	    	placeholder="day of birth" 
+	    	can-value="{player.birthday}"/>
+	  </div>
+	  <button type="submit" class="btn btn-default" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
+	</form>
+{{else}}
+	{{#playerPromise.isPending}}
+		<div>Loading player</div>
+	{{/playerPromise.isPending}}
+	{{#playerPromise.isRejected}}
+		<div>Problem loading player</div>
+	{{/playerPromise.isRejected}}
+	
+{{/player}}
