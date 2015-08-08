@@ -5,7 +5,8 @@
   "homepage": "",
   "author": "Bitovi",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node build.js"
   },
   "main": "index.stache!done-autorender",
   "files": [
@@ -29,14 +30,14 @@
     "done-css": "^1.0.0",
     "generator-donejs": "0.0.4",
     "jquery": "^2.1.4",
-    "steal": "^0.10.5",
+    "steal": "^0.11.0-pre.1",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
     "documentjs": "^0.3.0-pre.5",
     "funcunit": "^3.0.0",
     "steal-qunit": "^0.1.0",
-    "steal-tools": "^0.11.0-pre.3",
+    "steal-tools": "^0.11.0-pre.8",
     "testee": "^0.2.0"
   }
 }
