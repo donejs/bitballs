@@ -14,9 +14,15 @@ Component.extend({
 		define: {
 			players: {
 				value: function(){
-					return Player.getList({})
+					return Player.getList({});
 				}
 			}
+		},
+		editPlayer: function(player){
+			this.attr("editingPlayer", player);
+		},
+		removeEdit: function(){
+			this.removeAttr("editingPlayer");
 		}
 	}
 });

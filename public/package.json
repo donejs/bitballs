@@ -23,17 +23,18 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.5",
-    "can": "^2.3.0-pre.3",
-    "can-connect": "0.1.0",
-    "can-ssr": "^0.3.3",
-    "done-autorender": "^0.2.1",
+    "can": "^2.3.0-pre.4",
+    "can-connect": "0.2.0",
+    "can-ssr": "^0.5.3",
+    "done-autorender": "^0.3.0",
     "done-component": "^0.1.0",
     "done-css": "^1.0.0",
     "generator-donejs": "0.0.4",
     "jquery": "^2.1.4",
+    "moment": "^2.10.6",
     "steal": "^0.11.0-pre.1",
-    "yeoman-environment": "^1.2.7",
-    "steal-tools": "^0.11.0-pre.8"
+    "steal-tools": "^0.11.0-pre.8",
+    "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {}
 }

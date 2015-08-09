@@ -1,5 +1,6 @@
+
+
 <h2>Players</h2>
-<a can-href="{page='new-player'}">Create Player</a>
 <table class="table">
 	<thead>
 		<tr>
@@ -18,17 +19,33 @@
 		{{#if players.isResolved}}
 			{{#each players.value}}
 				<tr>
-					<td><a can-href='{page="player" playerId=id}'>{{name}}</a></td>
-					<td>{{age}}</td>
-					<td>{{weight}}</td>
-					<td>{{height}}</td>
-					<td>{{rank}}</td>
-					<td><button type="button" class="btn btn-danger" (click)="{destroy}"
-						{{#isDestroying}}disabled{{/isDestroying}}>
-							<span class='glyphicon glyphicon-remove'/>
-						</button></td>
+					{{#eq . editingPlayer}}
+						<td>
+							<player-edit player="{.}"
+								(saved)="removeEdit" (canceled)="removeEdit"/>
+						</td>
+					{{else}}
+						<td><a can-href='{page="player" playerId=id}'>{{name}}</a></td>
+						<td>{{age}}</td>
+						<td>{{weight}}</td>
+						<td>{{height}}</td>
+						<td>{{rank}}</td>
+						<td>
+							{{#if appState.user.isAdmin}}
+								<button type="button" class="btn btn-default" (click)="{editPlayer .}">
+									<span class='glyphicon glyphicon-edit'/>
+								</button>
+								<button type="button" class="btn btn-danger" (click)="{destroy}"
+									{{#isDestroying}}disabled{{/isDestroying}}>
+									<span class='glyphicon glyphicon-remove'/>
+								</button>
+							{{/if}}
+						</td>
+					{{/if}}
 				</tr>
 			{{/each}}
 		{{/if}}
 	</tbody>
 </table>
+<h3>Create Player</h3>
+<player-edit/>

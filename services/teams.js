@@ -1,9 +1,22 @@
 
 var app = require("../app");
 var bookshelf = require("../bookshelf");
+var Player = require("./players");
 
 var Team = bookshelf.Model.extend({
-	tableName: 'teams'
+	tableName: 'teams',
+	player1: function(){
+		return this.belongsTo(Player,"player1Id");
+	},
+	player2: function(){
+		return this.belongsTo(Player,"player2Id");
+	},
+	player3: function(){
+		return this.belongsTo(Player,"player3Id");
+	},
+	player4: function(){
+		return this.belongsTo(Player,"player4Id");
+	}
 });
 
 app.get('/services/teams', function(req, res){
@@ -37,3 +50,5 @@ app.post('/services/teams', function(req, res) {
 	});
 
 });
+
+module.exports = Team;

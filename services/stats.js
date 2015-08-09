@@ -6,6 +6,13 @@ var Stat = bookshelf.Model.extend({
 	tableName: 'stats'
 });
 
+var clean = function(data){
+	if(data.time) {
+		data.time = parseInt(data.time, 10);
+	}
+	return data;
+};
+
 app.get('/services/stats', function(req, res){
 	Stat.fetchAll({}).then(function(stats){
 		res.send({data: stats.toJSON()});
@@ -30,10 +37,12 @@ app['delete']('/services/stats/:id', function(req, res){
 });
 
 app.post('/services/stats', function(req, res) {
-	new Stat(req.body).save().then(function(stat){
+	new Stat(clean(req.body)).save().then(function(stat){
 		res.send({id: stat.get('id')});
 	}, function(e){
 		res.status(500).send(e);
 	});
 
 });
+
+module.exports = Stat;

@@ -32,13 +32,14 @@ Component.extend({
 			},
 			gamesGroupedByRound: {
 				get: function(){
+					console.log("grouping re-evaluate");
 					var rounds = {},
 						games = this.attr("games");
 					if(games) {
 						games.each(function(game){
 							var round = game.attr("round");
 							if(!rounds[round]) {
-								rounds[round] = new Game.List();
+								rounds[round] = [];
 							}
 							rounds[round].push(game);
 						});
@@ -101,7 +102,48 @@ Component.extend({
 					return map;
 				},
 				type: "*"
+			},
+			teamIdMap: {
+				get: function(){
+					var map = {};
+					var teams = this.attr("teams");
+					if(teams) {
+						teams.each(function(team){
+							map[team.attr("id")] = team;
+						});
+					}
+					
+					return map;
+				},
+				type: "*"
 			}
+		},
+		availableTeamFor: function(name, round){
+			var teams = this.attr("teams");
+			var games = this.attr("games");
+			if(!games || !teams) {
+				return [];
+			}
+			
+			var roundValue = round();
+			if(!round) {
+				return teams;
+			}
+			var remainingTeams = teams.slice(0);
+			games.forEach(function(game){
+				if(game.attr("round") === roundValue) {
+					remainingTeams.removeById(game.attr("homeTeamId"));
+					remainingTeams.removeById(game.attr("awayTeamId"));
+				}
+			});
+			
+			var opposite = name === "home" ? "away" : "home",
+				oppositeId = this.attr("game").attr(opposite+"TeamId");
+			
+			if(oppositeId) {
+				remainingTeams.removeById(oppositeId);
+			}
+			return remainingTeams;
 		},
 		availablePlayersFor: function(teamCompute, number, options){
 			
@@ -148,7 +190,18 @@ Component.extend({
 		createGame: function(ev) {
 			ev.preventDefault();
 			var self = this;
-			this.attr("game").attr("tournamentId", this.attr("appState.tournamentId"))
+			var game = this.attr("game");
+			
+			// cleanup that https://github.com/bitovi/canjs/issues/1834 should do for us
+			if(!game.attr("court")) {
+				game.attr("court","1")
+			}
+			
+			if(!game.attr("round")) {
+				game.attr("round",Game.roundNames[0]);
+			}
+			
+			game.attr("tournamentId", this.attr("appState.tournamentId"))
 				.save(function(){
 				self.attr("game", new Game());
 			});
@@ -159,6 +212,15 @@ Component.extend({
 			var idVal = id();
 			if(idVal != null) {
 				return options.fn( this.attr("playerIdMap")[idVal] );
+			} else {
+				return;
+			}
+			
+		},
+		teamById: function(id, options){
+			var idVal = id();
+			if(idVal != null) {
+				return options.fn( this.attr("teamIdMap")[idVal] );
 			} else {
 				return;
 			}

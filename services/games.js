@@ -1,9 +1,20 @@
 
 var app = require("../app");
 var bookshelf = require("../bookshelf");
+var Stat = require("./stats");
+var Team = require("./teams");
 
 var Game = bookshelf.Model.extend({
-	tableName: 'games'
+	tableName: 'games',
+	stats: function(){
+		return this.hasMany(Stat,"gameId");
+	},
+	homeTeam: function(){
+		return this.belongsTo(Team,"homeTeamId");
+	},
+	awayTeam: function(){
+		return this.belongsTo(Team,"awayTeamId");
+	}
 });
 
 app.get('/services/games', function(req, res){
@@ -13,7 +24,7 @@ app.get('/services/games', function(req, res){
 });
 
 app.get('/services/games/:id', function(req, res){
-	new Game({id: req.params.id}).fetch().then(function(game){
+	new Game({id: req.params.id}).fetch(req.query).then(function(game){
 		res.send(game.toJSON());
 	});
 });

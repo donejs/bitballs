@@ -9,35 +9,28 @@ Component.extend({
 	template: require("./edit.stache!"),
 	viewModel: {
 		define: {
-			playerId: {
-				type: "number",
-				set: function(newValue){
-					if(newValue != null && newValue != this.attr("player.id")) {
-						can.batch.start();
-						var self = this;
-						this.removeAttr("player");
-						var promise = Player.get({id: newValue})
-						this.attr("playerPromise", promise );
-						promise.then(function(player){
-								self.attr("player", player);
-							});
-						can.batch.stop();
-					} else if(newValue == null && this.attr("player.id") != null) {
-						this.attr("player", new Player() );
-					}
-					return newValue;
-				}
-			},
 			player: {
 				Value: Player
 			}
 		},
-		savePlayer: function(ev){
+		savePlayer: function(ev, el){
 			ev.preventDefault();
 			var self = this;
-			this.attr("player").save().then(function(player){
-				self.attr("playerId", player.attr("id"));
-			});
+			var player = this.attr("player");
+			if(player.isNew()) {
+				player.save().then(function(){
+					self.attr("player",new Player());
+				}).then(function(){
+					el.parent().triggerHandler("saved");
+				});
+			} else {
+				player.save().then(function(){
+					el.parent().triggerHandler("saved");
+				});
+			}
+		},
+		cancelEvent: function(el) {
+			el.closest("player-edit").triggerHandler("canceled");
 		}
 	}
 });

@@ -1,4 +1,92 @@
+<h2>{{tournament.year}} Tournament</h2>
+<p>{{tournament.prettyDate}}</p>
 
+<h3>Games</h3>
+<table  class="table">
+<thead>
+	<tr>
+		<th>Round</th>
+		<th>Court 1</th>
+		<th>Court 2</th>
+		<th>Court 3</th>
+		<th>Court 4</th>
+	</tr>
+</thead>
+<tbody>
+{{#each gamesGroupedByRound}}
+	<tr>
+		<td>{{@key}}</td>
+		{{#each .}}
+			<td>
+				<a can-href="{gameId=id}">
+					{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
+				</a>
+				{{#if appState.user.isAdmin}}
+					<td>
+						<button type="button" class="btn btn-danger" 
+							(click)="{destroy}"
+							{{#isDestroying}}disabled{{/isDestroying}}>
+								<span class='glyphicon glyphicon-remove'/>
+						</button>
+					</td>
+				{{/if}}
+			</td>
+		{{/each}}
+	</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if appState.user.isAdmin}}
+<h4>New Game</h4>
+<form (submit)="{createGame @event}" action="">
+	
+	<div class="form-group">
+	    <label for="game-round">round</label>
+	    <select can-value="{game.round}" class="form-control" id="game-round">
+	    	{{#roundNames}}
+	    		<option value="{{.}}">{{.}}</option>
+	    	{{/roundNames}}
+	    </select>
+	</div>
+	
+	<div class="form-group">
+	    <label for="game-court">court</label>
+	    <select can-value="{game.court}" class="form-control" id="game-court">
+    		<option value="1">1</option>
+	    	<option value="2">2</option>
+	    	<option value="3">3</option>
+	    	<option value="4">4</option>
+	    </select>
+	</div>
+	
+	<div class="form-group">
+	    <label for="game-home">Home team</label>
+	    <select can-value="{game.homeTeamId}" class="form-control" id="game-home">
+	    	<option value=''/>
+	    	{{#each (availableTeamFor "home" game.round)}}
+	    		<option value='{{id}}'>{{color}} - {{name}}</option>
+	    	{{/each}}
+	    </select>
+		<label for="game-away">Away team</label>
+	    <select can-value="{game.awayTeamId}" class="form-control" id="game-away">
+	    	<option value=''/>
+	    	{{#each (availableTeamFor "away" game.round)}}
+	    		<option value='{{id}}'>{{color}} - {{name}}</option>
+	    	{{/each}}
+	    </select>
+	</div>
+	
+
+	
+	<div class="form-group">
+	    <label for="game-videoUrl">YouTube URL</label>
+	    <input type="text" class="form-control" id="game-videoUrl" placeholder="https://www.youtube.com/watch?v=y5z1Ym2uJfs" can-value="{game.videoUrl}"/>
+	</div>
+	
+	<button type="submit" class="btn btn-default" >Create</button>
+</form>
+{{/if}}
 
 <h2>Teams</h2>
 <table  class="table">
@@ -24,13 +112,15 @@
 		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
-		<td>
-			<button type="button" class="btn btn-danger" 
-				(click)="{destroy}"
-				{{#isDestroying}}disabled{{/isDestroying}}>
-					<span class='glyphicon glyphicon-remove'/>
-			</button>
-		</td>
+		{{#if appState.user.isAdmin}}
+			<td>
+				<button type="button" class="btn btn-danger" 
+					(click)="{destroy}"
+					{{#isDestroying}}disabled{{/isDestroying}}>
+						<span class='glyphicon glyphicon-remove'/>
+				</button>
+			</td>
+		{{/if}}
 	</tr>
 {{/each}}
 </tbody>
@@ -43,9 +133,61 @@
 	<div class="form-group">
 	    <label for="team-name">Name</label>
 	    <input type="text" class="form-control" id="team-name" placeholder="team name" can-value="{team.name}"/>
+	</div>
+	
+	<div class="form-group">
+	    <label for="team-color">Color</label>
+	    <select can-value="{team.color}" class="form-control" id="team-color">
+	    	{{#availableColors}}
+	    		<option value="{{.}}">{{.}}</option>
+	    	{{/availableColors}}
+	    </select>
 	  </div>
+	</div>
 	
+	<div class="form-group">
+	    <label for="team-player1">Player 1</label>
+	    <select can-value="{team.player1Id}" class="form-control" id="team-player1">
+	    	<option value=''/>
+	    	{{#availablePlayersFor team 1}}
+	    		<option value='{{id}}'>{{name}}</option>
+	    	{{/availablePlayersFor}}
+	    </select>
+	  </div>
+	</div>
 	
+	<div class="form-group">
+	    <label for="team-player2">Player 2</label>
+	    <select can-value="{team.player2Id}" class="form-control" id="team-player2">
+	    	<option value=''/>
+	    	{{#availablePlayersFor team 2}}
+	    		<option value='{{id}}'>{{name}}</option>
+	    	{{/availablePlayersFor}}
+	    </select>
+	  </div>
+	</div>
+	
+	<div class="form-group">
+	    <label for="team-player3">Player 3</label>
+	    <select can-value="{team.player3Id}" class="form-control" id="team-player3">
+	    	<option value=''/>
+	    	{{#availablePlayersFor team 3}}
+	    		<option value='{{id}}'>{{name}}</option>
+	    	{{/availablePlayersFor}}
+	    </select>
+	  </div>
+	</div>
+	
+	<div class="form-group">
+	    <label for="team-player4">Player 4</label>
+	    <select can-value="{team.player4Id}" class="form-control" id="team-player4">
+	    	<option value=''/>
+	    	{{#availablePlayersFor team 4}}
+	    		<option value='{{id}}'>{{name}}</option>
+	    	{{/availablePlayersFor}}
+	    </select>
+	  </div>
+	</div>
 	
 	<button type="submit" class="btn btn-default" >Create</button>
 </form>

@@ -1,0 +1,176 @@
+var Component = require("can/component/component");
+
+require("./details.css!");
+require("bootstrap/dist/css/bootstrap.css!");
+require("can/map/define/");
+require("can/route/");
+require("can/view/href/");
+
+var Tournament = require("bitballs/models/tournament");
+var Game = require("bitballs/models/game");
+var Team = require("bitballs/models/team");
+var Player = require("bitballs/models/player");
+var Stat = require("bitballs/models/stat");
+var youtubeAPI = require("bitballs/models/youtube");
+
+Component.extend({
+	tag: "game-details",
+	template: require("./details.stache!"),
+	viewModel: {
+		define: {
+			game: {
+				get: function(last, set){
+					
+					Game.get({
+						id: this.attr("appState.gameId"),
+						withRelated: ["stats",
+							"homeTeam.player1",
+							"homeTeam.player2",
+							"homeTeam.player3",
+							"homeTeam.player4",
+							"awayTeam.player1",
+							"awayTeam.player2",
+							"awayTeam.player3",
+							"awayTeam.player4"
+						]
+					}).then(set);
+				}
+			},
+			youtubePlayer: {
+				type: "*"
+			},
+			statTypes: {
+				value: Stat.statTypes
+			}
+		},
+		showStatMenuFor: function(player, element, event){
+			
+			var youtubePlayer = this.attr("youtubePlayer");
+			var time = youtubePlayer.getCurrentTime();
+			youtubePlayer.pauseVideo();
+			
+			
+			this.attr("stat", new Stat({
+				time: time,
+				playerId: player.attr("id"),
+				gameId: this.attr("game.id"),
+				player: player
+			}));
+		},
+		createStat: function(ev) {
+			ev.preventDefault();
+			var self = this;
+			var stat = this.attr("stat");
+			
+			
+			stat.save(function(){
+				self.removeAttr("stat");
+			});
+		},
+		removeStat: function(){
+			this.removeAttr("stat");
+		},
+		addTime: function(time){
+			this.attr("stat.time", this.attr("stat.time")+time);
+		},
+		minusTime: function(time){
+			this.attr("stat.time", this.attr("stat.time")-time);
+		},
+		gotoTimeMinus5: function(time, event) {
+			this.attr("youtubePlayer").seekTo(time - 5, true);
+			this.attr("youtubePlayer").playVideo();
+			event.stopPropagation();
+		}
+	},
+	events: {
+		inserted: function(){
+			var self = this;
+			youtubeAPI().then(function(YT){
+				self.YT = YT;
+				var player = new YT.Player('youtube-player', {
+					height: '390',
+					width: '640',
+					videoId: 'y5z1Ym2uJfs',
+					events: {
+					  'onReady': self.onPlayerReady.bind(self),
+					  'onStateChange': self.onPlayerStateChange.bind(self)
+					}
+				});
+				self.scope.attr("youtubePlayer", player)
+				
+			})["catch"](function(e){
+				setTimeout(function(){
+					throw e
+				},1);
+			});
+		},
+		onPlayerReady: function(){
+			var youtubePlayer = this.scope.attr("youtubePlayer"),
+				self = this;
+			
+			//this.scope.attr("youtubePlayer").playVideo();
+			
+			// get durration
+			var getDuration = function(){
+				var duration = youtubePlayer.getDuration();
+				if(duration) {
+					self.scope.attr("duration", duration);
+				} else {
+					setTimeout(getDuration, 100);
+				}
+			};
+			getDuration();
+		},
+		onPlayerStateChange: function(ev){
+			var viewModel = this.viewModel,
+				player = viewModel.attr("youtubePlayer"),
+				self = this;
+			var timeUpdate = function(){
+				if(viewModel.attr("stat")) {
+					viewModel.attr("stat").attr("time", player.getCurrentTime());
+				}
+				self.timeUpdate = setTimeout(timeUpdate, 100);
+			};
+			
+			
+			if(ev.data === YT.PlayerState.PLAYING) {
+				this.scope.attr("playing", true);
+				timeUpdate();
+			} else {
+				this.scope.attr("playing", false);
+				clearTimeout(this.timeUpdate);
+			}
+			
+
+		},
+		"{stat} time": function(){
+			var time = this.scope.attr("stat.time");
+			if(typeof time === "number" && time >= 0) {
+				
+				var player = this.scope.attr("youtubePlayer");
+				var playerTime = player.getCurrentTime();
+				if(Math.abs(time-playerTime) > 2) {
+					player.seekTo(time, true);
+				}
+				
+			}
+			
+		}
+	},
+	helpers: {
+		statsForPlayerId: function(id, options){
+			return this.attr("game").statsForPlayerId(id).map(function(stat){
+				return options.fn(stat);
+			});
+		},
+		statPercent: function(time){
+			var duration = this.attr("duration");
+			if(duration) {
+				return time() / duration * 100;
+			} else {
+				return "0"
+			}
+			
+		}
+	}
+});

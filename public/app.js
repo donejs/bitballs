@@ -3,6 +3,7 @@ import Player from "./models/player";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
+import 'can/route/pushstate/';
 
 const AppState = AppMap.extend({
 	define: {
@@ -11,11 +12,13 @@ const AppState = AppMap.extend({
 				if(this.attr("gameId")) {
 					return "game-details"
 				} else if(this.attr("teamId")) {
-					return "team-details"
+					return "team-details";
 				} else if(this.attr("tournamentId")) {
 					return "tournament-details";
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list";
+				} else if( this.attr("gameId") ) {
+					return "game-details";
 				} else {
 					return "player-list";
 				}
@@ -28,7 +31,8 @@ const AppState = AppMap.extend({
 				});
 			},
 			serialize: false
-		}
+		},
+		tournamentId: {type: "number"}
 	},
 	
 	pageComponent: function(){

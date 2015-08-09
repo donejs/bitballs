@@ -1,0 +1,12 @@
+game-details .stats-container {
+	position: relative;
+	width: 75%;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+game-details .stat-point {
+    position: absolute;
+}
+.youtube-container {
+  text-align:center;
+}
