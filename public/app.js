@@ -3,7 +3,6 @@ import Player from "./models/player";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
-import 'can/route/pushstate/';
 
 const AppState = AppMap.extend({
 	define: {
@@ -39,7 +38,7 @@ const AppState = AppMap.extend({
   		return can.stache("<"+this.attr("pageComponentName")+" app-state='{app}'/>")({
   			app: this
   		});
-  	}
+  }
 	
 });
 

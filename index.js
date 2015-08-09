@@ -13,7 +13,7 @@ require('./services/stats');
 require('./services/teams');
 require('./services/tournaments');
 
-app.use("/", require('./public/service'));
+//app.use("/", require('./public/service'));
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
