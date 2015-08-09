@@ -15,7 +15,6 @@ var Stat = Map.extend({
 		{ name: "Ast"},
 		{ name: "Stl"},
 		{ name: "Blk"},
-		{ name: "1PA"},
 		{ name: "To"}
 	]
 },{

@@ -65,6 +65,9 @@ Component.extend({
 			
 			stat.save(function(){
 				self.removeAttr("stat");
+			}, function(e){
+				console.log(e);
+				self.removeAttr("stat");
 			});
 		},
 		removeStat: function(){
@@ -87,16 +90,17 @@ Component.extend({
 			var self = this;
 			youtubeAPI().then(function(YT){
 				self.YT = YT;
+				//console.log('gA2Y1UQ5zjE',self.scope.attr("videoUrl"));
 				var player = new YT.Player('youtube-player', {
 					height: '390',
 					width: '640',
-					videoId: 'y5z1Ym2uJfs',
+					videoId: self.scope.attr("game.videoUrl"),
 					events: {
 					  'onReady': self.onPlayerReady.bind(self),
 					  'onStateChange': self.onPlayerStateChange.bind(self)
 					}
 				});
-				self.scope.attr("youtubePlayer", player)
+				self.scope.attr("youtubePlayer", player);
 				
 			})["catch"](function(e){
 				setTimeout(function(){
@@ -126,10 +130,12 @@ Component.extend({
 				player = viewModel.attr("youtubePlayer"),
 				self = this;
 			var timeUpdate = function(){
+				var currentTime = player.getCurrentTime();
 				if(viewModel.attr("stat")) {
-					viewModel.attr("stat").attr("time", player.getCurrentTime());
+					viewModel.attr("stat").attr("time", currentTime);
 				}
 				self.timeUpdate = setTimeout(timeUpdate, 100);
+				self.updatePosition(currentTime);
 			};
 			
 			
@@ -142,6 +148,20 @@ Component.extend({
 			}
 			
 
+		},
+		updatePosition: function(time){
+			var duration = this.scope.attr("duration");
+			if(duration) {
+				var fraction = time /duration;
+				var containers = this.element.find(".stats-container");
+				var width = containers.width();
+				var firstOffset = containers.first().offset();
+				var height = containers.last().offset().top - firstOffset.top + containers.last().height();
+				$("#player-pos").offset({
+					left: firstOffset.left + fraction*width,
+					top: firstOffset.top
+				}).height(height);
+			}
 		},
 		"{stat} time": function(){
 			var time = this.scope.attr("stat.time");

@@ -59,6 +59,7 @@ var Game = Map.extend({
 		stats: {
 			get: function(lastSet){
 				if(lastSet) {
+					lastSet.__listSet = {};
 					return lastSet;
 				}
 			},

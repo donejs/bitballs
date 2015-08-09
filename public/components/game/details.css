@@ -10,3 +10,9 @@ game-details .stat-point {
 .youtube-container {
   text-align:center;
 }
+#player-pos {
+	width: 1px;
+	border-left: solid 1px red;
+	z-index: 0;
+	position: absolute;
+}

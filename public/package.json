@@ -24,7 +24,7 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "can": "^2.3.0-pre.4",
-    "can-connect": "0.2.0",
+    "can-connect": "0.2.1",
     "can-ssr": "^0.5.3",
     "done-autorender": "^0.3.0",
     "done-component": "^0.1.0",

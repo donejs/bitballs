@@ -4,6 +4,7 @@
 	<div id="youtube-player"/>
 </div>
 
+
 <table class="table table-condensed table-hover">
 <tbody>
 {{#each game.teams}}
@@ -24,6 +25,9 @@
 {{/each}}
 </tbody>
 </table>
+<div id="player-pos"/>
+
+
 {{#if stat}}
 <div>
 	<h4>Add Stat for {{stat.player.name}}</h4>
