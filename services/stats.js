@@ -14,7 +14,7 @@ var clean = function(data){
 };
 
 app.get('/services/stats', function(req, res){
-	Stat.fetchAll({}).then(function(stats){
+	Stat.collection().query({where: req.query}).fetch().then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });

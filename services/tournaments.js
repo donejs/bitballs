@@ -7,8 +7,8 @@ var Tournament = bookshelf.Model.extend({
 });
 
 app.get('/services/tournaments', function(req, res){
-	Tournament.fetchAll({}).then(function(tournaments){
-		res.send({data: tournaments.toJSON()});
+	Tournament.collection().fetch().then(function(tournaments){
+		res.send({data: tournaments});
 	});
 });
 

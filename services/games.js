@@ -16,9 +16,12 @@ var Game = bookshelf.Model.extend({
 		return this.belongsTo(Team,"awayTeamId");
 	}
 });
+var Games = bookshelf.Collection.extend({
+  model: Game
+});
 
 app.get('/services/games', function(req, res){
-	Game.fetchAll({}).then(function(games){
+	new Games().query({where: req.query}).fetch().then(function(games){
 		res.send({data: games.toJSON()});
 	});
 });

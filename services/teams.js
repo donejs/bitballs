@@ -18,9 +18,12 @@ var Team = bookshelf.Model.extend({
 		return this.belongsTo(Player,"player4Id");
 	}
 });
+var Teams = bookshelf.Collection.extend({
+  model: Team
+});
 
 app.get('/services/teams', function(req, res){
-	Team.fetchAll({}).then(function(teams){
+	Team.collection().query({where: req.query}).fetch().then(function(teams){
 		res.send({data: teams.toJSON()});
 	});
 });
