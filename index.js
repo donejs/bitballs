@@ -12,6 +12,8 @@ require('./services/players');
 require('./services/stats');
 require('./services/teams');
 require('./services/tournaments');
+require('./services/sessions');
+require('./services/users');
 
 //app.use("/", require('./public/service'));
 

@@ -36,5 +36,12 @@
     "steal-tools": "^0.11.0-pre.8",
     "yeoman-environment": "^1.2.7"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "system": {
+  	"meta": {
+  		"bootstrap/js/dropdown": {
+  			"deps": ["jquery"]
+  		}
+  	}
+  }
 }

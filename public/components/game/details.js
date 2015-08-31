@@ -1,6 +1,6 @@
 var Component = require("can/component/component");
 
-require("./details.css!");
+require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require("can/route/");
@@ -41,10 +41,69 @@ Component.extend({
 			},
 			statTypes: {
 				value: Stat.statTypes
+			},
+			finalScore: {
+				get: function(){
+					var game = this.attr("game");
+					if(game) {
+						var playerMap = this.attr("playerIdToHomeOrAwayMap");
+						var scores = {home: 0, away: 0};
+						game.attr("stats").each(function(stat){
+							if(stat.attr("type") === "1P") {
+								scores[playerMap[ stat.attr("playerId")]]++;
+							}
+							if(stat.attr("type") === "2P") {
+								scores[playerMap[ stat.attr("playerId")]] += 2;
+							}
+						});
+						return scores;
+					}
+				},
+				type:"*"
+			},
+			currentScore: {
+				get: function(){
+					var game = this.attr("game");
+					if(game) {
+						var playerMap = this.attr("playerIdToHomeOrAwayMap");
+						var scores = {home: 0, away: 0};
+						
+						var time = this.attr("time");
+						
+						game.attr("stats").each(function(stat){
+							if(stat.attr("time") <= time) {
+								if(stat.attr("type") === "1P") {
+									scores[playerMap[ stat.attr("playerId")] ]++;
+								}
+								if(stat.attr("type") === "2P") {
+									scores[playerMap[ stat.attr("playerId")]] += 2;
+								}
+							}
+						});
+						return scores;
+					}
+				},
+				type:"*"
+			},
+			playerIdToHomeOrAwayMap: {
+				type: "*",
+				get: function(){
+					var game = this.attr("game");
+					if(game) {
+						var map = {};
+						for(var i = 1; i <= 4; i++) {
+							map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
+							map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
+						}
+						return map;
+					}
+				}
 			}
 		},
 		showStatMenuFor: function(player, element, event){
-			
+			if(!this.attr("appState").isAdmin()) {
+				return;
+			}
 			var youtubePlayer = this.attr("youtubePlayer");
 			var time = youtubePlayer.getCurrentTime();
 			youtubePlayer.pauseVideo();
@@ -152,6 +211,7 @@ Component.extend({
 		updatePosition: function(time){
 			var duration = this.scope.attr("duration");
 			if(duration) {
+				this.viewModel.attr("time", time);
 				var fraction = time /duration;
 				var containers = this.element.find(".stats-container");
 				var width = containers.width();
@@ -175,6 +235,19 @@ Component.extend({
 				
 			}
 			
+		},
+		"{window} resize": function(){
+			var player = this.viewModel.attr("youtubePlayer");
+			var currentTime = player.getCurrentTime();
+			this.updatePosition(currentTime);
+		},
+		"{viewModel} stat": function(vm, ev, newVal){
+			setTimeout(function(){
+				
+				
+				$("#add-stat").offset( $(".stats-container:first").offset() ).show()
+			},1);
+
 		}
 	},
 	helpers: {

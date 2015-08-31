@@ -3,19 +3,22 @@ import Player from "./models/player";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
+import Session from './models/session';
 
 const AppState = AppMap.extend({
 	define: {
 		pageComponentName: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details"
+					return "game-details";
 				} else if(this.attr("teamId")) {
 					return "team-details";
 				} else if(this.attr("tournamentId")) {
 					return "tournament-details";
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list";
+				} else if(this.attr("page") === "user") {
+					return "user-create";
 				} else if( this.attr("gameId") ) {
 					return "game-details";
 				} else {
@@ -23,22 +26,26 @@ const AppState = AppMap.extend({
 				}
 			}
 		},
-		user: {
-			value: function(){
-				return new can.Map({
-					isAdmin: true
+		session: {
+			serialize: false,
+			value: function() {
+				var self = this;
+				Session.get({}).then(function(session){
+					self.attr("session", session);
 				});
-			},
-			serialize: false
+			}
 		},
 		tournamentId: {type: "number"}
 	},
-	
 	pageComponent: function(){
   		return can.stache("<"+this.attr("pageComponentName")+" app-state='{app}'/>")({
   			app: this
   		});
-  }
+	},
+	isAdmin: function(){
+		var session = this.attr("session");
+		return session && session.attr("user").attr("isAdmin");
+	}
 	
 });
 

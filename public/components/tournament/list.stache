@@ -5,7 +5,7 @@
 	{{/if}}
 	{{#each value}}
 		<h3><a can-href='{tournamentId=id}'>{{year}}</a> 
-			{{#if appState.user.isAdmin}}
+			{{#if appState.isAdmin}}
 			<button type="button" class="btn btn-danger" 
 				(click)="{destroy}"
 				{{#isDestroying}}disabled{{/isDestroying}}>
@@ -15,7 +15,7 @@
 		</h3>
 	{{/each}}
 </tournament-model>
-{{#if appState.user.isAdmin}}
+{{#if appState.isAdmin}}
 <h2>New Tournament</h2>
 <form (submit)="{createTournament @event}" action="">
 	<div class="form-group">
