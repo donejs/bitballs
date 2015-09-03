@@ -1,0 +1,34 @@
+<h2>Tournaments</h2>
+
+<tournament-model get-list="{}">
+	{{#if isPending}}
+		<div class='info'>Loading</div>
+	{{/if}}
+	{{#each value}}
+		<h3><a can-href='{tournamentId=id}'>{{year}}</a> 
+			{{#if session.isAdmin}}
+			<button type="button" class="btn btn-danger" 
+				(click)="{destroy}"
+				{{#isDestroying}}disabled{{/isDestroying}}>
+					<span class='glyphicon glyphicon-remove'/>
+			</button>
+			{{/if}}
+		</h3>
+	{{/each}}
+</tournament-model>
+
+{{#if session.isAdmin}}
+	<h2>New Tournament</h2>
+	<form (submit)="{createTournament @event}" action="">
+		<div class="form-group">
+		    <label for="tournament-date">Date</label>
+		    <input 
+		    	type="date" 
+		    	class="form-control" 
+		    	id="tournament-date" 
+		    	placeholder="date" 
+		    	can-value="{tournament.date}"/>
+		</div>
+		<button type="submit" class="btn btn-default" >Create</button>
+	</form>
+{{/if}}

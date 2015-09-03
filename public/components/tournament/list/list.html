@@ -1,0 +1,18 @@
+<script type="text/stache" id="demo" can-autorender>
+  <can-import from="bitballs/components/tournament/list/" />
+  
+  <tournament-list session="{session}"></tournament-list>
+</script>
+
+<script src="../../../node_modules/steal/steal.js"
+        main="can/view/autorender/">
+
+  import $ from 'jquery';
+  import 'can';
+  import Tournament from 'bitballs/models/tournament';
+  import 'bitballs/models/fixtures/tournaments';
+  
+  $('#demo').viewModel().attr({
+    session: {isAdmin: true}
+  });
+</script>
