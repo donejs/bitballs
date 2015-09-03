@@ -13,13 +13,6 @@
     "."
   ],
   "keywords": [],
-  "system": {
-    "npmIgnore": [
-      "documentjs",
-      "testee",
-      "steal-tools"
-    ]
-  },
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.5",
@@ -36,12 +29,19 @@
     "steal-tools": "^0.11.0-pre.8",
     "yeoman-environment": "^1.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "steal-qunit": "^0.1.1"
+  },
   "system": {
-  	"meta": {
-  		"bootstrap/js/dropdown": {
-  			"deps": ["jquery"]
-  		}
-  	}
+    "npmIgnore": [
+      "documentjs",
+      "testee",
+      "steal-tools"
+    ],
+    "meta": {
+      "bootstrap/js/dropdown": {
+        "deps": ["jquery"]
+      }
+    }
   }
 }
