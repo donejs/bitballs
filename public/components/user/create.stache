@@ -1,5 +1,5 @@
 <h2>New User</h2>
-<form (submit)="{createUser @event}" action="">
+<form (submit)="{createUserHandler @event}" action="">
 	<div class="form-group">
 	    <label for="user-email">Email</label>
 	    
