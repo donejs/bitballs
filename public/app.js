@@ -10,7 +10,7 @@ const AppState = AppMap.extend({
 		pageComponentName: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details app-state='{.}'";
+					return "game-details session='{session}'";
 					
 				} else if(this.attr("teamId")) {
 					return "team-details app-state='{.}'";

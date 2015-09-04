@@ -103,7 +103,7 @@ exports.ViewModel = Map.extend({
 		}
 	},
 	showStatMenuFor: function(player, element, event){
-		if(!this.attr("appState").isAdmin()) {
+		if(!this.attr("session").attr('user').isAdmin()) {
 			return;
 		}
 		var youtubePlayer = this.attr("youtubePlayer");
