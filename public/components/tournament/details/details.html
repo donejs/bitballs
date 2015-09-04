@@ -1,0 +1,13 @@
+<div id="main"></div>
+
+<script src="../../../node_modules/steal/steal.js" main="@empty">
+    import "bitballs/models/tournament/fixture";
+    import "bitballs/components/tournament/details/";
+    import $ from 'jquery';
+    import stache from "can/view/stache/";
+
+    localStorage.clear();
+    var template = stache('<tournament-details tournament-id="{id}" />');
+
+    $("#main").html( template({ id: 2 }) );
+</script>
