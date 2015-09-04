@@ -10,7 +10,7 @@ const AppState = AppMap.extend({
 		pageComponentName: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details session='{session}'";
+					return "game-details game-id='{gameId}' session='{session}'";
 					
 				} else if(this.attr("teamId")) {
 					return "team-details app-state='{.}'";
@@ -23,9 +23,6 @@ const AppState = AppMap.extend({
 					
 				} else if(this.attr("page") === "user") {
 					return "user-create app-state='{.}'";
-					
-				} else if( this.attr("gameId") ) {
-					return "game-details app-state='{.}'";
 					
 				} else {
 					return "player-list app-state='{.}'";

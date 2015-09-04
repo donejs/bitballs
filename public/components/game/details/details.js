@@ -19,7 +19,7 @@ exports.ViewModel = Map.extend({
 		gamePromise: {
 			get: function() {
 				return Game.get({
-					id: this.attr("id"),
+					id: this.attr("gameId"),
 					withRelated: ["stats",
 						"homeTeam.player1",
 						"homeTeam.player2",
