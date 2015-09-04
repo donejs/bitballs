@@ -129,6 +129,7 @@ Component.extend({
 			if(!round) {
 				return teams;
 			}
+			teams.attr("length");
 			var remainingTeams = teams.slice(0);
 			games.forEach(function(game){
 				if(game.attr("round") === roundValue) {
