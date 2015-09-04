@@ -10,6 +10,12 @@ var Tournament = require("bitballs/models/tournament");
 
 var ViewModel = can.Map.extend({
 	define: {
+		tournaments: {
+			get(lastVal, setVal){
+				return Tournament.getList({}).then(setVal);
+			}
+		},
+
 		tournament: {
 			Value: Tournament
 		}
