@@ -8,10 +8,10 @@ fixture("/services/users", function(request, response){
 	});
 });
 
-fixture("/services/users/:id", function(request, response){
+fixture("PUT /services/users/{id}", function(request, response){
 	console.log('[fixture] request', request);
 	response({
-		id: 123,
+		id: request.data.id,
 		email: request.data.email
 	});
 });
