@@ -10,25 +10,25 @@ const AppState = AppMap.extend({
 		pageComponentName: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details app-state='{app}'";
+					return "game-details app-state='{.}'";
 					
 				} else if(this.attr("teamId")) {
-					return "team-details app-state='{app}'";
+					return "team-details app-state='{.}'";
 					
 				} else if(this.attr("tournamentId")) {
-					return "tournament-details app-state='{app}'";
+					return "tournament-details app-state='{.}'";
 					
 				} else if(this.attr("page") === "tournaments") {
-					return "tournament-list app-state='{app}'";
+					return "tournament-list app-state='{.}'";
 					
 				} else if(this.attr("page") === "user") {
-					return "user-create app-state='{app}'";
+					return "user-create app-state='{.}'";
 					
 				} else if( this.attr("gameId") ) {
-					return "game-details app-state='{app}'";
+					return "game-details app-state='{.}'";
 					
 				} else {
-					return "player-list app-state='{app}'";
+					return "player-list app-state='{.}'";
 				}
 			}
 		},
@@ -44,9 +44,7 @@ const AppState = AppMap.extend({
 		tournamentId: {type: "number"}
 	},
 	pageComponent: function(){
-  		return can.stache("<"+this.attr("pageComponentName")+"/>")({
-  			app: this
-  		});
+  		return can.stache("<"+this.attr("pageComponentName")+"/>")(this);
 	},
 	isAdmin: function(){
 		var session = this.attr("session");
