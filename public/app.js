@@ -22,7 +22,7 @@ const AppState = AppMap.extend({
 					return "tournament-list app-state='{.}'";
 					
 				} else if(this.attr("page") === "user") {
-					return "user-create app-state='{.}'";
+					return "user-create session='{session}'";
 					
 				} else if( this.attr("gameId") ) {
 					return "game-details app-state='{.}'";
@@ -44,7 +44,7 @@ const AppState = AppMap.extend({
 		tournamentId: {type: "number"}
 	},
 	pageComponent: function(){
-  		return can.stache("<"+this.attr("pageComponentName")+"/>")(this);	
+		return can.stache("<"+this.attr("pageComponentName")+"/>")(this);
 	},
 	isAdmin: function(){
 		var session = this.attr("session");
