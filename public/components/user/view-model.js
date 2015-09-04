@@ -5,10 +5,25 @@ var Session = require("bitballs/models/session");
 module.exports = can.Map.extend({
 	define: {
 		user: {
-			Value: User
+			/**
+			 * user is used to bind to the form, so it must always be instanceof User
+			 */
+			Value: User,
+
+			/**
+			 * Sync user with session.user if session is active
+			 */
+			get: function(val){
+				if (this.attr('session.user')){
+					//console.log('- existing user. Session: ' + this.attr('session').attr());
+					return this.attr('session.user');
+				}
+				//console.log('- NEW user.');
+				return val;
+			}
 		},
 		session: {
-			Type: Session
+			value: null
 		}
 	},
 	createUserHandler: function(ev){
