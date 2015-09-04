@@ -7,6 +7,8 @@ var DetailsViewModel = details.ViewModel;
 
 QUnit.module("bitballs/game/details/", {
     setup: function() {
+        localStorage.clear();
+
         this.vm = new DetailsViewModel({
             gameId: 1,
             session: new Session()
