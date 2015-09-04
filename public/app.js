@@ -16,7 +16,7 @@ const AppState = AppMap.extend({
 					return "team-details app-state='{.}'";
 					
 				} else if(this.attr("tournamentId")) {
-					return "tournament-details app-state='{.}'";
+					return "tournament-details tournament-id='{tournamentId}'";
 					
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list app-state='{.}'";
