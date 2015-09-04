@@ -30,7 +30,9 @@
     "steal-tools": "^0.11.0-pre.12",
     "yeoman-environment": "^1.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "steal-qunit": "^0.1.1"
+  },
   "system": {
     "npmIgnore": [
       "documentjs",
