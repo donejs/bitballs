@@ -122,6 +122,8 @@ module.exports = Map.extend({
 		if(!round) {
 			return teams;
 		}
+		// hack b/c canjs sucks
+		teams.attr("length");
 		var remainingTeams = teams.slice(0);
 		games.forEach(function(game){
 			if(game.attr("round") === roundValue) {
