@@ -1,0 +1,15 @@
+<nav class="navbar navbar-default">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav navbar-right">
+			{{#if session}}
+				<li>
+					<a href="javascript://" can-click="{logout}">Logout</a>
+				</li>
+			{{else}}
+				<li>
+					<a href="javascript://" can-click="{createSession}">Login</a>
+				</li>
+			{{/if}}
+		</ul>
+	</div>
+</nav>
