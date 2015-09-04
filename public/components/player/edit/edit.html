@@ -1,0 +1,24 @@
+
+<div id="main"></div>
+
+
+<script type="text/stache" id="player-edit-test-template">
+	<player-edit session="{session}" player-id="{route.id}"></player-edit>
+</script>
+
+
+<script src='../../../node_modules/steal/steal.js' main="@empty">
+
+	import can from "can";
+	import stache from "can/view/stache/";
+	import route from "can/route/";
+	import "bitballs/components/player/edit/";
+
+	var template = can.view('#player-edit-test-template');
+	
+	can.$("#main").html(  template({
+		route: route,
+		session: null //TODO: new Session
+	}) );
+	route.ready();
+</script>
