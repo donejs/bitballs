@@ -6,8 +6,8 @@ require("can/map/define/");
 require("can/route/");
 require("can/view/href/");
 
-var Tournament = require("bitballs/models/tournament");
-var Game = require("bitballs/models/game");
+var Tournament = require("bitballs/models/tournament/");
+var Game = require("bitballs/models/game/");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
