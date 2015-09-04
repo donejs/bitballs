@@ -1,4 +1,5 @@
 var Component = require("can/component/component");
+var Map = require("can/map/");
 
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
@@ -13,137 +14,143 @@ var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
 
-Component.extend({
-	tag: "game-details",
-	template: require("./details.stache!"),
-	viewModel: {
-		define: {
-			game: {
-				get: function(last, set){
-					
-					Game.get({
-						id: this.attr("appState.gameId"),
-						withRelated: ["stats",
-							"homeTeam.player1",
-							"homeTeam.player2",
-							"homeTeam.player3",
-							"homeTeam.player4",
-							"awayTeam.player1",
-							"awayTeam.player2",
-							"awayTeam.player3",
-							"awayTeam.player4"
-						]
-					}).then(set);
+exports.ViewModel = Map.extend({
+	define: {
+		gamePromise: {
+			get: function() {
+				return Game.get({
+					id: this.attr("id"),
+					withRelated: ["stats",
+						"homeTeam.player1",
+						"homeTeam.player2",
+						"homeTeam.player3",
+						"homeTeam.player4",
+						"awayTeam.player1",
+						"awayTeam.player2",
+						"awayTeam.player3",
+						"awayTeam.player4"
+					]
+				});
+			}
+		},
+		game: {
+			get: function(last, set){
+				this.attr('gamePromise').then(set);
+			}
+		},
+		youtubePlayer: {
+			type: "*"
+		},
+		statTypes: {
+			value: Stat.statTypes
+		},
+		finalScore: {
+			get: function(){
+				var game = this.attr("game");
+				if(game) {
+					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+					var scores = {home: 0, away: 0};
+					game.attr("stats").each(function(stat){
+						if(stat.attr("type") === "1P") {
+							scores[playerMap[ stat.attr("playerId")]]++;
+						}
+						if(stat.attr("type") === "2P") {
+							scores[playerMap[ stat.attr("playerId")]] += 2;
+						}
+					});
+					return scores;
 				}
 			},
-			youtubePlayer: {
-				type: "*"
-			},
-			statTypes: {
-				value: Stat.statTypes
-			},
-			finalScore: {
-				get: function(){
-					var game = this.attr("game");
-					if(game) {
-						var playerMap = this.attr("playerIdToHomeOrAwayMap");
-						var scores = {home: 0, away: 0};
-						game.attr("stats").each(function(stat){
+			type:"*"
+		},
+		currentScore: {
+			get: function(){
+				var game = this.attr("game");
+				if(game) {
+					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+					var scores = {home: 0, away: 0};
+
+					var time = this.attr("time");
+
+					game.attr("stats").each(function(stat){
+						if(stat.attr("time") <= time) {
 							if(stat.attr("type") === "1P") {
-								scores[playerMap[ stat.attr("playerId")]]++;
+								scores[playerMap[ stat.attr("playerId")] ]++;
 							}
 							if(stat.attr("type") === "2P") {
 								scores[playerMap[ stat.attr("playerId")]] += 2;
 							}
-						});
-						return scores;
-					}
-				},
-				type:"*"
-			},
-			currentScore: {
-				get: function(){
-					var game = this.attr("game");
-					if(game) {
-						var playerMap = this.attr("playerIdToHomeOrAwayMap");
-						var scores = {home: 0, away: 0};
-						
-						var time = this.attr("time");
-						
-						game.attr("stats").each(function(stat){
-							if(stat.attr("time") <= time) {
-								if(stat.attr("type") === "1P") {
-									scores[playerMap[ stat.attr("playerId")] ]++;
-								}
-								if(stat.attr("type") === "2P") {
-									scores[playerMap[ stat.attr("playerId")]] += 2;
-								}
-							}
-						});
-						return scores;
-					}
-				},
-				type:"*"
-			},
-			playerIdToHomeOrAwayMap: {
-				type: "*",
-				get: function(){
-					var game = this.attr("game");
-					if(game) {
-						var map = {};
-						for(var i = 1; i <= 4; i++) {
-							map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
-							map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
 						}
-						return map;
+					});
+					return scores;
+				}
+			},
+			type:"*"
+		},
+		playerIdToHomeOrAwayMap: {
+			type: "*",
+			get: function(){
+				var game = this.attr("game");
+				if(game) {
+					var map = {};
+					for(var i = 1; i <= 4; i++) {
+						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
+						map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
 					}
+					return map;
 				}
 			}
-		},
-		showStatMenuFor: function(player, element, event){
-			if(!this.attr("appState").isAdmin()) {
-				return;
-			}
-			var youtubePlayer = this.attr("youtubePlayer");
-			var time = youtubePlayer.getCurrentTime();
-			youtubePlayer.pauseVideo();
-			
-			
-			this.attr("stat", new Stat({
-				time: time,
-				playerId: player.attr("id"),
-				gameId: this.attr("game.id"),
-				player: player
-			}));
-		},
-		createStat: function(ev) {
-			ev.preventDefault();
-			var self = this;
-			var stat = this.attr("stat");
-			
-			
-			stat.save(function(){
-				self.removeAttr("stat");
-			}, function(e){
-				console.log(e);
-				self.removeAttr("stat");
-			});
-		},
-		removeStat: function(){
-			this.removeAttr("stat");
-		},
-		addTime: function(time){
-			this.attr("stat.time", this.attr("stat.time")+time);
-		},
-		minusTime: function(time){
-			this.attr("stat.time", this.attr("stat.time")-time);
-		},
-		gotoTimeMinus5: function(time, event) {
-			this.attr("youtubePlayer").seekTo(time - 5, true);
-			this.attr("youtubePlayer").playVideo();
-			event.stopPropagation();
 		}
 	},
+	showStatMenuFor: function(player, element, event){
+		if(!this.attr("appState").isAdmin()) {
+			return;
+		}
+		var youtubePlayer = this.attr("youtubePlayer");
+		var time = youtubePlayer.getCurrentTime();
+		youtubePlayer.pauseVideo();
+
+
+		this.attr("stat", new Stat({
+			time: time,
+			playerId: player.attr("id"),
+			gameId: this.attr("game.id"),
+			player: player
+		}));
+	},
+	createStat: function(ev) {
+		ev.preventDefault();
+		var self = this;
+		var stat = this.attr("stat");
+
+
+		stat.save(function(){
+			self.removeAttr("stat");
+		}, function(e){
+			console.log(e);
+			self.removeAttr("stat");
+		});
+	},
+	removeStat: function(){
+		this.removeAttr("stat");
+	},
+	addTime: function(time){
+		this.attr("stat.time", this.attr("stat.time")+time);
+	},
+	minusTime: function(time){
+		this.attr("stat.time", this.attr("stat.time")-time);
+	},
+	gotoTimeMinus5: function(time, event) {
+		this.attr("youtubePlayer").seekTo(time - 5, true);
+		this.attr("youtubePlayer").playVideo();
+		event.stopPropagation();
+	}
+});
+
+exports.Component = Component.extend({
+	tag: "game-details",
+	template: require("./details.stache!"),
+	viewModel: exports.ViewModel,
 	events: {
 		inserted: function(){
 			var self = this;
