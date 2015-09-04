@@ -13,12 +13,14 @@
 	import stache from "can/view/stache/";
 	import route from "can/route/";
 	import "bitballs/components/player/edit/";
+	import Session from "bitballs/models/session";
 
-	var template = can.view('#player-edit-test-template');
+	var template = can.view('#player-edit-test-template'),
+		session = new Session();
 	
 	can.$("#main").html(  template({
 		route: route,
-		session: null //TODO: new Session
+		session: session
 	}) );
 	route.ready();
 </script>
