@@ -18,7 +18,18 @@ module.exports = can.Map.extend({
 	createUser: function(){
 		var self = this;
 		return this.attr("user").save().then(function(user){
-			self.attr("session", new Session({user: user}));
+
+			// Clear password:
+			user.attr("password", "");
+
+			if (!self.attr("session")){
+				// Create session:
+				self.attr("session", new Session({user: user}));
+
+			} else {
+				// Update session:
+				self.attr("session").attr({user: user});
+			}
 		});
 	}
 });

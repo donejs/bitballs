@@ -38,7 +38,7 @@ const AppState = AppMap.extend({
 		tournamentId: {type: "number"}
 	},
 	pageComponent: function(){
-  		return can.stache("<"+this.attr("pageComponentName")+" app-state='{app}'/>")({
+  		return can.stache("<"+this.attr("pageComponentName")+" app-state='{app}' session='{app.session}' />")({
   			app: this
   		});
 	},

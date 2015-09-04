@@ -1,7 +1,7 @@
 <script type="text/stache" id="demo" can-autorender>
   <can-import from="bitballs/components/user/create" />
 
-  <user-create user="{user}"></user-create>
+  <user-create></user-create>
 </script>
 
 <script src="../../node_modules/steal/steal.js"
@@ -9,11 +9,7 @@
 
     import can from 'can';
     import $ from 'jquery';
-    import User from 'models/user';
+    import 'bitballs/models/fixtures/user';
 
-    var user = new User();
-
-    $('#demo').viewModel().attr({
-        user: user
-    });
+    $('#demo').viewModel().attr();
 </script>

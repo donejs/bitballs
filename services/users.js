@@ -23,7 +23,7 @@ passport.use('signup', new LocalStrategy({
 				var newUser = new User({
 					email: username,
 					password: createHash(password),
-					isAdmin: username === "justin@bitovi.com" || username === "justinbmeyer@gmail.com"
+					isAdmin: username === "ilya@bitovi.com" || username === "ilya@gmail.com"
 				});
 				// set the user's local credentials
 	
