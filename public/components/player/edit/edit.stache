@@ -1,4 +1,9 @@
 <form (submit)="{savePlayer @event @element}" action="">
+  {{#if player.isNew}}
+    <h3>Create Player</h3>
+  {{else}}
+    <h3>Update Player</h3>
+  {{/if}}
   <div class="form-group">
     <label for="player-name">Name</label>
     <input type="text" class="form-control" id="player-name" placeholder="fullname" can-value="{player.name}"/>
