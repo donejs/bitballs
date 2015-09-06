@@ -7,7 +7,7 @@
     <can-import from="bitballs/styles.less!" />
     <can-import from="bitballs/app" as="viewModel" />
 	<can-import from="bitballs/components/navigation" />
-	<can-import from="bitballs/components/player/list" />
+	<can-import from="bitballs/components/player/list/" />
 	<can-import from="bitballs/components/player/edit/" />
 	<can-import from="bitballs/components/tournament/list" />
 	<can-import from="bitballs/components/tournament/details/" />
@@ -15,9 +15,9 @@
 	<can-import from="bitballs/components/user/create" />
 	<div class="container">
 		<bitballs-navigation app-state="{.}"/>
-		
+
 		{{{pageComponent}}}
-    
+
 	</div>
     {{asset "inline-cache"}}
 

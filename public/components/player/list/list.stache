@@ -31,7 +31,7 @@
 						<td>{{height}}</td>
 						<td>{{rank}}</td>
 						<td>
-							{{#if appState.isAdmin}}
+							{{#if session.user.isAdmin}}
 								<button type="button" class="btn btn-default" (click)="{editPlayer .}">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
@@ -47,5 +47,5 @@
 		{{/if}}
 	</tbody>
 </table>
-<h3>Create Player</h3>
+
 <player-edit/>
