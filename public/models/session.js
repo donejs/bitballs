@@ -12,6 +12,9 @@ var Session = Map.extend({
 		user: {
 			Type: User
 		}
+	},
+	isAdmin: function(){
+		return this.attr("user") && this.attr("user").attr("isAdmin");
 	}
 });
 Session.List = can.List.extend({Map: Session},{});

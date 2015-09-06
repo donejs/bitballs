@@ -11,35 +11,15 @@ var Team = Map.extend({
 			type: "number"
 		},
 		player1: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Player
 		},
 		player2: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Player
 		},
 		player3: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Player
 		},
 		player4: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Player
 		},
 		players: {

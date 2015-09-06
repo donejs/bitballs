@@ -10,16 +10,16 @@ const AppState = AppMap.extend({
 		pageComponentName: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details session='{.}'";
+					return "game-details game-id='{gameId}' session='{session}'";
 
 				} else if(this.attr("teamId")) {
 					return "team-details session='{.}'";
 
 				} else if(this.attr("tournamentId")) {
-					return "tournament-details tournament-id='{tournamentId}'";
+					return "tournament-details tournament-id='{tournamentId}' session='{session}'";
 
 				} else if(this.attr("page") === "tournaments") {
-					return "tournament-list session='{.}'";
+					return "tournament-list app-state='{.}'";
 
 				} else if(this.attr("page") === "user") {
 					return "user-create session='{session}'";

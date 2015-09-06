@@ -16,19 +16,9 @@ var Game = Map.extend({
 		awayTeamId: {type: "number"},
 
 		homeTeam: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Team
 		},
 		awayTeam: {
-			get: function(lastSet){
-				if(lastSet) {
-					return lastSet;
-				}
-			},
 			Type: Team
 		},
 		teams: {
@@ -57,12 +47,6 @@ var Game = Map.extend({
 			}
 		},
 		stats: {
-			get: function(lastSet){
-				if(lastSet) {
-					lastSet.__listSet = {};
-					return lastSet;
-				}
-			},
 			Type: Stat.List
 		}
 	},
