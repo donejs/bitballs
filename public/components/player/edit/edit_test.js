@@ -3,7 +3,7 @@ import QUnit from 'steal-qunit';
 import ViewModel from 'bitballs/components/player/edit/viewmodel';
 import Player from 'bitballs/models/player';
 
-import 'bitballs/models/fixture_player_edit';
+import 'bitballs/models/fixtures/players';
 
 // viewmodel unit tests
 QUnit.module('order/new');
@@ -84,7 +84,7 @@ QUnit.test("Update player", function(assert){
 			assert.deepEqual(playerModel.attr(), player, "Player updated");
 			vm.unbind("saved");
 			done();
-		})
+		});
 		vm.savePlayer()
 	
 });
@@ -107,7 +107,7 @@ QUnit.test("Cancel event", function(assert){
 		vm.bind("canceled", function(){
 			assert.ok(true, "Event triggered");
 			done();
-		})
+		});
 		vm.cancelEvent();
 	
 });
