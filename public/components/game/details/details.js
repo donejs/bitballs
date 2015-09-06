@@ -7,8 +7,8 @@ require("can/map/define/");
 require("can/route/");
 require("can/view/href/");
 
-var Tournament = require("bitballs/models/tournament");
-var Game = require("bitballs/models/game");
+var Tournament = require("bitballs/models/tournament/");
+var Game = require("bitballs/models/game/");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
@@ -47,7 +47,7 @@ exports.ViewModel = Map.extend({
 		finalScore: {
 			get: function(){
 				var game = this.attr("game");
-				if(game) {
+				if(game && game.attr("stats")) {
 					var playerMap = this.attr("playerIdToHomeOrAwayMap");
 					var scores = {home: 0, away: 0};
 					game.attr("stats").each(function(stat){
@@ -66,7 +66,7 @@ exports.ViewModel = Map.extend({
 		currentScore: {
 			get: function(){
 				var game = this.attr("game");
-				if(game) {
+				if(game && game.attr("stats")) {
 					var playerMap = this.attr("playerIdToHomeOrAwayMap");
 					var scores = {home: 0, away: 0};
 
@@ -91,7 +91,7 @@ exports.ViewModel = Map.extend({
 			type: "*",
 			get: function(){
 				var game = this.attr("game");
-				if(game) {
+				if(game && game.attr("homeTeam") && game.attr("awayTeam")) {
 					var map = {};
 					for(var i = 1; i <= 4; i++) {
 						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
@@ -103,7 +103,7 @@ exports.ViewModel = Map.extend({
 		}
 	},
 	showStatMenuFor: function(player, element, event){
-		if(!this.attr("session").attr('user').isAdmin()) {
+		if(!this.attr("session").isAdmin()) {
 			return;
 		}
 		var youtubePlayer = this.attr("youtubePlayer");
