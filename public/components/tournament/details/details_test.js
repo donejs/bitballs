@@ -1,3 +1,4 @@
+import can from 'can';
 import QUnit from 'steal-qunit';
 import details from './details';
 import defineTournamentFixtures, { tournaments } from 'bitballs/models/fixtures/tournaments';
@@ -17,14 +18,21 @@ QUnit.module('components/tournament/details/', {
 });
 
 QUnit.test('should load a tournament', (assert) => {
-    let done = assert.async();
-    let vm = new ViewModel({
-        tournamentId: 2
+    let done = assert.async(),
+        localSteal = steal.clone(),
+        localTournament,
+        vm;
+
+    localTournament = localSteal.System.newModule({
+        __useDefault: true,
+        default: {
+            get: () => Promise.resolve(new can.Map({ name: 'Test Name' }))
+        }
     });
 
     vm.bind('tournament', function (ev, newVal) {
-        assert.equal(newVal.attr('name'), tournaments.data[0].name, 'with the correct name' );
-        assert.equal(newVal.attr('year'), tournaments.data[0].date.getYear() + 1900, 'with the correct year' );
+        assert.equal(newVal.attr('name'), tournaments.data[0].name, 'with the correct name');
+        assert.equal(newVal.attr('year'), tournaments.data[0].date.getYear() + 1900, 'with the correct year');
         done();
     });
 });
@@ -70,3 +78,4 @@ QUnit.test('The selected court defaults to the first available court', function 
             'The second court is selected');
     });
 });
+
