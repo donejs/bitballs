@@ -8,7 +8,7 @@
 Make sure you have installed:
 
 - Node 5
-- Postgres
+- [Postgres](http://www.postgresql.org/)
 
 Then clone from github.
 
