@@ -45,5 +45,5 @@ In your console, run:
 npm start
 ```
 
-To develop, go to [http://localhost:5000/dev.html](http://localhost:5000/dev.html).
+To develop, go to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user).
 
