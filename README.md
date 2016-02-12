@@ -8,7 +8,7 @@
 Make sure you have installed:
 
 - Node 5
-- [Postgres](http://www.postgresql.org/)
+- [Postgres](http://www.postgresql.org/) (`brew install postgresql` worked best for me)
 
 Then clone from github.
 
@@ -31,7 +31,9 @@ Make sure postgres is running and a `bitballs` schema is created.
 Then run:
 
 ```
-> ./node_modules/.bin/db-migrate up
+npm install db-migrate
+createdb bitballs
+./node_modules/db-migrate/bin/db-migrate up
 ```
 
 You should do this everytime you pull from github.
