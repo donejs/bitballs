@@ -4,7 +4,7 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require("can/construct/super/");
 
-var viewModel = require("bitballs/components/player/edit/viewmodel")
+var viewModel = require("bitballs/components/player/edit/viewmodel");
 
 module.exports = Component.extend({
 	tag: "player-edit",

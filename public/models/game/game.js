@@ -1,9 +1,16 @@
+/**
+ * @module {can.Map} bitballs/models/game GameModel
+ * @parent bitballs.client
+ */
+
+
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
+require("can/list/sort/");
 
 var Game = Map.extend({
 	roundNames: ["Round 1","Round 2","Round 3","Round 4","Round 5",
@@ -47,7 +54,11 @@ var Game = Map.extend({
 			}
 		},
 		stats: {
-			Type: Stat.List
+			Type: Stat.List,
+			set: function(newVal){
+				newVal.__listSet = {gameId: this.attr("id")};
+				return newVal;
+			}
 		}
 	},
 	statsForPlayerId: function(id) {
@@ -57,6 +68,21 @@ var Game = Map.extend({
 		return this.attr("stats").filter(function(stat){
 			return stat.attr("playerId") === id;
 		});
+	},
+	sortedStatsByPlayerId: function(){
+		if(this.attr("stats")) {
+			var playerIds = {};
+			this.attr("stats").each(function(stat){
+				var id = stat.attr("playerId");
+				var stats = playerIds[id];
+				if(!stats) {
+					stats = playerIds[id] = new can.List([]).attr("comparator",'time');
+				}
+				// makes sort work
+				stats.push(stat);
+			});
+			return playerIds;
+		}
 	}
 
 });

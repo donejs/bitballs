@@ -20,16 +20,16 @@
 
 <table class="table table-condensed table-hover">
 <tbody>
-{{#each game.teams}}
+{{#eachOf game.teams}}
 	<tr>
 		<th colspan="2">{{color}} - {{name}}</th>
 	</tr>
-	{{#each players}}
-		<tr (click)="{showStatMenuFor . @element @event}">
+	{{#eachOf players}}
+		<tr ($click)="showStatMenuFor(.,%element, %event)">
 			<td>{{name}}</div>
 			<td class="stats-container">
-				{{#statsForPlayerId id}}
-					<span (click)="{gotoTimeMinus5 time @event}" 
+				{{#eachOf statsForPlayerId(id)}}
+					<span ($click)="gotoTimeMinus5( time, %event)" 
 							class='stat-point stat-{{type}}' style="left: {{statPercent time}}%">{{type}}</span>
 				{{/each}}
 			</td>
@@ -47,9 +47,9 @@
 	<div class="arrow" style="top: 50%;"></div>
 	<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
 	<div class="popover-content">
-		<form (submit)="{createStat @event}" action="">
+		<form ($submit)="createStat(%event)" action="">
 			<label for="stat-type">Type</label>
-		    <select can-value="{stat.type}" class="form-control" id="stat-type">
+		    <select {($value)}="stat.type" class="form-control" id="stat-type">
 		    	<option value=""/>
 		    	{{#statTypes}}
 		    		<option value="{{name}}">{{name}}</option>
@@ -60,18 +60,18 @@
 			    <label for="stat-time">Time (seconds)</label>
 			    <div class="row">
 			    	<div class="col-xs-6">
-			    		<input type="text" class="form-control" id="stat-time" can-value="{stat.time}"/>
+			    		<input type="text" class="form-control" id="stat-time" {($value)}="stat.time"/>
 		    		</div>
 		    		<div class="col-xs-6">
-		    		<a class="btn btn-default" (click)="{minusTime 10}">-10 s</a> 
-		    			<a class="btn btn-default" (click)="{minusTime 2}">-2 s</a> 
-		    			<a class="btn btn-default" (click)="{addTime 2}">+2 s</a> 
-		    			<a class="btn btn-default" (click)="{addTime 10}">+10 s</a> 
+		    		<a class="btn btn-default" ($click)="minusTime(10)">-10 s</a> 
+		    			<a class="btn btn-default" ($click)="minusTime(2)">-2 s</a> 
+		    			<a class="btn btn-default" ($click)="addTime(2)">+2 s</a> 
+		    			<a class="btn btn-default" ($click)="addTime(10)">+10 s</a> 
 		    		</div>
 			    </div>
 			    
 			</div>
-			<button type="submit" class="btn btn-primary" >Add</button> <a class="btn btn-default" (click)="{removeStat}">Cancel</a>
+			<button type="submit" class="btn btn-primary" >Add</button> <a class="btn btn-default" ($click)="removeStat()">Cancel</a>
 		</form>
 	</div>
 </div>

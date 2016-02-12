@@ -1,5 +1,5 @@
 <h2>{{#if user.isNew}}Create User{{else}}Update User{{/if}}</h2>
-<form (submit)="{createUserHandler @event}" action="">
+<form ($submit)="createUserHandler(%event)" action="">
 	<div class="form-group">
 	    <label for="user-email">Email</label>
 	    
@@ -7,7 +7,7 @@
 	    	class="form-control" 
 	    	id="user-email"
 	    	{{^if user.isNew}}disabled{{/if}}
-	    	can-value="{user.email}"/>
+	    	{($value)}="user.email"/>
 	    
 	</div>
 	<div class="form-group">
@@ -16,7 +16,7 @@
 	    	class="form-control" 
 	    	type="password"
 	    	id="user-password" 
-	    	can-value="{user.password}"/>
+	    	{($value)}="user.password"/>
 	    
 	</div>
 	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>

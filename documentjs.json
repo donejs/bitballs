@@ -1,0 +1,10 @@
+{
+	"sites" : {
+		"docs": {
+			"glob" : {
+				"ignore": ["{node_modules,public/node_modules}/**/*"]
+			},
+			"parent": "bitballs"
+		}
+	}
+}

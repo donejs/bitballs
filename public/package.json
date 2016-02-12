@@ -16,21 +16,28 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.5",
-    "can": "^2.3.0-pre.10",
-    "can-connect": "0.2.8",
-    "can-ssr": "^0.5.3",
-    "done-autorender": "^0.3.0",
-    "done-component": "^0.1.0",
-    "done-css": "^1.0.0",
-    "generator-donejs": "0.0.4",
+    "can": "^2.3.15",
+    "can-connect": "0.3.4",
+    "done-autorender": "^0.6.1",
+    "done-component": "^0.4.0",
+    "done-css": "^1.1.16",
+    "generator-donejs": "0.6.4",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
-    "steal": "^0.11.0-pre.8",
+    "steal": "^0.14.0-pre.8",
     "steal-qunit": "^0.1.1",
-    "steal-tools": "^0.11.0-pre.12",
-    "yeoman-environment": "^1.2.7"
+    "steal-tools": "^0.14.0-pre.3",
+    "yeoman-environment": "^1.2.7",
+    "can-wait": "0.2.0"
+  },
+  "devDependencies": {
+    "can-ssr": "^0.11.4",
+    "donejs-cli": "^0.6.0",
+    "can-fixture": "^0.1.0",
+    "testee": "^0.2.4"
   },
   "system": {
+    "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",
       "testee",

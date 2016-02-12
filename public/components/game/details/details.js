@@ -1,3 +1,28 @@
+/**
+ * @module {Module} bitballs/components/game/details <game-details>
+ * @parent bitballs.client
+ *
+ * @description Provides a custom element that allows a user
+ * to either view a game or edit a game's stats.
+ * 
+ * @body
+ *
+ * To create a `<game-details>` element pass the [bitballs/models/session]
+ * and a [bitballs/models/game] id like:
+ *
+ * ```
+ * <game-details 
+ *     {session}="session"
+ *     {game-id}="gameId"
+ *     ></games-details>
+ * ```
+ *
+ * ## Sweet example
+ * 
+ * @demo bitballs/public/components/game/details/details.html
+ * 
+ */
+
 var Component = require("can/component/component");
 var Map = require("can/map/");
 
@@ -14,8 +39,46 @@ var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
 
-exports.ViewModel = Map.extend({
+/**
+ * @constructor bitballs/components/game/details.ViewModel ViewModel
+ * @parent bitballs/components/game/details
+ *
+ * @description  A `<game-details>` component's viewModel.
+ */
+
+exports.ViewModel = Map.extend(
+/**
+ * @prototype
+ */
+{
 	define: {
+		/**
+		 * @property {Promise<bitballs/models/game>|undefined} 
+		 *
+		 * Provides a Game instance with all the stats for the
+		 * game and all the player information!
+		 *
+		 * @signature `Promise<bitballs/models/game>`
+		 *
+		 *   Given a valid `gameId`, the game promise.
+		 *
+		 * @signature `undefined`
+		 *
+		 *   Given an invalid `gameId`, the game promise.
+		 *
+		 * 
+		 * @body
+		 * 
+		 * ```
+		 * var gameDetailsVM = new GameDetailsViewModel({
+		 *   gameId: 5
+		 * });
+		 * gameDetailsVM.attr("gamePromise").then(function(game){
+		 *   game.attr("date") //-> Date
+		 * })
+		 * ```
+		 * 
+		 */
 		gamePromise: {
 			get: function() {
 				return Game.get({
@@ -100,10 +163,19 @@ exports.ViewModel = Map.extend({
 					return map;
 				}
 			}
+		},
+		sortedStatsByPlayerId: {
+			type: "*",
+			get: function(){
+				var game = this.attr("game");
+				if(game) {
+					return game.sortedStatsByPlayerId();
+				}
+			}
 		}
 	},
 	showStatMenuFor: function(player, element, event){
-		if(!this.attr("session").isAdmin()) {
+		if(!this.attr("session") || !this.attr("session").isAdmin()) {
 			return;
 		}
 		var youtubePlayer = this.attr("youtubePlayer");
@@ -140,10 +212,48 @@ exports.ViewModel = Map.extend({
 	minusTime: function(time){
 		this.attr("stat.time", this.attr("stat.time")-time);
 	},
+	/**
+	 * Moves the youtube player to minus 5 seconds for a given time.
+	 * 
+	 * @param  {Number} time  
+	 *    The time of some event.
+	 *    
+	 * @param  {Event} [event] 
+	 *    An optional event that's default will be prevented.
+	 *
+	 * @body
+	 *
+	 * Use this in a template like:
+	 *
+	 * ```
+	 * <button ($click)="gotoTimeMinus5(stat.time,$event)">
+	 * ```
+	 */
 	gotoTimeMinus5: function(time, event) {
 		this.attr("youtubePlayer").seekTo(time - 5, true);
 		this.attr("youtubePlayer").playVideo();
-		event.stopPropagation();
+		event && event.stopPropagation();
+	},
+	
+	statPercent: function(time){
+		var duration = this.attr("duration");
+		if(duration) {
+			return time() / duration * 100;
+		} else {
+			return "0"
+		}
+		
+	},
+	statsForPlayerId: function(id){
+		if(typeof id === "function") {
+			id = id();
+		}
+		var statsById = this.attr("sortedStatsByPlayerId");
+		if(statsById) {
+			return statsById[id] || new can.List();
+		} else {
+			return new can.List();
+		}
 	}
 });
 
@@ -258,19 +368,6 @@ exports.Component = Component.extend({
 		}
 	},
 	helpers: {
-		statsForPlayerId: function(id, options){
-			return this.attr("game").statsForPlayerId(id).map(function(stat){
-				return options.fn(stat);
-			});
-		},
-		statPercent: function(time){
-			var duration = this.attr("duration");
-			if(duration) {
-				return time() / duration * 100;
-			} else {
-				return "0"
-			}
-			
-		}
+		
 	}
 });

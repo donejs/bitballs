@@ -1,4 +1,4 @@
-<form (submit)="{savePlayer @event @element}" action="">
+<form ($submit)="savePlayer(%event,%element)" action="">
   {{#if player.isNew}}
     <h3>Create Player</h3>
   {{else}}
@@ -6,7 +6,7 @@
   {{/if}}
   <div class="form-group">
     <label for="player-name">Name</label>
-    <input type="text" class="form-control" id="player-name" placeholder="fullname" can-value="{player.name}"/>
+    <input type="text" class="form-control" id="player-name" placeholder="fullname" {($value)}="player.name"/>
   </div>
   <div class="form-group">
     <label for="player-weight">Weight</label>
@@ -15,7 +15,7 @@
     	class="form-control" 
     	id="player-weight" 
     	placeholder="weight in pounds" 
-    	can-value="{player.weight}"/>
+    	{($value)}="player.weight"/>
   </div>
   <div class="form-group">
     <label for="player-height">Height</label>
@@ -24,7 +24,7 @@
     	class="form-control" 
     	id="player-height" 
     	placeholder="height in inches (Ex: 71)" 
-    	can-value="{player.height}"/>
+    	{($value)}="player.height"/>
   </div>
   <div class="form-group">
     <label for="player-birthday">Birthday</label>
@@ -33,8 +33,8 @@
     	class="form-control" 
     	id="player-birthday" 
     	placeholder="day of birth" 
-    	can-value="{player.birthDate}"/>
+    	{($value)}="player.birthDate"/>
   </div>
   <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
-  <a class="btn btn-default" (click)="{cancelEvent @element}">Cancel</a>
+  <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
 </form>

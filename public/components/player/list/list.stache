@@ -32,10 +32,10 @@
 						<td>{{rank}}</td>
 						<td>
 							{{#if session.isAdmin}}
-								<button type="button" class="btn btn-default" (click)="{editPlayer .}">
+								<button type="button" class="btn btn-default" ($click)="editPlayer(.)">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
-								<button type="button" class="btn btn-danger" (click)="{destroy}"
+								<button type="button" class="btn btn-danger" ($click)="destroy()"
 									{{#isDestroying}}disabled{{/isDestroying}}>
 									<span class='glyphicon glyphicon-remove'/>
 								</button>

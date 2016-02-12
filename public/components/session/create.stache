@@ -1,12 +1,12 @@
 <h2>Login</h2>
-<form (submit)="{createSession @event}" action="">
+<form ($submit)="createSession(%event)" action="">
 	<div class="form-group">
 	    <label for="user-email">Email</label>
 	    
 	    <input  
 	    	class="form-control" 
 	    	id="user-email" 
-	    	can-value="{session.user.email}"/>
+	    	{($value)}="session.user.email"/>
 	    
 	</div>
 	<div class="form-group">
@@ -15,7 +15,7 @@
 	    	class="form-control" 
 	    	type="password"
 	    	id="user-password" 
-	    	can-value="{session.user.password}"/>
+	    	{($value)}="session.user.password"/>
 	    
 	</div>
 	<button type="submit" class="btn btn-default" >Login</button>

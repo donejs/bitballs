@@ -4,10 +4,10 @@
 		<div class='info'>Loading</div>
 	{{/if}}
 	{{#each value}}
-		<h3><a can-href='{tournamentId=id}'>{{year}}</a> 
+		<h3><a href='{{routeUrl tournamentId=id}}'>{{year}}</a> 
 			{{#if appState.isAdmin}}
 			<button type="button" class="btn btn-danger" 
-				(click)="{destroy}"
+				($click)="destroy()"
 				{{#isDestroying}}disabled{{/isDestroying}}>
 					<span class='glyphicon glyphicon-remove'/>
 			</button>
@@ -17,7 +17,7 @@
 </tournament-model>
 {{#if appState.isAdmin}}
 <h2>New Tournament</h2>
-<form (submit)="{createTournament @event}" action="">
+<form ($submit)="createTournament(%event)" action="">
 	<div class="form-group">
 	    <label for="tournament-date">Date</label>
 	    <input 
@@ -25,7 +25,7 @@
 	    	class="form-control" 
 	    	id="tournament-date" 
 	    	placeholder="date" 
-	    	can-value="{tournament.date}"/>
+	    	{($value)}="tournament.date"/>
 	</div>
 	<button type="submit" class="btn btn-default" >Create</button>
 </form>

@@ -34,5 +34,8 @@
     "heroku",
     "express"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "documentjs": "^0.3.3"
+  }
 }

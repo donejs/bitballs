@@ -118,7 +118,6 @@ module.exports = Map.extend({
 			return [];
 		}
 
-		var roundValue = round();
 		if(!round) {
 			return teams;
 		}
@@ -126,7 +125,7 @@ module.exports = Map.extend({
 		teams.attr("length");
 		var remainingTeams = teams.slice(0);
 		games.forEach(function(game){
-			if(game.attr("round") === roundValue) {
+			if(game.attr("round") === round) {
 				remainingTeams.removeById(game.attr("homeTeamId"));
 				remainingTeams.removeById(game.attr("awayTeamId"));
 			}
@@ -140,10 +139,9 @@ module.exports = Map.extend({
 		}
 		return remainingTeams;
 	},
-	availablePlayersFor: function(teamCompute, number, options){
+	availablePlayersFor: function(team, number){
 
-		var team = teamCompute(),
-			allPlayers = this.attr("allPlayers"),
+		var allPlayers = this.attr("allPlayers"),
 			teams = this.attr('teams');
 		var usedIds = {};
 		if(teams) {
@@ -161,12 +159,10 @@ module.exports = Map.extend({
 				usedIds[team.attr("player"+index+"Id")] = true;
 			}
 		});
-		var available = allPlayers.filter(function(player){
+		return allPlayers.filter(function(player){
 			return !usedIds[player.attr("id")];
 		});
-		return available.map(function(player){
-			return options.fn(player)
-		});
+		
 
 	},
 	createTeam: function(ev){
@@ -189,7 +185,7 @@ module.exports = Map.extend({
 
 		// cleanup that https://github.com/bitovi/canjs/issues/1834 should do for us
 		if(!game.attr("court")) {
-			game.attr("court","1")
+			game.attr("court","1");
 		}
 
 		if(!game.attr("round")) {
