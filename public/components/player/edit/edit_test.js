@@ -6,7 +6,7 @@ import Player from 'bitballs/models/player';
 import 'bitballs/models/fixtures/players';
 
 // viewmodel unit tests
-QUnit.module('order/new');
+QUnit.module('edit/new');
 
 
 var initTest = function(){

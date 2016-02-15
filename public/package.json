@@ -5,8 +5,8 @@
   "homepage": "",
   "author": "Bitovi",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node build.js"
+    "install": "node build.js",
+    "test": "testee test.html --browsers firefox --reporter Spec"
   },
   "main": "index.stache!done-autorender",
   "files": [
