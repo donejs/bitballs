@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "install": "./node_modules/.bin/db-migrate up -e prod && cd public/ && npm install"
+    "db-migrate": "dropdb bitballs --if-exists && createdb bitballs && ./node_modules/db-migrate/bin/db-migrate up",
+    "install": "cd public/ && npm install"
   },
   "dependencies": {
     "async": "^1.4.0",

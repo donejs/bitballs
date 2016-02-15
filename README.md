@@ -3,7 +3,7 @@
 @group bitballs.server Server
 
 
-## Dev Setup
+## Environment Setup
 
 Make sure you have installed:
 
@@ -11,42 +11,33 @@ Make sure you have installed:
 - NPM 3
 - [Postgres](http://www.postgresql.org/)
 
-Then clone from github.
+### Setup the DB
 
-Next, run: 
+Make sure postgres is running:
+
+```
+pg_ctl status -D {DATA_DIR}
+```
+
+Then create the database and schema: 
+
+```
+npm run db-migrate
+```
+
+### Install Dependencies
 
 ```
 npm install
 ```
 
-You should do this everytime you pull from github.
-
-
-
-
-### Setup DB
-
-
-Make sure postgres is running and a `bitballs` schema is created.
-
-Then run:
-
-```
-npm install db-migrate
-createdb bitballs
-./node_modules/db-migrate/bin/db-migrate up
-```
-
-You should do this everytime you pull from github.
-
-
-### Run app
-
-In your console, run:
+### Start the app
 
 ```
 npm start
 ```
 
-To develop, go to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user).
+### Create an admin user
+
+Go to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user).
 
