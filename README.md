@@ -8,7 +8,8 @@
 Make sure you have installed:
 
 - Node 5
-- [Postgres](http://www.postgresql.org/) (`brew install postgresql` worked best for me)
+- NPM 3
+- [Postgres](http://www.postgresql.org/)
 
 Then clone from github.
 
