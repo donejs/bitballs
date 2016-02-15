@@ -5,6 +5,9 @@ require("bitballs/models/fixtures/player");
 
 var vm;
 QUnit.module("Player List Component", {
+	beforeAll: function () {
+
+	},
 	beforeEach: function () {
 		localStorage.clear();
 		vm = new PlayerList.ViewModel();
