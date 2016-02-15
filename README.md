@@ -8,7 +8,7 @@
 Make sure you have installed:
 
 - Node 5
-- NPM 3
+- NPM
 - [Postgres](http://www.postgresql.org/)
 
 
