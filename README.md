@@ -11,6 +11,15 @@ Make sure you have installed:
 - NPM 3
 - [Postgres](http://www.postgresql.org/)
 
+
+### Install Dependencies
+
+Run:
+
+```
+npm install
+```
+
 ### Setup the DB
 
 Make sure postgres is running:
@@ -19,19 +28,15 @@ Make sure postgres is running:
 pg_ctl status -D {DATA_DIR}
 ```
 
-Then create the database and schema: 
+Then create the database and schema by running:
 
 ```
 npm run db-migrate
 ```
 
-### Install Dependencies
-
-```
-npm install
-```
-
 ### Start the app
+
+Run:
 
 ```
 npm start
@@ -39,5 +44,5 @@ npm start
 
 ### Create an admin user
 
-Go to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user).
+Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user) in your browser.
 
