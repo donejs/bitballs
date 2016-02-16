@@ -5,24 +5,30 @@
 [![Build Status](https://travis-ci.org/donejs/bitballs.svg?branch=master)](https://travis-ci.org/donejs/bitballs)
 
 
-## Environment Setup
+## Development Setup
+
+To host the Bitballs app locally, run its tests, or generate its documentation,
+follow the steps outlined below.
+
+### Setup Environment
 
 Make sure you have installed:
 
-- Node 5
-- NPM
+- [Node 5](https://nodejs.org/en/download/)
+- NPM 3
 - [Postgres](http://www.postgresql.org/)
 
+### Download Source
+
+Clone this repo.
 
 ### Install Dependencies
-
-Run:
 
 ```
 npm install
 ```
 
-### Setup the DB
+### Prepare the Database
 
 Make sure postgres is running:
 
@@ -38,13 +44,20 @@ npm run db-migrate
 
 ### Start the app
 
-Run:
-
 ```
 npm start
 ```
 
-### Create an admin user
+### Create an Admin User
 
-Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user) in your browser.
+Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user)
+in your browser and follow the instructions.
+
+### Enjoy
+
+Your finished! Explore some of the app's features:
+
+- Live reload (`npm develop`)
+- Run the tests (`npm test`)
+- *(coming soon)* Build the documentation (`npm build`)
 
