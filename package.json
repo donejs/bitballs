@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "db-migrate": "dropdb bitballs --if-exists && createdb bitballs && ./node_modules/db-migrate/bin/db-migrate up",
+    "install": "cd public/ && npm install",
     "test": "cd public/ && npm test"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "express-session": "^1.11.3",
     "knex": "^0.8.6",
     "lodash": "^3.10.1",
+    "npm": "^3.7.2",
     "passport": "~0.2.0",
     "passport-local": "^1.0.0",
     "pg": "4.x"
