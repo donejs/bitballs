@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "develop": "node index.js --develop",
     "db-migrate": "dropdb bitballs --if-exists && createdb bitballs && ./node_modules/db-migrate/bin/db-migrate up",
     "test": "cd public/ && npm test"
   },
@@ -37,6 +38,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "documentjs": "^0.3.3"
+    "documentjs": "^0.3.3",
+    "donejs-cli": "^0.6.6"
   }
 }

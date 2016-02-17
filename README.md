@@ -2,6 +2,8 @@
 @group bitballs.client Client
 @group bitballs.server Server
 
+[![Build Status](https://travis-ci.org/donejs/bitballs.svg?branch=master)](https://travis-ci.org/donejs/bitballs)
+
 
 ## Environment Setup
 
