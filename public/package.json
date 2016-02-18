@@ -18,7 +18,7 @@
     "bootstrap": "^3.3.5",
     "can": "^2.3.15",
     "can-connect": "0.3.4",
-    "done-autorender": "^0.6.1",
+    "done-autorender": "^0.6.2",
     "done-component": "^0.4.0",
     "done-css": "^1.1.16",
     "generator-donejs": "0.6.4",
@@ -27,8 +27,7 @@
     "steal": "^0.14.0-pre.8",
     "steal-qunit": "^0.1.1",
     "steal-tools": "^0.14.0-pre.3",
-    "yeoman-environment": "^1.2.7",
-    "can-wait": "0.2.0"
+    "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
     "can-ssr": "^0.11.4",

@@ -4,7 +4,19 @@ addons:
   firefox: latest
 install:
   - npm install
-  - "cd public/ && npm install"
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - 'export DISPLAY=:99.0'
+  - sh -e /etc/init.d/xvfb start
+before_deploy:
+  - 'git config --global user.email "jan@bitovi.com"'
+  - 'git config --global user.name "bitballs deploy bot"'
+  - node public/build
+  - git add public/dist/ --force
+  - 'git commit -m "Updating build."'
+  - node_modules/.bin/deploy
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  app: bitballs
+  api_key:
+    - secure: dxex208EVkI/C0AURYuCCxvJShEBdQkBy+uQGxkKlZ0QeHwRrjI4zJkgd2DpXW4CjTVCx5GDm20nW5q1ifglLAwWe6MuBVk3tUog33cMHSRaXlbe6jok44XrELPasGw5Rs/WtBzzUcivbpjFFbZtsjaYNMfN7Z3hXZwrUYJTe3sxnH8Dj+Jh059sjghZ5ldCPADiERI4vaN3BT9Ik2WmnsP1WoVzvV5Ohls50VtmG8ntuUmvofWdmXU5S0IeoeczCCEYOc/6s5PtPrITctxIJ5DKLP1CX7AsEZjh2/2QniCW+/5h5G6OfsoJ1P1XkQ2bfxX2V7bVclFEUwHIJMjmLIyXeU9dLPjLfD476nUpfKonAl1TzRW7dTtD0bX+ZbcTXensGqbwGLE5xE2sCnMMqtDPDRhK5MchOJ8q2Jw7YTGj5Hy1OaK+hcHJXTHBSyWS/5NovrqSz3RWCUnVb25nw2h9R3vpiO2rWJtM8L0YTnR0+WWz6RJNEH07m0yD+tPaUJ0PbLwPT5xqKB7QylDYX9zyK9HgpIv7Qub3T36Cz73tqXXbF0Y0w/NH0AWW2lGj4WcBHgh1KG0BOUdpY1M8xmEPGB9EYzttdoLzUBcN1j5JJaiXfZQMcyrvrqoJaRq5JWwB7GeToyPxhZS09FDhdhACqsdVh+o4Eh6Rp9ox8n8=
