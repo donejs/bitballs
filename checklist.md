@@ -7,7 +7,7 @@
 A guide and application that:
 
 - Teaches people how to solve common problems with DoneJS 
-- Semonstrates that DoneJS elegantly solves common problems.
+- Demonstrates that DoneJS elegantly solves common problems.
 
 Produce people who can build a good guide without much
 oversite.
