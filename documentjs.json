@@ -2,9 +2,10 @@
 	"sites" : {
 		"docs": {
 			"glob" : {
-				"ignore": ["{node_modules,public/node_modules}/**/*"]
+				"ignore": ["{node_modules,public/node_modules,migrations}/**/*"]
 			},
-			"parent": "bitballs"
+			"parent": "bitballs",
+			"dest": "docs"
 		}
 	}
 }
