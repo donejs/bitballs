@@ -42,6 +42,11 @@
       "testee",
       "steal-tools"
     ],
+    "envs": {
+      "server-production": {
+        "baseURL": "https://bitballs-donejs.firebaseapp.com/"
+      }
+    },
     "meta": {
       "bootstrap/js/dropdown": {
         "deps": [
