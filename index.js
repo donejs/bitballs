@@ -7,6 +7,14 @@ app.set('port', (process.env.PORT || 5000));
 
 app.use( express.static(__dirname + '/public') );
 
+if ( process.argv.indexOf( "--slow" ) !== -1 ) {
+	console.log("Delaying everything 1 second");
+	app.use( function ( req, res, next ) {
+		setTimeout(next, 1000);
+	});
+}
+
+
 require('./services/games');
 require('./services/players');
 require('./services/stats');

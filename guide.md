@@ -36,7 +36,7 @@ Outline:
  - Sessions
  	- How sessions are used
  		- allow an admin to login, possible someone else could.
-	- How users are created.
+	- How users are created and logged in right away.
 	- How a session is created / retrieved / deleted server-side.
 	- How we tell if a user is logged in or not on the client.
 	- How we log someone in.
