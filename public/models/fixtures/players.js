@@ -1,6 +1,5 @@
 import fixture from 'can-fixture';
 
-
 export const players = {
 	data: [{
 		id: 1,
@@ -18,9 +17,9 @@ export const defineFixtures = function() {
 	fixture('GET /services/players/{id}', function(req) {
 		var data;
 
-		$.each(players.data, function(i, tourney) {
-			if (tourney.id === parseInt(req.data.id, 10)) {
-				data = tourney;
+		$.each(players.data, function(i, player) {
+			if (player.id === parseInt(req.data.id, 10)) {
+				data = player;
 				return false;
 			}
 		});
@@ -31,7 +30,6 @@ export const defineFixtures = function() {
 	fixture('GET /services/players', function(req) {
 		return players;
 	});
-
 
 	fixture('POST /services/players', function(request, response){
 		if(!request.data.name){
