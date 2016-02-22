@@ -57,7 +57,7 @@ in your browser and follow the instructions.
 
 Your finished! Explore some of the app's features:
 
-- Live reload (`npm develop`)
-- Run the tests (`npm test`)
-- *(coming soon)* Build the documentation (`npm build`)
+- Live reload (`donejs develop`)
+- Run the tests (`donejs test`)
+- Generate the documentation (`donejs document`)
 
