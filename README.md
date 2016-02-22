@@ -57,7 +57,7 @@ in your browser and follow the instructions.
 
 Your finished! Explore some of the app's features:
 
-- Live reload (`npm develop`)
+- Live reload (`npm run develop`)
 - Run the tests (`npm test`)
-- *(coming soon)* Build the documentation (`npm build`)
+- Generate the documentation (`npm run generate-docs`)
 
