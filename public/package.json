@@ -43,7 +43,7 @@
       "steal-tools"
     ],
     "envs": {
-      "server-production": {
+      "window-production": {
         "baseURL": "https://bitballs-donejs.firebaseapp.com/"
       }
     },
