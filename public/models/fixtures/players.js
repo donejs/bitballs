@@ -1,51 +1,45 @@
-import fixture from 'can/util/fixture/';
+import fixture from 'can-fixture';
 
-fixture('GET services/players', function(){
-	return {
-		"data":[
-			{
-				"name": "Test Player",
-				"weight": 200,
-				"height": 71,
-				"birthday": "1980-01-01",
-				"id":1,
-				"profile":null,"startRank":null
+export const players = {
+	data: [{
+		id: 1,
+		name: 'Test Player',
+		weight: 200,
+		height: 71,
+		birthday: '1980-01-01',
+		profile:null,
+		startRank:null
+	}]
+};
+
+export const defineFixtures = function() {
+	fixture('GET services/players/{id}', function(req) {
+		var data;
+
+		$.each(players.data, function(i, tourney) {
+			if (tourney.id === parseInt(req.data.id, 10)) {
+				data = tourney;
+				return false;
 			}
-		]
-	}
-});
-
-fixture('GET services/players/{id}', function(request, response){
-	if(request.data.id == '1'){
-		response({
-			"name": "Test Player",
-			"weight": 200,
-			"height": 71,
-			"birthday": "1980-01-01",
-			"id":1,
-			"profile":null,"startRank":null
 		});
-	}else if(!request.data.id){
-		response({
-			data:[{
-				"name": "Test Player",
-				"weight": 200,
-				"height": 71,
-				"birthday": "1980-01-01",
-				"id":1,
-				"profile":null,"startRank":null
-			}]
-		});
-	}
-});
 
-fixture('POST services/players', function(request, response){
-	response({
-		"id":1
+		return data;
 	});
-});
 
-fixture('PUT services/players/{id}', function(request, response){
-	request.data.id = parseInt(request.data.id);
-	response(request.data);
-});
+	fixture('GET services/players', function(req) {
+		return players;
+	});
+
+	fixture('POST services/players', function(req) {
+		return { id: 1 };
+	});
+
+	fixture('PUT services/players/{id}', function(req) {
+		req.data.id = parseInt(req.data.id, 10);
+		return req.data;
+	});
+};
+
+defineFixtures();
+
+export default defineFixtures;
