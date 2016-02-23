@@ -2,6 +2,7 @@ var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
+var stringForNumberProp = require("./util/stringForNumberProp");
 require("can/map/define/");
 
 var Player = Map.extend({
@@ -9,9 +10,11 @@ var Player = Map.extend({
 		weight: {
 			type: 'number'
 		},
+		weightString: stringForNumberProp("weight"),
 		height: {
 			type: 'number'
 		},
+		heightString: stringForNumberProp("height"),
 		jsBirthday: {
 			get: function(){
 				var date = this.attr("birthday");
