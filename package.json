@@ -8,6 +8,7 @@
     "build": "node public/build.js",
     "develop": "node index.js --develop",
     "db-migrate": "dropdb bitballs --if-exists && createdb bitballs && ./node_modules/db-migrate/bin/db-migrate up",
+    "document": "documentjs -d",
     "test": "cd public/ && npm test",
     "install": "node post_install.js"
   },

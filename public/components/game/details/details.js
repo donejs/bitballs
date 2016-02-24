@@ -19,7 +19,7 @@
  *
  * ## Sweet example
  * 
- * @demo bitballs/public/components/game/details/details.html
+ * @demo public/components/game/details/details.html
  * 
  */
 
