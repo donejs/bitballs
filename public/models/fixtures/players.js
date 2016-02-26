@@ -1,4 +1,4 @@
-import fixture from 'can/util/fixture/';
+import fixture from 'can-fixture';
 
 fixture('GET services/players', function(){
 	return {
