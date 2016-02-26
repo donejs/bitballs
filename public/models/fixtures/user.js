@@ -1,4 +1,4 @@
-import fixture from 'can/util/fixture/';
+import fixture from 'can-fixture';
 
 fixture("/services/users", function(request, response){
 	console.log('[fixture] request', request);

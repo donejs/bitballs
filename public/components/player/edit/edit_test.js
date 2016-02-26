@@ -4,10 +4,13 @@ import stache from "can/view/stache/";
 import 'bitballs/components/player/edit/';
 import ViewModel from 'bitballs/components/player/edit/viewmodel';
 import Player from 'bitballs/models/player';
+import F from 'funcunit';
 import route from "can/route/";
 import Session from "bitballs/models/session";
 
 import 'bitballs/models/fixtures/players';
+
+F.attach(QUnit);
 
 // viewmodel unit tests
 QUnit.module('player/edit', function(hooks){
@@ -115,7 +118,11 @@ QUnit.module('player/edit', function(hooks){
 		hooks.beforeEach(function(){
 			var template = can.stache('<player-edit player-id=""></player-edit>');
 
-			$('#qunit-fixture').html(template({}));
+			$('#qunit-fixture').html(template({
+				session: {
+					isAdmin: true
+				}
+			}));
 		});
 
 		QUnit.test("Height and weight default to empty instead of numbers", function(assert){
@@ -124,4 +131,28 @@ QUnit.module('player/edit', function(hooks){
 		});
 	});
 
+});
+
+
+QUnit.test('Form is only shown to admins', function () {
+	var session = new Session({
+		user: {
+			isAdmin: false
+		}
+	});
+
+	var frag = can.stache('<player-edit />')({
+		session: session
+	});
+
+	$('#qunit-fixture').html(frag);
+
+	F('player-edit .edit-form')
+		.missing('Edit form is excluded for non-admin user')
+		.then(function () {
+			session.attr('user', {
+				isAdmin: true
+			});
+		})
+		.exists('Edit form is included for admin user');
 });
