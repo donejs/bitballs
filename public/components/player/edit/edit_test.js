@@ -113,13 +113,9 @@ QUnit.module('player/edit', function(hooks){
 
 	QUnit.module('Component', function(hooks){
 		hooks.beforeEach(function(){
-			var template = can.view.stache('<player-edit session="{session}" player-id="{route.id}"></player-edit>'),
-				session = new Session();
+			var template = can.stache('<player-edit player-id=""></player-edit>');
 
-			can.$('#qunit-fixture').html(template({
-				route: route,
-				session: session
-			}));
+			$('#qunit-fixture').html(template({}));
 		});
 
 		QUnit.test("Height and weight default to empty instead of numbers", function(assert){
