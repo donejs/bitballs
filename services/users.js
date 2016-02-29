@@ -39,17 +39,24 @@ passport.use('signup', new LocalStrategy({
 					});
 				});
 			}
-		}, function() {
-			
 		});
 
 	});
 
 }));
 
-app.post('/services/users', passport.authenticate('signup'), function(req, res) {
-	res.send(_.omit(req.user.toJSON(), "password"));
-});
+app.post('/services/users', 
+	function(req, res, next){
+		if(!req.body.password){
+			res.status(404).send({type: "Bad Request", message: "Password is required"});
+		}else{
+			next();
+		}
+	},
+	passport.authenticate('signup'), 
+	function(req, res) {
+		res.send(_.omit(req.user.toJSON(), "password"));
+	});
 
 var createHash = function(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);

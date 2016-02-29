@@ -20,4 +20,7 @@
 	    
 	</div>
 	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>
+	{{#is userPromise.state 'rejected'}}
+		{{userPromise.reason.responseJSON.message}}
+	{{/is}}
 </form>

@@ -27,3 +27,18 @@ QUnit.test('createUser', function(assert) {
 		done();
 	});
 });
+
+QUnit.test('createUser without password fails', function(assert) {
+	var done = assert.async();
+
+	var vm = new ViewModel();
+
+	vm.attr('user').attr({email: 'test@bitovi.com'});
+
+	assert.expect(1);
+
+	vm.createUser().fail(function(resp, type){
+		assert.equal(type, 'error', 'fail creation without password');
+		done();
+	});
+});

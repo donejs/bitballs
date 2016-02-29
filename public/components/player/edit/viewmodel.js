@@ -11,20 +11,25 @@ module.exports = can.Map.extend({
 		}
 	},
 	savePlayer: function(){
-		
 		var self = this;
-		var player = this.attr("player");
+		var player = this.attr("player"),
+			promise;
+
 		if(player.isNew()) {
-			player.save().then(function(){
+			promise = player.save().then(function(){
 				self.attr("player",new Player());
 			}).then(function(){
 				can.dispatch.call(self, "saved");
 			});
 		} else {
-			player.save().then(function(){
+			promise = player.save().then(function(){
 				can.dispatch.call(self, "saved");
 			});
 		}
+
+		this.attr('playerPromise', promise);
+
+		return promise;
 	},
 	cancelEvent: function() {
 		can.dispatch.call(this, "canceled");

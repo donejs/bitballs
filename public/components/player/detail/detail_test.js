@@ -12,13 +12,13 @@ QUnit.test("basics of playerPromise and player properties", function(){
 	
 	detailVM.bind("player", function(ev, player){
 		
-		deepEqual(player.attr("name"),"Test Player");
+		deepEqual(player.attr("name"),"Test Player (modified)");
 		start();
 		
 	});
 	
 	detailVM.attr("playerPromise").then(function(player){
-		deepEqual(player.attr("name"),"Test Player");
+		deepEqual(player.attr("name"),"Test Player (modified)");
 		start();
 	});
 	

@@ -37,4 +37,7 @@
   </div>
   <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
   <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
+  {{#is playerPromise.state 'rejected'}}
+    {{playerPromise.reason.responseJSON.message}}
+  {{/is}}
 </form>

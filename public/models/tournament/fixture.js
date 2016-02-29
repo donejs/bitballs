@@ -27,3 +27,13 @@ export default can.fixture('GET /services/tournaments/{id}', function (req) {
     });
     return data;
 });
+
+export default can.fixture('POST /services/tournaments', function(req, response){
+    if(!req.data.date){
+        response(400, '{type: "Bad Request", message: "Can not create a tournament without a date"}');
+    } else {
+        response({
+            id: 3
+        });
+    }
+});

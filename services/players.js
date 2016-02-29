@@ -44,11 +44,15 @@ app['delete']('/services/players/:id', function(req, res){
 });
 
 app.post('/services/players', function(req, res) {
-	new Player(clean(req.body)).save().then(function(player){
-		res.send({id: player.get('id')});
-	}, function(e){
-		res.status(500).send(e);
-	});
+	if(!req.params.name){
+		res.status(400).send({type: "Bad Request", message: "Players must have a name"});
+	}else{
+		new Player(clean(req.body)).save().then(function(player){
+			res.send({id: player.get('id')});
+		}, function(e){
+			res.status(500).send(e);
+		});
+	}
 
 });
 

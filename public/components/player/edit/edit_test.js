@@ -16,7 +16,7 @@ QUnit.module('player/edit', function(hooks){
 		localStorage.clear();
 	});
 
-	QUnit.module('ViewModel');
+	QUnit.module('ViewModel', function(){
 
 		QUnit.test('Tests are running', function(assert){
 		  assert.ok( true, "Passed!" );
@@ -26,16 +26,14 @@ QUnit.module('player/edit', function(hooks){
 			var vm = new ViewModel();
 			
 		  assert.ok( !!vm , "Passed!" );
-		});
 
-
-		QUnit.test("Has 'player' property", function(assert){
-			var vm = new ViewModel();
-
-			assert.ok( !!vm.attr("player") , "Passed!" );
-			
-		});
-
+		vm.bind("saved", function(){
+			player.id = 1;
+			assert.deepEqual(player, playerModel.attr(),  "New player saved");
+			vm.unbind("saved");
+			done();
+		})
+		vm.savePlayer()
 
 		QUnit.test("Create player", function(assert){
 			assert.expect(1);
@@ -57,9 +55,28 @@ QUnit.module('player/edit', function(hooks){
 					vm.unbind("saved");
 					done();
 				})
-				vm.savePlayer()
+				vm.savePlayer();
 			
 		});
+
+		QUnit.test("Create player fails without name", function(assert){
+			assert.expect(1);
+			var done = assert.async(),
+				player = {
+					"weight": 200,
+					"height": 71,
+					"birthday": "1980-01-01"
+				},
+				playerModel = new Player(player),
+				vam = new ViewModel({
+					player: playerModel
+				});
+
+				vm.savePlayer().fail(function(resp, type){
+					assert.equal(type, 'error', 'fail creation without password');
+					done();
+				});
+		});		
 
 		QUnit.test("Update player", function(assert){
 			assert.expect(1);
@@ -111,6 +128,8 @@ QUnit.module('player/edit', function(hooks){
 				vm.cancelEvent();
 		});
 
+	});
+
 	QUnit.module('Component', function(hooks){
 		hooks.beforeEach(function(){
 			var template = can.stache('<player-edit player-id=""></player-edit>');
@@ -123,5 +142,5 @@ QUnit.module('player/edit', function(hooks){
 			assert.equal($('#player-weight').val(), '', "Player weight displays as empty string");
 		});
 	});
-
+});
 });
