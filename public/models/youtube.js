@@ -1,4 +1,4 @@
-define([], function(){
+define([ "steal-platform" ], function( platform ){
 	
 	var promise;
 	
@@ -8,6 +8,10 @@ define([], function(){
 			return promise
 		} else {
 			return promise = new Promise(function(resolve, reject){
+				if ( platform.isNode ) {
+					reject({});
+					return;
+				}
 				window.onYouTubeIframeAPIReady = function(){
 					resolve(YT);
 				};

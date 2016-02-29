@@ -32,6 +32,7 @@ require("can/map/define/");
 require("can/route/");
 require("can/view/href/");
 
+var platform = require( "steal-platform" );
 var Tournament = require("bitballs/models/tournament/");
 var Game = require("bitballs/models/game/");
 var Team = require("bitballs/models/team");
@@ -277,8 +278,10 @@ exports.Component = Component.extend({
 					}
 				});
 				self.scope.attr("youtubePlayer", player);
-				
 			})["catch"](function(e){
+				if ( platform.isNode ) {
+					return;
+				}
 				setTimeout(function(){
 					throw e
 				},1);

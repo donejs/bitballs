@@ -10,7 +10,6 @@ var route = require("can/route/");
 var Session = require("../models/session");
 var User = require("../models/user");
 
-
 stache.registerHelper("isActive", function(options){
 	var attrs = {};
 	for(var prop in options.hash) {

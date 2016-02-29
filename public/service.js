@@ -1,6 +1,7 @@
 var render = require("can-ssr")({
 	config: __dirname + "/package.json!npm",
-	main: "bitballs/index.stache!done-autorender"
+	main: "bitballs/index.stache!done-autorender",
+  liveReload: true
 });
 
 require( "can-ssr/lib/middleware/xhr" )( global );
