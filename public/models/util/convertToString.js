@@ -17,6 +17,8 @@ module.exports = function(prop){
 			if(toNum !== toNum){
 				// NaN
 				this.removeAttr(prop);
+			} else if (newVal==='') {
+				this.removeAttr(prop);
 			} else {
 				this.attr(prop, toNum);
 			}
