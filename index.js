@@ -2,10 +2,13 @@ var express = require('express');
 var app = require('./app');
 var url = require("url");
 var exec = require( "child_process" ).exec;
+var cookieParser = require('cookie-parser')
 
 app.set('port', (process.env.PORT || 5000));
 
 app.use( express.static(__dirname + '/public') );
+
+app.use(cookieParser());
 
 require('./services/games');
 require('./services/players');
@@ -15,7 +18,8 @@ require('./services/tournaments');
 require('./services/sessions');
 require('./services/users');
 
-//app.use("/", require('./public/service'));
+//can-ssr:
+app.use( "/", require('./public/service') );
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

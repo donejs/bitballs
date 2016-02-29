@@ -45,7 +45,6 @@ app.get('/services/session', function(req, res) {
 });
 
 app.post('/services/session', function(req, res, next) {
-	
 	var email = req.body["user[email]"],
 		password = req.body["user[password]"];
 		
@@ -65,7 +64,7 @@ app.post('/services/session', function(req, res, next) {
 				});
 			}
 		} else {
-			return res.status(404).json({message: "wrong username"});
+			return res.status(401).json({message: "wrong username"});
 		}
 		
 	}, function(error) {

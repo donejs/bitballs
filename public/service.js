@@ -3,13 +3,15 @@ var render = require("can-ssr")({
 	main: "bitballs/index.stache!done-autorender"
 });
 
-var url = require("url");
-module.exports = function (req, res) {
-	var pathname = url.parse(req.url).pathname;
+require( "can-ssr/lib/middleware/xhr" )( global );
 
-	render(pathname).then(function(html) {
+var setCookies = require( "can-ssr/lib/set-cookies" );
+
+module.exports = function ( req, res, next ) {
+	render( req ).then(function( result ) {
+    setCookies(req, res);
 		var dt = '<!DOCTYPE html>';
-		res.send(dt + '\n' + html);
+		res.send(dt + '\n' +  result.html );
 	});
 };
 
