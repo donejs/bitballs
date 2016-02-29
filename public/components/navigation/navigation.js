@@ -4,11 +4,12 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("bootstrap/js/dropdown");
 require("can/route/");
 require("can/view/href/");
+require("./navigation.less!");
 
 var stache = require("can/view/stache/");
 var route = require("can/route/");
-var Session = require("../models/session");
-var User = require("../models/user");
+var Session = require("bitballs/models/session");
+var User = require("bitballs/models/user");
 
 stache.registerHelper("isActive", function(options){
 	var attrs = {};

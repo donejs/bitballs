@@ -6,7 +6,7 @@
   <body>
     <can-import from="bitballs/styles.less!" />
     <can-import from="bitballs/app" export-as="viewModel" />
-	<can-import from="bitballs/components/navigation" />
+	<can-import from="bitballs/components/navigation/navigation" />
 	<can-import from="bitballs/components/player/list/" />
 	<can-import from="bitballs/components/player/edit/" />
 	<can-import from="bitballs/components/tournament/list" />
@@ -14,6 +14,7 @@
 	<can-import from="bitballs/components/game/details/" />
 	<can-import from="bitballs/components/user/create" />
 	<div class="container">
+
 		<bitballs-navigation app-state="{.}"/>
 
 		{{{pageComponent}}}
@@ -22,10 +23,12 @@
     {{asset "inline-cache"}}
 
     {{#isProduction}}
-      <script src="/node_modules/steal/steal.production.js"
-        main="index.stache!done-autorender"></script>
+        <script
+          src="{{joinBase 'node_modules/steal/steal.production.js'}}"  
+          main="index.stache!done-autorender">
+        </script>
     {{else}}
-      <script src="/node_modules/steal/steal.js"></script>
+        <script src="/node_modules/steal/steal.js"></script>
     {{/isProduction}}
   </body>
 </html>

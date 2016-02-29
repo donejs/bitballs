@@ -21,6 +21,7 @@
     "done-autorender": "^0.6.2",
     "done-component": "^0.4.0",
     "done-css": "^1.1.16",
+    "funcunit": "3.0.0",
     "generator-donejs": "0.6.4",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
@@ -43,6 +44,11 @@
       "testee",
       "steal-tools"
     ],
+    "envs": {
+      "window-production": {
+        "baseURL": "https://bitballs-donejs.firebaseapp.com/"
+      }
+    },
     "meta": {
       "bootstrap/js/dropdown": {
         "deps": [
