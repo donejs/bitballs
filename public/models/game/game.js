@@ -59,6 +59,17 @@ var Game = Map.extend({
 				newVal.__listSet = {gameId: this.attr("id")};
 				return newVal;
 			}
+		},
+		videoUrl: {
+			set: function (setVal) {
+				var youtubeKeySearchPattern =
+					/^.*(?:youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+				var keys = setVal && setVal.match(youtubeKeySearchPattern);
+
+				// Use the found video key; Fallback to the raw input
+				var videoUrl = (keys && keys.length > 1 && keys[1]) || setVal;
+				return videoUrl;
+			}
 		}
 	},
 	statsForPlayerId: function(id) {
