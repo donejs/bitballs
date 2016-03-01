@@ -29,7 +29,7 @@
     "steal-qunit": "^0.1.1",
     "steal-tools": "^0.14.0-pre.3",
     "steal-platform": "0.0.4",
-    "can-ssr": "canjs/can-ssr#cookies",
+    "can-ssr": "^0.12.0-pre.0",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
@@ -38,6 +38,9 @@
     "testee": "^0.2.4"
   },
   "system": {
+    "configDependencies": [
+      "live-reload"
+    ],
     "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",

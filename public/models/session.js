@@ -4,26 +4,18 @@
  */
 
 var Map = require('can/map/');
-//var superMap = require('can-connect/can/super-map/');
 var connect = require("can-connect");
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
 require("can/map/define/");
-
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
 require( "can-connect/can/" );
 require( "can-connect/constructor/store/" );
 require( "can-connect/constructor/callbacks-once/" );
 require( "can-connect/data/callbacks/" );
-//require( "can-connect/data/callbacks-cache/" );
-//require( "can-connect/data/combine-requests/" );
-//require( "can-connect/data/inline-cache/" );
-//require( "can-connect/data/localstorage-cache/" );
 require( "can-connect/data/parse/" );
 require( "can-connect/data/url/" );
-//require( "can-connect/fall-through-cache/" );
-//require( "can-connect/real-time/" );
 
 var User = require("./user");
 

@@ -2,7 +2,7 @@ var express = require('express');
 var app = require('./app');
 var url = require("url");
 var exec = require( "child_process" ).exec;
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 
 app.set('port', (process.env.PORT || 5000));
 
