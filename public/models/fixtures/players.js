@@ -17,7 +17,6 @@ fixture('GET services/players', function(){
 
 fixture('GET services/players/{id}', function(request, response){
 	if(request.data.id == '1'){
-		console.log('hi')
 		response({
 			"name": "Test Player",
 			"weight": 200,

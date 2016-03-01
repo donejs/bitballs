@@ -27,7 +27,7 @@ module.exports = can.Map.extend({
 			});
 		}
 
-		this.attr('playerPromise', promise);
+		this.attr('savePromise', promise);
 
 		return promise;
 	},

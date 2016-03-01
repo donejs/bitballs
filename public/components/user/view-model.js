@@ -47,7 +47,7 @@ module.exports = can.Map.extend({
 			}
 		});
 
-		this.attr('userPromise', promise);
+		this.attr('savePromise', promise);
 
 		return promise;
 	}

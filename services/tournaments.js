@@ -2,9 +2,7 @@
 var app = require("../app");
 var bookshelf = require("../bookshelf");
 
-var Tournament = bookshelf.Model.extend({
-	tableName: 'tournaments'
-});
+var Tournament = require("../models/tournament");
 
 app.get('/services/tournaments', function(req, res){
 	Tournament.collection().fetch().then(function(tournaments){
@@ -30,14 +28,9 @@ app['delete']('/services/tournaments/:id', function(req, res){
 });
 
 app.post('/services/tournaments', function(req, res) {
-	if(!req.params.date){
-		res.status(400).send({type: 'Bad Request', message: 'Tournaments must have a date'})
-	}else {
-		new Tournament(req.body).save().then(function(tournament){
-			res.send({id: tournament.get('id')});
-		}, function(e){
-			res.status(500).send(e);
-		});
-	}
-
+	new Tournament(req.body).save().then(function(tournament){
+		res.send({id: tournament.get('id')});
+	}, function(e){
+		res.status(500).send(e);
+	});
 });

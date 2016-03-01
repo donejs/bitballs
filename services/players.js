@@ -1,12 +1,12 @@
 
 var app = require("../app");
 var bookshelf = require("../bookshelf");
-
-var Player = bookshelf.Model.extend({
-	tableName: 'players'
-});
+var Player = require("../models/player")
 
 var clean = function(data){
+	if(data.name===''){
+		delete data.name;
+	}
 	if(data.weight) {
 		data.weight = parseInt(data.weight, 10);
 	}
@@ -44,15 +44,12 @@ app['delete']('/services/players/:id', function(req, res){
 });
 
 app.post('/services/players', function(req, res) {
-	if(!req.params.name){
-		res.status(400).send({type: "Bad Request", message: "Players must have a name"});
-	}else{
 		new Player(clean(req.body)).save().then(function(player){
 			res.send({id: player.get('id')});
 		}, function(e){
 			res.status(500).send(e);
 		});
-	}
+	// }
 
 });
 

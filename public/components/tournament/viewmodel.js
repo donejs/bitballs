@@ -20,7 +20,7 @@ module.exports = Map.extend({
 			self.attr("tournament", new Tournament());
 		});
 		
-		this.attr("tournamentPromise", promise);
+		this.attr("savePromise", promise);
 
 		return promise;
 	}

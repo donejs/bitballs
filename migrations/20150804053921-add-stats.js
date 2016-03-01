@@ -6,7 +6,7 @@ exports.up = function(db, callback) {
  async.series([
  	db.createTable.bind(db, 'tournaments', {
       id: { type: 'int', primaryKey: true, autoIncrement: true },
-      date: {type: 'date', nullable: false}
+      date: 'date'
     }),
     db.createTable.bind(db, 'teams', {
       id: { type: 'int', primaryKey: true, autoIncrement: true },

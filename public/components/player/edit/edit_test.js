@@ -60,7 +60,7 @@ QUnit.module('player/edit', function(hooks){
 		});
 
 		QUnit.test("Create player fails without name", function(assert){
-			assert.expect(1);
+			assert.expect(2);
 			var done = assert.async(),
 				player = {
 					"weight": 200,
@@ -74,6 +74,7 @@ QUnit.module('player/edit', function(hooks){
 
 				vm.savePlayer().fail(function(resp, type){
 					assert.equal(type, 'error', 'fail creation without password');
+					assert.equal(vm.attr('savePromise').state(), 'rejected');
 					done();
 				});
 		});		

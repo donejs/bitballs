@@ -8,12 +8,13 @@ QUnit.module('tournament-list', function(){
 	QUnit.test('creating tournament fails without a name', function(assert){
 		var done = assert.async();
 
-		assert.expect(1);
+		assert.expect(2);
 
 		var vm = new ViewModel();
 
 		vm.createTournament().fail(function(resp, type){
 			assert.equal(type, 'error', 'fail creation without date');
+			assert.equal(vm.attr('savePromise').state(), 'rejected');
 			done();
 		});
 	});
