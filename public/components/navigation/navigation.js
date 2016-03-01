@@ -35,7 +35,6 @@ can.Component.extend({
 			}
 		},
 		createSession: function(ev){
-			
 			ev.preventDefault();
 			var self = this;
 			this.attr("loginSession").save().then(function(session){
