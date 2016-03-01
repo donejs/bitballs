@@ -28,15 +28,19 @@
     "steal": "^0.14.0-pre.8",
     "steal-qunit": "^0.1.1",
     "steal-tools": "^0.14.0-pre.3",
+    "steal-platform": "0.0.4",
+    "can-ssr": "^0.12.0-pre.0",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
-    "can-ssr": "^0.11.4",
     "donejs-cli": "^0.6.0",
     "can-fixture": "^0.1.0",
     "testee": "^0.2.4"
   },
   "system": {
+    "configDependencies": [
+      "live-reload"
+    ],
     "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",

@@ -11,7 +11,6 @@ var route = require("can/route/");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 
-
 stache.registerHelper("isActive", function(options){
 	var attrs = {};
 	for(var prop in options.hash) {
@@ -36,7 +35,6 @@ can.Component.extend({
 			}
 		},
 		createSession: function(ev){
-			
 			ev.preventDefault();
 			var self = this;
 			this.attr("loginSession").save().then(function(session){

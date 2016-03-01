@@ -4,6 +4,7 @@ import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
 import Session from './models/session';
+import "can/route/pushstate/";
 
 const AppState = AppMap.extend({
 	define: {
