@@ -1,6 +1,7 @@
 
 var app = require("../app");
 var bookshelf = require("../bookshelf");
+var adminOnly = require( "../adminOnly" );
 
 var Tournament = bookshelf.Model.extend({
 	tableName: 'tournaments'
@@ -17,23 +18,23 @@ app.get('/services/tournaments/:id', function(req, res){
 		res.send(tournament.toJSON());
 	});
 });
-app.put('/services/tournaments/:id', function(req, res){
+
+app.put('/services/tournaments/:id', adminOnly( "Must be an admin to update tournaments" ), function(req, res){
 	new Tournament({id: req.params.id}).save(req.body).then(function(tournament){
 		res.send(tournament.toJSON());
 	});
 });
 
-app['delete']('/services/tournaments/:id', function(req, res){
+app['delete']('/services/tournaments/:id', adminOnly( "Must be an admin to delete tournaments" ), function(req, res){
 	new Tournament({id: req.params.id}).destroy().then(function(tournament){
 		res.send({});
 	});
 });
 
-app.post('/services/tournaments', function(req, res) {
+app.post('/services/tournaments', adminOnly( "Must be an admin to create tournaments" ), function(req, res) {
 	new Tournament(req.body).save().then(function(tournament){
 		res.send({id: tournament.get('id')});
 	}, function(e){
 		res.status(500).send(e);
 	});
-
 });
