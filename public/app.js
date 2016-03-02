@@ -22,7 +22,7 @@ const AppState = AppMap.extend({
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list app-state='{.}'";
 
-				} else if(this.attr("page") === "user") {
+				} else if(this.attr("page") === "register") {
 					return "user-create session='{session}'";
 
 				} else if( this.attr("gameId") ) {

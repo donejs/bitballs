@@ -39,6 +39,7 @@
 						    
 						</div>
 						<button type="submit" class="btn btn-primary btn-sm" >Login</button>
+						<a href="{{routeUrl page='register'}}" class="register-btn btn btn-link">or register</a>
 						{{#is sessionPromise.state 'rejected'}}
 							<p>{{sessionPromise.reason.responseJSON.message}}</p>
 						{{/is}}
