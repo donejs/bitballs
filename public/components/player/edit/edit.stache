@@ -37,9 +37,9 @@
   </div>
   <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
   <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
-  {{#is savePromise.state 'rejected'}}
+  {{#if savePromise.isRejected}}
     {{#each savePromise.reason.responseJSON}}
-      <p>{{.}}</p>
+      <p class="text-danger">{{.}}</p>
     {{/each}}
-  {{/is}}
+  {{/if}}
 </form>

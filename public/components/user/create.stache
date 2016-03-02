@@ -20,9 +20,9 @@
 	    
 	</div>
 	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>
-	{{#is savePromise.state 'rejected'}}
+	{{#if savePromise.isRejected}}
 		{{#each savePromise.reason.responseJSON}}
-			<p>{{.}}</p>
+			<p class="text-danger">{{.}}</p>
 		{{/each}}
-	{{/is}}
+	{{/if}}
 </form>

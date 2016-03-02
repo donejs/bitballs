@@ -44,13 +44,11 @@ app['delete']('/services/players/:id', function(req, res){
 });
 
 app.post('/services/players', function(req, res) {
-		new Player(clean(req.body)).save().then(function(player){
-			res.send({id: player.get('id')});
-		}, function(e){
-			res.status(500).send(e);
-		});
-	// }
-
+	new Player(clean(req.body)).save().then(function(player){
+		res.send({id: player.get('id')});
+	}, function(e){
+		res.status(500).send(e);
+	});
 });
 
 module.exports = Player;
