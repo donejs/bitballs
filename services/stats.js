@@ -1,6 +1,7 @@
 
 var app = require("../app");
 var bookshelf = require("../bookshelf");
+var adminOnly = require( "../adminOnly" );
 
 var Stat = bookshelf.Model.extend({
 	tableName: 'stats'
@@ -24,25 +25,25 @@ app.get('/services/stats/:id', function(req, res){
 		res.send(stat.toJSON());
 	});
 });
-app.put('/services/stats/:id', function(req, res){
+
+app.put('/services/stats/:id', adminOnly( "Must be an admin to update stats" ), function(req, res){
 	new Stat({id: req.params.id}).save(req.body).then(function(stat){
 		res.send(stat.toJSON());
 	});
 });
 
-app['delete']('/services/stats/:id', function(req, res){
+app['delete']('/services/stats/:id', adminOnly( "Must be an admin to delete stats" ), function(req, res){
 	new Stat({id: req.params.id}).destroy().then(function(stat){
 		res.send({});
 	});
 });
 
-app.post('/services/stats', function(req, res) {
+app.post('/services/stats', adminOnly( "Must be an admin to create stats" ), function(req, res) {
 	new Stat(clean(req.body)).save().then(function(stat){
 		res.send({id: stat.get('id')});
 	}, function(e){
 		res.status(500).send(e);
 	});
-
 });
 
 module.exports = Stat;

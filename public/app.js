@@ -4,6 +4,7 @@ import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
 import Session from './models/session';
+import "can/route/pushstate/";
 
 const AppState = AppMap.extend({
 	define: {
@@ -21,7 +22,7 @@ const AppState = AppMap.extend({
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list app-state='{.}'";
 
-				} else if(this.attr("page") === "user") {
+				} else if(this.attr("page") === "register") {
 					return "user-create session='{session}'";
 
 				} else if( this.attr("gameId") ) {

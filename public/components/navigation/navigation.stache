@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	    <a href="/dev.html" class="pull-left main-logo">BitBalls</a>
-		<ul class="nav navbar-nav">
+		<ul class="main-menu nav navbar-nav">
 		  <li role="presentation" {{#isActive page='tournaments'}}class='active'{{/isActive}}>
 		  	<a href="{{routeUrl page='tournaments'}}">Tournaments</a>
 		  </li>
@@ -10,7 +10,7 @@
 		  </li>
 		</ul>
 		
-		<ul class="nav navbar-nav navbar-right">
+		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if appState.session}}
 				<li>
 					<a href="javascript://" ($click)="logout()">Logout</a>
@@ -41,13 +41,12 @@
 							    
 							</div>
 							<button type="submit" class="btn btn-primary btn-sm" >Login</button>
+							<a href="{{routeUrl page='register'}}" class="register-btn btn btn-link">or register</a>
 						</form>
 					</li>
 				</ul>
 			</li>
 			{{/appState.session}}
 		</ul>
-		
 	</div>
-	
 </nav>
