@@ -8,7 +8,6 @@ install:
 before_install:
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
-before_script:
   - psql -c 'create database bitballs;' -U postgres
 before_deploy:
   - 'git config --global user.email "jan@bitovi.com"'
