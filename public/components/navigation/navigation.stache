@@ -39,6 +39,9 @@
 						    
 						</div>
 						<button type="submit" class="btn btn-primary btn-sm" >Login</button>
+						{{#is sessionPromise.state 'rejected'}}
+							<p>{{sessionPromise.reason.responseJSON.message}}</p>
+						{{/is}}
 					</form>
 				</li>
 			</ul>

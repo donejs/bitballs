@@ -51,20 +51,17 @@ app.post('/services/session', function(req, res, next) {
 	new User({
 		'email': email
 	}).fetch().then(function(user) {
-		if(user) {
-			// User exists but wrong password, log the error
-			if (!isValidPassword(user, password)) {
-				res.status(401).json({message: "wrong password"});
-			} else {
-				req.logIn(user, function(err) {
-					if (err) { 
-						return next(err); 
-					}
-					return res.json({id: user.id, user: _.omit(req.user.toJSON(), "password")});
-				});
-			}
+		if(user && isValidPassword(user, password)) {
+			req.logIn(user, function(err) {
+				if (err) {
+					next(err);
+				}
+				return res.json({user: _.omit(req.user.toJSON(), "password")});
+			});
 		} else {
-			return res.status(401).json({message: "wrong username"});
+			// Security conventions dictate that you shouldn't tell the user whether
+			// it was their username or their password that was the problem
+			return res.status(401).json({message: "Incorrect username or password"});
 		}
 		
 	}, function(error) {
