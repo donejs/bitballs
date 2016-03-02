@@ -1,7 +1,7 @@
 var QUnit = require("steal-qunit");
 var Player = require("bitballs/models/player");
 var PlayerList = require("./list");
-require("bitballs/models/fixtures/player");
+require("bitballs/models/fixtures/players");
 
 var vm;
 QUnit.module("Player List Component", {
