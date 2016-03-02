@@ -1,11 +1,7 @@
 import can from 'can';
 import QUnit from 'steal-qunit';
-import stache from "can/view/stache/";
-import 'bitballs/components/player/edit/';
 import ViewModel from 'bitballs/components/player/edit/viewmodel';
 import Player from 'bitballs/models/player';
-import route from "can/route/";
-import Session from "bitballs/models/session";
 
 import 'bitballs/models/fixtures/players';
 
@@ -32,7 +28,7 @@ QUnit.module('player/edit', function(hooks){
 			assert.deepEqual(player, playerModel.attr(),  "New player saved");
 			vm.unbind("saved");
 			done();
-		})
+		});
 		vm.savePlayer()
 
 		QUnit.test("Create player", function(assert){
@@ -108,25 +104,9 @@ QUnit.module('player/edit', function(hooks){
 			
 		});
 
-		QUnit.test("Cancel event", function(assert){
-			assert.expect(1);
-			var done = assert.async(),
-				player = {
-					"name": "Test Player",
-					"weight": 200,
-					"height": 71,
-					"birthday": "1980-01-01"
-				},
-				playerModel = new Player(player),
-				vm = new ViewModel({
-					player:playerModel
-				});
-
-				vm.bind("canceled", function(){
-					assert.ok(true, "Event triggered");
-					done();
-				});
-				vm.cancelEvent();
+		vm.bind("canceled", function(){
+			assert.ok(true, "Event triggered");
+			done();
 		});
 
 	});
@@ -143,5 +123,4 @@ QUnit.module('player/edit', function(hooks){
 			assert.equal($('#player-weight').val(), '', "Player weight displays as empty string");
 		});
 	});
-});
 });
