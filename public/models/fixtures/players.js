@@ -1,20 +1,5 @@
 import fixture from 'can/util/fixture/';
 
-fixture('GET services/players', function(){
-	return {
-		"data":[
-			{
-				"name": "Test Player",
-				"weight": 200,
-				"height": 71,
-				"birthday": "1980-01-01",
-				"id":1,
-				"profile":null,"startRank":null
-			}
-		]
-	}
-});
-
 fixture('GET services/players/{id}', function(request, response){
 	if(request.data.id == '1'){
 		response({
@@ -22,8 +7,7 @@ fixture('GET services/players/{id}', function(request, response){
 			"weight": 200,
 			"height": 71,
 			"birthday": "1980-01-01",
-			"id":1,
-			"profile":null,"startRank":null
+			"id":1
 		});
 	}else if(!request.data.id){
 		response({
@@ -32,8 +16,7 @@ fixture('GET services/players/{id}', function(request, response){
 				"weight": 200,
 				"height": 71,
 				"birthday": "1980-01-01",
-				"id":1,
-				"profile":null,"startRank":null
+				"id":1
 			}]
 		});
 	}
