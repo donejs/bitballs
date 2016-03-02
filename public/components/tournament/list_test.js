@@ -12,7 +12,8 @@ QUnit.module('tournament-list', function(){
 
 		var vm = new ViewModel();
 
-		vm.createTournament().fail(function(resp, type){
+		vm.createTournament();
+		vm.attr('savePromise').fail(function(resp, type){
 			assert.equal(type, 'error', 'fail creation without date');
 			assert.equal(vm.attr('savePromise').state(), 'rejected');
 			done();
