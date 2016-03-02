@@ -36,10 +36,16 @@
     	{($value)}="player.birthDate"/>
   </div>
   <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
+<<<<<<< HEAD
   <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
   {{#is savePromise.state 'rejected'}}
     {{#each savePromise.reason.responseJSON}}
       <p>{{.}}</p>
     {{/each}}
   {{/is}}
+=======
+  {{#unless player.isNew}}
+    <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
+  {{/unless}}
+>>>>>>> staging
 </form>

@@ -2,6 +2,8 @@
 var app = require("../app");
 var bookshelf = require("../bookshelf");
 var Player = require("../models/player")
+var adminOnly = require( "../adminOnly" );
+
 
 var clean = function(data){
 	if(data.name===''){
@@ -29,28 +31,27 @@ app.get('/services/players/:id', function(req, res){
 		res.send(player.toJSON());
 	});
 });
-app.put('/services/players/:id', function(req, res){
+
+app.put('/services/players/:id', adminOnly( "Must be an admin to update players" ), function(req, res){
 	var cleaned = clean(req.body);
 	new Player({id: req.params.id}).save(cleaned).then(function(player){
 		res.send(player.toJSON());
 	});
 });
 
-app['delete']('/services/players/:id', function(req, res){
+app['delete']('/services/players/:id', adminOnly( "Must be an admin to delete players" ), function(req, res){
 	console.log("DESTROYING", req.params.id);
 	new Player({id: req.params.id}).destroy().then(function(player){
 		res.send({_destroyed: true});
 	});
 });
 
-app.post('/services/players', function(req, res) {
-		new Player(clean(req.body)).save().then(function(player){
-			res.send({id: player.get('id')});
-		}, function(e){
-			res.status(500).send(e);
-		});
-	// }
-
+app.post('/services/players', adminOnly( "Must be an admin to create players" ), function(req, res) {
+	new Player(clean(req.body)).save().then(function(player){
+		res.send({id: player.get('id')});
+	}, function(e){
+		res.status(500).send(e);
+	});
 });
 
 module.exports = Player;
