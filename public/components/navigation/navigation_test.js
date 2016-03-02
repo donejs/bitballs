@@ -41,3 +41,10 @@ QUnit.test('Layout preserved at smaller screen resolutions', function (assert) {
     evaluateAtWidth('1170px');
     evaluateAtWidth('750px');
 });
+
+QUnit.test('Register button exists', function () {
+    var frag = can.stache('<bitballs-navigation></bitballs-navigation>')();
+    var buttons = $(frag).find('.register-btn');
+
+    equal(buttons.length, 1, 'Register button found');
+})
