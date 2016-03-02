@@ -1,0 +1,12 @@
+<script id="demo-html" can-autorender type="text/stache">
+<can-import from="bitballs/components/navigation/navigation" />
+<bitballs-navigation></bitballs-navigation>
+</script>
+
+<script src="../../../../node_modules/steal/steal.js" main="@empty" id='demo-source'>
+import $ from "jquery";
+import 'can/component/';
+import "can/view/autorender/";
+
+$('#demo-html').viewModel();
+</script>

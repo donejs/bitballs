@@ -8,7 +8,6 @@
 			<th>Age</th>
 			<th>Weight</th>
 			<th>Height</th>
-			<th>Rank</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -29,7 +28,6 @@
 						<td>{{age}}</td>
 						<td>{{weight}}</td>
 						<td>{{height}}</td>
-						<td>{{rank}}</td>
 						<td>
 							{{#if session.isAdmin}}
 								<button type="button" class="btn btn-default" ($click)="editPlayer(.)">
