@@ -49,13 +49,6 @@
     "donejs-cli": "^0.6.6",
     "donejs-deploy": "^0.3.1"
   },
-  "system": {
-    "envs": {
-      "window-production": {
-        "baseURL": "https://bitballs-donejs.firebaseapp.com/"
-      }
-    }
-  },
   "donejs": {
     "deploy": {
       "root": "public/dist",
