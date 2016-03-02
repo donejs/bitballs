@@ -144,3 +144,4 @@ QUnit.module('player/edit', function(hooks){
 		});
 	});
 });
+});
