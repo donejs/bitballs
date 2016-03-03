@@ -70,11 +70,12 @@ QUnit.module('player/edit', function(hooks){
 					"birthday": "1980-01-01"
 				},
 				playerModel = new Player(player),
-				vam = new ViewModel({
+				vm = new ViewModel({
 					player: playerModel
 				});
 
-				vm.savePlayer().fail(function(resp, type){
+				vm.savePlayer()
+				vm.attr("savePromise").fail(function(resp, type){
 					assert.equal(type, 'error', 'fail creation without password');
 					assert.equal(vm.attr('savePromise').state(), 'rejected');
 					done();

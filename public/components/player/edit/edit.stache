@@ -1,49 +1,45 @@
-{{#if session.isAdmin}}
-  <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
-    {{#if player.isNew}}
-      <h3>Create Player</h3>
-    {{else}}
-      <h3>Update Player</h3>
-    {{/if}}
-    <div class="form-group">
-      <label for="player-name">Name</label>
-      <input type="text" class="form-control" id="player-name" placeholder="fullname" {($value)}="player.name"/>
-    </div>
-    <div class="form-group">
-      <label for="player-weight">Weight</label>
-      <input
-          type="number"
-          class="form-control"
-          id="player-weight"
-          placeholder="weight in pounds"
-          {($value)}="player.weightString"/>
-    </div>
-    <div class="form-group">
-      <label for="player-height">Height</label>
-      <input
-          type="number"
-          class="form-control"
-          id="player-height"
-          placeholder="height in inches (Ex: 71)"
-          {($value)}="player.heightString"/>
-    </div>
-    <div class="form-group">
-      <label for="player-birthday">Birthday</label>
-      <input
-          type="date"
-          class="form-control"
-          id="player-birthday"
-          placeholder="day of birth"
-          {($value)}="player.birthDate"/>
-    </div>
-    <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
-    {{#unless player.isNew}}
-		<a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
-	{{/unless}}
-	{{#if savePromise.isRejected}}
-      {{#each savePromise.reason.responseJSON}}
-        <p>{{.}}</p>
-      {{/each}}
-    {{/if}}
-  </form>
-{{/if}}
+<form ($submit)="savePlayer(%event,%element)" action="">
+  {{#if player.isNew}}
+    <h3>Create Player</h3>
+  {{else}}
+    <h3>Update Player</h3>
+  {{/if}}
+  <div class="form-group">
+    <label for="player-name">Name</label>
+    <input type="text" class="form-control" id="player-name" placeholder="fullname" {($value)}="player.name"/>
+  </div>
+  <div class="form-group">
+    <label for="player-weight">Weight</label>
+    <input 
+    	type="number" 
+    	class="form-control" 
+    	id="player-weight" 
+    	placeholder="weight in pounds" 
+    	{($value)}="player.weightString"/>
+  </div>
+  <div class="form-group">
+    <label for="player-height">Height</label>
+    <input 
+    	type="number" 
+    	class="form-control" 
+    	id="player-height" 
+    	placeholder="height in inches (Ex: 71)" 
+    	{($value)}="player.heightString"/>
+  </div>
+  <div class="form-group">
+    <label for="player-birthday">Birthday</label>
+    <input 
+    	type="date" 
+    	class="form-control" 
+    	id="player-birthday" 
+    	placeholder="day of birth" 
+    	{($value)}="player.birthDate"/>
+  </div>
+  <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
+  <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
+  {{#if savePromise.isRejected}}
+    {{#each savePromise.reason.responseJSON}}
+      <p class="text-danger">{{.}}</p>
+    {{/each}}
+  {{/if}}
+</form>
