@@ -235,7 +235,12 @@ exports.ViewModel = Map.extend(
 		this.attr("youtubePlayer").playVideo();
 		event && event.stopPropagation();
 	},
-	
+
+	deleteStat: function (stat, el, event) {
+		stat.destroy();
+		event && event.stopPropagation();
+	},
+
 	statPercent: function(time){
 		var duration = this.attr("duration");
 		if(duration) {
