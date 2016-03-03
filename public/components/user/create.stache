@@ -1,4 +1,4 @@
-<h2>{{#if user.isNew}}Create User{{else}}Update User{{/if}}</h2>
+<h2>{{#if user.isNew}}Register New User{{else}}Update User{{/if}}</h2>
 <form ($submit)="createUserHandler(%event)" action="">
 	<div class="form-group">
 	    <label for="user-email">Email</label>
@@ -20,4 +20,9 @@
 	    
 	</div>
 	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>
+	{{#is savePromise.state 'rejected'}}
+		{{#each savePromise.reason.responseJSON}}
+			<p>{{.}}</p>
+		{{/each}}
+	{{/is}}
 </form>

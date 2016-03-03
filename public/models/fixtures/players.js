@@ -23,9 +23,13 @@ fixture('GET services/players/{id}', function(request, response){
 });
 
 fixture('POST services/players', function(request, response){
-	response({
-		"id":1
-	});
+	if(!request.data.name){
+		response(400, '{type: "Bad Request", message: "Can not create a player without a name"}');
+	}else{
+		response({
+			"id":1
+		});
+	}
 });
 
 fixture('PUT services/players/{id}', function(request, response){

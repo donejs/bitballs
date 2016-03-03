@@ -28,5 +28,10 @@
 	    	{($value)}="tournament.date"/>
 	</div>
 	<button type="submit" class="btn btn-default" >Create</button>
+	{{#is savePromise.state 'rejected'}}
+		{{#each savePromise.reason.responseJSON}}
+			<p>{{.}}</p>
+		{{/each}}
+	{{/is}}
 </form>
 {{/if}}
