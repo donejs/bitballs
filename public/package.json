@@ -49,7 +49,6 @@
     ],
     "envs": {
       "server-production": {
-        "renderingBaseURL": "https://bitballs-donejs.firebaseapp.com/"
       }
     },
     "meta": {
