@@ -42,13 +42,27 @@ passport.use('signup', new LocalStrategy({
 		});
 
 	});
+}));
 
+passport.use('basic', new LocalStrategy({
+	usernameField: 'email',
+	passReqToCallback : true
+}, function(req, username, password, done){
+	new User({
+		'email': username
+	}).fetch().then(function(user) {
+		if(isValidPassword(user.attributes, password)){
+			return done(null, user);
+		}else {
+			return done(null, false, { message: 'Incorrect Password' });
+		}
+	})
 }));
 
 app.post('/services/users', 
 	function(req, res, next){
 		if(!req.body.password){
-			res.status(404).send({type: "Bad Request", message: "Password is required"});
+			res.status(401).send({password: "Password is required"});
 		}else{
 			next();
 		}
@@ -56,6 +70,21 @@ app.post('/services/users',
 	passport.authenticate('signup'), 
 	function(req, res) {
 		res.send(_.omit(req.user.toJSON(), "password"));
+	});
+
+app.put('/services/users/:id',
+	passport.authenticate('basic'),
+	function(req, res, next){
+		if(!req.body.newPassword || !req.body.password){
+			res.status(401).send({password: "Password is required"});
+		}else {
+			new User({id: req.params.id}).save({
+				email: req.body.email,
+				password: createHash(req.body.newPassword)
+			}).then(function(user){
+				res.send(_.omit(req.user.toJSON(), "password"));
+			});
+		}
 	});
 
 var createHash = function(password) {

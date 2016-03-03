@@ -28,9 +28,9 @@ module.exports = can.Map.extend({
 	},
 	createUserHandler: function(ev){
 		ev.preventDefault();
-		this.createUser();
+		this.saveUser();
 	},
-	createUser: function(){
+	saveUser: function(){
 		var self = this;
 		var promise = this.attr("user").save().then(function(user){
 

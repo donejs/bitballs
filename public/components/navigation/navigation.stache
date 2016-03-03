@@ -13,6 +13,9 @@
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if appState.session}}
 				<li>
+					<a href="{{routeUrl page='account'}}">Account</a>
+				</li>
+				<li>
 					<a href="javascript://" ($click)="logout()">Logout</a>
 				</li>
 			{{/if}}
