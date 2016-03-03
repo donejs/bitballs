@@ -1,5 +1,6 @@
 import fixture from 'can-fixture';
 
+
 export const players = {
 	data: [{
 		id: 1,
@@ -13,6 +14,7 @@ export const players = {
 };
 
 export const defineFixtures = function() {
+	
 	fixture('GET /services/players/{id}', function(req) {
 		var data;
 
