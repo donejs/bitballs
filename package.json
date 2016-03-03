@@ -7,16 +7,17 @@
     "start": "node index.js",
     "build": "node public/build.js",
     "develop": "node index.js --develop",
-    "db-migrate": "dropdb bitballs --if-exists && createdb bitballs && ./node_modules/db-migrate/bin/db-migrate up",
+    "db-migrate": "db-migrate up",
     "document": "documentjs -d",
     "test": "cd public/ && npm test",
-    "install": "node post_install.js"
+    "install": "node post_install.js && npm run db-migrate"
   },
   "dependencies": {
     "async": "^1.4.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.3",
     "bookshelf": "^0.8.1",
+    "checkit": "^0.6.0",
     "cookie-parser": "^1.4.1",
     "db-migrate": "^0.9.18",
     "ejs": "^2.3.1",
@@ -47,13 +48,6 @@
     "donejs": "^0.7.0-pre.1",
     "donejs-cli": "^0.6.6",
     "donejs-deploy": "^0.3.1"
-  },
-  "system": {
-    "envs": {
-      "window-production": {
-        "baseURL": "https://bitballs-donejs.firebaseapp.com/"
-      }
-    }
   },
   "donejs": {
     "deploy": {
