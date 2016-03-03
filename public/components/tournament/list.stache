@@ -13,6 +13,8 @@
 			</button>
 			{{/if}}
 		</h3>
+	{{else}}
+		<div class="text-center lead">No Tournaments</div>
 	{{/each}}
 </tournament-model>
 {{#if appState.isAdmin}}

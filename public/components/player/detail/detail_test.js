@@ -26,7 +26,7 @@ QUnit.module("bitballs/components/player/detail/", function(hooks){
 		});
 		
 		
-		
 	});
+
 });
 
