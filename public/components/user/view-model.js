@@ -32,7 +32,7 @@ module.exports = can.Map.extend({
 	},
 	createUser: function(){
 		var self = this;
-		return this.attr("user").save().then(function(user){
+		var promise = this.attr("user").save().then(function(user){
 
 			// Clear password:
 			user.attr("password", "");
@@ -46,5 +46,9 @@ module.exports = can.Map.extend({
 				self.attr("session").attr({user: user});
 			}
 		});
+
+		this.attr('savePromise', promise);
+
+		return promise;
 	}
 });

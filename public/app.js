@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
 import Session from './models/session';
 import "can/route/pushstate/";
+import stache from "can/view/stache/";
 
 const AppState = AppMap.extend({
 	define: {
@@ -17,7 +18,7 @@ const AppState = AppMap.extend({
 					return "team-details session='{.}'";
 
 				} else if(this.attr("tournamentId")) {
-					return "tournament-details tournament-id='{tournamentId}' session='{session}'";
+					return "tournament-details {tournament-id}='tournamentId' session='{session}'";
 
 				} else if(this.attr("page") === "tournaments") {
 					return "tournament-list app-state='{.}'";
@@ -44,14 +45,14 @@ const AppState = AppMap.extend({
 		},
 		tournamentId: {type: "number"}
 	},
-	pageComponent: function(){
-		return can.stache("<"+this.attr("pageComponentName")+"/>")(this);
-	},
 	isAdmin: function(){
 		var session = this.attr("session");
 		return session && session.attr("user").attr("isAdmin");
 	}
+});
 
+stache.registerHelper("pageComponent", function(options){
+	return can.stache("<"+options.context.attr("pageComponentName")+"/>")(this, options.helpers, options.nodeList);
 });
 
 route(':page',{page: 'tournaments'});

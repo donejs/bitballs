@@ -1,13 +1,15 @@
 import can from 'can';
 import QUnit from 'steal-qunit';
-import stache from "can/view/stache/";
-import 'bitballs/components/player/edit/';
 import ViewModel from 'bitballs/components/player/edit/viewmodel';
 import Player from 'bitballs/models/player';
+import F from 'funcunit';
 import route from "can/route/";
 import Session from "bitballs/models/session";
 
+
 import 'bitballs/models/fixtures/players';
+
+F.attach(QUnit);
 
 // viewmodel unit tests
 QUnit.module('player/edit', function(hooks){
@@ -16,7 +18,7 @@ QUnit.module('player/edit', function(hooks){
 		localStorage.clear();
 	});
 
-	QUnit.module('ViewModel');
+	QUnit.module('ViewModel', function(){
 
 		QUnit.test('Tests are running', function(assert){
 		  assert.ok( true, "Passed!" );
@@ -26,16 +28,14 @@ QUnit.module('player/edit', function(hooks){
 			var vm = new ViewModel();
 			
 		  assert.ok( !!vm , "Passed!" );
+
+		vm.bind("saved", function(){
+			player.id = 1;
+			assert.deepEqual(player, playerModel.attr(),  "New player saved");
+			vm.unbind("saved");
+			done();
 		});
-
-
-		QUnit.test("Has 'player' property", function(assert){
-			var vm = new ViewModel();
-
-			assert.ok( !!vm.attr("player") , "Passed!" );
-			
-		});
-
+		vm.savePlayer()
 
 		QUnit.test("Create player", function(assert){
 			assert.expect(1);
@@ -57,9 +57,29 @@ QUnit.module('player/edit', function(hooks){
 					vm.unbind("saved");
 					done();
 				})
-				vm.savePlayer()
+				vm.savePlayer();
 			
 		});
+
+		QUnit.test("Create player fails without name", function(assert){
+			assert.expect(2);
+			var done = assert.async(),
+				player = {
+					"weight": 200,
+					"height": 71,
+					"birthday": "1980-01-01"
+				},
+				playerModel = new Player(player),
+				vam = new ViewModel({
+					player: playerModel
+				});
+
+				vm.savePlayer().fail(function(resp, type){
+					assert.equal(type, 'error', 'fail creation without password');
+					assert.equal(vm.attr('savePromise').state(), 'rejected');
+					done();
+				});
+		});		
 
 		QUnit.test("Update player", function(assert){
 			assert.expect(1);
@@ -90,38 +110,50 @@ QUnit.module('player/edit', function(hooks){
 			
 		});
 
-		QUnit.test("Cancel event", function(assert){
-			assert.expect(1);
-			var done = assert.async(),
-				player = {
-					"name": "Test Player",
-					"weight": 200,
-					"height": 71,
-					"birthday": "1980-01-01"
-				},
-				playerModel = new Player(player),
-				vm = new ViewModel({
-					player:playerModel
-				});
-
-				vm.bind("canceled", function(){
-					assert.ok(true, "Event triggered");
-					done();
-				});
-				vm.cancelEvent();
+		vm.bind("canceled", function(){
+			assert.ok(true, "Event triggered");
+			done();
 		});
+
+	});
 
 	QUnit.module('Component', function(hooks){
 		hooks.beforeEach(function(){
 			var template = can.stache('<player-edit player-id=""></player-edit>');
 
-			$('#qunit-fixture').html(template({}));
+			$('#qunit-fixture').html(template({
+				session: {
+					isAdmin: true
+				}
+			}));
 		});
 
 		QUnit.test("Height and weight default to empty instead of numbers", function(assert){
 			assert.equal($('#player-height').val(), '', "Player height displays as empty string");
 			assert.equal($('#player-weight').val(), '', "Player weight displays as empty string");
 		});
+	});
+	QUnit.test('Form is only shown to admins', function () {
+		var session = new Session({
+			user: {
+				isAdmin: false
+			}
+		});
+	
+		var frag = can.stache('<player-edit />')({
+			session: session
+		});
+	
+		$('#qunit-fixture').html(frag);
+	
+		F('player-edit .edit-form')
+			.missing('Edit form is excluded for non-admin user')
+			.then(function () {
+				session.attr('user', {
+					isAdmin: true
+				});
+			})
+			.exists('Edit form is included for admin user');
 	});
 
 });

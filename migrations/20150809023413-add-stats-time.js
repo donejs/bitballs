@@ -12,6 +12,6 @@ exports.up = function(db, callback) {
 exports.down = function(db, callback) {
 	async.series([
 		db.removeColumn.bind(db, "stats","time"),
-		db.addCremoveColumnolumn.bind(db, "stats","value")
+		db.removeColumn.bind(db, "stats","value")
 	], callback);
 };

@@ -1,4 +1,4 @@
-import fixture from "can/util/fixture/";
+import fixture from "can-fixture";
 
 var responseData = {
     id: 1,

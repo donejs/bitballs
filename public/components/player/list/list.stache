@@ -41,6 +41,8 @@
 						</td>
 					{{/if}}
 				</tr>
+			{{else}}
+				<tr class="empty-list-placeholder"><td class="text-center lead" colspan="5">No Players</td></tr>
 			{{/each}}
 		{{/if}}
 	</tbody>
