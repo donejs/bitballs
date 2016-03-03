@@ -2,6 +2,7 @@
 var app = require("../app");
 var bookshelf = require("../bookshelf");
 var Player = require("./players");
+var adminOnly = require( "../adminOnly" );
 
 var Team = bookshelf.Model.extend({
 	tableName: 'teams',
@@ -18,6 +19,7 @@ var Team = bookshelf.Model.extend({
 		return this.belongsTo(Player,"player4Id");
 	}
 });
+
 var Teams = bookshelf.Collection.extend({
   model: Team
 });
@@ -33,25 +35,25 @@ app.get('/services/teams/:id', function(req, res){
 		res.send(team.toJSON());
 	});
 });
-app.put('/services/teams/:id', function(req, res){
+
+app.put('/services/teams/:id', adminOnly( "Must be an admin to update teams" ), function(req, res){
 	new Team({id: req.params.id}).save(req.body).then(function(team){
 		res.send(team.toJSON());
 	});
 });
 
-app['delete']('/services/teams/:id', function(req, res){
+app['delete']('/services/teams/:id', adminOnly( "Must be an admin to delete teams" ), function(req, res){
 	new Team({id: req.params.id}).destroy().then(function(team){
 		res.send({});
 	});
 });
 
-app.post('/services/teams', function(req, res) {
+app.post('/services/teams', adminOnly( "Must be an admin to create teams" ), function(req, res) {
 	new Team(req.body).save().then(function(team){
 		res.send({id: team.get('id')});
 	}, function(e){
 		res.status(500).send(e);
 	});
-
 });
 
 module.exports = Team;

@@ -1,5 +1,11 @@
 var fs = require("fs");
-fs.unlinkSync(__dirname+"/node_modules/.bin/npm");
+try {
+	// it's ok for this to fail
+	fs.unlinkSync(__dirname+"/node_modules/.bin/npm");
+} catch(e) {
+
+}
+
 
 var exec = require( "child_process" ).exec;
 

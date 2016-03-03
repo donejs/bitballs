@@ -10,12 +10,13 @@ app.use( express.static(__dirname + '/public') );
 
 app.use(cookieParser());
 
+require('./services/sessions');
+
 require('./services/games');
 require('./services/players');
 require('./services/stats');
 require('./services/teams');
 require('./services/tournaments');
-require('./services/sessions');
 require('./services/users');
 
 //can-ssr:

@@ -37,6 +37,13 @@
           {($value)}="player.birthDate"/>
     </div>
     <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
-    <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
+    {{#unless player.isNew}}
+		<a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
+	{{/unless}}
+	{{#if savePromise.isRejected}}
+      {{#each savePromise.reason.responseJSON}}
+        <p>{{.}}</p>
+      {{/each}}
+    {{/if}}
   </form>
 {{/if}}

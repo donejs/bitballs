@@ -19,5 +19,10 @@
 	    	{($value)}="user.password"/>
 	    
 	</div>
-	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Register{{else}}Update{{/if}}</button>
+	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>
+	{{#is savePromise.state 'rejected'}}
+		{{#each savePromise.reason.responseJSON}}
+			<p>{{.}}</p>
+		{{/each}}
+	{{/is}}
 </form>

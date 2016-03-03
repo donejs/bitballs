@@ -30,6 +30,11 @@ app.use(expressSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function ( req, res, next ) {
+  req.isAdmin = ( req.user && req.user.attributes && req.user.attributes.isAdmin ) ? true : false;
+  next();
+});
+
 var isValidPassword = function(user, password) {
 	return bCrypt.compareSync(password, user.get("password") );
 };
