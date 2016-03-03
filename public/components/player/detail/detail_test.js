@@ -1,6 +1,6 @@
 var QUnit = require("steal-qunit");
 var DetailViewModel = require("./detail");
-require("bitballs/models/fixtures/player");
+require("bitballs/models/fixtures/players");
 
 QUnit.module("bitballs/components/player/detail/", function(hooks){
 	hooks.beforeEach = function(){
@@ -15,13 +15,13 @@ QUnit.module("bitballs/components/player/detail/", function(hooks){
 		
 		detailVM.bind("player", function(ev, player){
 			
-			deepEqual(player.attr("name"),"Joe Bobo");
+			deepEqual(player.attr("name"),"Test Player");
 			start();
 			
 		});
 		
 		detailVM.attr("playerPromise").then(function(player){
-			deepEqual(player.attr("name"),"Joe Bobo");
+			deepEqual(player.attr("name"),"Test Player");
 			start();
 		});
 		
