@@ -11,6 +11,7 @@ var route = require("can/route/");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 
+
 stache.registerHelper("isActive", function(options){
 	var attrs = {};
 	for(var prop in options.hash) {
@@ -37,12 +38,13 @@ can.Component.extend({
 		createSession: function(ev){
 			ev.preventDefault();
 			var self = this;
-			this.attr("loginSession").save().then(function(session){
+			var sessionPromise = this.attr("loginSession").save().then(function(session){
 				
 				self.attr("loginSession", new Session({user: new User()}));
 				self.attr("appState").attr("session", session);
 				
 			});
+			this.attr("sessionPromise", sessionPromise);
 		},
 		logout: function(){
 			this.attr("appState").attr("session").destroy();
