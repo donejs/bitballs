@@ -267,8 +267,10 @@ exports.Component = Component.extend({
 			var self = this;
 			youtubeAPI().then(function(YT){
 				self.YT = YT;
-				//console.log('gA2Y1UQ5zjE',self.scope.attr("videoUrl"));
-				var player = new YT.Player('youtube-player', {
+			}).then(function () {
+				return self.scope.attr('gamePromise');
+			}).then(function () {
+				var player = new self.YT.Player('youtube-player', {
 					height: '390',
 					width: '640',
 					videoId: self.scope.attr("game.videoUrl"),
