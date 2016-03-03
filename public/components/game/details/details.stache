@@ -1,16 +1,17 @@
 <div class="row">
-	<div class="col-md-3">
+  	<div class="col-md-8">
+		<div class='youtube-container'>
+			<div id="youtube-player"/>
+		</div>
+	</div>
+	<div class="col-md-4">
 		<h3>{{game.round}} - Court {{game.court}}</h3>
 		<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
 		<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p> 
 		<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
 		<p>Current Score {{currentScore.home}} - {{currentScore.away}}</p>
 	</div>
-	<div class="col-md-9">
-		<div class='youtube-container'>
-			<div id="youtube-player"/>
-		</div>
-	</div>
+
 </div>
 
 

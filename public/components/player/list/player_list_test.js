@@ -7,6 +7,7 @@ var fixture = require('can-fixture');
 
 F.attach(QUnit);
 
+
 var vm;
 QUnit.module("Player List Component", {
 	beforeEach: function () {
@@ -66,15 +67,17 @@ QUnit.test('Loading message shown while players list is loaded', function () {
 });
 
 QUnit.test('Placeholder message shown when player list is empty', function () {
+	// Make the players fixture return an empty list
+	fixture('GET /services/players', function () {
+		return { data: [] };
+	});
+	
 	var frag = can.stache('<player-list />')();
 	var players = $('player-list', frag).viewModel().attr('players');
 
 	$('#qunit-fixture').html(frag);
 
-	// Make the players fixture return an empty list
-	fixture('GET services/players', function () {
-		return { data: [] };
-	});
+	
 
 	F('tbody tr.empty-list-placeholder')
 		.wait(fixture.delay) // Wait for the fixture to resolve

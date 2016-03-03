@@ -13,7 +13,7 @@ export const players = {
 };
 
 export const defineFixtures = function() {
-	fixture('GET services/players/{id}', function(req) {
+	fixture('GET /services/players/{id}', function(req) {
 		var data;
 
 		$.each(players.data, function(i, tourney) {
@@ -26,15 +26,22 @@ export const defineFixtures = function() {
 		return data;
 	});
 
-	fixture('GET services/players', function(req) {
+	fixture('GET /services/players', function(req) {
 		return players;
 	});
 
-	fixture('POST services/players', function(req) {
-		return { id: 1 };
+
+	fixture('POST /services/players', function(request, response){
+		if(!request.data.name){
+			response(400, '{type: "Bad Request", message: "Can not create a player without a name"}');
+		}else{
+			response({
+				"id":1
+			});
+		}
 	});
 
-	fixture('PUT services/players/{id}', function(req) {
+	fixture('PUT /services/players/{id}', function(req) {
 		req.data.id = parseInt(req.data.id, 10);
 		return req.data;
 	});

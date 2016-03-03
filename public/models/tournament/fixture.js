@@ -1,4 +1,4 @@
-import fixture from 'can/util/fixture/';
+import fixture from 'can-fixture';
 import $ from 'jquery';
 
 export const tournamentData = {
@@ -17,7 +17,7 @@ export const tournamentData = {
     ]
 };
 
-export default can.fixture('GET /services/tournaments/{id}', function (req) {
+fixture('GET /services/tournaments/{id}', function (req) {
     var data;
     $.each(tournamentData.data, function (i, tourney) {
         if (tourney.id == req.data.id) {
@@ -26,4 +26,14 @@ export default can.fixture('GET /services/tournaments/{id}', function (req) {
         }
     });
     return data;
+});
+
+fixture('POST /services/tournaments', function(req, response){
+    if(!req.data.date){
+        response(400, '{type: "Bad Request", message: "Can not create a tournament without a date"}');
+    } else {
+        response({
+            id: 3
+        });
+    }
 });
