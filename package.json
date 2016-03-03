@@ -57,11 +57,7 @@
           "type": "firebase",
           "config": {
             "firebase": "bitballs-donejs",
-            "public": "./public",
-            "ignore": [
-              "/*",
-              "!dist/"
-            ],
+            "public": "./public/dist",
             "headers": [
               {
                 "source": "/**",

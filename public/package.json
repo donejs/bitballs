@@ -58,6 +58,14 @@
           "jquery"
         ]
       }
-    }
+    },
+    "bundle": [
+      "bitballs/components/game/details/",
+      "bitballs/components/tournament/details/",
+      "bitballs/components/tournament/list",
+      "bitballs/components/user/create",
+      "bitballs/components/game/details/",
+      "bitballs/components/player/list/"
+    ]
   }
 }
