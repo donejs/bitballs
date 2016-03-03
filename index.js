@@ -10,6 +10,13 @@ app.use( express.static(__dirname + '/public') );
 
 app.use(cookieParser());
 
+if ( process.argv.indexOf( "--slow" ) !== -1 ) {
+	console.log("Delaying everything 1 second");
+	app.use( function ( req, res, next ) {
+		setTimeout(next, 1000);
+	});
+}
+
 require('./services/sessions');
 
 require('./services/games');
