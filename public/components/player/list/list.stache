@@ -47,5 +47,6 @@
 		{{/if}}
 	</tbody>
 </table>
-
+{{#session.isAdmin}}
 <player-edit/>
+{{/session.isAdmin}}

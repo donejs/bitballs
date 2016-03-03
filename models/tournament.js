@@ -8,7 +8,7 @@ var Tournament = bookshelf.Model.extend({
 	},
 	validateSave: function(){
 		return checkit({
-			date: ['required', 'date']
+			date: ['required']
 		}).run(this.attributes);
 	}
 });
