@@ -37,7 +37,8 @@ QUnit.test('createUser without password fails', function(assert) {
 
 	assert.expect(2);
 
-	vm.createUser().fail(function(resp, type){
+	vm.createUser();
+	vm.attr('savePromise').fail(function(resp, type){
 		assert.equal(type, 'error', 'fail creation without password');
 		assert.equal(vm.attr('savePromise').state(), 'rejected');
 		done();

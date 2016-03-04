@@ -39,10 +39,9 @@
   {{#unless player.isNew}}
     <a class="btn btn-default" ($click)="cancelEvent(%element)">Cancel</a>
   {{/unless}}
-  {{#is savePromise.state 'rejected'}}
+  {{#if savePromise.isRejected}}
     {{#each savePromise.reason.responseJSON}}
-      <p>{{.}}</p>
+      <p class="text-danger">{{.}}</p>
     {{/each}}
-  {{/is}}
-  
+  {{/if}}
 </form>

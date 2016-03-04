@@ -13,6 +13,8 @@
 			</button>
 			{{/if}}
 		</h3>
+	{{else}}
+		<div class="text-center lead">No Tournaments</div>
 	{{/each}}
 </tournament-model>
 {{#if appState.isAdmin}}
@@ -27,11 +29,11 @@
 	    	placeholder="date" 
 	    	{($value)}="tournament.date"/>
 	</div>
-	<button type="submit" class="btn btn-default" >Create</button>
-	{{#is savePromise.state 'rejected'}}
+	<button type="submit" class="create-btn btn btn-default" {{#if tournament.isSaving}}disabled{{/if}}>Create</button>
+	{{#if savePromise.isRejected}}
 		{{#each savePromise.reason.responseJSON}}
-			<p>{{.}}</p>
+			<p class="text-danger">{{.}}</p>
 		{{/each}}
-	{{/is}}
+	{{/if}}
 </form>
 {{/if}}
