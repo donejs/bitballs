@@ -31,11 +31,14 @@ module.exports = can.Map.extend({
 		this.saveUser();
 	},
 	saveUser: function(){
-		var self = this;
+		var self = this,
+			isNew = this.attr("user").isNew()
+
 		var promise = this.attr("user").save().then(function(user){
 
 			// Clear password:
 			user.attr("password", "");
+			user.removeAttr("newPassword");
 
 			if (!self.attr("session")){
 				// Create session:
@@ -44,6 +47,10 @@ module.exports = can.Map.extend({
 			} else {
 				// Update session:
 				self.attr("session").attr({user: user});
+			}
+
+			if(isNew){
+				can.route.attr("page", "account");
 			}
 		});
 
