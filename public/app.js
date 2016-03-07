@@ -23,7 +23,6 @@ const AppState = AppMap.extend({
 						attributes: "game-id='{gameId}' session='{session}'",
 						moduleName: "game/details/"
 					};
-
 				} else if(this.attr("tournamentId")) {
 					return {
 						title: "Tournament",
