@@ -1,6 +1,0 @@
-{{#if showList}}
-	<player-list/>
-{{/if}}
-{{#if showEdit}}
-	<player-edit player-id='{route.playerId}'/>
-{{/if}}
