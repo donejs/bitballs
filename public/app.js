@@ -38,14 +38,14 @@ const AppState = AppMap.extend({
 						moduleName: "tournament/list"
 					};
 
-				} else if(this.attr("page") === "register") {
+
+				} else if(this.attr("page") === "register"  || this.attr("page") === "account") {
 					return {
 						title: "Account",
 						componentName: "user-create",
 						attributes: "session='{session}'",
 						moduleName: "user/create"
 					};
-
 				} else if( this.attr("gameId") ) {
 					return {
 						title: "Game",
