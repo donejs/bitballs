@@ -2,6 +2,11 @@ import QUnit from "steal-qunit";
 import Session from "models/session";
 import details from "./details";
 import fixtureContent from "models/fixtures/games";
+import F from 'funcunit';
+import stache from 'can/view/stache/';
+import fixture from 'can-fixture';
+
+F.attach(QUnit);
 
 var DetailsViewModel = details.ViewModel;
 
@@ -40,5 +45,45 @@ QUnit.test("correctly sums score", function() {
             away: 5
         });
         QUnit.start();
+    });
+});
+
+QUnit.test('A stat can be deleted by an admin', function () {
+
+    var session = new Session({
+        isAdmin: false
+    });
+
+    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
+        gameId: this.vm.attr('gameId'),
+        session: session
+    });
+
+    $('#qunit-fixture').html(frag);
+
+    QUnit.stop();
+
+    var vm = $('game-details').viewModel();
+
+    vm.bind('game', function(ev, game) {
+        QUnit.start();
+
+        F('.stat-point')
+            .exists('Stat points exist')
+            .size(6, 'Number of stats is correct')
+            .first()
+            .find('.destroy-btn')
+            .size(0, 'There is no destroy button')
+            .then(function () {
+                session.attr('isAdmin', true);
+                ok(true, 'The user is given admin privileges');
+            })
+            .size(1, 'Destroy button is inserted')
+            .click()
+            .wait(fixture.delay)
+            // For some reason .size(0) doesn't work here
+            .then(function () {
+                equal($(this).closest('tbody').length, 0, 'Stat is removed');
+            });
     });
 });
