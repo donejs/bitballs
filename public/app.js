@@ -26,6 +26,9 @@ const AppState = AppMap.extend({
 				} else if(this.attr("page") === "register") {
 					return "user-create session='{session}'";
 
+				} else if(this.attr("page") === "users") {
+					return "users-admin session='{session}'";
+
 				} else if( this.attr("gameId") ) {
 					return "game-details session='{.}'";
 

@@ -24,6 +24,13 @@ module.exports = can.Map.extend({
 		},
 		session: {
 			value: null
+		},
+		userStatus: {
+			get: function () {
+				if ( this.attr( "user" ).isNew() ) return "new";
+				if ( !this.attr( "user.verified" ) ) return "pending";
+				return "verified";
+			}
 		}
 	},
 	createUserHandler: function(ev){
@@ -34,13 +41,12 @@ module.exports = can.Map.extend({
 		var self = this;
 		var promise = this.attr("user").save().then(function(user){
 
-			// Clear password:
-			user.attr("password", "");
+			user.attr( "password", "" );
+			user.attr( "verificationHash", "" );
 
 			if (!self.attr("session")){
 				// Create session:
 				self.attr("session", new Session({user: user}));
-
 			} else {
 				// Update session:
 				self.attr("session").attr({user: user});
@@ -50,5 +56,8 @@ module.exports = can.Map.extend({
 		this.attr('savePromise', promise);
 
 		return promise;
+	},
+	verifyUser: function () {
+		var self = this;
 	}
 });

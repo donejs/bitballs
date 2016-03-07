@@ -1,24 +1,48 @@
-<h2>{{#if user.isNew}}Register New User{{else}}Update User{{/if}}</h2>
+<h2>
+	{{#switch userStatus}}
+		{{#case "new"}}
+			Register New User
+		{{/case}}
+
+		{{#case "pending"}}
+			Verify User
+		{{/case}}
+
+		{{#default}}
+			Update User
+		{{/default}}
+	{{/switch}}
+</h2>
 <form ($submit)="createUserHandler(%event)" action="">
 	<div class="form-group">
-	    <label for="user-email">Email</label>
-	    
-	    <input  
-	    	class="form-control" 
-	    	id="user-email"
-	    	{{^if user.isNew}}disabled{{/if}}
-	    	{($value)}="user.email"/>
-	    
+			<label for="user-email">Email</label>
+			<input
+				class="form-control"
+				id="user-email"
+				{{^if user.isNew}}disabled{{/if}}
+				{($value)}="user.email" />
 	</div>
-	<div class="form-group">
-	    <label for="user-password">Password</label>
-	    <input  
-	    	class="form-control" 
-	    	type="password"
-	    	id="user-password" 
-	    	{($value)}="user.password"/>
-	    
-	</div>
+
+	{{#is userStatus "pending"}}
+		<div class="form-group">
+				<label for="user-verificationHash">Verification Hash</label>
+				<input
+					class="form-control"
+					type="text"
+					id="user-verificationHash"
+					{($value)}="user.verificationHash" />
+		</div>
+	{{else}}
+		<div class="form-group">
+				<label for="user-password">Password</label>
+				<input
+					class="form-control"
+					type="password"
+					id="user-password"
+					{($value)}="user.password" />
+		</div>
+	{{/is}}
+
 	<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">{{#if user.isNew}}Create{{else}}Update{{/if}}</button>
 	{{#if savePromise.isRejected}}
 		{{#each savePromise.reason.responseJSON}}
