@@ -45,7 +45,7 @@ var options = {
 	ajax: $.ajax,
 	Map: Session,
 	List: Session.List,
-	//name: "session",
+	name: "session",
 	url: {
 		getData: "/services/session",
 		createData: "/services/session",
