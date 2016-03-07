@@ -29,10 +29,25 @@ game-details .stat-point {
     border: 1px solid transparent;
     border-radius: 2px;
     transform: translate( -50%, 0);
+
+    .delete-btn {
+        display: none;
+        padding: 2px;
+        font-size: 0.9em;
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1.0;
+        }
+    }
 }
 game-details .stat-point:hover {
     font-size: 12px;
     padding: 1px;
+
+    .delete-btn {
+        display: inline-block;
+    }
 }
 .youtube-container {
   padding-bottom: 15px;

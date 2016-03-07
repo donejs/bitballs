@@ -21,7 +21,8 @@ QUnit.module('Tournament List', {
 QUnit.test('Create button is disabled while posting data', function () {
     var expectingRequest = true;
     var requestPromise = new can.Deferred();
-    var frag = can.stache('<tournament-list {tournament}="tournament" />')({
+    var frag = can.stache('<tournament-list {app-state}="appState" {tournament}="tournament" />')({
+
         appState: {
             isAdmin: true
         },
