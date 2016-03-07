@@ -1,4 +1,4 @@
-
+<can-import from="bitballs/components/player/edit/" />
 
 <h2>Players</h2>
 <table class="table">
@@ -24,7 +24,7 @@
 								(saved)="removeEdit" (canceled)="removeEdit"/>
 						</td>
 					{{else}}
-						<td><a can-href='{page="player" playerId=id}'>{{name}}</a></td>
+						<td>{{name}}</td>
 						<td>{{age}}</td>
 						<td>{{weight}}</td>
 						<td>{{height}}</td>

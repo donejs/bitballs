@@ -15,13 +15,13 @@ QUnit.module("bitballs/components/player/detail/", function(hooks){
 		
 		detailVM.bind("player", function(ev, player){
 			
-			deepEqual(player.attr("name"),"Test Player");
+			deepEqual(player.attr("name"),"Test Player", "got player name");
 			start();
 			
 		});
 		
 		detailVM.attr("playerPromise").then(function(player){
-			deepEqual(player.attr("name"),"Test Player");
+			deepEqual(player.attr("name"),"Test Player", "got player promise name");
 			start();
 		});
 		

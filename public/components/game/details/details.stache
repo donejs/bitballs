@@ -30,8 +30,13 @@
 			<td>{{name}}</div>
 			<td class="stats-container">
 				{{#eachOf statsForPlayerId(id)}}
-					<span ($click)="gotoTimeMinus5( time, %event)" 
-							class='stat-point stat-{{type}}' style="left: {{statPercent time}}%">{{type}}</span>
+					<span ($click)="gotoTimeMinus5(time, %event)"
+						class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
+						{{type}}
+						{{#if session.isAdmin}}
+							<span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
+						{{/if}}
+					</span>
 				{{/each}}
 			</td>
 		</tr>
