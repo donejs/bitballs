@@ -9,13 +9,13 @@ before_install:
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
   - psql -c 'create database bitballs;' -U postgres
+script: 'node public/build.js'
+after_success: 'node_modules/.bin/deploy'
 before_deploy:
   - 'git config --global user.email "jan@bitovi.com"'
   - 'git config --global user.name "bitballs deploy bot"'
-  - node public/build
-  - git add public/dist/ --force
+  - 'git add public/dist/ --force'
   - 'git commit -m "Updating build."'
-  - node_modules/.bin/deploy
 deploy:
   skip_cleanup: true
   provider: heroku
