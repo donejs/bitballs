@@ -4,7 +4,7 @@
     {{asset "css"}}
   </head>
   <body>
-    <can-import from="bitballs/styles.less!" />
+    <can-import from="bitballs/app.less!" />
     <can-import from="bitballs/app" export-as="viewModel" />
 	<can-import from="bitballs/components/navigation/navigation" />
 	<can-import from="bitballs/components/player/list/" />
