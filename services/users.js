@@ -63,15 +63,15 @@ passport.use('signup', new LocalStrategy({
 }));
 
 app.post('/services/users', 
-	function(req, res, next){
-		if(!req.body.password){
-			res.status(404).send({type: "Bad Request", message: "Password is required"});
-		}else{
+	function ( req, res, next ){
+		if ( !req.body.password ) {
+			res.status(404).send({ type: "Bad Request", message: "Password is required" });
+		} else {
 			next();
 		}
 	},
-	passport.authenticate('signup'), 
-	function( req, res ) {
+	passport.authenticate( 'signup' ), 
+	function ( req, res ) {
 		var user = req.user.toJSON();
 		var subject = "Complete your registration at bitballs";
 		var htmlbody = "To complete your registration, copy this hash into the form:<br>" + user.verificationHash;
@@ -84,6 +84,50 @@ app.post('/services/users',
 		});
 	}
 );
+
+var verifyUser = function ( req, res, user ) {
+	if ( req.body.verificationHash === user.get( "verificationHash" ) ) {
+		//update as email verified
+		user.save({ verified: true, verificationHash: "" }, { patch: true }).then( function ( user ) {
+			res.send( _.omit( user, [ "password", "verificationHash" ] ) );
+		});
+	} else {
+		res.status( 401 ).send({ err: "Verification hash is incorrect." });
+	}
+};
+
+app.put( "/services/users/:id",
+function ( req, res, next ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	if ( req.isAdmin ) {
+		next();
+	} else if ( req.user.attributes.id === userid ) {
+		next();
+	} else {
+		res.status( 401 ).json({
+			err: "Must be logged in to verify yourself."
+		});
+	}
+},
+function ( req, res ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	new User({
+		'id' : userid
+	}).fetch().then( function( user ) {
+		if ( !user ) {
+			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+		}
+
+		if ( !user.get( "verified" ) && req.body.verificationHash ) {
+			return verifyUser( req, res, user );
+		}
+
+		// else other user updates
+		// ...
+	}, function ( err ) {
+		res.status( 500 ).send( err );
+	});
+});
 
 var createHash = function(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
