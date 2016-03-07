@@ -1,5 +1,5 @@
 
-var app = require("../app");
+var app = require("../services/app");
 var bookshelf = require("../bookshelf");
 var Stat = require("./stats");
 var Team = require("./teams");
