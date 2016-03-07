@@ -1,4 +1,4 @@
-
+<can-import from="bitballs/components/player/edit/" />
 
 <h2>Players</h2>
 <table class="table">
