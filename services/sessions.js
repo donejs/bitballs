@@ -40,8 +40,8 @@ var isValidPassword = function(user, password) {
 };
 
 app.get('/services/session', function(req, res) {
-	if (req.user) {
-		res.send({id: req.user.id, user: _.omit(req.user.toJSON(), "password")});
+	if (req.body.user) {
+		res.send({id: req.body.user.id, user: _.omit(req.body.user.toJSON(), "password")});
 	} else {
 		res.status(404).send(JSON.stringify({
 			message : "No session"
@@ -50,8 +50,8 @@ app.get('/services/session', function(req, res) {
 });
 
 app.post('/services/session', function(req, res, next) {
-	var email = req.body["user[email]"],
-		password = req.body["user[password]"];
+	var email = req.body.user.email,
+		password = req.body.user.password;
 		
 	new User({
 		'email': email

@@ -6,6 +6,7 @@ import route from 'can/route/';
 import Session from './models/session';
 import "can/route/pushstate/";
 import stache from "can/view/stache/";
+import "./prefilter";
 
 const AppState = AppMap.extend({
 	define: {
