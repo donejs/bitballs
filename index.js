@@ -1,5 +1,5 @@
 var express = require('express');
-var app = require('./app');
+var app = require('./services/app');
 var url = require("url");
 var exec = require( "child_process" ).exec;
 var cookieParser = require('cookie-parser');
