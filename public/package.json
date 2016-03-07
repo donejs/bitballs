@@ -17,7 +17,7 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "can": "^2.3.15",
-    "can-connect": "0.3.4",
+    "can-connect": "0.3.6",
     "done-autorender": "^0.6.2",
     "done-component": "^0.4.0",
     "done-css": "^1.1.16",
