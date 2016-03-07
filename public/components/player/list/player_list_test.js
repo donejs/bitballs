@@ -7,8 +7,8 @@ var fixture = require('can-fixture');
 
 F.attach(QUnit);
 
-
 var vm;
+
 QUnit.module("Player List Component", {
 	beforeEach: function () {
 		localStorage.clear();
@@ -16,6 +16,7 @@ QUnit.module("Player List Component", {
 		vm = new PlayerList.ViewModel();
 	},
 	afterEach: function () {
+		defineFixtures();
 		vm = undefined;
 	}
 });
@@ -66,41 +67,16 @@ QUnit.test('Loading message shown while players list is loaded', function () {
 		.size(0, 'Loading element was removed');
 });
 
-QUnit.test('Placeholder message shown when player list is empty', function () {
+QUnit.test('Placeholder message is shown when player list is empty', function () {
+	var frag = can.stache('<player-list />')();
+
 	// Make the players fixture return an empty list
 	fixture('GET /services/players', function () {
 		return { data: [] };
 	});
 	
-	var frag = can.stache('<player-list />')();
-	var players = $('player-list', frag).viewModel().attr('players');
-
 	$('#qunit-fixture').html(frag);
 
-	
-
 	F('tbody tr.empty-list-placeholder')
-		.wait(fixture.delay) // Wait for the fixture to resolve
-		.then(function () {
-			return players.then(function (players) {
-				equal(players.length, 0, 'The list is empty');
-			});
-		})
-		.exists('Placeholder element is present')
-		.text('No Players', 'Placeholder message is shown')
-		.then(function () {
-			
-			// Make the players fixture return its default
-			defineFixtures();
-
-			vm.attr('players', Player.getList({}));
-		})
-		.wait(fixture.delay) // Wait for the fixture to resolve
-		.then(function () {
-			return players.then(function (players) {
-				equal(players.length, 1, 'The list is not empty');
-			});
-		})
-		.closest('tbody')
-		.size(0, 'Placeholder element was removed');
+		.exists('Placeholder element is present');
 });
