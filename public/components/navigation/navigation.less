@@ -39,4 +39,38 @@ bitballs-navigation {
 	.navbar-right {
 		float: right;
 	}
+
+	.navbar {
+		border-radius: none;
+	}
+
+	.navbar.navbar-default {
+		background-color: #c46d3d;
+		border: none;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.navbar-default .navbar-nav > li > a {
+		color: white;
+	}
+
+	.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+		background-color: rgba(45, 49, 53, .3);
+		color: white;
+	}
+		
+	.main-logo {
+		padding: 15px;
+		background: url(./img/bitballs-logo-01.svg) no-repeat 0 50%;
+		background-size: 90% auto;
+		width: 150px;
+		text-indent: -9999px;
+		overflow: hidden;
+	}
+
+	.dropdown-menu form {
+		padding: 5px;
+		margin-bottom: 0px;
+	}
 }
