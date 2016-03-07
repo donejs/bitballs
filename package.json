@@ -10,7 +10,7 @@
     "db-migrate": "db-migrate up",
     "document": "documentjs -d",
     "test": "cd public/ && npm test",
-    "install": "node post_install.js && npm run db-migrate"
+    "install": "node install.js && npm run db-migrate"
   },
   "dependencies": {
     "async": "^1.4.0",
