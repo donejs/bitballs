@@ -6,34 +6,65 @@ import route from 'can/route/';
 import Session from './models/session';
 import "can/route/pushstate/";
 import stache from "can/view/stache/";
+import "./prefilter";
 
 const AppState = AppMap.extend({
 	define: {
-		pageComponentName: {
+		title: {
+			get: function(){
+				return "BitBalls | " + this.attr('pageComponentConfig').title;
+			}
+		},
+		pageComponentConfig: {
 			get: function(){
 				if(this.attr("gameId")) {
-					return "game-details game-id='{gameId}' session='{session}'";
-
-				} else if(this.attr("teamId")) {
-					return "team-details session='{.}'";
+					return {
+						title: "Game",
+						componentName: "game-details",
+						attributes: "{(game-id)}='../gameId' {(session)}='../session'",
+						moduleName: "game/details/"
+					};
 
 				} else if(this.attr("tournamentId")) {
-					return "tournament-details {tournament-id}='tournamentId' session='{session}'";
+					return {
+						title: "Tournament",
+						componentName: "tournament-details",
+						attributes: "{tournament-id}='../tournamentId' {session}='../session'",
+						moduleName: "tournament/details/"
+					};
 
 				} else if(this.attr("page") === "tournaments") {
-					return "tournament-list app-state='{.}'";
-
-				} else if(this.attr("page") === "register") {
-					return "user-create session='{session}'";
+					return {
+						title: "Tournaments",
+						componentName: "tournament-list",
+						attributes: "{app-state}='../.'",
+						moduleName: "tournament/list"
+					};
 
 				} else if(this.attr("page") === "users") {
-					return "users-admin session='{session}'";
+					return {
+						title: "Users Admin",
+						componentName: "users-admin",
+						attributes: "{(session)}='../session'",
+						moduleName: "users/users"
+					};
 
-				} else if( this.attr("gameId") ) {
-					return "game-details session='{.}'";
+				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
+					return {
+						title: "Account",
+						componentName: "user-create",
+						attributes: "{(session)}='../session'",
+						moduleName: "user/create"
+					};
 
 				} else {
-					return "player-list session='{session}'";
+					return {
+						title: "Players",
+						componentName: "player-list",
+						attributes: "{(session)}='../session'",
+						moduleName: "player/list/"
+					};
+
 				}
 			}
 		},
@@ -55,7 +86,17 @@ const AppState = AppMap.extend({
 });
 
 stache.registerHelper("pageComponent", function(options){
-	return can.stache("<"+options.context.attr("pageComponentName")+"/>")(this, options.helpers, options.nodeList);
+	var pageComponent = options.context.attr("pageComponentConfig"),
+		template = 
+			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
+				"{{#if isResolved}}" +
+					"<"+pageComponent.componentName + " " + pageComponent.attributes + "/>" +
+				"{{else}}" +
+					"Loading..." +
+				"{{/if}}" +
+			"</can-import>";
+
+	return can.stache(template)(this, options.helpers, options.nodeList);
 });
 
 route(':page',{page: 'tournaments'});

@@ -11,7 +11,8 @@ var Tournament = require("bitballs/models/tournament/");
 Component.extend({
 	tag: "tournament-list",
 	template: require("./list.stache!"),
-	viewModel: viewmodel
+	viewModel: viewmodel,
+	leakScope: false
 });
 
 

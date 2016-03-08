@@ -35,14 +35,16 @@ module.exports = can.Map.extend({
 	},
 	createUserHandler: function(ev){
 		ev.preventDefault();
-		this.createUser();
+		this.saveUser();
 	},
-	createUser: function(){
+	saveUser: function(){
 		var self = this;
+		var isNew = this.attr("user").isNew();
 		var promise = this.attr("user").save().then(function(user){
 
 			user.attr( "password", "" );
 			user.attr( "verificationHash", "" );
+			user.removeAttr("newPassword");
 
 			if (!self.attr("session")){
 				// Create session:
@@ -51,13 +53,24 @@ module.exports = can.Map.extend({
 				// Update session:
 				self.attr("session").attr({user: user});
 			}
+
+			if(isNew){
+				can.route.attr("page", "account");
+			}
 		});
 
 		this.attr('savePromise', promise);
 
 		return promise;
 	},
-	verifyUser: function () {
+	nuclearOption: function () {
 		var self = this;
+		if ( confirm( "Are you sure you want to delete your account?" ) ) {
+			this.attr("user").destroy(function () {
+				self.attr("session").destroy();
+				self.attr("session", null);
+				can.route.attr("page", "register");
+			});
+		}
 	}
 });

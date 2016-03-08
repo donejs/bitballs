@@ -126,4 +126,12 @@ fixture("/services/games/{id}", function(request, response) {
     }
 });
 
+fixture('GET /services/stats', function () {
+    return { data: responseData.stats };
+});
+
+fixture('DELETE /services/stats/{id}', function () {
+    return {};
+});
+
 export default responseData;

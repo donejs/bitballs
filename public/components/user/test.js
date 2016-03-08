@@ -8,7 +8,7 @@ QUnit.module('User: create', {
 	}
 });
 
-QUnit.test('createUser', function(assert) {
+QUnit.test('saveUser', function(assert) {
 	var done = assert.async();
 
 	var vm = new ViewModel();
@@ -19,7 +19,7 @@ QUnit.test('createUser', function(assert) {
 	// todo: skipped test
 	// equal(typeof vm.attr('session'), 'undefined', 'Session should not exist before user gets created.');
 
-	vm.createUser().then(function(){
+	vm.saveUser().then(function(){
 		equal(vm.attr('session.user.email'), 'test@bitovi.com', 'Session email should be set after user gets created.');
 		notOk(vm.attr('user').isNew(), 'User should not be new any more.');
 		equal(vm.attr('user.password'), '', 'User\'s password property should be cleared after user gets created/updated.');
@@ -28,7 +28,7 @@ QUnit.test('createUser', function(assert) {
 	});
 });
 
-QUnit.test('createUser without password fails', function(assert) {
+QUnit.test('saveUser without password fails', function(assert) {
 	var done = assert.async();
 
 	var vm = new ViewModel();
@@ -37,7 +37,7 @@ QUnit.test('createUser without password fails', function(assert) {
 
 	assert.expect(2);
 
-	vm.createUser();
+	vm.saveUser();
 	vm.attr('savePromise').fail(function(resp, type){
 		assert.equal(type, 'error', 'fail creation without password');
 		assert.equal(vm.attr('savePromise').state(), 'rejected');

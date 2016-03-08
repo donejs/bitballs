@@ -12,11 +12,18 @@
 		
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if appState.session}}
+				{{#if appState.session.isAdmin}}
+					<li {{#isActive page='users'}}class='active'{{/isActive}}>
+						<a href="{{routeUrl page='users'}}">Users</a>
+					</li>
+				{{/if}}
+				<li {{#isActive page='account'}}class='active'{{/isActive}}>
+					<a href="{{routeUrl page='account'}}">Account</a>
+				</li>
 				<li>
 					<a href="javascript://" ($click)="logout()">Logout</a>
 				</li>
-			{{/if}}
-			{{^appState.session}}
+			{{else}}
 			<li class="dropdown">
 				<a href="javascript://" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 					aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
@@ -49,7 +56,7 @@
 					</li>
 				</ul>
 			</li>
-			{{/appState.session}}
+			{{/if}}
 		</ul>
 	</div>
 </nav>

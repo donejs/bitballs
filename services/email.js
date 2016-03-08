@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer');
+//var checkit = require('checkit');
 
 var validateEmail = function ( email ) {
   var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,6 +27,9 @@ if ( process.argv.indexOf( "--develop" ) !== -1 ) {
 module.exports = function ( to, from, subject, body, cb ) {
   // cb function takes ( error, info )
   var transporter = nodemailer.createTransport( transportOpts );
+
+  //checkit({email: ['required', 'email']}).run({})
+  //    .then(function(){})
 
   return transporter.sendMail({
       from: from,

@@ -1,3 +1,4 @@
+<can-import from="bitballs/components/edit/" />
 {{#if showList}}
 	<player-list/>
 {{/if}}

@@ -1,9 +1,0 @@
-{{#playerPromise.isPending}}
-	<i>loading ...</i>
-{{/}}
-{{#playerPromise.isRejected}}
-	{{playerPromise.reason.message}}
-{{/playerPromise.isRejected}}
-{{#playerPromise.isResolved}}
-	<h1>Player is {{player.name}}</h1>
-{{/playerPromise.isResolved}}

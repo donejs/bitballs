@@ -7,14 +7,38 @@ var LocalStrategy = require('passport-local').Strategy;
 var adminOnly = require( "../adminOnly" );
 var nodeMail = require( "./email" );
 
+var omitSensitive = function ( user ) {
+	if ( user.toJSON ) user = user.toJSON();
+	return _.omit( user, [ "password", "verificationHash" ] );
+};
+
 app.get('/services/users', adminOnly(), function( req, res ) {
 	User.collection().query(function(qb){
 		qb.orderBy('email','ASC'); 
 	}).fetch().then(function( users ){
 		users = _.map( users.toJSON(), function( user ) {
-			return _.omit( user, [ "password", "verificationHash" ] );
+			return omitSensitive( user );
 		});
 		res.send({data: users});
+	});
+});
+
+app.get( "/services/setadmin/:id/:setto", adminOnly(), function ( req, res ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	var setto = /^[ty1-9]/i.test( req.params.setto );
+
+	new User({
+		'id' : userid
+	}).fetch().then( function( user ) {
+		if ( !user ) {
+			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+		}
+
+		return user.save({ isAdmin: setto }, { patch: true }).then( function ( user ) {
+			res.send( omitSensitive( user ) );
+		});
+	}, function ( err ) {
+		res.status( 500 ).send( err );
 	});
 });
 
@@ -37,7 +61,7 @@ passport.use('signup', new LocalStrategy({
 					console.log( "POST USERS: creating a new user. Current count of users:", numberOfUsers );
 
 					var passHash = createHash( password );
-					var hashHash = createHash( passHash );
+					var hashHash = createHash( username + passHash );
 					var newUser = new User({
 						email: username,
 						password: passHash,
@@ -45,9 +69,6 @@ passport.use('signup', new LocalStrategy({
 						verificationHash: hashHash,
 						isAdmin: !numberOfUsers
 					});
-					// set the user's local credentials
-
-					console.log( "Hashy hash:", hashHash );
 		
 					// save the user
 					newUser.save().then(function(err) {
@@ -73,28 +94,51 @@ app.post('/services/users',
 	passport.authenticate( 'signup' ), 
 	function ( req, res ) {
 		var user = req.user.toJSON();
+		var hash = encodeURIComponent( user.verificationHash );
 		var subject = "Complete your registration at bitballs";
-		var htmlbody = "To complete your registration, copy this hash into the form:<br>" + user.verificationHash;
+		var htmlbody = "Click here to verify your email address:<br>";
+		htmlbody += "<a href='http://localhost:5000/services/verifyemail/" + user.id + "/" + hash + "'>";
+		htmlbody += "Verify Email Address";
+		htmlbody += "</a>";
 
 		nodeMail( user.email, 'signup@bitballs.com', subject, htmlbody, function ( err, info ) {
 			if ( err ) {
 				throw err;
 			}
-			res.send( _.omit( user, [ "password", "verificationHash" ] ) );
+			res.send( omitSensitive( user ) );
 		});
 	}
 );
 
-var verifyUser = function ( req, res, user ) {
-	if ( req.body.verificationHash === user.get( "verificationHash" ) ) {
-		//update as email verified
-		user.save({ verified: true, verificationHash: "" }, { patch: true }).then( function ( user ) {
-			res.send( _.omit( user, [ "password", "verificationHash" ] ) );
+app.get( "/services/verifyemail/:id/:verificationHash",
+	function ( req, res ) {
+		var userid = parseInt( req.params.id, 10 ) || 0;
+		var verificationHash = req.params.verificationHash;
+
+		new User({
+			'id' : userid
+		}).fetch().then( function( user ) {
+			if ( !user ) {
+				return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+			}
+
+			if ( user.get( "verified" ) ) {
+				return res.status( 500 ).send({ err: "Already verified." });
+			}
+
+			if ( verificationHash === user.get( "verificationHash" ) ) {
+				//update as email verified
+				return user.save({ verified: true, verificationHash: "" }, { patch: true }).then( function ( user ) {
+					res.redirect( "/account" );
+				});
+			} else {
+				return res.status( 401 ).send({ err: "Verification hash is incorrect." });
+			}
+		}, function ( err ) {
+			res.status( 500 ).send( err );
 		});
-	} else {
-		res.status( 401 ).send({ err: "Verification hash is incorrect." });
 	}
-};
+);
 
 app.put( "/services/users/:id",
 function ( req, res, next ) {
@@ -118,12 +162,17 @@ function ( req, res ) {
 			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
 		}
 
-		if ( !user.get( "verified" ) && req.body.verificationHash ) {
-			return verifyUser( req, res, user );
+		//Password updating
+		if ( req.body.newPassword ) {
+			if ( isValidPassword( user, req.body.password ) ) {
+				return user.save({ password: createHash( req.body.newPassword ) }, { patch: true }).then( function ( user ) {
+					res.send( omitSensitive( user ) );
+				});
+			} else {
+				return res.status( 401 ).send({ err: "Password is incorrect" });
+			}
 		}
 
-		// else other user updates
-		// ...
 	}, function ( err ) {
 		res.status( 500 ).send( err );
 	});
@@ -133,5 +182,38 @@ var createHash = function(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 };
 var isValidPassword = function(user, password) {
-	return bCrypt.compareSync(password, user.password);
-}; 
+	return bCrypt.compareSync(password, user.password || user.get( "password" ) );
+};
+
+app.delete( "/services/users/:id",
+function ( req, res, next ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	if ( req.isAdmin ) {
+		next();
+	} else if ( req.user.attributes.id === userid ) {
+		next();
+	} else {
+		res.status( 401 ).json({
+			err: "Must be logged in to delete yourself."
+		});
+	}
+},
+function ( req, res ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	new User({
+		'id' : userid
+	}).fetch().then( function( user ) {
+		if ( !user ) {
+			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+		}
+
+		user.destroy().then(function ( user ) {
+			res.send( user );
+		}, function ( err ) {
+			res.status( 500 ).send( err );
+		});
+
+	}, function ( err ) {
+		res.status( 500 ).send( err );
+	});
+});
