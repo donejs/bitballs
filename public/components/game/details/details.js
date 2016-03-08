@@ -112,7 +112,7 @@ exports.ViewModel = Map.extend(
 			get: function(){
 				var game = this.attr("game");
 				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+					var playerMap = this.attr("game.playerIdToHomeOrAwayMap");
 					var scores = {home: 0, away: 0};
 					game.attr("stats").each(function(stat){
 						if(stat.attr("type") === "1P") {
@@ -131,7 +131,7 @@ exports.ViewModel = Map.extend(
 			get: function(){
 				var game = this.attr("game");
 				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+					var playerMap = this.attr("game.playerIdToHomeOrAwayMap");
 					var scores = {home: 0, away: 0};
 
 					var time = this.attr("time");
@@ -150,20 +150,6 @@ exports.ViewModel = Map.extend(
 				}
 			},
 			type:"*"
-		},
-		playerIdToHomeOrAwayMap: {
-			type: "*",
-			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("homeTeam") && game.attr("awayTeam")) {
-					var map = {};
-					for(var i = 1; i <= 4; i++) {
-						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
-						map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
-					}
-					return map;
-				}
-			}
 		},
 		sortedStatsByPlayerId: {
 			type: "*",

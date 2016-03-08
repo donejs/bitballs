@@ -70,6 +70,20 @@ var Game = Map.extend({
 				var videoUrl = (keys && keys.length > 1 && keys[1]) || setVal;
 				return videoUrl;
 			}
+		},
+		playerIdToHomeOrAwayMap: {
+			type: "*",
+			get: function(){
+				var game = this;
+				if(this.attr("homeTeam") && this.attr("awayTeam")) {
+					var map = {};
+					for(var i = 1; i <= 4; i++) {
+						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
+						map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
+					}
+					return map;
+				}
+			}
 		}
 	},
 	statsForPlayerId: function(id) {
