@@ -15,13 +15,13 @@ var ViewModel = playerEdit.ViewModel;
 F.attach(QUnit);
 
 // viewmodel unit tests
-QUnit.module('player/edit', function(hooks){
+QUnit.module('components/player/edit/', function(hooks){
 
 	hooks.beforeEach(function(){
 		localStorage.clear();
 	});
 
-	QUnit.module('ViewModel', function(){
+	QUnit.module('components/player/edit/ - ViewModel', function(){
 
 		QUnit.test('Tests are running', function(assert){
 			assert.ok( true, "Passed!" );
