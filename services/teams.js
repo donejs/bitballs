@@ -1,6 +1,6 @@
 
 var app = require("../services/app");
-var bookshelf = require("../bookshelf");
+var bookshelf = require("../models/bookshelf");
 var Player = require("./players");
 var adminOnly = require( "../adminOnly" );
 
