@@ -51,7 +51,7 @@ npm start
 
 ### Create an Admin User
 
-Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user)
+Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/register)
 in your browser and follow the instructions.
 
 ### Enjoy
