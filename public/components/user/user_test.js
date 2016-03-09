@@ -5,7 +5,7 @@ import 'bitballs/models/fixtures/user';
 
 var ViewModel = user.ViewModel;
 
-QUnit.module('User: create', {
+QUnit.module('components/user/', {
 	beforeEach: function() {
 	}
 });

@@ -4,7 +4,7 @@ import defineFixtures, { tournaments } from 'bitballs/models/tournament/fixture'
 
 var ViewModel = details.ViewModel;
 
-QUnit.module('Tournament Details ViewModel', {
+QUnit.module('components/tournament/details/', {
     beforeEach: function () {
         localStorage.clear();
         defineFixtures();
