@@ -6,7 +6,7 @@ require("can/map/define/");
 require("can/route/");
 require("can/view/href/");
 
-var Tournament = require("bitballs/models/tournament/");
+var Tournament = require("bitballs/models/tournament");
 
 Component.extend({
 	tag: "tournament-list",

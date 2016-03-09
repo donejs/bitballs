@@ -1,7 +1,7 @@
 import QUnit from 'steal-qunit';
 import ViewModel from './viewmodel';
 
-import fixture, { tournamentData } from 'bitballs/models/tournament/fixture';
+import fixture, { tournamentData } from 'bitballs/models/fixtures/tournament';
 
 QUnit.module('tournament-list', function(){
 

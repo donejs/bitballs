@@ -5,7 +5,7 @@ import fixture from 'can-fixture';
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
 import './list';
-import defineFixtures from 'bitballs/models/tournament/fixture';
+import defineFixtures from 'bitballs/models/fixtures/tournament';
 import './details/test';
 import './list_test';
 

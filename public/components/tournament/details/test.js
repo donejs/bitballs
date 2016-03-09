@@ -1,6 +1,6 @@
 import QUnit from 'steal-qunit';
 import ViewModel from './viewModel';
-import defineFixtures, { tournaments } from 'bitballs/models/tournament/fixture';
+import defineFixtures, { tournaments } from 'bitballs/models/fixtures/tournament';
 
 QUnit.module('Tournament Details ViewModel', {
     beforeEach: function () {
