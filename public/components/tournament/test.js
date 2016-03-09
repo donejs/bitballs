@@ -20,9 +20,7 @@ QUnit.module('Tournament List', {
 
 QUnit.test('Create button is disabled while posting data', function () {
     var expectingRequest = true;
-    var requestPromise = new can.Deferred();
     var frag = can.stache('<tournament-list {app-state}="appState" {tournament}="tournament" />')({
-
         appState: {
             isAdmin: true
         },
@@ -31,18 +29,16 @@ QUnit.test('Create button is disabled while posting data', function () {
             date: '01/21/1987'
         }
     });
+    var resolveRequest;
 
     fixture('POST /services/tournaments', function (req, res) {
         ok(expectingRequest, 'Request was made');
 
+        // Determine when the request resolves, later
+        resolveRequest = res;
+
         // The request should only be made once
         expectingRequest = false;
-
-        // Commit the response so the UI updates
-        res({});
-
-        // Continue the tests
-        requestPromise.resolve();
     });
 
     $('#qunit-fixture').html(frag);
@@ -55,7 +51,9 @@ QUnit.test('Create button is disabled while posting data', function () {
         .click()
         .attr('disabled', 'disabled', 'Create button is disabled after click')
         .click()
-        .then(requestPromise.then)
+        .then(function () {
+            resolveRequest({});
+        })
         .attr('disabled', undefined,
             'Create button is enabled after the request is resolved');
 });

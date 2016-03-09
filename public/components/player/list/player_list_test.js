@@ -12,6 +12,7 @@ var vm;
 QUnit.module("Player List Component", {
 	beforeEach: function () {
 		localStorage.clear();
+		fixture.delay = 1;
 		defineFixtures();
 		vm = new PlayerList.ViewModel();
 	},
@@ -44,24 +45,21 @@ QUnit.test("removeEdit removes editingPlayer", function (assert) {
 
 QUnit.test('Loading message shown while players list is loaded', function () {
 	var frag = can.stache('<player-list />')();
-	var isResolved = false;
 	var players = $('player-list', frag).viewModel().attr('players');
+	var resolveFixture;
 	
 	$('#qunit-fixture').html(frag);
 
-	players.then(function () {
-		isResolved = true;
+	fixture('GET /services/players', function (req, res) {
+		resolveFixture = res;
 	});
 
 	F('tbody tr.info')
-		.then(function () {
-			equal(isResolved, false, 'The list is not resolved');
-		})
 		.exists('Loading element is present')
 		.text('Loading', 'Loading message is shown')
-		.wait(fixture.delay) // Wait for the fixture to resolve
 		.then(function () {
-			equal(isResolved, true, 'The list is resolved');
+			ok(true, 'Request is resolved');
+			resolveFixture({ data: [] });
 		})
 		.closest('tbody')
 		.size(0, 'Loading element was removed');
@@ -74,7 +72,7 @@ QUnit.test('Placeholder message is shown when player list is empty', function ()
 	fixture('GET /services/players', function () {
 		return { data: [] };
 	});
-	
+
 	$('#qunit-fixture').html(frag);
 
 	F('tbody tr.empty-list-placeholder')

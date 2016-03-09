@@ -13,6 +13,7 @@ var DetailsViewModel = details.ViewModel;
 QUnit.module("bitballs/game/details/", {
     setup: function() {
         localStorage.clear();
+        fixture.delay = 1;
 
         this.vm = new DetailsViewModel({
             gameId: 1,
@@ -61,29 +62,13 @@ QUnit.test('A stat can be deleted by an admin', function () {
 
     $('#qunit-fixture').html(frag);
 
-    QUnit.stop();
-
-    var vm = $('game-details').viewModel();
-
-    vm.bind('game', function(ev, game) {
-        QUnit.start();
-
-        F('.stat-point')
-            .exists('Stat points exist')
-            .size(6, 'Number of stats is correct')
-            .first()
-            .find('.destroy-btn')
-            .size(0, 'There is no destroy button')
-            .then(function () {
-                session.attr('isAdmin', true);
-                ok(true, 'The user is given admin privileges');
-            })
-            .size(1, 'Destroy button is inserted')
-            .click()
-            .wait(fixture.delay)
-            // For some reason .size(0) doesn't work here
-            .then(function () {
-                equal($(this).closest('tbody').length, 0, 'Stat is removed');
-            });
-    });
+    F('.stat-point .destroy-btn')
+        .size(0, 'There is no destroy button')
+        .then(function () {
+            session.attr('isAdmin', true);
+            ok(true, 'The user is given admin privileges');
+        })
+        .size(6, 'Destroy buttons are inserted')
+        .click()
+        .size(5, 'Clicking the destroy button removed a stat');
 });
