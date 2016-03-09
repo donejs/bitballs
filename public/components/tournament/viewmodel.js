@@ -1,6 +1,6 @@
 var Map = require("can/map/");
 var Team = require("bitballs/models/team");
-var Game = require("bitballs/models/game/");
+var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
 var Tournament = require("bitballs/models/tournament/");
 

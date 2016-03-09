@@ -34,7 +34,7 @@ require("can/view/href/");
 
 var platform = require( "steal-platform" );
 var Tournament = require("bitballs/models/tournament/");
-var Game = require("bitballs/models/game/");
+var Game = require("bitballs/models/game");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
