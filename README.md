@@ -39,6 +39,7 @@ pg_ctl status -D {DATA_DIR}
 Then create the database and schema by running:
 
 ```
+createdb bitballs
 npm run db-migrate
 ```
 
