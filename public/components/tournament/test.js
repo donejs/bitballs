@@ -4,10 +4,10 @@ import 'can/view/stache/stache';
 import fixture from 'can-fixture';
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
-import './list';
+import './list/list';
 import defineFixtures from 'bitballs/models/tournament/fixture';
-import './details/test';
-import './list_test';
+import './details/details_test';
+import './list/list_test';
 
 F.attach(QUnit);
 
