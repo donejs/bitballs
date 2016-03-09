@@ -1,4 +1,5 @@
 require("can/map/define/");
+require('can/route/');
 var User = require("bitballs/models/user");
 var Session = require("bitballs/models/session");
 
