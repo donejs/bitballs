@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import QUnit from 'steal-qunit';
-import ViewModel from 'bitballs/components/user/view-model';
+import user from 'bitballs/components/user/user';
 import 'bitballs/models/fixtures/user';
 
-QUnit.module('User: create', {
+var ViewModel = user.ViewModel;
+
+QUnit.module('components/user/', {
 	beforeEach: function() {
 	}
 });

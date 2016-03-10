@@ -38,7 +38,7 @@ const AppState = AppMap.extend({
 						title: "Tournaments",
 						componentName: "tournament-list",
 						attributes: "{app-state}='../.'",
-						moduleName: "tournament/list"
+						moduleName: "tournament/list/"
 					};
 
 				} else if(this.attr("page") === "users") {
@@ -54,7 +54,7 @@ const AppState = AppMap.extend({
 						title: "Account",
 						componentName: "user-create",
 						attributes: "{(session)}='../session'",
-						moduleName: "user/create"
+						moduleName: "user/"
 					};
 
 				} else {

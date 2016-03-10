@@ -8,8 +8,7 @@ var fixture = require('can-fixture');
 F.attach(QUnit);
 
 var vm;
-
-QUnit.module("Player List Component", {
+QUnit.module("components/player/list/", {
 	beforeEach: function () {
 		localStorage.clear();
 		fixture.delay = 1;
