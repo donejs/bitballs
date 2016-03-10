@@ -21,45 +21,47 @@ const AppState = AppMap.extend({
 					return {
 						title: "Game",
 						componentName: "game-details",
-						attributes: "game-id='{gameId}' session='{session}'",
+						attributes: "{(game-id)}='../gameId' {(session)}='../session'",
 						moduleName: "game/details/"
 					};
+
 				} else if(this.attr("tournamentId")) {
 					return {
 						title: "Tournament",
 						componentName: "tournament-details",
-						attributes: "{tournament-id}='tournamentId' {session}='session'",
+						attributes: "{tournament-id}='../tournamentId' {session}='../session'",
 						moduleName: "tournament/details/"
 					};
+
 				} else if(this.attr("page") === "tournaments") {
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
 						attributes: "{app-state}='../.'",
-						moduleName: "tournament/list"
+						moduleName: "tournament/list/"
 					};
 
+				} else if(this.attr("page") === "users") {
+					return {
+						title: "Users Admin",
+						componentName: "users-admin",
+						attributes: "{(session)}='../session'",
+						moduleName: "users/users"
+					};
 
-				} else if(this.attr("page") === "register"  || this.attr("page") === "account") {
+				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
 					return {
 						title: "Account",
 						componentName: "user-create",
-						attributes: "session='{session}'",
-						moduleName: "user/create"
-					};
-				} else if( this.attr("gameId") ) {
-					return {
-						title: "Game",
-						componentName: "game-details",
-						attributes: "{session}='../.'",
-						moduleName: "game/details/"
+						attributes: "{(session)}='../session'",
+						moduleName: "user/"
 					};
 
 				} else {
 					return {
 						title: "Players",
 						componentName: "player-list",
-						attributes: "session='{session}'",
+						attributes: "{(session)}='../session'",
 						moduleName: "player/list/"
 					};
 
