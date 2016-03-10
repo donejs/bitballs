@@ -1,7 +1,7 @@
 
 var app = require("../services/app");
 var bookshelf = require("../models/bookshelf");
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 var Tournament = require("../models/tournament");
 
