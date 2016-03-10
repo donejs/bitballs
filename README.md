@@ -39,6 +39,7 @@ pg_ctl status -D {DATA_DIR}
 Then create the database and schema by running:
 
 ```
+createdb bitballs
 npm run db-migrate
 ```
 
@@ -50,7 +51,7 @@ npm start
 
 ### Create an Admin User
 
-Navigate to [http://localhost:5000/dev.html#!user](http://localhost:5000/dev.html#!user)
+Navigate to [http://localhost:5000/register](http://localhost:5000/register)
 in your browser and follow the instructions.
 
 ### Enjoy
