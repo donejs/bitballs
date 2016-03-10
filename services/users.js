@@ -4,7 +4,7 @@ var User = require("../models/user");
 var _ = require("lodash");
 var bCrypt = require("bcrypt-nodejs");
 var LocalStrategy = require('passport-local').Strategy;
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 var nodeMail = require( "./email" );
 
 var omitSensitive = function ( user ) {

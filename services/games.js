@@ -3,7 +3,7 @@ var app = require("../services/app");
 var bookshelf = require("../models/bookshelf");
 var Stat = require("./stats");
 var Team = require("./teams");
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 var Game = bookshelf.Model.extend({
 	tableName: 'games',
