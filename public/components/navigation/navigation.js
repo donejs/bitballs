@@ -50,8 +50,8 @@ can.Component.extend({
 			this.attr("appState").attr("session").destroy();
 			this.attr("appState").attr("session", null);
 		},
-		closeDropdown: function () {
-			$( ".session-menu .open .dropdown-toggle" ).dropdown( "toggle" );
+		closeDropdown: function ( el ) {
+			$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
 		}
 	}
 });
