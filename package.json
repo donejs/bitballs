@@ -25,6 +25,7 @@
     "express-session": "^1.11.3",
     "knex": "^0.8.6",
     "lodash": "^3.10.1",
+    "nodemailer": "^2.3.0",
     "npm": "^3.7.2",
     "passport": "~0.2.0",
     "passport-local": "^1.0.0",
@@ -47,7 +48,8 @@
     "documentjs": "^0.3.3",
     "donejs": "^0.7.0-pre.1",
     "donejs-cli": "^0.6.6",
-    "donejs-deploy": "^0.3.1"
+    "donejs-deploy": "^0.3.1",
+    "maildev": "^0.12.1"
   },
   "donejs": {
     "deploy": {

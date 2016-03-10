@@ -29,6 +29,13 @@ exports.ViewModel = can.Map.extend({
     },
     session: {
       value: null
+    },
+    userStatus: {
+      get: function () {
+        if ( this.attr( "user" ).isNew() ) return "new";
+        if ( !this.attr( "user.verified" ) ) return "pending";
+        return "verified";
+      }
     }
   },
   createUserHandler: function(ev){
@@ -36,19 +43,17 @@ exports.ViewModel = can.Map.extend({
     this.saveUser();
   },
   saveUser: function(){
-    var self = this,
-      isNew = this.attr("user").isNew()
-
+    var self = this;
+    var isNew = this.attr("user").isNew();
     var promise = this.attr("user").save().then(function(user){
 
-      // Clear password:
-      user.attr("password", "");
+      user.attr( "password", "" );
+      user.attr( "verificationHash", "" );
       user.removeAttr("newPassword");
 
       if (!self.attr("session")){
         // Create session:
         self.attr("session", new Session({user: user}));
-
       } else {
         // Update session:
         self.attr("session").attr({user: user});
@@ -62,6 +67,16 @@ exports.ViewModel = can.Map.extend({
     this.attr('savePromise', promise);
 
     return promise;
+  },
+  nuclearOption: function () {
+    var self = this;
+    if ( confirm( "Are you sure you want to delete your account?" ) ) {
+      this.attr("user").destroy(function () {
+        self.attr("session").destroy();
+        self.attr("session", null);
+        can.route.attr("page", "register");
+      });
+    }
   }
 });
 
