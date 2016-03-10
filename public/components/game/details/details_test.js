@@ -72,3 +72,36 @@ QUnit.test('A stat can be deleted by an admin', function () {
         .click()
         .size(5, 'Clicking the destroy button removed a stat');
 });
+
+
+QUnit.test('Deleting a stat does not change playback location', function () {
+
+    var gotoCalled = false;
+    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
+        gameId: this.vm.attr('gameId'),
+        session: new Session({
+            isAdmin: true
+        })
+    });
+
+    $('#qunit-fixture').html(frag);
+
+    QUnit.stop();
+
+    var vm = $('game-details').viewModel();
+
+    vm.gotoTimeMinus5 = function () {
+        gotoCalled = true;
+    };
+
+    vm.bind('game', function(ev, game) {
+        QUnit.start();
+
+        F('.stat-point .destroy-btn')
+            .exists('Destroy button exists')
+            .click()
+            .then(function () {
+                notOk(gotoCalled, 'Seek was not called');
+            });
+    });
+});

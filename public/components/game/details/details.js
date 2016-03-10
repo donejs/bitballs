@@ -236,7 +236,7 @@ exports.ViewModel = Map.extend(
 		event && event.stopPropagation();
 	},
 
-	deleteStat: function (stat, el, event) {
+	deleteStat: function (stat, event) {
 		stat.destroy();
 		event && event.stopPropagation();
 	},
