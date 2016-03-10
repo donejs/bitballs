@@ -83,7 +83,7 @@ exports.ViewModel = can.Map.extend({
 });
 
 exports.Component = Component.extend({
-	tag: "user-create",
+	tag: "bitballs-user",
 	template: require("./user.stache!"),
 	viewModel: exports.ViewModel
 });
