@@ -49,6 +49,9 @@ can.Component.extend({
 		logout: function(){
 			this.attr("appState").attr("session").destroy();
 			this.attr("appState").attr("session", null);
+		},
+		closeDropdown: function () {
+			$( ".session-menu .open .dropdown-toggle" ).dropdown( "toggle" );
 		}
 	}
 });
