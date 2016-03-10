@@ -12,6 +12,14 @@ var omitSensitive = function ( user ) {
 	return _.omit( user, [ "password", "verificationHash" ] );
 };
 
+var disallowAdminOnlyChanges = function ( onThis, withThis ) {
+	var i, prop, forProps = [ "verified", "verificationHash", "isAdmin" ];
+	for ( i = 0; i < forProps.length; i++ ) {
+		prop = forProps[ i ];
+		onThis[ prop ] = withThis[ prop ];
+	}
+};
+
 app.get('/services/users', adminOnly(), function( req, res ) {
 	User.collection().query(function(qb){
 		qb.orderBy('email','ASC'); 
@@ -20,25 +28,6 @@ app.get('/services/users', adminOnly(), function( req, res ) {
 			return omitSensitive( user );
 		});
 		res.send({data: users});
-	});
-});
-
-app.get( "/services/setadmin/:id/:setto", adminOnly(), function ( req, res ) {
-	var userid = parseInt( req.params.id, 10 ) || 0;
-	var setto = /^[ty1-9]/i.test( req.params.setto );
-
-	new User({
-		'id' : userid
-	}).fetch().then( function( user ) {
-		if ( !user ) {
-			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
-		}
-
-		return user.save({ isAdmin: setto }, { patch: true }).then( function ( user ) {
-			res.send( omitSensitive( user ) );
-		});
-	}, function ( err ) {
-		res.status( 500 ).send( err );
 	});
 });
 
@@ -162,6 +151,10 @@ function ( req, res ) {
 			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
 		}
 
+		if ( !req.isAdmin ) {
+			disallowAdminOnlyChanges( req.body, user );
+		}
+
 		//Password updating
 		if ( req.body.newPassword ) {
 			if ( isValidPassword( user, req.body.password ) ) {
@@ -171,8 +164,11 @@ function ( req, res ) {
 			} else {
 				return res.status( 401 ).send({ err: "Password is incorrect" });
 			}
+		} else {
+			return user.save( omitSensitive( req.body ), { patch: true } ).then( function ( user ) {
+				res.send( omitSensitive( user ) );
+			});
 		}
-
 	}, function ( err ) {
 		res.status( 500 ).send( err );
 	});

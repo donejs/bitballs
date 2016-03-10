@@ -47,8 +47,10 @@ exports.ViewModel = can.Map.extend({
     var isNew = this.attr("user").isNew();
     var promise = this.attr("user").save().then(function(user){
 
-      user.attr( "password", "" );
-      user.attr( "verificationHash", "" );
+      user.attr({
+        password: "",
+        verificationHash: ""
+      });
       user.removeAttr("newPassword");
 
       if (!self.attr("session")){
@@ -68,7 +70,7 @@ exports.ViewModel = can.Map.extend({
 
     return promise;
   },
-  nuclearOption: function () {
+  deleteUser: function () {
     var self = this;
     if ( confirm( "Are you sure you want to delete your account?" ) ) {
       this.attr("user").destroy(function () {
