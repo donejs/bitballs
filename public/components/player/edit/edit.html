@@ -16,11 +16,16 @@
 	import Session from "bitballs/models/session";
 
 	var template = can.view('#player-edit-test-template'),
-		session = new Session();
+		session = new Session({
+			user: {
+				isAdmin: true
+			}
+		});
 	
 	can.$("#main").html(  template({
 		route: route,
 		session: session
 	}) );
+
 	route.ready();
 </script>

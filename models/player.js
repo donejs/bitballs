@@ -1,4 +1,4 @@
-var bookshelf = require("../bookshelf"),
+var bookshelf = require("./bookshelf"),
 	checkit = require("checkit");
 
 var Player = bookshelf.Model.extend({

@@ -1,8 +1,10 @@
 import QUnit from 'steal-qunit';
-import ViewModel from './viewModel';
-import defineFixtures, { tournaments } from 'bitballs/models/tournament/fixture';
+import details from './details';
+import defineFixtures, { tournaments } from 'bitballs/models/fixtures/tournament';
 
-QUnit.module('Tournament Details ViewModel', {
+var ViewModel = details.ViewModel;
+
+QUnit.module('components/tournament/details/', {
     beforeEach: function () {
         localStorage.clear();
         defineFixtures();
