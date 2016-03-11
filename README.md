@@ -9,7 +9,7 @@ the players, teams, games, rounds and recordings of a basketball tournament.
 It also serves as an example of how to DoneJS use with sessions, user
 privileges, RESTful services, and ORM models.
 
-To run the Bitballs app locally, run its tests, or generate its documentation,
+To run the Bitballs app locally, run its tests, or generate its documentation
 follow the steps outlined below.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
