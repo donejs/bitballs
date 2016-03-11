@@ -6,7 +6,7 @@
 
 Bitballs is a [DoneJS](https://donejs.com) app that enables users to coordinate
 the players, teams, games, rounds and recordings of a basketball tournament.
-It also serves as an example of how to use DoneJS use with sessions, user
+It also serves as an example of how to DoneJS use with sessions, user
 privileges, RESTful services, and ORM models.
 
 To run the Bitballs app locally, run its tests, or generate its documentation,
