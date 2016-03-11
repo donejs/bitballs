@@ -23,7 +23,7 @@ follow the steps outlined below.
 - [Download Source](#download-source)
 - [Install Dependencies](#install-dependencies)
 - [Prepare the Database](#prepare-the-database)
-- [Start the server](#start-the-server)
+- [Start the Server](#start-the-server)
 - [Create an Admin User](#create-an-admin-user)
 - [Enjoy](#enjoy)
 
@@ -125,7 +125,7 @@ Next, create the database schema that the application expects by running:
 npm run db-migrate
 ```
 
-### Start the server
+### Start the Server
 
 With all the prerequisite setup completed the server can be started by running
 
