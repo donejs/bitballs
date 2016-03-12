@@ -12,7 +12,12 @@
 		
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if appState.session}}
-				<li>
+				{{#if appState.session.isAdmin}}
+					<li {{#isActive page='users'}}class='active'{{/isActive}}>
+						<a href="{{routeUrl page='users'}}">Users</a>
+					</li>
+				{{/if}}
+				<li {{#isActive page='account'}}class='active'{{/isActive}}>
 					<a href="{{routeUrl page='account'}}">Account</a>
 				</li>
 				<li>

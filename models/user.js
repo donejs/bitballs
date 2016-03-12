@@ -1,4 +1,4 @@
-var bookshelf = require("../bookshelf");
+var bookshelf = require("./bookshelf");
 var checkit = require('checkit');
 
 var User = bookshelf.Model.extend({

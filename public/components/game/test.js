@@ -1,1 +1,0 @@
-import './details/details_test';
