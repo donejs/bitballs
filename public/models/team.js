@@ -1,6 +1,7 @@
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
+var set = require("can-set");
 var Player = require("./player");
 
 var Team = Map.extend({
@@ -52,11 +53,17 @@ Team.List = can.List.extend({Map: Team},{
 	}
 });
 
+Team.algebra = new set.Algebra(
+	new set.Translate("where","where"),
+	set.comparators.sort('sortBy')
+);
+
 var teamConnection = superMap({
   Map: Team,
   List: Team.List,
   url: "/services/teams",
-  name: "team"
+  name: "team",
+  algebra: Team.algebra
 });
 
 tag("team-model", teamConnection);

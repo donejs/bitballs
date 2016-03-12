@@ -6,6 +6,7 @@
 
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
+var set = require("can-set");
 var tag = require('can-connect/can/tag/');
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
@@ -56,7 +57,7 @@ var Game = Map.extend({
 		stats: {
 			Type: Stat.List,
 			set: function(newVal){
-				newVal.__listSet = {gameId: this.attr("id")};
+				newVal.__listSet = {where: {gameId: this.attr("id")}};
 				return newVal;
 			}
 		},
@@ -99,11 +100,17 @@ var Game = Map.extend({
 });
 Game.List = can.List.extend({Map: Game},{});
 
+Game.algebra = new set.Algebra(
+	new set.Translate("where","where"),
+	set.comparators.sort('sortBy')
+);
+
 var gameConnection = superMap({
   Map: Game,
   List: Game.List,
   url: "/services/games",
-  name: "game"
+  name: "game",
+  algebra: Game.algebra
 });
 
 tag("game-model", gameConnection);

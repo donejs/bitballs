@@ -23,7 +23,7 @@ var Games = bookshelf.Collection.extend({
 });
 
 app.get('/services/games', function(req, res){
-	new Games().query({where: req.query}).fetch().then(function(games){
+	Game.collection().query(req.query).fetch().then(function(games){
 		res.send({data: games.toJSON()});
 	});
 });

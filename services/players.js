@@ -19,9 +19,7 @@ var clean = function(data){
 };
 
 app.get('/services/players', function(req, res){
-	Player.collection().query(function(qb){
-		qb.orderBy('name','DESC'); 
-	}).fetch().then(function(players){
+	Player.collection().query(req.query).fetch().then(function(players){
 		res.send({data: players.toJSON()});
 	});
 });
