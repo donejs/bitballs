@@ -12,7 +12,7 @@ var ViewModel = exports.ViewModel = can.Map.extend({
 	define: {
 		players: {
 			value: function(){
-				return Player.getList({});
+				return Player.getList({orderBy: "name"});
 			}
 		}
 	},

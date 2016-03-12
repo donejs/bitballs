@@ -19,7 +19,9 @@ exports.ViewModel = Map.extend({
 		},
 		gamesPromise: {
 			get: function(){
-				return Game.getList({tournamentId: this.attr("tournamentId")});
+				return Game.getList({
+					where: {tournamentId: this.attr("tournamentId")}
+				});
 			}
 		},
 		games: {
@@ -47,7 +49,7 @@ exports.ViewModel = Map.extend({
 		teamsPromise: {
 			get: function(){
 				return Team.getList({
-					tournamentId: this.attr("tournamentId")
+					where: {tournamentId: this.attr("tournamentId")}
 				});
 			}
 		},
@@ -84,18 +86,27 @@ exports.ViewModel = Map.extend({
 		team: {
 			Value: Team
 		},
-
-		allPlayers: {
+		playersPromise: {
 			value: function(){
-				return new Player.List({});
+				return Player.getList({orderBy: "name"})
+			}
+		},
+		players: {
+			get: function(set, resolve){
+				this.attr("playersPromise").then(resolve);
 			}
 		},
 		playerIdMap: {
 			get: function(){
-				var map = {};
-				this.attr("allPlayers").each(function(player){
-					map[player.attr("id")] = player;
-				});
+				var map = {},
+					players = this.attr("players");
+
+				if(players) {
+					players.each(function(player){
+						map[player.attr("id")] = player;
+					});
+				}
+
 				return map;
 			},
 			type: "*"
@@ -145,10 +156,11 @@ exports.ViewModel = Map.extend({
 	},
 	availablePlayersFor: function(team, number){
 
-		var allPlayers = this.attr("allPlayers"),
+		var allPlayers = this.attr("players"),
 			teams = this.attr('teams');
-		var usedIds = {};
-		if(teams) {
+		if(allPlayers && teams) {
+			var usedIds = {};
+
 			teams.each(function(tm){
 				if(tm !== team) {
 					[1,2,3,4].forEach(function(index){
@@ -156,17 +168,21 @@ exports.ViewModel = Map.extend({
 					});
 				}
 			});
+
+
+			[1,2,3,4].forEach(function(index){
+				if(index != number) {
+					usedIds[team.attr("player"+index+"Id")] = true;
+				}
+			});
+			return allPlayers.filter(function(player){
+				return !usedIds[player.attr("id")];
+			});
+		} else {
+			return [];
 		}
 
-		[1,2,3,4].forEach(function(index){
-			if(index != number) {
-				usedIds[team.attr("player"+index+"Id")] = true;
-			}
-		});
-		return allPlayers.filter(function(player){
-			return !usedIds[player.attr("id")];
-		});
-		
+
 
 	},
 	createTeam: function(ev){
