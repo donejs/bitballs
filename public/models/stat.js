@@ -1,6 +1,7 @@
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
+var set = require("can-set");
 require("can/map/define/");
 
 
@@ -31,11 +32,17 @@ var Stat = Map.extend({
 });
 Stat.List = can.List.extend({Map: Stat},{});
 
+Stat.algebra = new set.Algebra(
+	new set.Translate("where","where"),
+	set.comparators.sort('sortBy')
+);
+
 var statConnection = superMap({
-  Map: Stat,
-  List: Stat.List,
-  url: "/services/stats",
-  name: "stat"
+	Map: Stat,
+	List: Stat.List,
+	url: "/services/stats",
+	name: "stat",
+	algebra: Stat.algebra
 });
 
 tag("stat-model", statConnection);

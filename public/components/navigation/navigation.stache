@@ -1,12 +1,12 @@
 <nav class="navbar navbar-default">
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	    <a href="/" class="pull-left main-logo">BitBalls</a>
+		<a href="/" class="pull-left main-logo">BitBalls</a>
 		<ul class="main-menu nav navbar-nav">
 		  <li role="presentation" {{#isActive page='tournaments'}}class='active'{{/isActive}}>
-		  	<a href="{{routeUrl page='tournaments'}}">Tournaments</a>
+				<a href="{{routeUrl page='tournaments'}}">Tournaments</a>
 		  </li>
 		  <li role="presentation" {{#isActive page='players'}}class='active'{{/isActive}}>
-		  	<a href="{{routeUrl page='players'}}">Players</a>
+				<a href="{{routeUrl page='players'}}">Players</a>
 		  </li>
 		</ul>
 		
@@ -24,38 +24,50 @@
 					<a href="javascript://" ($click)="logout()">Logout</a>
 				</li>
 			{{else}}
-			<li class="dropdown">
-				<a href="javascript://" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-					aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li>
-						<form ($submit)="createSession(%event)" action="">
-							<div class="form-group form-group-sm">
-							    <input  
-							    	class="form-control" 
-							    	id="user-email" 
-							    	placeholder="email"
-							    	{($value)}="loginSession.user.email"/>
-							    
-							</div>
-							<div class="form-group form-group-sm">
-							    <input  
-							        placeholder="password"
-							    	class="form-control" 
-							    	type="password"
-							    	id="user-password" 
-							    	{($value)}="loginSession.user.password"/>
-							    
-							</div>
-							<button type="submit" class="btn btn-primary btn-sm" >Login</button>
-							<a href="{{routeUrl page='register'}}" class="register-btn btn btn-link">or register</a>
-							{{#if sessionPromise.isRejected}}
-								<p class="text-danger">{{sessionPromise.reason.responseJSON.message}}</p>
-							{{/if}}
-						</form>
-					</li>
-				</ul>
-			</li>
+				<li class="dropdown">
+					<a href="javascript://"
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						role="button" 
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+						Login <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<form ($submit)="createSession(%event)" action="">
+								<div class="form-group form-group-sm">
+									<input  
+										class="form-control" 
+										id="user-email" 
+										placeholder="email"
+										{($value)}="loginSession.user.email"
+									>
+								</div>
+								<div class="form-group form-group-sm">
+									<input  
+										placeholder="password"
+										class="form-control" 
+										type="password"
+										id="user-password" 
+										{($value)}="loginSession.user.password"
+									>
+								</div>
+								<button type="submit" class="btn btn-primary btn-sm" >Login</button>
+								<a href="{{routeUrl page='register'}}"
+									class="register-btn btn btn-link"
+									($click)="closeDropdown( %element )"
+								>
+									or register
+								</a>
+								{{#if sessionPromise.isRejected}}
+									<p class="text-danger">{{sessionPromise.reason.responseJSON.message}}</p>
+								{{/if}}
+							</form>
+						</li>
+					</ul>
+				</li>
 			{{/if}}
 		</ul>
 	</div>

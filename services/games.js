@@ -3,7 +3,7 @@ var app = require("../services/app");
 var bookshelf = require("../models/bookshelf");
 var Stat = require("./stats");
 var Team = require("./teams");
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 var Game = bookshelf.Model.extend({
 	tableName: 'games',
@@ -23,7 +23,7 @@ var Games = bookshelf.Collection.extend({
 });
 
 app.get('/services/games', function(req, res){
-	new Games().query({where: req.query}).fetch().then(function(games){
+	Game.collection().query(req.query).fetch().then(function(games){
 		res.send({data: games.toJSON()});
 	});
 });

@@ -24,7 +24,11 @@
               {{#is id session.user.id}}
                 {{isAdmin}}
               {{else}}
-                <input ($click)="toggleAdmin( ., %element, %event )" type="checkbox" {{#if isAdmin}}checked{{/if}}>
+                <input type="checkbox"
+                  ($change)="setAdmin( ., %element.checked )"
+                  {$checked}="isAdmin"
+                  {$disabled}="isSaving"
+                >
               {{/is}}
             </td>
           </tr>

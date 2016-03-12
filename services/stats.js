@@ -1,7 +1,7 @@
 
 var app = require("../services/app");
 var bookshelf = require("../models/bookshelf");
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 var Stat = bookshelf.Model.extend({
 	tableName: 'stats'
@@ -15,7 +15,7 @@ var clean = function(data){
 };
 
 app.get('/services/stats', function(req, res){
-	Stat.collection().query({where: req.query}).fetch().then(function(stats){
+	Stat.collection().query(req.query).fetch().fetch().then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });

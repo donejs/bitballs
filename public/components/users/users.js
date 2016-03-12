@@ -14,13 +14,8 @@ export const ViewModel = Map.extend({
       }
     }
   },
-  toggleAdmin: function ( user, el, ev ) {
-    var userid = user.attr( "id" );
-    var setto = el.checked;
-    el.checked = !setto;
-    return $.get( "/services/setadmin/"+userid+"/"+setto ).then(function () {
-      el.checked = setto;
-    });
+  setAdmin: function ( user, isAdmin ) {
+    return user.attr( "isAdmin", isAdmin ).save();
   }
 });
 

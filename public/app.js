@@ -52,7 +52,7 @@ const AppState = Map.extend({
 				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
 					return {
 						title: "Account",
-						componentName: "user-create",
+						componentName: "bitballs-user",
 						attributes: "{(session)}='../session'",
 						moduleName: "user/"
 					};
