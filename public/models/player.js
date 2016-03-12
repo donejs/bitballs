@@ -2,6 +2,7 @@ var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
+var set = require("can-set");
 require("can/map/define/");
 
 var Player = Map.extend({
@@ -53,11 +54,17 @@ Player.List = can.List.extend({Map: Player},{
 	}
 });
 
+Player.algebra = new set.Algebra(
+	new set.Translate("where","where"),
+	set.comparators.sort('orderBy')
+);
+
 var playerConnection = superMap({
   Map: Player,
   List: Player.List,
   url: "/services/players",
-  name: "player"
+  name: "player",
+  algebra: Player.algebra
 });
 
 tag("player-model", playerConnection);

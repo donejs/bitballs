@@ -22,13 +22,11 @@
 					{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
 				</a>
 				{{#if session.isAdmin}}
-					<td>
-						<button type="button" class="btn btn-danger" 
-							($click)="destroy()"
-							{{#isDestroying}}disabled{{/isDestroying}}>
-								<span class='glyphicon glyphicon-remove'/>
-						</button>
-					</td>
+					<button type="button" class="btn btn-danger btn-xs"
+						($click)="destroy()"
+						{{#isDestroying}}disabled{{/isDestroying}}>
+							<span class='glyphicon glyphicon-remove'/>
+					</button>
 				{{/if}}
 			</td>
 		{{/each}}
@@ -42,7 +40,7 @@
 {{#if session.isAdmin}}
 <h4>New Game</h4>
 <form ($submit)="createGame(%event)" action="">
-	
+
 	<div class="form-group">
 	    <label for="game-round">round</label>
 	    <select {($value)}="game.round" class="form-control" id="game-round">
@@ -51,7 +49,7 @@
 	    	{{/roundNames}}
 	    </select>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="game-court">court</label>
 	    <select {($value)}="game.court" class="form-control" id="game-court">
@@ -61,7 +59,7 @@
 	    	<option value="4">4</option>
 	    </select>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="game-home">Home team</label>
 	    <select {($value)}="game.homeTeamId" class="form-control" id="game-home">
@@ -78,14 +76,14 @@
 	    	{{/each}}
 	    </select>
 	</div>
-	
 
-	
+
+
 	<div class="form-group">
 	    <label for="game-videoUrl">YouTube URL</label>
 	    <input type="text" class="form-control" id="game-videoUrl" placeholder="https://www.youtube.com/watch?v=y5z1Ym2uJfs" {($value)}="{game.videoUrl}"/>
 	</div>
-	
+
 	<button type="submit" class="btn btn-default" >Create</button>
 </form>
 {{/if}}
@@ -116,7 +114,7 @@
 		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
 		{{#if session.isAdmin}}
 			<td>
-				<button type="button" class="btn btn-danger" 
+				<button type="button" class="btn btn-danger"
 					($click)="destroy()"
 					{{#isDestroying}}disabled{{/isDestroying}}>
 						<span class='glyphicon glyphicon-remove'/>
@@ -133,12 +131,12 @@
 {{#if session.isAdmin}}
 <h4>New Team</h4>
 <form ($submit)="createTeam(%event)" action="">
-	
+
 	<div class="form-group">
 	    <label for="team-name">Name</label>
 	    <input type="text" class="form-control" id="team-name" placeholder="team name" {($value)}="team.name"/>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="team-color">Color</label>
 	    <select {($value)}="team.color" class="form-control" id="team-color">
@@ -148,7 +146,7 @@
 	    </select>
 	  </div>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="team-player1">Player 1</label>
 	    <select {($value)}="team.player1Id" class="form-control" id="team-player1">
@@ -159,7 +157,7 @@
 	    </select>
 	  </div>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="team-player2">Player 2</label>
 	    <select {($value)}="team.player2Id" class="form-control" id="team-player2">
@@ -170,7 +168,7 @@
 	    </select>
 	  </div>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="team-player3">Player 3</label>
 	    <select {($value)}="team.player3Id" class="form-control" id="team-player3">
@@ -181,7 +179,7 @@
 	    </select>
 	  </div>
 	</div>
-	
+
 	<div class="form-group">
 	    <label for="team-player4">Player 4</label>
 	    <select {($value)}="team.player4Id" class="form-control" id="team-player4">
@@ -192,7 +190,7 @@
 	    </select>
 	  </div>
 	</div>
-	
+
 	<button type="submit" class="btn btn-default" >Create</button>
 </form>
 {{/if}}

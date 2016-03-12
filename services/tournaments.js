@@ -1,12 +1,12 @@
 
-var app = require("../app");
-var bookshelf = require("../bookshelf");
-var adminOnly = require( "../adminOnly" );
+var app = require("../services/app");
+var bookshelf = require("../models/bookshelf");
+var adminOnly = require( "./adminOnly" );
 
 var Tournament = require("../models/tournament");
 
 app.get('/services/tournaments', function(req, res){
-	Tournament.collection().fetch().then(function(tournaments){
+	Tournament.collection().query(req.query).fetch().then(function(tournaments){
 		res.send({data: tournaments});
 	});
 });

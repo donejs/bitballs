@@ -1,4 +1,4 @@
-var ssr = require('can-ssr/middleware');
+var ssr = require('done-ssr-middleware');
 
 module.exports = ssr({
   config: __dirname + "/package.json!npm",

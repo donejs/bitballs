@@ -1,8 +1,8 @@
 
-var app = require("../app");
-var bookshelf = require("../bookshelf");
+var app = require("../services/app");
+var bookshelf = require("../models/bookshelf");
 var Player = require("./players");
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 var Team = bookshelf.Model.extend({
 	tableName: 'teams',
@@ -25,7 +25,7 @@ var Teams = bookshelf.Collection.extend({
 });
 
 app.get('/services/teams', function(req, res){
-	Team.collection().query({where: req.query}).fetch().then(function(teams){
+	Team.collection().query(req.query).fetch().then(function(teams){
 		res.send({data: teams.toJSON()});
 	});
 });

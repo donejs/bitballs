@@ -8,7 +8,7 @@ import './navigation';
 
 F.attach(QUnit);
 
-QUnit.module('bitballs-navigation', {
+QUnit.module('components/navigation/', {
     beforeEach: function () {
         var frag = can.stache('<bitballs-navigation></bitballs-navigation>')();
         testUtils.insertAndPopulateIframe('#qunit-fixture', frag);

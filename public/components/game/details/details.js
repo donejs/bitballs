@@ -33,8 +33,8 @@ require("can/route/");
 require("can/view/href/");
 
 var platform = require( "steal-platform" );
-var Tournament = require("bitballs/models/tournament/");
-var Game = require("bitballs/models/game/");
+var Tournament = require("bitballs/models/tournament");
+var Game = require("bitballs/models/game");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
@@ -236,7 +236,7 @@ exports.ViewModel = Map.extend(
 		event && event.stopPropagation();
 	},
 
-	deleteStat: function (stat, el, event) {
+	deleteStat: function (stat, event) {
 		stat.destroy();
 		event && event.stopPropagation();
 	},
