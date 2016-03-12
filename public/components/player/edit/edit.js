@@ -54,4 +54,4 @@ exports.Component = Component.extend({
 			this.element.triggerHandler("canceled", arg1);
 		}
 	}
-}); 
+});

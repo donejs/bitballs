@@ -1,7 +1,6 @@
 <html>
 	<head>
 		<title>{{title}}</title>
-		{{asset "css"}}
 	</head>
 	<body>
 		<can-import from="bitballs/app.less!" />
@@ -12,11 +11,9 @@
 			{{{pageComponent}}}
 
 		</div>
-		{{asset "inline-cache"}}
-
 		{{#isProduction}}
 			<script
-				src="{{joinBase 'node_modules/steal/steal.production.js'}}"  
+				src="{{joinBase 'node_modules/steal/steal.production.js'}}"
 				main="index.stache!done-autorender">
 			</script>
 		{{else}}

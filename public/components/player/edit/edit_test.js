@@ -8,7 +8,7 @@ import route from "can/route/";
 import Session from "bitballs/models/session";
 import './edit';
 
-import 'bitballs/models/fixtures/players';
+import defineFixtures from 'bitballs/models/fixtures/players';
 
 var ViewModel = playerEdit.ViewModel;
 
@@ -19,9 +19,10 @@ QUnit.module('components/player/edit/', function(hooks){
 
 	hooks.beforeEach(function(){
 		localStorage.clear();
+		defineFixtures();
 	});
 
-	QUnit.module('components/player/edit/ - ViewModel', function(){
+	QUnit.module('ViewModel', function(){
 
 		QUnit.test('Tests are running', function(assert){
 			assert.ok( true, "Passed!" );
@@ -30,7 +31,7 @@ QUnit.module('components/player/edit/', function(hooks){
 		var vm = new ViewModel();
 		QUnit.test('Can create new ViewModel', function(assert){
 			var vm = new ViewModel();
-				
+			vm.attr("player.name","Justin");
 			assert.ok( !!vm , "Passed!" );
 
 			vm.bind("saved", function(){
@@ -63,7 +64,7 @@ QUnit.module('components/player/edit/', function(hooks){
 				done();
 			});
 			vm.savePlayer();
-			
+
 		});
 
 		QUnit.test("Create player fails without name", function(assert){
@@ -85,7 +86,7 @@ QUnit.module('components/player/edit/', function(hooks){
 				assert.equal(vm.attr('savePromise').state(), 'rejected');
 				done();
 			});
-		});		
+		});
 
 		QUnit.test("Update player", function(assert){
 			assert.expect(1);
@@ -113,7 +114,7 @@ QUnit.module('components/player/edit/', function(hooks){
 				done();
 			});
 			vm.savePlayer()
-			
+
 		});
 
 	});
@@ -124,13 +125,13 @@ QUnit.module('components/player/edit/', function(hooks){
 				isAdmin: false
 			}
 		});
-	
+
 		var frag = can.stache('<player-edit {session}="session" />')({
 			session: session
 		});
-	
+
 		$('#qunit-fixture').html(frag);
-	
+
 		F('player-edit .edit-form')
 			.missing('Edit form is excluded for non-admin user')
 			.then(function () {
