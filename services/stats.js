@@ -1,11 +1,9 @@
 
 var app = require("../services/app");
-var bookshelf = require("../models/bookshelf");
+var Stat = require("../models/stat");
 var adminOnly = require( "./adminOnly" );
 
-var Stat = bookshelf.Model.extend({
-	tableName: 'stats'
-});
+
 
 var clean = function(data){
 	if(data.time) {
@@ -45,5 +43,3 @@ app.post('/services/stats', adminOnly( "Must be an admin to create stats" ), fun
 		res.status(500).send(e);
 	});
 });
-
-module.exports = Stat;

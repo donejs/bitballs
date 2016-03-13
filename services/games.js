@@ -1,29 +1,16 @@
 
 var app = require("../services/app");
-var bookshelf = require("../models/bookshelf");
-var Stat = require("./stats");
-var Team = require("./teams");
+var Game = require("../models/game");
 var adminOnly = require( "./adminOnly" );
 
-var Game = bookshelf.Model.extend({
-	tableName: 'games',
-	stats: function(){
-		return this.hasMany(Stat,"gameId");
-	},
-	homeTeam: function(){
-		return this.belongsTo(Team,"homeTeamId");
-	},
-	awayTeam: function(){
-		return this.belongsTo(Team,"awayTeamId");
-	}
-});
 
-var Games = bookshelf.Collection.extend({
-  model: Game
-});
+
 
 app.get('/services/games', function(req, res){
 	Game.collection().query(req.query).fetch().then(function(games){
+		console.log(games.models.map(function(m){
+			return m;
+		}));
 		res.send({data: games.toJSON()});
 	});
 });
