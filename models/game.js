@@ -1,6 +1,7 @@
 var bookshelf = require("../models/bookshelf");
 var Stat = require("./stat");
 var Team = require("./team");
+var Tournament = require("./tournament");
 
 var Game = bookshelf.Model.extend({
 	tableName: 'games',
@@ -12,6 +13,9 @@ var Game = bookshelf.Model.extend({
 	},
 	awayTeam: function(){
 		return this.belongsTo(Team,"awayTeamId");
+	},
+	tournament: function(){
+		return this.belongsTo(Tournament, "tournamentId");
 	}
 });
 
