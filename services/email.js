@@ -6,7 +6,7 @@ var validateEmail = function ( email ) {
   return re.test( email );
 };
 
-var transportOpts = {};
+var transportOpts;
 
 if ( process.argv.indexOf( "--develop" ) !== -1 ) {
   var MailDev = require('maildev');
@@ -20,6 +20,8 @@ if ( process.argv.indexOf( "--develop" ) !== -1 ) {
     port: 1025,
     ignoreTLS: true
   };
+} else {
+    transportOpts = process.env.EMAIL_CONFIG;
 }
 
 module.exports = function ( to, from, subject, body, cb ) {
