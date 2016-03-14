@@ -25,11 +25,8 @@ if ( process.argv.indexOf( "--develop" ) !== -1 ) {
 }
 
 module.exports = function ( to, from, subject, body, cb ) {
-  // cb function takes ( error, info )
+  
   var transporter = nodemailer.createTransport( transportOpts );
-
-  //checkit({email: ['required', 'email']}).run({})
-  //    .then(function(){})
 
   return transporter.sendMail({
       from: from,
