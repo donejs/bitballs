@@ -75,5 +75,9 @@
         }
       }
     }
+  },
+  "urls": {
+    "prod": "https://bitballs.herokuapp.com/",
+    "dev": "http://localhost:5000"
   }
 }
