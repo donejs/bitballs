@@ -34,13 +34,16 @@ exports.ViewModel = CanMap.extend({
 				console.log("grouping re-evaluate");
 				var rounds = {},
 					games = this.attr("games");
-				if(games) {
+				if (games) {
 					games.each(function(game){
 						var round = game.attr("round");
+						var court = parseInt(game.attr('court'), 10);
 						if(!rounds[round]) {
-							rounds[round] = [];
+							rounds[round] = {
+								courts: []
+							};
 						}
-						rounds[round].push(game);
+						rounds[round].courts[court] = game;
 					});
 				}
 				return rounds;
