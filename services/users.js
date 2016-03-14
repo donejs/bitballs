@@ -92,7 +92,7 @@ app.post('/services/users',
 		var hash = encodeURIComponent( user.verificationHash );
 		var subject = "Complete your registration at bitballs";
 		var htmlbody = "Click here to verify your email address:<br>";
-		htmlbody += "<a href='"+appUrl+"/services/verifyemail/" + user.id + "/" + hash + "'>";
+		htmlbody += "<a href='"+appUrl+"services/verifyemail/" + user.id + "/" + hash + "'>";
 		htmlbody += "Verify Email Address";
 		htmlbody += "</a>";
 
