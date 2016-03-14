@@ -103,7 +103,7 @@ stache.registerHelper("pageComponent", function(options){
 				"{{/if}}" +
 			"</can-import>";
 
-	return can.stache(template)(this, options.helpers, options.nodeList);
+	return Zone.ignore(can.stache(template))(this, options.helpers, options.nodeList);
 });
 
 route(':page',{page: 'tournaments'});

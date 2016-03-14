@@ -42,7 +42,7 @@
 <form ($submit)="createGame(%event)" action="">
 
 	<div class="form-group">
-	    <label for="game-round">round</label>
+	    <label for="game-round">round</label>[{{game.round}}]
 	    <select {($value)}="game.round" class="form-control" id="game-round">
 	    	{{#roundNames}}
 	    		<option value="{{.}}">{{.}}</option>
