@@ -1,6 +1,7 @@
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
+var moment = require('moment');
 require("can/map/define/");
 
 
@@ -9,7 +10,7 @@ var Tournament = Map.extend({
 		jsDate: {
 			get: function(){
 				var date = this.attr("date");
-				return date ? new Date(date) : null;
+				return date ? moment(date).toDate() : null;
 			}
 		},
 		year: {
