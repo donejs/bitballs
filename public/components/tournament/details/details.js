@@ -39,7 +39,7 @@ exports.ViewModel = CanMap.extend({
 					games.each(function(game){
 						var roundName = game.attr("round");
 						var roundIndex =
-							Game.roundNamesMappedToIndex[roundName];
+							Game.roundToIndexMap[roundName];
 						var courtNumber = parseInt(game.attr('court'), 10);
 						var courtIndex = courtNumber - 1;
 						var round;

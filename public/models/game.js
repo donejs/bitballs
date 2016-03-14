@@ -18,17 +18,7 @@ require("can/list/sort/");
 var Game = CanMap.extend({
 	roundNames: ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5",
 		"Elimination", "Quarter Finals", "Semi Finals", "Championship"],
-	roundNamesMappedToIndex: {
-		"Round 1": 0,
-		"Round 2": 1,
-		"Round 3": 2,
-		"Round 4": 3,
-		"Round 5": 4,
-		"Elimination": 5,
-		"Quarter Finals": 6,
-		"Semi Finals": 7,
-		"Championship": 8
-	}
+	roundToIndexMap: {}
 },{
 	define: {
 		tournamentId: {type: "number"},
@@ -111,6 +101,12 @@ var Game = CanMap.extend({
 	}
 
 });
+
+// Cache a static map of round names to round indices
+Game.roundNames.forEach(function(roundName, index){
+  Game.roundToIndexMap[roundName] = index;
+});
+
 Game.List = List.extend({Map: Game},{});
 
 Game.algebra = new set.Algebra(
