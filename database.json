@@ -1,7 +1,7 @@
 {
   "dev": "postgres://localhost:5432/bitballs",
   "prod": {
-  	"ENV": "HEROKU_POSTGRESQL_TEAL_URL",
+  	"ENV": "DATABASE_URL",
   	"driver": "pg"
   }
 }
