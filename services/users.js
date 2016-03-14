@@ -95,9 +95,10 @@ app.post('/services/users',
 		htmlbody += "<a href='"+appUrl+"/services/verifyemail/" + user.id + "/" + hash + "'>";
 		htmlbody += "Verify Email Address";
 		htmlbody += "</a>";
-
+		console.log("Sending email")
 		nodeMail( user.email, 'signup@bitballs.com', subject, htmlbody, function ( err, info ) {
 			if ( err ) {
+				console.log("ERROR sending email", err);
 				throw err;
 			}
 			res.send( omitSensitive( user ) );
