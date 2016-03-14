@@ -32,20 +32,37 @@ exports.ViewModel = CanMap.extend({
 		gamesGroupedByRound: {
 			get: function(){
 				console.log("grouping re-evaluate");
-				var rounds = {},
+				var rounds = [],
 					games = this.attr("games");
+				
 				if (games) {
 					games.each(function(game){
-						var round = game.attr("round");
-						var court = parseInt(game.attr('court'), 10);
-						if(!rounds[round]) {
-							rounds[round] = {
-								courts: []
+						var roundName = game.attr("round");
+						var roundIndex =
+							Game.roundNamesMappedToIndex[roundName];
+						var courtNumber = parseInt(game.attr('court'), 10);
+						var courtIndex = courtNumber - 1;
+						var round;
+
+						if (!rounds[roundIndex]) {
+							// Create Round pseudo-model and store it
+							// in the `rounds` list according to the
+							// order of `Game.roundNames`
+							rounds[roundIndex] = {
+								name: roundName,
+								courts: new Array(4)
 							};
 						}
-						rounds[round].courts[court] = game;
+
+						// Get a reference to the Round
+						round = rounds[roundIndex];
+
+						// Add the game to the list of courts at the
+						// correct index
+						round.courts[courtIndex] = game;
 					});
 				}
+
 				return rounds;
 			}
 		},

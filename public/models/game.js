@@ -16,8 +16,19 @@ var can = require("can/util/");
 require("can/list/sort/");
 
 var Game = CanMap.extend({
-	roundNames: ["Round 1","Round 2","Round 3","Round 4","Round 5",
-		"Elimination", "Quarter Finals","Semi Finals","Championship"]
+	roundNames: ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5",
+		"Elimination", "Quarter Finals", "Semi Finals", "Championship"],
+	roundNamesMappedToIndex: {
+		"Round 1": 0,
+		"Round 2": 1,
+		"Round 3": 2,
+		"Round 4": 3,
+		"Round 5": 4,
+		"Elimination": 5,
+		"Quarter Finals": 6,
+		"Semi Finals": 7,
+		"Championship": 8
+	}
 },{
 	define: {
 		tournamentId: {type: "number"},
