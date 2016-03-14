@@ -8,9 +8,6 @@ var adminOnly = require( "./adminOnly" );
 
 app.get('/services/games', function(req, res){
 	Game.collection().query(req.query).fetch().then(function(games){
-		console.log(games.models.map(function(m){
-			return m;
-		}));
 		res.send({data: games.toJSON()});
 	});
 });
