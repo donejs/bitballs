@@ -11,6 +11,7 @@ var tag = require('can-connect/can/tag/');
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
+var Tournament = require("./tournament");
 require("can/list/sort/");
 
 var Game = Map.extend({
@@ -19,10 +20,10 @@ var Game = Map.extend({
 },{
 	define: {
 		tournamentId: {type: "number"},
+		tournament: {Type: Tournament},
+
 		homeTeamId: {type: "number"},
-
 		awayTeamId: {type: "number"},
-
 		homeTeam: {
 			Type: Team
 		},
