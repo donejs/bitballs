@@ -34,7 +34,7 @@ exports.ViewModel = CanMap.extend({
 				console.log("grouping re-evaluate");
 				var rounds = [],
 					games = this.attr("games");
-				
+
 				if (games) {
 					games.each(function(game){
 						var roundName = game.attr("round");
@@ -50,7 +50,8 @@ exports.ViewModel = CanMap.extend({
 							// order of `Game.roundNames`
 							rounds[roundIndex] = {
 								name: roundName,
-								courts: new Array(4)
+								courts: new Array(4),
+								reservedCourts: {}
 							};
 						}
 
@@ -60,10 +61,56 @@ exports.ViewModel = CanMap.extend({
 						// Add the game to the list of courts at the
 						// correct index
 						round.courts[courtIndex] = game;
+
+						// Add the court number to the list of reserved courts
+						round.reservedCourts[courtNumber] = courtIndex;
 					});
 				}
 
 				return rounds;
+			}
+		},
+		availableCourts: {
+			get: function () {
+				var availableCourts = [],
+					rounds = this.attr('gamesGroupedByRound') || [],
+					selectedRoundName = this.attr('game').attr('round'),
+					selectedRoundIndex = Game.roundToIndexMap[selectedRoundName],
+					maxCourtReserverations = Game.roundNames.length,
+					courtReserverations = {},
+					courtNumber, reservationCount;
+
+				// If a particular round is selected limit the search to
+				// that round
+				if (rounds.length && typeof selectedRoundIndex === 'number') {
+					maxCourtReserverations = 1;
+					rounds = rounds[selectedRoundIndex] ?
+						[rounds[selectedRoundIndex]] : [];
+				}
+
+				// Sum up the total reserverations of each court in each round
+				rounds.forEach(function (round) {
+					round.reservedCourts.forEach(function (courtIndex, courtNumber) {
+						// Get the current reserveration count for the given court
+						reservationCount = courtReserverations[courtNumber];
+
+						// Increment the reserverations counter
+						courtReserverations[courtNumber] =
+							typeof reservationCount === 'number' ? reservationCount + 1 : 1;
+					});
+				});
+
+				for (courtNumber = 1; courtNumber <= 4; courtNumber++) {
+					reservationCount = courtReserverations[courtNumber];
+
+					// Add the court number to the available courts list if
+					// the court was used less than expected
+					if (! reservationCount || reservationCount < maxCourtReserverations) {
+						availableCourts.push(courtNumber);
+					}
+				}
+
+				return availableCourts;
 			}
 		},
 		teamsPromise: {

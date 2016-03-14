@@ -57,10 +57,9 @@
 	<div class="form-group">
 	    <label for="game-court">court</label>
 	    <select {($value)}="game.court" class="form-control" id="game-court">
-    		<option value="1">1</option>
-	    	<option value="2">2</option>
-	    	<option value="3">3</option>
-	    	<option value="4">4</option>
+		{{#each availableCourts}}
+			<option value="{{.}}">{{.}}</option>
+		{{/each}}
 	    </select>
 	</div>
 
