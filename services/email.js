@@ -6,9 +6,7 @@ var validateEmail = function ( email ) {
   return re.test( email );
 };
 
-var transportOpts = {
-  port: 25
-};
+var transportOpts = {};
 
 if ( process.argv.indexOf( "--develop" ) !== -1 ) {
   var MailDev = require('maildev');

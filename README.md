@@ -6,7 +6,7 @@
 
 Bitballs is a [DoneJS](https://donejs.com) app that enables users to coordinate
 the players, teams, games, rounds and recordings of a basketball tournament.
-It also serves as an example of how to DoneJS use with sessions, user
+It also serves as an example of how to use DoneJS with sessions, user
 privileges, RESTful services, and ORM models.
 
 To run the Bitballs app locally, run its tests, or generate its documentation
@@ -24,7 +24,7 @@ follow the steps outlined below.
 - [Install Dependencies](#install-dependencies)
 - [Prepare the Database](#prepare-the-database)
 - [Start the Server](#start-the-server)
-- [Create an Admin User](#create-an-admin-user)
+- [Register a User](#register-a-user)
 - [Enjoy](#enjoy)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -127,13 +127,13 @@ npm run db-migrate
 
 ### Start the Server
 
-With all the prerequisite setup completed the server can be started by running
+With all the prerequisite setup completed the server can be started by running:
 
 ```
 donejs start
 ```
 
-### Create an Admin User
+### Register a User
 
 Navigate to [http://localhost:5000/register](http://localhost:5000/register)
 in your browser and follow the instructions.

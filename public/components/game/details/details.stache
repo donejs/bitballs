@@ -5,19 +5,15 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<h3>{{game.round}} - Court {{game.court}}</h3>
+		<h3> <a href="{{routeUrl tournamentId=game.tournamentId}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
 		<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
-		<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p> 
+		<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p>
 		<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
 		<p>Current Score {{currentScore.home}} - {{currentScore.away}}</p>
+        <p></p>
 	</div>
 
 </div>
-
-
-
-
-
 
 <table class="table table-condensed table-hover">
 <tbody>
@@ -61,7 +57,7 @@
 		    		<option value="{{name}}">{{name}}</option>
 		    	{{/statTypes}}
 		    </select>
-			
+
 			<div class="form-group">
 			    <label for="stat-time">Time (seconds)</label>
 			    <div class="row">
@@ -69,13 +65,13 @@
 			    		<input type="text" class="form-control" id="stat-time" {($value)}="stat.time"/>
 		    		</div>
 		    		<div class="col-xs-6">
-		    		<a class="btn btn-default" ($click)="minusTime(10)">-10 s</a> 
-		    			<a class="btn btn-default" ($click)="minusTime(2)">-2 s</a> 
-		    			<a class="btn btn-default" ($click)="addTime(2)">+2 s</a> 
-		    			<a class="btn btn-default" ($click)="addTime(10)">+10 s</a> 
+		    		<a class="btn btn-default" ($click)="minusTime(10)">-10 s</a>
+		    			<a class="btn btn-default" ($click)="minusTime(2)">-2 s</a>
+		    			<a class="btn btn-default" ($click)="addTime(2)">+2 s</a>
+		    			<a class="btn btn-default" ($click)="addTime(10)">+10 s</a>
 		    		</div>
 			    </div>
-			    
+
 			</div>
 			<button type="submit" class="btn btn-primary" >Add</button> <a class="btn btn-default" ($click)="removeStat()">Cancel</a>
 		</form>

@@ -6,6 +6,9 @@ var bCrypt = require("bcrypt-nodejs");
 var LocalStrategy = require('passport-local').Strategy;
 var adminOnly = require( "./adminOnly" );
 var nodeMail = require( "./email" );
+var urls = require("../package.json").urls;
+var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+var appUrl = urls[envKey];
 
 var omitSensitive = function ( user ) {
 	if ( user.toJSON ) user = user.toJSON();
@@ -22,7 +25,7 @@ var disallowAdminOnlyChanges = function ( onThis, withThis ) {
 
 app.get('/services/users', adminOnly(), function( req, res ) {
 	User.collection().query(function(qb){
-		qb.orderBy('email','ASC'); 
+		qb.orderBy('email','ASC');
 	}).fetch().then(function( users ){
 		users = _.map( users.toJSON(), function( user ) {
 			return omitSensitive( user );
@@ -58,7 +61,7 @@ passport.use('signup', new LocalStrategy({
 						verificationHash: hashHash,
 						isAdmin: !numberOfUsers
 					});
-		
+
 					// save the user
 					newUser.save().then(function(err) {
 						console.log('User Registration step 1 succesful');
@@ -72,7 +75,10 @@ passport.use('signup', new LocalStrategy({
 	});
 }));
 
-app.post('/services/users', 
+
+
+
+app.post('/services/users',
 	function ( req, res, next ){
 		if ( !req.body.password ) {
 			res.status(404).send({ type: "Bad Request", message: "Password is required" });
@@ -80,18 +86,19 @@ app.post('/services/users',
 			next();
 		}
 	},
-	passport.authenticate( 'signup' ), 
+	passport.authenticate( 'signup' ),
 	function ( req, res ) {
 		var user = req.user.toJSON();
 		var hash = encodeURIComponent( user.verificationHash );
 		var subject = "Complete your registration at bitballs";
 		var htmlbody = "Click here to verify your email address:<br>";
-		htmlbody += "<a href='http://localhost:5000/services/verifyemail/" + user.id + "/" + hash + "'>";
+		htmlbody += "<a href='"+appUrl+"/services/verifyemail/" + user.id + "/" + hash + "'>";
 		htmlbody += "Verify Email Address";
 		htmlbody += "</a>";
-
+		console.log("Sending email", appUrl, user.email);
 		nodeMail( user.email, 'signup@bitballs.com', subject, htmlbody, function ( err, info ) {
 			if ( err ) {
+				console.log("ERROR sending email", err);
 				throw err;
 			}
 			res.send( omitSensitive( user ) );
