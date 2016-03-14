@@ -1,11 +1,9 @@
 
-var app = require("../app");
-var bookshelf = require("../bookshelf");
-var adminOnly = require( "../adminOnly" );
+var app = require("../services/app");
+var Stat = require("../models/stat");
+var adminOnly = require( "./adminOnly" );
 
-var Stat = bookshelf.Model.extend({
-	tableName: 'stats'
-});
+
 
 var clean = function(data){
 	if(data.time) {
@@ -15,7 +13,7 @@ var clean = function(data){
 };
 
 app.get('/services/stats', function(req, res){
-	Stat.collection().query({where: req.query}).fetch().then(function(stats){
+	Stat.collection().query(req.query).fetch().fetch().then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });
@@ -45,5 +43,3 @@ app.post('/services/stats', adminOnly( "Must be an admin to create stats" ), fun
 		res.status(500).send(e);
 	});
 });
-
-module.exports = Stat;

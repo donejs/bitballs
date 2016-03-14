@@ -1,8 +1,8 @@
 
-var app = require("../app");
-var bookshelf = require("../bookshelf");
+var app = require("../services/app");
+var bookshelf = require("../models/bookshelf");
 var Player = require("../models/player")
-var adminOnly = require( "../adminOnly" );
+var adminOnly = require( "./adminOnly" );
 
 
 var clean = function(data){
@@ -19,9 +19,7 @@ var clean = function(data){
 };
 
 app.get('/services/players', function(req, res){
-	Player.collection().query(function(qb){
-		qb.orderBy('name','DESC'); 
-	}).fetch().then(function(players){
+	Player.collection().query(req.query).fetch().then(function(players){
 		res.send({data: players.toJSON()});
 	});
 });

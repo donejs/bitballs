@@ -4,23 +4,23 @@
  *
  * @description Provides a custom element that allows a user
  * to either view a game or edit a game's stats.
- * 
+ *
  * @body
  *
  * To create a `<game-details>` element pass the [bitballs/models/session]
  * and a [bitballs/models/game] id like:
  *
  * ```
- * <game-details 
+ * <game-details
  *     {session}="session"
  *     {game-id}="gameId"
  *     ></games-details>
  * ```
  *
  * ## Sweet example
- * 
+ *
  * @demo public/components/game/details/details.html
- * 
+ *
  */
 
 var Component = require("can/component/component");
@@ -33,8 +33,8 @@ require("can/route/");
 require("can/view/href/");
 
 var platform = require( "steal-platform" );
-var Tournament = require("bitballs/models/tournament/");
-var Game = require("bitballs/models/game/");
+var Tournament = require("bitballs/models/tournament");
+var Game = require("bitballs/models/game");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
@@ -54,7 +54,7 @@ exports.ViewModel = Map.extend(
 {
 	define: {
 		/**
-		 * @property {Promise<bitballs/models/game>|undefined} 
+		 * @property {Promise<bitballs/models/game>|undefined}
 		 *
 		 * Provides a Game instance with all the stats for the
 		 * game and all the player information!
@@ -67,9 +67,9 @@ exports.ViewModel = Map.extend(
 		 *
 		 *   Given an invalid `gameId`, the game promise.
 		 *
-		 * 
+		 *
 		 * @body
-		 * 
+		 *
 		 * ```
 		 * var gameDetailsVM = new GameDetailsViewModel({
 		 *   gameId: 5
@@ -78,13 +78,14 @@ exports.ViewModel = Map.extend(
 		 *   game.attr("date") //-> Date
 		 * })
 		 * ```
-		 * 
+		 *
 		 */
 		gamePromise: {
 			get: function() {
 				return Game.get({
 					id: this.attr("gameId"),
 					withRelated: ["stats",
+						"tournament",
 						"homeTeam.player1",
 						"homeTeam.player2",
 						"homeTeam.player3",
@@ -215,11 +216,11 @@ exports.ViewModel = Map.extend(
 	},
 	/**
 	 * Moves the youtube player to minus 5 seconds for a given time.
-	 * 
-	 * @param  {Number} time  
+	 *
+	 * @param  {Number} time
 	 *    The time of some event.
-	 *    
-	 * @param  {Event} [event] 
+	 *
+	 * @param  {Event} [event]
 	 *    An optional event that's default will be prevented.
 	 *
 	 * @body
@@ -236,7 +237,7 @@ exports.ViewModel = Map.extend(
 		event && event.stopPropagation();
 	},
 
-	deleteStat: function (stat, el, event) {
+	deleteStat: function (stat, event) {
 		stat.destroy();
 		event && event.stopPropagation();
 	},
@@ -248,7 +249,7 @@ exports.ViewModel = Map.extend(
 		} else {
 			return "0"
 		}
-		
+
 	},
 	statsForPlayerId: function(id){
 		if(typeof id === "function") {
@@ -294,12 +295,16 @@ exports.Component = Component.extend({
 				},1);
 			});
 		},
+		"removed": function(){
+			// timeUpdate could be running
+			clearTimeout(this.timeUpdate);
+		},
 		onPlayerReady: function(){
 			var youtubePlayer = this.scope.attr("youtubePlayer"),
 				self = this;
-			
+
 			//this.scope.attr("youtubePlayer").playVideo();
-			
+
 			// get durration
 			var getDuration = function(){
 				var duration = youtubePlayer.getDuration();
@@ -323,8 +328,8 @@ exports.Component = Component.extend({
 				self.timeUpdate = setTimeout(timeUpdate, 100);
 				self.updatePosition(currentTime);
 			};
-			
-			
+
+
 			if(ev.data === YT.PlayerState.PLAYING) {
 				this.scope.attr("playing", true);
 				timeUpdate();
@@ -332,7 +337,7 @@ exports.Component = Component.extend({
 				this.scope.attr("playing", false);
 				clearTimeout(this.timeUpdate);
 			}
-			
+
 
 		},
 		updatePosition: function(time){
@@ -353,15 +358,15 @@ exports.Component = Component.extend({
 		"{stat} time": function(){
 			var time = this.scope.attr("stat.time");
 			if(typeof time === "number" && time >= 0) {
-				
+
 				var player = this.scope.attr("youtubePlayer");
 				var playerTime = player.getCurrentTime();
 				if(Math.abs(time-playerTime) > 2) {
 					player.seekTo(time, true);
 				}
-				
+
 			}
-			
+
 		},
 		"{window} resize": function(){
 			var player = this.viewModel.attr("youtubePlayer");
@@ -370,14 +375,14 @@ exports.Component = Component.extend({
 		},
 		"{viewModel} stat": function(vm, ev, newVal){
 			setTimeout(function(){
-				
-				
+
+
 				$("#add-stat").offset( $(".stats-container:first").offset() ).show()
 			},1);
 
 		}
 	},
 	helpers: {
-		
+
 	}
 });

@@ -1,10 +1,38 @@
-var app = require("../app");
+var app = require("../services/app");
 var passport = require('passport');
 var User = require("../models/user");
 var _ = require("lodash");
 var bCrypt = require("bcrypt-nodejs");
 var LocalStrategy = require('passport-local').Strategy;
+var adminOnly = require( "./adminOnly" );
+var nodeMail = require( "./email" );
+var urls = require("../package.json").urls;
+var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+var appUrl = urls[envKey];
 
+var omitSensitive = function ( user ) {
+	if ( user.toJSON ) user = user.toJSON();
+	return _.omit( user, [ "password", "verificationHash" ] );
+};
+
+var disallowAdminOnlyChanges = function ( onThis, withThis ) {
+	var i, prop, forProps = [ "verified", "verificationHash", "isAdmin" ];
+	for ( i = 0; i < forProps.length; i++ ) {
+		prop = forProps[ i ];
+		onThis[ prop ] = withThis[ prop ];
+	}
+};
+
+app.get('/services/users', adminOnly(), function( req, res ) {
+	User.collection().query(function(qb){
+		qb.orderBy('email','ASC');
+	}).fetch().then(function( users ){
+		users = _.map( users.toJSON(), function( user ) {
+			return omitSensitive( user );
+		});
+		res.send({data: users});
+	});
+});
 
 passport.use('signup', new LocalStrategy({
 	passReqToCallback : true,
@@ -23,16 +51,20 @@ passport.use('signup', new LocalStrategy({
 					//bookshelf returns a string for the result of a count.
 					numberOfUsers = parseInt( numberOfUsers, 10 ) || 0;
 					console.log( "POST USERS: creating a new user. Current count of users:", numberOfUsers );
+
+					var passHash = createHash( password );
+					var hashHash = createHash( username + passHash );
 					var newUser = new User({
 						email: username,
-						password: createHash(password),
+						password: passHash,
+						verified: false,
+						verificationHash: hashHash,
 						isAdmin: !numberOfUsers
 					});
-					// set the user's local credentials
-		
+
 					// save the user
 					newUser.save().then(function(err) {
-						console.log('User Registration succesful');
+						console.log('User Registration step 1 succesful');
 						return done(null, newUser);
 					}, function(err) {
 						console.log('Error in Saving user: ' + err);
@@ -40,66 +72,150 @@ passport.use('signup', new LocalStrategy({
 				});
 			}
 		});
-
 	});
 }));
 
-passport.use('basic', new LocalStrategy({
-	usernameField: 'email',
-	passReqToCallback : true
-}, function(req, username, password, done){
-	new User({
-		'email': username
-	}).fetch().then(function(user) {
-		if(isValidPassword(user.attributes, password)){
-			return done(null, user);
-		}else {
-			return done(null, false);
-		}
-	})
-}));
+
+
 
 app.post('/services/users',
-	function(req, res, next){
-		new User({
-			email: req.body.email,
-			password: req.body.password
-		}).validateSave().then(function(){
+	function ( req, res, next ){
+		if ( !req.body.password ) {
+			res.status(404).send({ type: "Bad Request", message: "Password is required" });
+		} else {
 			next();
-		}, function(e){
-			res.status(500).send(e);
-		});
+		}
 	},
-	passport.authenticate('signup'), 
-	function(req, res) {
-		res.send(_.omit(req.user.toJSON(), "password"));
-	});
+	passport.authenticate( 'signup' ),
+	function ( req, res ) {
+		var user = req.user.toJSON();
+		var hash = encodeURIComponent( user.verificationHash );
+		var subject = "Complete your registration at bitballs";
+		var htmlbody = "Click here to verify your email address:<br>";
+		htmlbody += "<a href='"+appUrl+"/services/verifyemail/" + user.id + "/" + hash + "'>";
+		htmlbody += "Verify Email Address";
+		htmlbody += "</a>";
 
-app.put('/services/users/:id',
-	function(req, res, next){
-		new User({
-			email: req.body.email,
-			password: req.body.newPassword
-		}).validateSave().then(function(){
-			passport.authenticate('basic', function(err, user, info){
-				if (err) { return next(err); }
-				if(!user) { return res.status(401).send({password: "Incorrect Password"}); }
-
-				new User({id: req.params.id}).save({
-					email: user.attributes.email,
-					password: createHash(req.body.newPassword)
-				}).then(function(user){
-					res.send(_.omit(req.user.toJSON(), "password"));
-				});
-			})(req, res, next);
-		}).catch(function(e){
-			res.status(400).send(e);
+		nodeMail( user.email, 'signup@bitballs.com', subject, htmlbody, function ( err, info ) {
+			if ( err ) {
+				throw err;
+			}
+			res.send( omitSensitive( user ) );
 		});
+	}
+);
+
+app.get( "/services/verifyemail/:id/:verificationHash",
+	function ( req, res ) {
+		var userid = parseInt( req.params.id, 10 ) || 0;
+		var verificationHash = req.params.verificationHash;
+
+		new User({
+			'id' : userid
+		}).fetch().then( function( user ) {
+			if ( !user ) {
+				return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+			}
+
+			if ( user.get( "verified" ) ) {
+				return res.status( 500 ).send({ err: "Already verified." });
+			}
+
+			if ( verificationHash === user.get( "verificationHash" ) ) {
+				//update as email verified
+				return user.save({ verified: true, verificationHash: "" }, { patch: true }).then( function ( user ) {
+					res.redirect( "/account" );
+				});
+			} else {
+				return res.status( 401 ).send({ err: "Verification hash is incorrect." });
+			}
+		}, function ( err ) {
+			res.status( 500 ).send( err );
+		});
+	}
+);
+
+app.put( "/services/users/:id",
+function ( req, res, next ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	if ( req.isAdmin ) {
+		next();
+	} else if ( req.user.attributes.id === userid ) {
+		next();
+	} else {
+		res.status( 401 ).json({
+			err: "Must be logged in to verify yourself."
+		});
+	}
+},
+function ( req, res ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	new User({
+		'id' : userid
+	}).fetch().then( function( user ) {
+		if ( !user ) {
+			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+		}
+
+		if ( !req.isAdmin ) {
+			disallowAdminOnlyChanges( req.body, user );
+		}
+
+		//Password updating
+		if ( req.body.newPassword ) {
+			if ( isValidPassword( user, req.body.password ) ) {
+				return user.save({ password: createHash( req.body.newPassword ) }, { patch: true }).then( function ( user ) {
+					res.send( omitSensitive( user ) );
+				});
+			} else {
+				return res.status( 401 ).send({ err: "Password is incorrect" });
+			}
+		} else {
+			return user.save( omitSensitive( req.body ), { patch: true } ).then( function ( user ) {
+				res.send( omitSensitive( user ) );
+			});
+		}
+	}, function ( err ) {
+		res.status( 500 ).send( err );
 	});
+});
 
 var createHash = function(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 };
 var isValidPassword = function(user, password) {
-	return bCrypt.compareSync(password, user.password);
-}; 
+	return bCrypt.compareSync(password, user.password || user.get( "password" ) );
+};
+
+app.delete( "/services/users/:id",
+function ( req, res, next ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	if ( req.isAdmin ) {
+		next();
+	} else if ( req.user.attributes.id === userid ) {
+		next();
+	} else {
+		res.status( 401 ).json({
+			err: "Must be logged in to delete yourself."
+		});
+	}
+},
+function ( req, res ) {
+	var userid = parseInt( req.params.id, 10 ) || 0;
+	new User({
+		'id' : userid
+	}).fetch().then( function( user ) {
+		if ( !user ) {
+			return res.status( 404 ).send({ err: "user (" + userid + ") not found" });
+		}
+
+		user.destroy().then(function ( user ) {
+			res.send( user );
+		}, function ( err ) {
+			res.status( 500 ).send( err );
+		});
+
+	}, function ( err ) {
+		res.status( 500 ).send( err );
+	});
+});

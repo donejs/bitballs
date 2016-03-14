@@ -1,0 +1,39 @@
+{{#session.isAdmin}}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Verified</th>
+        <th>Is Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if users.isPending}}
+        <tr class="info">
+          <td colspan="4">LOADING...</td>
+        </tr>
+      {{/if}}
+      {{#if users.isResolved}}
+        {{#each users.value}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{email}}</td>
+            <td>{{verified}}</td>
+            <td>
+              {{#is id session.user.id}}
+                {{isAdmin}}
+              {{else}}
+                <input type="checkbox"
+                  ($change)="setAdmin( ., %element.checked )"
+                  {$checked}="isAdmin"
+                  {$disabled}="isSaving"
+                >
+              {{/is}}
+            </td>
+          </tr>
+        {{/each}}
+      {{/if}}
+    </tbody>
+  </table>
+{{/session.isAdmin}}

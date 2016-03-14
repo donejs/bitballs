@@ -5,7 +5,7 @@
 To clear the database, run:
 
 ```
-./node_modules/.bin/db-migrate down --count 5
+./node_modules/.bin/db-migrate reset
 ```
 
 until you can't run it anymore
@@ -60,6 +60,3 @@ This puts a 1s delay on all responses.
 - logout and try to log back in
 
 ## Update user's password
-
-
-
