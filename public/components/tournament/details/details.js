@@ -51,7 +51,8 @@ exports.ViewModel = CanMap.extend({
 							rounds[roundIndex] = {
 								name: roundName,
 								courts: new Array(4),
-								reservedCourts: {}
+								reservedCourts: {},
+								reservedCourtsCount: 0
 							};
 						}
 
@@ -64,10 +65,31 @@ exports.ViewModel = CanMap.extend({
 
 						// Add the court number to the list of reserved courts
 						round.reservedCourts[courtNumber] = courtIndex;
+
+						// Increment the reserved courts count
+						round.reservedCourtsCount++;
 					});
 				}
 
 				return rounds;
+			}
+		},
+		availableRounds: {
+			get: function () {
+				var availableRounds = [],
+					rounds = this.attr('gamesGroupedByRound'),
+					maxCourtReserverations = 4;
+
+				Game.roundNames.forEach(function (roundName) {
+					var roundIndex = Game.roundToIndexMap[roundName];
+					var round = rounds[roundIndex];
+
+					if (! round || round.reservedCourtsCount < maxCourtReserverations) {
+						availableRounds.push(roundName);
+					}
+				});
+
+				return availableRounds;
 			}
 		},
 		availableCourts: {

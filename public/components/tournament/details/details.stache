@@ -48,9 +48,9 @@
 	<div class="form-group">
 	    <label for="game-round">round</label>
 	    <select {($value)}="game.round" class="form-control" id="game-round">
-	    	{{#roundNames}}
+	    	{{#each availableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
-	    	{{/roundNames}}
+	    	{{/each}}
 	    </select>
 	</div>
 
