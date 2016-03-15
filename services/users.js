@@ -11,7 +11,9 @@ var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 var appUrl = urls[envKey];
 
 var omitSensitive = function ( user ) {
-	if ( user.toJSON ) user = user.toJSON();
+	if ( user.toJSON ) {
+		user = user.toJSON();
+	}
 	return _.omit( user, [ "password", "verificationHash" ] );
 };
 

@@ -17,8 +17,8 @@ var Team = bookshelf.Model.extend({
 	}
 });
 
-var Teams = bookshelf.Collection.extend({
-  model: Team
-});
+//var Teams = bookshelf.Collection.extend({
+//  model: Team
+//});
 
 module.exports = Team;

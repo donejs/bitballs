@@ -72,7 +72,7 @@ app.post('/services/session', function(req, res, next) {
 	}, function(error) {
 
 		console.log('User error ' + email, error);
-		return done(null, false);
+		return res.status( 500 ).json( error );
 
 	});
 });

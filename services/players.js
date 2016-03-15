@@ -1,9 +1,6 @@
-
 var app = require("../services/app");
-var bookshelf = require("../models/bookshelf");
-var Player = require("../models/player")
+var Player = require("../models/player");
 var adminOnly = require( "./adminOnly" );
-
 
 var clean = function(data){
 	if(data.name===''){
