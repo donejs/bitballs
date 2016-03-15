@@ -132,4 +132,43 @@ QUnit.module('components/player/edit/', function(hooks){
 			.exists('Edit form is included for admin user');
 	});
 
+	QUnit.test('Properties are restored when canceled', function () {
+		var initialName = 'Chris Gomez';
+		var initialWeight = 175;
+		var initialHeight = 69;
+		var editedName = 'Alfred Hitchcock';
+		var editedWeight = 210;
+		var editedHeight = 67;
+
+		var vm = new ViewModel({
+			player: {
+				name: initialName,
+				weight: initialWeight,
+				height: initialHeight
+			}
+		});
+
+		var player = vm.attr('player');
+
+		equal(player.attr('name'), initialName, 'Initial name is correct');
+		equal(player.attr('weight'), initialWeight, 'Initial weight is correct');
+		equal(player.attr('height'), initialHeight, 'Initial height is correct');
+
+		player.attr({
+			name: editedName,
+			weight: editedWeight,
+			height: editedHeight
+		});
+
+		equal(player.attr('name'), editedName, 'Edited name is correct');
+		equal(player.attr('weight'), editedWeight, 'Edited weight is correct');
+		equal(player.attr('height'), editedHeight, 'Edited height is correct');
+
+		vm.cancelEvent();
+
+		equal(player.attr('name'), initialName, 'Restored name is correct');
+		equal(player.attr('weight'), initialWeight, 'Restored weight is correct');
+		equal(player.attr('height'), initialHeight, 'Restored height is correct');
+	});
+
 });
