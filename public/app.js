@@ -106,6 +106,8 @@ stache.registerHelper("pageComponent", function(options){
 	return can.stache(template)(this, options.helpers, options.nodeList);
 });
 
+route('tournaments/:tournamentId');
+route('games/:gameId');
 route(':page',{page: 'tournaments'});
 
 export default AppState;
