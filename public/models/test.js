@@ -1,3 +1,2 @@
-import './fixtures';
-
+import './fixtures/';
 import './tournament_test';
