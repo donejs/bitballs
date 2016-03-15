@@ -50,10 +50,8 @@
  *
  *       GET /services/stats/5?
  *           withRelated[]=player
- *           sortBy=time
  *
  *   @param {Array} [withRelated] Clause used to add related data.
- *   @param {String} [sortBy] Clause used to sort the returned stats.
  *   @return {JSON} An object that contains the stats:
  *
  *       {
@@ -77,7 +75,7 @@
  *         }
  *
  *   @param {JSON} JSONBody The updated properties of the stat object.
- *   @return {JSON} Returns JSON with all the properties of the newly created object, including its id.
+ *   @return {JSON} Returns JSON with all the properties of the updated object, including its id.
  *
  *       {
  *         "id": 9

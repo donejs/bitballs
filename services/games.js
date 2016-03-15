@@ -35,15 +35,82 @@ var adminOnly = require( "./adminOnly" );
  *
  *       POST /services/games
  *         {
+ *            "tournamentId": 1,
+ *         	  "round": 'Final',
+ *         	  "court": 'Old court'
+ *         	  "videoUrl": '?v=2141232213',
+ *         	  "homeTeamId": 1
+ *         	  "awayTeamId": 1
  *         }
  *
- * @signature `DELETE /services/games`
- *   FOO
+ * 	@param {JSON} JSONBody The raw JSON properties of a game object
+ * 	@return {JSON} Returns JSON with all the properties of the newly created object, including its id.
+ *
+ * 		{
+ * 	 	  "id": 9,
+ *        "tournamentId": 1,
+ *        "round": 'Final',
+ *        "court": 'Old court'
+ *        "videoUrl": '?v=2141232213',
+ *        "homeTeamId": 1
+ *        "awayTeamId": 1
+ * 		}
+ *
+ *
  * @signature `GET /services/games/:id`
- *   FOO
+ *   Gets a game by id from the database
+ *
+ * 		GET /services/games/9?
+ * 			withRelated[]=homeTeam
+ *
+ *   @param {Array} [withRelated] Clause used to add related data.
+ *   @return {JSON} An object that contains the game data:
+ *
+ *	     {
+ *         id: Int,
+ *         tournamentId: Int,
+ *         round: String,
+ *         court: String,
+ *         videoUrl: String,
+ *         homeTeamId: Int,
+ *         awayTeamId: Int
+ *       }
  *
  * @signature `PUT /services/games/:id`
- *   FOO
+ *   Updates a game in the database. Only admins are allowed to update games.
+ *
+ * 	    PUT /services/games/9
+ *        {
+ *          "tournamentId": 1,
+ *          "round": 'Final',
+ *          "court": 'New court'
+ *         	"videoUrl": '?v=2141232213',
+ *          "homeTeamId": 1
+ *          "awayTeamId": 1
+ *        }
+ *
+ * 	@param {JSON} JSONBody The updated properties of the game object
+ * 	@return {JSON} Returns JSON with all the properties of the updated object, including its id.
+ *
+ * 		{
+ * 	 	  "id": 9,
+ *        "tournamentId": 1,
+ *        "round": 'Final',
+ *        "court": 'New court'
+ *        "videoUrl": '?v=2141232213',
+ *        "homeTeamId": 1
+ *        "awayTeamId": 1
+ * 		}
+ * 
+ *
+ * @signature `DELETE /services/games`
+ *   Deletes a game in the database. Only admins are allowed to delete games.
+ *
+ * 		DELETE /services/games/9
+ *
+ * 	@return {JSON} Returns an empty JSON object.
+ *
+ * 		{}
  */
 
 

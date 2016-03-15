@@ -7,6 +7,49 @@ var bCrypt = require("bcrypt-nodejs");
 /**
  * @module {function} services/session /services/session
  * @parent bitballs.services
+ *
+ * @signature `GET /services/session`
+ *   Gets the current session, if any
+ *
+ * 		GET /services/session
+ *
+ * 	  @return {JSON} An object containing the logged in user's data, omitting sensitive information.
+ *
+ * 	      {
+ * 		    "id": Int,
+ * 		    "name": String,  	// Optional name
+ * 		    "email": String,	// User email address
+ * 		    "isAdmin": Boolean,	// Whether user is an admin
+ * 		    "verified": Boolean // Whether user has verified an email address
+ * 	      }
+ * 		
+ * @signature `POST /services/session`
+ *   If password is valid, logs in the current user and creates a session
+ *
+ * 		POST /services/session
+ * 			{
+ * 			  "email": "addyfizzle@publicdefenders.org"
+ * 		   	  "password": "H3HLJ2HIO4"
+ * 		    }
+ * 		    
+ *   @return {JSON} An object containing the logged in user's data, omitting sensitive information.
+ *
+ * 		  {
+ * 		    "id": 9,
+ * 	 	    "name": "Atticus Finch",
+ * 	 	    "email": "addyfizzle@publicdefenders.org",
+ * 	 	    "isAdmin": false,
+ * 	 	    "verified": true
+ * 		  }
+ *
+ * @signature `DELETE /services/session`
+ *   Logs the current user out.
+ *
+ * 		DELETE /services/session
+ *
+ *  @return {JSON} Returns an empty JSON object.
+ *
+ * 		{}
  */
 
 passport.serializeUser(function(user, done) {

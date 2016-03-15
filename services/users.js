@@ -12,6 +12,90 @@ var appUrl = urls[envKey];
 /**
  * @module {function} services/users /services/users
  * @parent bitballs.services
+ *
+ * @signature `GET /services/users`
+ *   Gets users from the database.
+ *
+ * 		GET /services/users?
+ * 			where[idAdmin]=true&
+ * 			sortBy=email
+ *
+ *	@param {Object} [where] Clause to filter which users are returned
+ *	@param {String} [sortBy] Clause used to sort the returnd users
+ *	@return {JSON} An object that contains the user data, omitting sensitive information:
+ *
+ * 		{data: [{
+ * 			"id": Int,
+ * 			"name": String,  	// Optional name
+ * 			"email": String,	// User email address
+ * 			"isAdmin": Boolean,	// Whether user is an admin
+ * 			"verified": Boolean // Whether user has verified an email address
+ * 		}, ...]}
+ *
+ *  @signature 'POST /services/users'
+ *    Creates a user in the database and sends a verification email to the provided email address.
+ *
+ * 		POST /services/users
+ * 		 {
+ * 		   "name": "Atticus Finch",
+ * 		   "email": "addyfizzle@publicdefenders.org"
+ * 		   "password": "H3HLJ2HIO4",					//hashed password
+ * 		 }
+ *
+ *     @param {JSON} JSONBody The raw JSON properties of a user object
+ *     @return {JSON} Returns JSON with the properties of the newly created object, including its id but omitting sensitive data.
+ *
+ * 		{
+ * 		  "id": 9,
+ * 	 	  "name": "Atticus Finch",
+ * 	 	  "email": "addyfizzle@publicdefenders.org",
+ * 	 	  "isAdmin": false,
+ * 	 	  "verified": false
+ * 		}
+ *
+ *  @signature `GET /services/users/:id
+ *     Gets a user by id from the database
+ *
+ * 			GET /services/users/9
+ *
+ *   @return {JSON} Object that contains the player data, omitting sensitive information
+ *
+ * 		{
+ * 		  "id": Int,
+ * 		  "name": String,  	// Optional name
+ * 		  "email": String,	// User email address
+ * 		  "isAdmin": Boolean,	// Whether user is an admin
+ * 		  "verified": Boolean // Whether user has verified an email address
+ * 		}
+ *
+ * 	@signature `PUT /services/users/:id`
+ * 	  Updates a user in the database. Logged in users can update themselves, but only admins can update any user.
+ *
+ * 		PUT /services/players/9
+ *		   {
+ * 		     "email": "addyfizzle@publicdefenders.org"
+ * 		     "verificationHash": "H3HLJ2HIO4H3HLJ2HIO4H3HLJ2HIO4"
+ * 		   }
+ *
+ * 	  @param {JSON} JSONBody The updates properties of the user object.
+ * 	  @return {JSON} Returns JSON with the properties of the updated user, omitting sensitive information
+ *
+ * 	      {
+ * 		    "id": 9,
+ * 	 	    "name": "Atticus Finch",
+ * 	 	    "email": "addyfizzle@publicdefenders.org",
+ * 	 	    "isAdmin": false,
+ * 	 	    "verified": true
+ * 	      }
+ * 		
+ * 	@signature `DELETE /services/users/9`
+ * 	  Deletes a user in the database. Logged in users can delete themselves, but only admins can delete any user.
+ *
+ * 		DELETE /services/users/9
+ *
+ *    @return {JSON} Returns an empty JSON object.
+ *
+ * 		{}
  */
 
 var omitSensitive = function ( user ) {

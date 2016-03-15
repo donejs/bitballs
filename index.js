@@ -17,7 +17,7 @@ if ( process.argv.indexOf( "--slow" ) !== -1 ) {
 	});
 }
 
-require('./services/sessions');
+require('./services/session');
 
 require('./services/games');
 require('./services/players');
