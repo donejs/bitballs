@@ -1,6 +1,6 @@
 /**
  * @module {can.Map} bitballs/models/session Session
- * @parent bitballs.client
+ * @parent bitballs.clientModels
  */
 
 var Map = require('can/map/');

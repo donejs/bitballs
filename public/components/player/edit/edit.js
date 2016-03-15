@@ -45,13 +45,5 @@ exports.Component = Component.extend({
 			ev.preventDefault();
 			this._super.apply(this,arguments);
 		}
-	}),
-	events: {
-		"{viewModel} saved": function(vm, ev, arg1){
-			this.element.triggerHandler("saved", arg1);
-		},
-		"{viewModel} canceled": function(vm, ev, arg1){
-			this.element.triggerHandler("canceled", arg1);
-		}
-	}
+	})
 });

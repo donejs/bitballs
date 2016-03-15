@@ -9,6 +9,10 @@ var nodeMail = require( "./email" );
 var urls = require("../package.json").urls;
 var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 var appUrl = urls[envKey];
+/**
+ * @module {function} services/users /services/users
+ * @parent bitballs.services
+ */
 
 var omitSensitive = function ( user ) {
 	if ( user.toJSON ) user = user.toJSON();

@@ -1,6 +1,6 @@
 /**
  * @module {Module} bitballs/components/game/details <game-details>
- * @parent bitballs.client
+ * @parent bitballs.components
  *
  * @description Provides a custom element that allows a user
  * to either view a game or edit a game's stats.

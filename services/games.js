@@ -3,7 +3,48 @@ var app = require("../services/app");
 var Game = require("../models/game");
 var adminOnly = require( "./adminOnly" );
 
-
+/**
+ * @module {function} services/games /services/games
+ * @parent bitballs.services
+ *
+ * @signature `GET /services/games`
+ *   Gets games from the database.
+ *
+ *       GET /services/games?
+ *           where[tournamentId]=5&
+ *           withRelated[]=homeTeam&withRelated[]=awayTeam&
+ *           sortBy=round
+ *
+ *   @param {Object} [where] Clause used to filter which games are returned.
+ *   @param {Array} [withRelated] Clause used to add related data.
+ *   @param {String} [sortBy] Clause used to sort the returned games.
+ *   @return {connectData} An object that contains the games:
+ *
+ *       {data: [{
+ *         id: Int,
+ *         tournamentId: Int,
+ *         round: String,
+ *         court: String,
+ *         videoUrl: String,
+ *         homeTeamId: Int,
+ *         awayTeamId: Int
+ *       }, ...]}
+ *
+ * @signature `POST /services/games`
+ *   Creates a game in the database.  Only admins are allowed to create games.
+ *
+ *       POST /services/games
+ *         {
+ *         }
+ *
+ * @signature `DELETE /services/games`
+ *   FOO
+ * @signature `GET /services/games/:id`
+ *   FOO
+ *
+ * @signature `PUT /services/games/:id`
+ *   FOO
+ */
 
 
 app.get('/services/games', function(req, res){

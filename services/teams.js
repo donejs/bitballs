@@ -2,7 +2,10 @@ var app = require("../services/app");
 var Team = require("../models/team");
 var adminOnly = require( "./adminOnly" );
 
-
+/**
+ * @module {function} services/teams /services/teams
+ * @parent bitballs.services
+ */
 app.get('/services/teams', function(req, res){
 	Team.collection().query(req.query).fetch().then(function(teams){
 		res.send({data: teams.toJSON()});

@@ -5,6 +5,11 @@ var adminOnly = require( "./adminOnly" );
 
 var Tournament = require("../models/tournament");
 
+
+/**
+ * @module {function} services/tournaments /services/tournaments
+ * @parent bitballs.services
+ */
 app.get('/services/tournaments', function(req, res){
 	Tournament.collection().query(req.query).fetch().then(function(tournaments){
 		res.send({data: tournaments});

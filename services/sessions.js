@@ -4,6 +4,11 @@ var User = require("../models/user");
 var _ = require("lodash");
 var bCrypt = require("bcrypt-nodejs");
 
+/**
+ * @module {function} services/session /services/session
+ * @parent bitballs.services
+ */
+
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
@@ -52,7 +57,7 @@ app.get('/services/session', function(req, res) {
 app.post('/services/session', function(req, res, next) {
 	var email = req.body.user.email,
 		password = req.body.user.password;
-		
+
 	new User({
 		'email': email
 	}).fetch().then(function(user) {
@@ -68,7 +73,7 @@ app.post('/services/session', function(req, res, next) {
 			// it was their username or their password that was the problem
 			return res.status(401).json({message: "Incorrect username or password"});
 		}
-		
+
 	}, function(error) {
 
 		console.log('User error ' + email, error);
