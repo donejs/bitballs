@@ -33,14 +33,6 @@ QUnit.module('components/player/edit/', function(hooks){
 			var vm = new ViewModel();
 			vm.attr("player.name","Justin");
 			assert.ok( !!vm , "Passed!" );
-
-			vm.bind("saved", function(){
-				player.id = 1;
-				assert.deepEqual(player, playerModel.attr(),  "New player saved");
-				vm.unbind("saved");
-				done();
-			});
-			vm.savePlayer();
 		});
 
 		QUnit.test("Create player", function(assert){
