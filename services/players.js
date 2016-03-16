@@ -10,100 +10,100 @@ var adminOnly = require( "./adminOnly" );
  * @signature `GET /services/players`
  *   Gets players from the database
  *
- * 		GET /services/games?
- * 			where[playerId]=5&
- * 			sortBy=startRank
+ *     GET /services/games?
+ *         where[playerId]=5&
+ *         sortBy=startRank
  *
  * @param {Object} [where] Clause used to filter which players are returned.
  * @param {String} [sortBy] Clause used to sort the returned players
  * @return {JSON} An object that contains the player data:
  *
- * 		{data: [{
- * 			id: Int,
- * 	  		name: String,		// Player name
- * 	  		weight: Int,		// Player weight, in lbs
- * 	  		height: Int,		// Player height, in inches
- * 	  		birthday: Date 		// Player birthday
- * 	  		profile: String 	// Player description/bio
- * 	  		startRank: String	// Starting Rank
- * 	    }]}
+ *     {data: [{
+ *         id: Int,
+ *         name: String,		// Player name
+ *         weight: Int,			// Player weight, in lbs
+ *         height: Int,			// Player height, in inches
+ *         birthday: Date, 		// Player birthday
+ *         profile: String, 	// Player description/bio
+ *         startRank: String	// Starting Rank
+ *     }]}
  *
  * @signature `POST /services/players`
  *   Adds a player to the database. Only admins are allowed to create players.
  *
- * 		POST /services/players
- * 		  {
- * 		    "name": "Harper Lee",
- * 			"weight": 190,
- * 			"height": 72,
- * 			"birthday": "1990-01-22",
- * 			"profile": "Author of 'To Kill a Mockingbird'",
- * 			"startRank": "novice"
- * 		  }
+ *     POST /services/players
+ *          {
+ *            "name": "Harper Lee",
+ *            "weight": 190,
+ *            "height": 72,
+ *            "birthday": "1990-01-22",
+ *            "profile": "Author of 'To Kill a Mockingbird'",
+ *            "startRank": "novice"
+ *          }
  *
- * 	 @param {JSON} JSONBody The Raw JSON properties of a player object
- *   @return {JSON} Returns JSON with all the properties of the newly created object, including its id
+ * @param {JSON} JSONBody The Raw JSON properties of a player object
+ * @return {JSON} Returns JSON with all the properties of the newly created object, including its id
  *
- * 	    {
- * 	 	  "id": 9,
- * 		  "name": "Harper Lee",
- * 	      "weight": 190,
- * 		  "height": 72,
- * 	      "birthday": "1990-01-22",
- * 		  "profile": "Author of 'To Kill a Mockingbird'",
- * 		  "startRank": "novice"
- * 	    }
+ *     {
+ *       "id": 9,
+ *       "name": "Harper Lee",
+ *       "weight": 190,
+ *       "height": 72,
+ *       "birthday": "1990-01-22",
+ *       "profile": "Author of 'To Kill a Mockingbird'",
+ *       "startRank": "novice"
+ *     }
  *
- *	@signature `GET /services/players/:id`
+ *  @signature `GET /services/players/:id`
  *	  Gets a player by id from the database.
  *
- *	    GET /services/players/9
+ *      GET /services/players/9
  *
  *  @return {JSON} An object that contains the player data:
  *
- * 		{data: [{
- * 			id: Int,
- * 	  		name: String,		// Player name
- * 	  		weight: Int,		// Player weight, in lbs
- * 	  		height: Int,		// Player height, in inches
- * 	  		birthday: Date 		// Player birthday
- * 	  		profile: String 	// Player description/bio
- * 	  		startRank: String	// Starting Rank
- * 	    }]}
+ *      {data: [{
+ * 	      id: Int,
+ * 	      name: String,		// Player name
+ * 	      weight: Int,		// Player weight, in lbs
+ * 	      height: Int,		// Player height, in inches
+ * 	      birthday: Date 		// Player birthday
+ * 	      profile: String 	// Player description/bio
+ * 	      startRank: String	// Starting Rank
+ *      }]}
  *
- *  @signature `PUT /services/players/:id`
- *    Updates a player in the database. Only admins are allowed to update players.
+ * @signature `PUT /services/players/:id`
+ *   Updates a player in the database. Only admins are allowed to update players.
  *
- * 		PUT /services/players/9
- * 		  {
- * 		    "name": "Harper Lee",
- * 	        "weight": 190,
- * 		    "height": 72,
- * 	        "birthday": "1990-01-22",
- * 		    "profile": "Author of 'To Kill a Mockingbird' and `Absalom, Absalom`",
- * 		    "startRank": "novice"
- * 		  }
+ *     PUT /services/players/9
+ *         {
+ *           "name": "Harper Lee",
+ * 	         "weight": 190,
+ * 		     "height": 72,
+ * 	         "birthday": "1990-01-22",
+ * 		     "profile": "Author of 'To Kill a Mockingbird' and `Absalom, Absalom`",
+ * 		     "startRank": "novice"
+ * 		   }
  *
  *  @param {JSON} JSONBody The updated properties of the player object
  *  @return {JSON} Returns JSON with all the properties of the updated object, including its id.
  *
- * 	    {
- * 		  "name": "Harper Lee",
- * 	      "weight": 190,
- * 		  "height": 72,
- * 	      "birthday": "1990-01-22",
- * 		  "profile": "Author of 'To Kill a Mockingbird' and `Absalom, Absalom`",
- * 		  "startRank": "novice"
- * 	    }
+ *      {
+ *        "name": "Harper Lee",
+ *        "weight": 190,
+ *        "height": 72,
+ *        "birthday": "1990-01-22",
+ *        "profile": "Author of 'To Kill a Mockingbird' and `Absalom, Absalom`",
+ *        "startRank": "novice"
+ *      }
  *
- *  @signature `DELETE /services/players/:id`
+ * @signature `DELETE /services/players/:id`
  *    Deletes a player in the database. Only admins are allowed to delete players.
  *
  *		DELETE /services/players/9
  *
- *    @return {JSON} Returns and empty JSON object.
+ *  @return {JSON} Returns and empty JSON object.
  *
- * 		{}
+ *      {}
  */
 
 var clean = function(data){

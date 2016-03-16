@@ -7,15 +7,15 @@ var adminOnly = require( "./adminOnly" );
  * @parent bitballs.services
  *
  * @signature `GET /services/teams`
- *   Gets teams from the database.
+ *     Gets teams from the database.
  *
- *       GET /services/teams?
- *           where[tournamentId]=5&
- *           withRelated[]=player1&
- *           withRelated[]=player2&
- *           withRelated[]=player3&
- *           withRelated[]=player4
- *           sortBy=name
+ *     GET /services/teams?
+ *         where[tournamentId]=5&
+ *         withRelated[]=player1&
+ *         withRelated[]=player2&
+ *         withRelated[]=player3&
+ *         withRelated[]=player4
+ *         sortBy=name
  *
  *   @param {Object} [where] Clause used to filter which teams are returned.
  *   @param {Array} [withRelated] Clause used to add related data.
@@ -34,18 +34,18 @@ var adminOnly = require( "./adminOnly" );
  *       }, ...]}
  *
  * @signature `POST /services/teams`
- *   Creates a team in the database.  Only admins are allowed to create teams.
+ *    Creates a team in the database.  Only admins are allowed to create teams.
  *
- *       POST /services/teams
- *         {
- *           "tournamentId": 1,
- *           "name": "Tequila Mockingbird",
- *           "color": "Gregory Peck Gray",
- *           "player1Id": 1,
- *           "player2Id": 2,
- *           "player3Id": 3,
- *           "player4Id": 4
- *         }
+ *     POST /services/teams
+ *          {
+ *            "tournamentId": 1,
+ *            "name": "Tequila Mockingbird",
+ *            "color": "Gregory Peck Gray",
+ *            "player1Id": 1,
+ *            "player2Id": 2,
+ *            "player3Id": 3,
+ *            "player4Id": 4
+ *          }
  *         
  *   @param {JSON} JSONBody The raw JSON properties of a team object.
  *   @return {JSON} Returns JSON with all the properties of the newly created object, including its id.
@@ -64,8 +64,8 @@ var adminOnly = require( "./adminOnly" );
  * @signature `GET /services/teams/:id`
  *   Gets a team by id from the database.
  *
- *       GET /services/teams/5?
- *           withRelated[]=player1&
+ *     GET /services/teams/5?
+ *         withRelated[]=player1&
  *           withRelated[]=player2&
  *           withRelated[]=player3&
  *           withRelated[]=player4
@@ -73,7 +73,7 @@ var adminOnly = require( "./adminOnly" );
  *   @param {Array} [withRelated] Clause used to add related data.
  *   @return {JSON} An object that contains the team data:
  *
- *       {
+ *     {
  *         id: Int,
  *         tournamentId: Int,   // Related tournament
  *         name: String,		// Team name

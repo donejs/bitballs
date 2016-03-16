@@ -3,12 +3,12 @@
  * @parent bitballs.services
  *
  * @signature `GET /services/stats`
- *   Gets stats from the database.
+ *    Gets stats from the database.
  *
- *       GET /services/stats?
- *           where[gameId]=5&
- *           withRelated[]=player
- *           sortBy=time
+ *     GET /services/stats?
+ *         where[gameId]=5&
+ *         withRelated[]=player
+ *         sortBy=time
  *
  *   @param {Object} [where] Clause used to filter which stats are returned.
  *   @param {Array} [withRelated] Clause used to add related data.
@@ -25,15 +25,15 @@
  *       }, ...]}
  *
  * @signature `POST /services/stats`
- *   Creates a stat in the database.  Only admins are allowed to create stats.
+ *    Creates a stat in the database.  Only admins are allowed to create stats.
  *
- *       POST /services/stats
- *         {
- *           "gameId": 6,
- *           "playerId": 15,
- *           "type": "1P",
- *           "time": 60
- *         }
+ *     POST /services/stats
+ *          {
+ *            "gameId": 6,
+ *            "playerId": 15,
+ *            "type": "1P",
+ *            "time": 60
+ *          }
  *   @param {JSON} JSONBody The raw JSON properties of a stat object.
  *   @return {JSON} Returns JSON with all the properties of the newly created object, including its id.
  *
@@ -46,10 +46,10 @@
  *       }
  *
  * @signature `GET /services/stats/:id`
- *   Gets a stat by id from the database.
+ *    Gets a stat by id from the database.
  *
- *       GET /services/stats/5?
- *           withRelated[]=player
+ *     GET /services/stats/5?
+ *         withRelated[]=player
  *
  *   @param {Array} [withRelated] Clause used to add related data.
  *   @return {JSON} An object that contains the stats:
@@ -64,9 +64,9 @@
  *       }
  *
  * @signature `PUT /services/stats/:id`
- *   Updates a stat in the database.  Only admins are allowed to update stats.
+ *    Updates a stat in the database.  Only admins are allowed to update stats.
  *
- *       PUT /services/stats/9
+ *     PUT /services/stats/9
  *         {
  *           "gameId": 6,
  *           "playerId": 15,
@@ -86,11 +86,11 @@
  *       }
  *
  * @signature `DELETE /services/stats/:id`
- *   Deletes a stat in the database.  Only admins are allowed to delete stats.
+ *    Deletes a stat in the database.  Only admins are allowed to delete stats.
  *
- *       DELETE /services/stats/9
+ *     DELETE /services/stats/9
  *
- *   @return {JSON} Returns an empty JSON object.
+ *  @return {JSON} Returns an empty JSON object.
  *
  *       {}
  */
