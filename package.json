@@ -78,6 +78,6 @@
   },
   "urls": {
     "prod": "https://bitballs.herokuapp.com/",
-    "dev": "http://localhost:5000"
+    "dev": "http://localhost:5000/"
   }
 }
