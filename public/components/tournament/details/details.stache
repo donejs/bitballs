@@ -48,18 +48,18 @@
 	<div class="form-group">
 	    <label for="game-round">Round</label>
 	    <select {($value)}="selectedRound" class="form-control" id="game-round">
-	    	{{#each games.availableRounds}}
+	    	{{#games.getAvailableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
-	    	{{/each}}
+	    	{{/games.getAvailableRounds}}
 	    </select>
 	</div>
 
 	<div class="form-group">
 	    <label for="game-court">Court</label>
 	    <select {($value)}="selectedCourt" class="form-control" id="game-court">
-		{{#each games.availableCourts(game.round)}}
+		{{#games.getAvailableCourts(selectedRound)}}
 			<option value="{{.}}">{{.}}</option>
-		{{/each}}
+		{{/games.getAvailableCourts}}
 	    </select>
 	</div>
 

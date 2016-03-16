@@ -10,7 +10,16 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/route/");
 require("can/view/href/");
 
+
 exports.ViewModel = CanMap.extend({
+	init: function () {
+		this.bind('userSelectedRound', function () {
+			this.attr('userSelectedCourt', null);
+		});
+		this.bind('gamesLength', function () {
+			this.attr('userSelectedRound', null);
+		});
+	},
 	define: {
 		tournament: {
 			get: function(lastSet, setVal){
@@ -27,6 +36,11 @@ exports.ViewModel = CanMap.extend({
 		games: {
 			get: function(lastSet, setVal){
 				this.attr("gamesPromise").then(setVal);
+			}
+		},
+		gamesLength: {
+			get: function () {
+				return this.attr('games.length');
 			}
 		},
 		teamsPromise: {
@@ -96,52 +110,22 @@ exports.ViewModel = CanMap.extend({
 		},
 		selectedRound: {
 			set: function (setVal) {
-				// Apply the user's selection
-				this.attr('game.round', setVal);
+				this.attr('userSelectedRound', setVal);
+				return setVal;
 			},
 			get: function () {
-				// If the games list hasn't resolved, use the static
-				// list of round names
-				var availableRounds = this.attr('games') ?
-					this.attr('games').availableRounds() :
-					this.attr('roundNames');
-
-				// If the current `game.round` is "an available round", use it;
-				// Otherwise use the first in the list of available rounds
-				var selectedRound =
-					availableRounds.indexOf(this.attr('game.round')) > -1 ?
-						this.attr('game.round') :
-						availableRounds[0];
-
-				// Persist the qualified selection
-				this.attr('game.round', selectedRound);
-
-				return selectedRound;
+				return this.attr('userSelectedRound') ||
+					this.attr('games') && this.attr('games').getAvailableRounds()[0];
 			}
 		},
 		selectedCourt: {
 			set: function (setVal) {
-				// Apply the user's selection
-				this.attr('game.court', setVal);
+				this.attr('userSelectedCourt', setVal);
+				return setVal;
 			},
 			get: function () {
-				// If the games list hasn't resolved, use the static
-				// list of court names
-				var availableCourts = this.attr('games') ?
-					this.attr('games').availableCourts(this.attr('selectedRound')) :
-					this.attr('courtNames');
-
-				// If the current `game.court` is "an available court", use it;
-				// Otherwise use the first in the list of available courts
-				var selectedCourt =
-					availableCourts.indexOf(this.attr('game.court')) > -1 ?
-						this.attr('game.court') :
-						availableCourts[0];
-
-				// Persist the qualified selection
-				this.attr('game.court', selectedCourt);
-
-				return selectedCourt;
+				return this.attr('userSelectedCourt') ||
+					this.attr('games') && this.attr('games').getAvailableCourts(this.attr('selectedRound'))[0];
 			}
 		},
 		teamIdMap: {
@@ -237,17 +221,11 @@ exports.ViewModel = CanMap.extend({
 		var self = this;
 		var game = this.attr("game");
 
-		// cleanup that https://github.com/bitovi/canjs/issues/1834 should do for us
-		if(!game.attr("court")) {
-			game.attr("court","1");
-		}
-
-		if(!game.attr("round")) {
-			game.attr("round",Game.roundNames[0]);
-		}
-
-		game.attr("tournamentId", this.attr("tournamentId"))
-			.save(function(){
+		game.attr({
+			round: this.attr('selectedRound'),
+			court: this.attr('selectedCourt'),
+			tournamentId: this.attr('tournamentId')
+		}).save(function(){
 			self.attr("game", new Game());
 		});
 	}

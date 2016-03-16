@@ -144,12 +144,12 @@ Game.List = List.extend({Map: Game},{
 			round = gamesGroupedByRound[roundName];
 		return round && round[court];
 	},
-	availableRounds: function() {
+	getAvailableRounds: function() {
 		return Game.roundNames.filter(function (roundName) {
 			return this.getGameCountForRound(roundName) < Game.courtNames.length;
 		}, this);
 	},
-	availableCourts: function(roundName) {
+	getAvailableCourts: function(roundName) {
 		return Game.courtNames.filter(function (courtName) {
 			return !this.getGameForRoundAndCourt(roundName, courtName);
 		}, this);
