@@ -31,7 +31,6 @@ exports.ViewModel = Map.extend({
 		},
 		gamesGroupedByRound: {
 			get: function(){
-				// return;
 				console.log("grouping re-evaluate");
 				var rounds = {},
 					games = this.attr("games");
@@ -65,7 +64,6 @@ exports.ViewModel = Map.extend({
 		},
 		availableColors: {
 			get: function(){
-				// return;
 				var teams = this.attr("teams");
 				if(!teams) {
 					return this.attr("teamColors");
@@ -129,7 +127,6 @@ exports.ViewModel = Map.extend({
 		}
 	},
 	availableTeamFor: function(name, round){
-		// return;
 		var teams = this.attr("teams");
 		var games = this.attr("games");
 		if(!games || !teams) {
@@ -158,7 +155,6 @@ exports.ViewModel = Map.extend({
 		return remainingTeams;
 	},
 	availablePlayersFor: function(team, number){
-		// return;
 		var allPlayers = this.attr("players"),
 			teams = this.attr('teams');
 		if(allPlayers && teams) {
