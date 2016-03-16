@@ -13,13 +13,13 @@
 	</tr>
 </thead>
 <tbody>
-{{#eachOf gamesGroupedByRound}}
-	{{#if .}}
+{{#each roundNames}}
+	{{#if games.getGameCountForRound(.)}}
 		<tr>
-			<td>{{name}}</td>
-			{{#each courts}}
+			<td>{{.}}</td>
+			{{#each courtNames}}
 				<td>
-					{{#if .}}
+					{{#games.getGameForRoundAndCourt ../. .}}
 						<a href="{{routeUrl gameId=id}}">
 							{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
 						</a>
@@ -30,7 +30,7 @@
 									<span class='glyphicon glyphicon-remove'/>
 							</button>
 						{{/if}}
-					{{/if}}
+					{{/games.getGameForRoundAndCourt}}
 				</td>
 			{{/each}}
 		</tr>
@@ -46,18 +46,18 @@
 <form ($submit)="createGame(%event)" action="">
 
 	<div class="form-group">
-	    <label for="game-round">round</label>
+	    <label for="game-round">Round</label>
 	    <select {($value)}="game.round" class="form-control" id="game-round">
-	    	{{#each availableRounds}}
+	    	{{#each games.availableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
 	    	{{/each}}
 	    </select>
 	</div>
 
 	<div class="form-group">
-	    <label for="game-court">court</label>
+	    <label for="game-court">Court</label>
 	    <select {($value)}="game.court" class="form-control" id="game-court">
-		{{#each availableCourts}}
+		{{#each games.availableCourts(game.round)}}
 			<option value="{{.}}">{{.}}</option>
 		{{/each}}
 	    </select>

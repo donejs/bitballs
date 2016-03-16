@@ -29,112 +29,6 @@ exports.ViewModel = CanMap.extend({
 				this.attr("gamesPromise").then(setVal);
 			}
 		},
-		gamesGroupedByRound: {
-			get: function(){
-				console.log("grouping re-evaluate");
-				var rounds = [],
-					games = this.attr("games");
-
-				if (games) {
-					games.each(function(game){
-						var roundName = game.attr("round");
-						var roundIndex =
-							Game.roundToIndexMap[roundName];
-						var courtNumber = parseInt(game.attr('court'), 10);
-						var courtIndex = courtNumber - 1;
-						var round;
-
-						if (!rounds[roundIndex]) {
-							// Create Round pseudo-model and store it
-							// in the `rounds` list according to the
-							// order of `Game.roundNames`
-							rounds[roundIndex] = {
-								name: roundName,
-								courts: new Array(4),
-								reservedCourts: {},
-								reservedCourtsCount: 0
-							};
-						}
-
-						// Get a reference to the Round
-						round = rounds[roundIndex];
-
-						// Add the game to the list of courts at the
-						// correct index
-						round.courts[courtIndex] = game;
-
-						// Add the court number to the list of reserved courts
-						round.reservedCourts[courtNumber] = courtIndex;
-
-						// Increment the reserved courts count
-						round.reservedCourtsCount++;
-					});
-				}
-
-				return rounds;
-			}
-		},
-		availableRounds: {
-			get: function () {
-				var availableRounds = [],
-					rounds = this.attr('gamesGroupedByRound'),
-					maxCourtReserverations = 4;
-
-				Game.roundNames.forEach(function (roundName) {
-					var roundIndex = Game.roundToIndexMap[roundName];
-					var round = rounds[roundIndex];
-
-					if (! round || round.reservedCourtsCount < maxCourtReserverations) {
-						availableRounds.push(roundName);
-					}
-				});
-
-				return availableRounds;
-			}
-		},
-		availableCourts: {
-			get: function () {
-				var availableCourts = [],
-					rounds = this.attr('gamesGroupedByRound') || [],
-					selectedRoundName = this.attr('game').attr('round'),
-					selectedRoundIndex = Game.roundToIndexMap[selectedRoundName],
-					maxCourtReserverations = Game.roundNames.length,
-					courtReserverations = {},
-					courtNumber, reservationCount;
-
-				// If a particular round is selected limit the search to
-				// that round
-				if (rounds.length && typeof selectedRoundIndex === 'number') {
-					maxCourtReserverations = 1;
-					rounds = rounds[selectedRoundIndex] ?
-						[rounds[selectedRoundIndex]] : [];
-				}
-
-				// Sum up the total reserverations of each court in each round
-				rounds.forEach(function (round) {
-					round.reservedCourts.forEach(function (courtIndex, courtNumber) {
-						// Get the current reserveration count for the given court
-						reservationCount = courtReserverations[courtNumber];
-
-						// Increment the reserverations counter
-						courtReserverations[courtNumber] =
-							typeof reservationCount === 'number' ? reservationCount + 1 : 1;
-					});
-				});
-
-				for (courtNumber = 1; courtNumber <= 4; courtNumber++) {
-					reservationCount = courtReserverations[courtNumber];
-
-					// Add the court number to the available courts list if
-					// the court was used less than expected
-					if (! reservationCount || reservationCount < maxCourtReserverations) {
-						availableCourts.push(courtNumber);
-					}
-				}
-
-				return availableCourts;
-			}
-		},
 		teamsPromise: {
 			get: function(){
 				return Team.getList({
@@ -287,6 +181,7 @@ exports.ViewModel = CanMap.extend({
 		});
 	},
 	roundNames: Game.roundNames,
+	courtNames: Game.courtNames,
 	createGame: function(ev) {
 		ev.preventDefault();
 		var self = this;
