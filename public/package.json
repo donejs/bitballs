@@ -64,10 +64,10 @@
       "bitballs/components/game/details/",
       "bitballs/components/tournament/details/",
       "bitballs/components/tournament/list/",
-      "bitballs/components/user/",
+      "bitballs/components/user/details/",
+      "bitballs/components/user/list/",
       "bitballs/components/game/details/",
-      "bitballs/components/player/list/",
-      "bitballs/components/users/"
+      "bitballs/components/player/list/"
     ]
   }
 }

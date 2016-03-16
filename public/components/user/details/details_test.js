@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import QUnit from 'steal-qunit';
-import user from 'bitballs/components/user/user';
+import user from 'bitballs/components/user/details/';
 import 'bitballs/models/fixtures/user';
 
 var ViewModel = user.ViewModel;
