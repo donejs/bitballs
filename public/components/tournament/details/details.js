@@ -94,6 +94,56 @@ exports.ViewModel = CanMap.extend({
 			},
 			type: "*"
 		},
+		selectedRound: {
+			set: function (setVal) {
+				// Apply the user's selection
+				this.attr('game.round', setVal);
+			},
+			get: function () {
+				// If the games list hasn't resolved, use the static
+				// list of round names
+				var availableRounds = this.attr('games') ?
+					this.attr('games').availableRounds() :
+					this.attr('roundNames');
+
+				// If the current `game.round` is "an available round", use it;
+				// Otherwise use the first in the list of available rounds
+				var selectedRound =
+					availableRounds.indexOf(this.attr('game.round')) > -1 ?
+						this.attr('game.round') :
+						availableRounds[0];
+
+				// Persist the qualified selection
+				this.attr('game.round', selectedRound);
+
+				return selectedRound;
+			}
+		},
+		selectedCourt: {
+			set: function (setVal) {
+				// Apply the user's selection
+				this.attr('game.court', setVal);
+			},
+			get: function () {
+				// If the games list hasn't resolved, use the static
+				// list of court names
+				var availableCourts = this.attr('games') ?
+					this.attr('games').availableCourts(this.attr('selectedRound')) :
+					this.attr('courtNames');
+
+				// If the current `game.court` is "an available court", use it;
+				// Otherwise use the first in the list of available courts
+				var selectedCourt =
+					availableCourts.indexOf(this.attr('game.court')) > -1 ?
+						this.attr('game.court') :
+						availableCourts[0];
+
+				// Persist the qualified selection
+				this.attr('game.court', selectedCourt);
+
+				return selectedCourt;
+			}
+		},
 		teamIdMap: {
 			get: function(){
 				var map = {};

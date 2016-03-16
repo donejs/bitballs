@@ -47,7 +47,7 @@
 
 	<div class="form-group">
 	    <label for="game-round">Round</label>
-	    <select {($value)}="game.round" class="form-control" id="game-round">
+	    <select {($value)}="selectedRound" class="form-control" id="game-round">
 	    	{{#each games.availableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
 	    	{{/each}}
@@ -56,7 +56,7 @@
 
 	<div class="form-group">
 	    <label for="game-court">Court</label>
-	    <select {($value)}="game.court" class="form-control" id="game-court">
+	    <select {($value)}="selectedCourt" class="form-control" id="game-court">
 		{{#each games.availableCourts(game.round)}}
 			<option value="{{.}}">{{.}}</option>
 		{{/each}}
