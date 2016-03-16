@@ -84,6 +84,6 @@ exports.ViewModel = can.Map.extend({
 
 exports.Component = Component.extend({
 	tag: "bitballs-user",
-	template: require("./user.stache!"),
+	template: require("./details.stache!"),
 	viewModel: exports.ViewModel
 });
