@@ -34,7 +34,7 @@ exports.ViewModel = can.Map.extend({
 
 		return promise;
 	},
-	cancelEvent: function() {
+	cancel: function() {
 		this.attr('player').restore();
 		can.dispatch.call(this, "canceled");
 	}

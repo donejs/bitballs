@@ -164,7 +164,7 @@ QUnit.module('components/player/edit/', function(hooks){
 		equal(player.attr('weight'), editedWeight, 'Edited weight is correct');
 		equal(player.attr('height'), editedHeight, 'Edited height is correct');
 
-		vm.cancelEvent();
+		vm.cancel();
 
 		equal(player.attr('name'), initialName, 'Restored name is correct');
 		equal(player.attr('weight'), initialWeight, 'Restored weight is correct');
