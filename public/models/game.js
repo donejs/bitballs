@@ -1,9 +1,7 @@
 /**
- * @module {can.Map} bitballs/models/game GameModel
- * @parent bitballs.client
+ * @module {can.Map} bitballs/models/game Game
+ * @parent bitballs.clientModels
  */
-
-
 var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var set = require("can-set");

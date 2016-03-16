@@ -1,11 +1,41 @@
-var Map = require('can/map/');
-var superMap = require('can-connect/can/super-map/');
-var tag = require('can-connect/can/tag/');
-var set = require("can-set");
+/**
+ * @module {can.Map} bitballs/models/stat Stat
+ * @parent bitballs.clientModels
+ *
+ * A [can.Map](https://canjs.com/docs/can.Map.html) that's connected to the [services/stats] with
+ * all of [can-connect/can/super-map](https://connect.canjs.com/doc/can-connect%7Ccan%7Csuper-map.html)'s
+ * behaviors.
+ *
+ * @body
+ *
+ * ## Use
+ *
+ * Use the `Stat` model to CRUD stats on the server. Use the CRUD methods `getList`, `save`, and `destroy` added to
+ * `Stat` by the [can-connect/can/map](https://connect.canjs.com/doc/can-connect%7Ccan%7Cmap.html) behavior.
+ *
+ *
+ * ```
+ * var Stat = require("bitballs/models/stat");
+ * Stat.getList({where: {gameId: 5}}).then(function(stats){ ... });
+ * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
+ * ```
+ */
+var Map = require('can/map/'),
+	superMap = require('can-connect/can/super-map/'),
+	tag = require('can-connect/can/tag/'),
+	set = require("can-set");
+
 require("can/map/define/");
 
-
-var Stat = Map.extend({
+var Stat = Map.extend(
+/** @static */
+{
+	/**
+	 * @property {Array<{name: String}>} statTypes
+	 *
+	 * Array of statType objects.  Each object has a name property which
+	 * has the short name of the stat.  Ex: `{name: "1P"}`.
+	 */
 	statTypes: [
 		{ name: "1P"},
 		{ name: "1PA"},
@@ -18,20 +48,41 @@ var Stat = Map.extend({
 		{ name: "Blk"},
 		{ name: "To"}
 	]
-},{
+},
+/** @prototype */
+{
 	define: {
+		/**
+		 * @property {Number} time
+		 *
+		 * The time of the stat, rounded to the nearest integer.
+		 */
 		time: {
 			set: function(newVal){
 				return Math.round(newVal);
 			}
 		},
+		// TODO: remove?
 		player: {
 			serialize: false
 		}
 	}
 });
+
+/**
+ * @property {can.List} bitballs/models/stat.static.List List
+ * @parent bitballs/models/stat.static
+ *
+ * Methods on a List of stats.
+ */
 Stat.List = can.List.extend({Map: Stat},{});
 
+/**
+ * @property {set.Algebra} bitballs/models/stat.static.algebra algebra
+ * @parent bitballs/models/stat.static
+ *
+ * Set Algebra
+ */
 Stat.algebra = new set.Algebra(
 	new set.Translate("where","where"),
 	set.comparators.sort('sortBy')
