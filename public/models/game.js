@@ -112,8 +112,8 @@ Game.roundNames.forEach(function(roundName, index){
 Game.List = List.extend({Map: Game},{
 	define: {
 		gamesGroupedByRound: {
-			get: function(){
-				// {"round 1": {"c1": game1, _count: 0}}
+			type: '*',
+			get: function() {
 				var rounds = {};
 
 				this.each(function (game) {
