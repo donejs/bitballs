@@ -1,16 +1,15 @@
 var Component = require("can/component/component");
+var stache = require("can/view/stache/");
+var route = require("can/route/");
+var Session = require("bitballs/models/session");
+var User = require("bitballs/models/user");
+var $ = require("jquery");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("bootstrap/js/dropdown");
 require("can/route/");
 require("can/view/href/");
 require("./navigation.less!");
-
-var stache = require("can/view/stache/");
-var route = require("can/route/");
-var Session = require("bitballs/models/session");
-var User = require("bitballs/models/user");
-
 
 stache.registerHelper("isActive", function(options){
 	var attrs = {};
@@ -24,7 +23,7 @@ stache.registerHelper("isActive", function(options){
 	return route.current(attrs) ? options.fn() : options.inverse();
 });
 
-can.Component.extend({
+Component.extend({
 	tag: "bitballs-navigation",
 	template: require("./navigation.stache!"),
 	viewModel: {
@@ -39,10 +38,10 @@ can.Component.extend({
 			ev.preventDefault();
 			var self = this;
 			var sessionPromise = this.attr("loginSession").save().then(function(session){
-				
+
 				self.attr("loginSession", new Session({user: new User()}));
 				self.attr("appState").attr("session", session);
-				
+
 			});
 			this.attr("sessionPromise", sessionPromise);
 		},

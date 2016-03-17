@@ -1,6 +1,8 @@
 @page bitballs Bitballs
-@group bitballs.client Client
-@group bitballs.server Server
+@group bitballs.components Components
+@group bitballs.clientModels Client Models
+@group bitballs.services Services
+@group bitballs.serviceModels Service Models
 
 [![Build Status](https://travis-ci.org/donejs/bitballs.svg?branch=master)](https://travis-ci.org/donejs/bitballs)
 
@@ -145,4 +147,3 @@ You're finished! Explore some of the app's features:
 - Live reload (`donejs develop`)
 - Run the tests (`donejs test`)
 - Generate the documentation (`donejs document`)
-

@@ -1,11 +1,11 @@
-var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
-var moment = require("moment");
+var can = require("can/util/");
 require("can/map/define/");
+require("can/list/");
 
-var User = Map.extend({});
+var User = can.Map.extend({});
 User.List = can.List.extend({Map: User},{});
 
 User.algebra = new set.Algebra(

@@ -1,9 +1,10 @@
 var QUnit = require("steal-qunit");
-var Player = require("bitballs/models/player");
 var PlayerList = require("./list");
 var defineFixtures = require("bitballs/models/fixtures/players").defineFixtures;
 var F = require('funcunit');
 var fixture = require('can-fixture');
+var stache = require("can/view/stache/");
+var $ = require("jquery");
 
 F.attach(QUnit);
 
@@ -42,11 +43,11 @@ QUnit.test("removeEdit removes editingPlayer", function (assert) {
 	assert.notOk(vm.attr("editingPlayer"), "editingPlayer was removed");
 });
 
-QUnit.test('Loading message shown while players list is loaded', function () {
-	var frag = can.stache('<player-list />')();
-	var players = $('player-list', frag).viewModel().attr('players');
+QUnit.test('Loading message shown while players list is loaded', function (assert) {
+	var frag = stache('<player-list />')();
+
 	var resolveFixture;
-	
+
 	$('#qunit-fixture').html(frag);
 
 	fixture('GET /services/players', function (req, res) {
@@ -57,7 +58,7 @@ QUnit.test('Loading message shown while players list is loaded', function () {
 		.exists('Loading element is present')
 		.text('Loading', 'Loading message is shown')
 		.then(function () {
-			ok(true, 'Request is resolved');
+			assert.ok(true, 'Request is resolved');
 			resolveFixture({ data: [] });
 		})
 		.closest('tbody')
@@ -65,7 +66,7 @@ QUnit.test('Loading message shown while players list is loaded', function () {
 });
 
 QUnit.test('Placeholder message is shown when player list is empty', function () {
-	var frag = can.stache('<player-list />')();
+	var frag = stache('<player-list />')();
 
 	// Make the players fixture return an empty list
 	fixture('GET /services/players', function () {

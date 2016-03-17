@@ -13,7 +13,7 @@
 		{{/default}}
 	{{/switch}}
 </h2>
-<form ($submit)="createUserHandler(%event)" action="">
+<form ($submit)="saveUser(%event)" action="">
 	<div class="form-group">
 		<label for="user-email">
 			Email

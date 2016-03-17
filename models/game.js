@@ -2,7 +2,10 @@ var bookshelf = require("../models/bookshelf");
 var Stat = require("./stat");
 var Team = require("./team");
 var Tournament = require("./tournament");
-
+/**
+ * @module {can.Map} models/game Game
+ * @parent bitballs.serviceModels
+ */
 var Game = bookshelf.Model.extend({
 	tableName: 'games',
 	stats: function(){

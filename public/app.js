@@ -1,5 +1,4 @@
 import Map from "can/map/";
-import Player from "./models/player";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
@@ -103,7 +102,7 @@ stache.registerHelper("pageComponent", function(options){
 				"{{/if}}" +
 			"</can-import>";
 
-	return can.stache(template)(this, options.helpers, options.nodeList);
+	return stache(template)(this, options.helpers, options.nodeList);
 });
 
 route('tournaments/:tournamentId');

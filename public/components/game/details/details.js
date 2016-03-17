@@ -1,6 +1,6 @@
 /**
  * @module {Module} bitballs/components/game/details <game-details>
- * @parent bitballs.client
+ * @parent bitballs.components
  *
  * @description Provides a custom element that allows a user
  * to either view a game or edit a game's stats.
@@ -24,21 +24,18 @@
  */
 
 var Component = require("can/component/component");
-var Map = require("can/map/");
+var CanMap = require("can/map/");
+var List = require("can/list/");
+var Game = require("bitballs/models/game");
+var Stat = require("bitballs/models/stat");
+var youtubeAPI = require("bitballs/models/youtube");
+var platform = require( "steal-platform" );
+var $ = require("jquery");
 
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require("can/route/");
-require("can/view/href/");
-
-var platform = require( "steal-platform" );
-var Tournament = require("bitballs/models/tournament");
-var Game = require("bitballs/models/game");
-var Team = require("bitballs/models/team");
-var Player = require("bitballs/models/player");
-var Stat = require("bitballs/models/stat");
-var youtubeAPI = require("bitballs/models/youtube");
 
 /**
  * @constructor bitballs/components/game/details.ViewModel ViewModel
@@ -47,7 +44,7 @@ var youtubeAPI = require("bitballs/models/youtube");
  * @description  A `<game-details>` component's viewModel.
  */
 
-exports.ViewModel = Map.extend(
+exports.ViewModel = CanMap.extend(
 /**
  * @prototype
  */
@@ -234,12 +231,16 @@ exports.ViewModel = Map.extend(
 	gotoTimeMinus5: function(time, event) {
 		this.attr("youtubePlayer").seekTo(time - 5, true);
 		this.attr("youtubePlayer").playVideo();
-		event && event.stopPropagation();
+		if(event) {
+			event.stopPropagation();
+		}
 	},
 
 	deleteStat: function (stat, event) {
 		stat.destroy();
-		event && event.stopPropagation();
+		if(event) {
+			event.stopPropagation();
+		}
 	},
 
 	statPercent: function(time){
@@ -247,7 +248,7 @@ exports.ViewModel = Map.extend(
 		if(duration) {
 			return time() / duration * 100;
 		} else {
-			return "0"
+			return "0";
 		}
 
 	},
@@ -257,9 +258,9 @@ exports.ViewModel = Map.extend(
 		}
 		var statsById = this.attr("sortedStatsByPlayerId");
 		if(statsById) {
-			return statsById[id] || new can.List();
+			return statsById[id] || new List();
 		} else {
-			return new can.List();
+			return new List();
 		}
 	}
 });
@@ -291,7 +292,7 @@ exports.Component = Component.extend({
 					return;
 				}
 				setTimeout(function(){
-					throw e
+					throw e;
 				},1);
 			});
 		},
@@ -330,7 +331,7 @@ exports.Component = Component.extend({
 			};
 
 
-			if(ev.data === YT.PlayerState.PLAYING) {
+			if(ev.data === self.YT.PlayerState.PLAYING) {
 				this.scope.attr("playing", true);
 				timeUpdate();
 			} else {
@@ -375,9 +376,7 @@ exports.Component = Component.extend({
 		},
 		"{viewModel} stat": function(vm, ev, newVal){
 			setTimeout(function(){
-
-
-				$("#add-stat").offset( $(".stats-container:first").offset() ).show()
+				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
 			},1);
 
 		}

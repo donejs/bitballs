@@ -13,17 +13,15 @@ export const players = {
 };
 
 export const defineFixtures = function() {
-	
+
 	fixture('GET /services/players/{id}', function(req) {
 		var data;
-
-		$.each(players.data, function(i, player) {
+		players.data.forEach(function(player){
 			if (player.id === parseInt(req.data.id, 10)) {
 				data = player;
-				return false;
+				return true;
 			}
 		});
-
 		return data;
 	});
 

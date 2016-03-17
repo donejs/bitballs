@@ -8,11 +8,12 @@
     "afterEach": true,
     "exports": true,
     "bundle": true,
-    "can": true,
     "doneSsr": true,
     "Promise": true,
     "INLINE_CACHE": true,
-    "canWait": true
+    "canWait": true,
+    "confirm": true,
+    "YT": true
   },
   "curly": true,
   "eqeqeq": true,
