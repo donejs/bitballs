@@ -10,7 +10,16 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/route/");
 require("can/view/href/");
 
+
 exports.ViewModel = CanMap.extend({
+	init: function () {
+		this.bind('userSelectedRound', function () {
+			this.attr('userSelectedCourt', null);
+		});
+		this.bind('gamesLength', function () {
+			this.attr('userSelectedRound', null);
+		});
+	},
 	define: {
 		tournament: {
 			get: function(lastSet, setVal){
@@ -29,21 +38,9 @@ exports.ViewModel = CanMap.extend({
 				this.attr("gamesPromise").then(setVal);
 			}
 		},
-		gamesGroupedByRound: {
-			get: function(){
-				console.log("grouping re-evaluate");
-				var rounds = {},
-					games = this.attr("games");
-				if(games) {
-					games.each(function(game){
-						var round = game.attr("round");
-						if(!rounds[round]) {
-							rounds[round] = [];
-						}
-						rounds[round].push(game);
-					});
-				}
-				return rounds;
+		gamesLength: {
+			get: function () {
+				return this.attr('games.length');
 			}
 		},
 		teamsPromise: {
@@ -110,6 +107,26 @@ exports.ViewModel = CanMap.extend({
 				return map;
 			},
 			type: "*"
+		},
+		selectedRound: {
+			set: function (setVal) {
+				this.attr('userSelectedRound', setVal);
+				return setVal;
+			},
+			get: function () {
+				return this.attr('userSelectedRound') ||
+					this.attr('games') && this.attr('games').getAvailableRounds()[0];
+			}
+		},
+		selectedCourt: {
+			set: function (setVal) {
+				this.attr('userSelectedCourt', setVal);
+				return setVal;
+			},
+			get: function () {
+				return this.attr('userSelectedCourt') ||
+					this.attr('games') && this.attr('games').getAvailableCourts(this.attr('selectedRound'))[0];
+			}
 		},
 		teamIdMap: {
 			get: function(){
@@ -197,23 +214,17 @@ exports.ViewModel = CanMap.extend({
 			self.attr("team", new Team());
 		});
 	},
-	roundNames: Game.roundNames,
+	Game: Game,
 	createGame: function(ev) {
 		ev.preventDefault();
 		var self = this;
 		var game = this.attr("game");
 
-		// cleanup that https://github.com/bitovi/canjs/issues/1834 should do for us
-		if(!game.attr("court")) {
-			game.attr("court","1");
-		}
-
-		if(!game.attr("round")) {
-			game.attr("round",Game.roundNames[0]);
-		}
-
-		game.attr("tournamentId", this.attr("tournamentId"))
-			.save(function(){
+		game.attr({
+			round: this.attr('selectedRound'),
+			court: this.attr('selectedCourt'),
+			tournamentId: this.attr('tournamentId')
+		}).save(function(){
 			self.attr("game", new Game());
 		});
 	}

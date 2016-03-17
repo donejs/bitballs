@@ -102,6 +102,7 @@ stache.registerHelper("pageComponent", function(options){
 				"{{/if}}" +
 			"</can-import>";
 
+
 	return stache(template)(this, options.helpers, options.nodeList);
 });
 
