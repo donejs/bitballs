@@ -2,7 +2,7 @@
  * @module {Module} bitballs/components/navigation <bitballs-navigation>
  * @parent bitballs.components
  *
- * @group bitballs/components/navigation.properties properties
+ * @group bitballs/components/navigation.properties 0 properties
  *
  * @description Provides navigation between different parts of the app
  * and lets a user login or logout.
@@ -50,6 +50,9 @@ var ViewModel = CanMap.extend(
 		/**
 		 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
 		 * @parent bitballs/components/navigation.properties
+		 *
+		 * A placeholder session with a nested [bitballs/models/user user] property that
+		 * is used for two-way binding the login form's username and password.
 		 */
 		loginSession: {
 			value: function(){
@@ -59,10 +62,21 @@ var ViewModel = CanMap.extend(
 		/**
 		 * @property {bitballs/app} bitballs/components/navigation.app app
 		 * @parent bitballs/components/navigation.properties
+		 *
+		 * The [bitballs/app] used to add or destroy the session.
 		 */
+		 /**
+ 		 * @property {Promise} bitballs/components/navigation.sessionPromise sessionPromise
+ 		 * @parent bitballs/components/navigation.properties
+ 		 *
+ 		 * The promise that resolves when the user is logged in.
+ 		 */
 	},
 	/**
 	 * @function createSession
+	 *
+	 * Creates the session on the server and when successful updates [bitballs/components/navigation.app]
+	 * with the session. Sets [bitballs/components/navigation.sessionPromise].
 	 */
 	createSession: function(ev){
 		ev.preventDefault();
@@ -77,13 +91,18 @@ var ViewModel = CanMap.extend(
 	},
 	/**
 	 * @function logout
+	 *
+	 * Destroys [bitballs/components/navigation.app]'s [bitballs/models/session] and
+	 * then removes it from the session.
 	 */
 	logout: function(){
-		this.attr("app").attr("session").destroy();
+		var sessionPromise = this.attr("app").attr("session").destroy();
+		this.attr("sessionPromise", sessionPromise);
 		this.attr("app").attr("session", null);
 	},
 	/**
 	 * @function closeDropdown
+	 * Closes the dropdown.  Needed for when someone clicks on register.
 	 */
 	closeDropdown: function ( el ) {
 		$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
