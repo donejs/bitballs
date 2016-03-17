@@ -2,10 +2,17 @@
  * @module {Module} bitballs/components/navigation <bitballs-navigation>
  * @parent bitballs.components
  *
+ * @group bitballs/components/navigation.properties properties
+ *
  * @description Provides navigation between different parts of the app
  * and lets a user login or logout.
  *
  * @signature `<bitballs-navigation {app}/>`
+ *   Creates the navigation for Bitballs.
+ *
+ *   @param {bitballs/app} app The application viewModel.  This component
+ *   will read and set the `session` property on the [bitballs/app].
+ *
  *
  * @body
  *
@@ -13,10 +20,8 @@
  * and a [bitballs/models/game] id like:
  *
  * ```
- * <game-details
- *     {session}="session"
- *     {game-id}="gameId"
- *     />
+ * <bitballs-navigation
+ *     {app}="." />
  * ```
  *
  * ## Example
@@ -30,43 +35,65 @@ var route = require("can/route/");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 var $ = require("jquery");
+var CanMap = require("can/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("bootstrap/js/dropdown");
 require("can/route/");
-require("can/view/href/");
 require("./navigation.less!");
 
-stache.registerHelper();
+
+var ViewModel = CanMap.extend(
+/** @prototype */
+{
+	define: {
+		/**
+		 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
+		 * @parent bitballs/components/navigation.properties
+		 */
+		loginSession: {
+			value: function(){
+				return new Session({user: new User()});
+			}
+		}
+		/**
+		 * @property {bitballs/app} bitballs/components/navigation.app app
+		 * @parent bitballs/components/navigation.properties
+		 */
+	},
+	/**
+	 * @function createSession
+	 */
+	createSession: function(ev){
+		ev.preventDefault();
+		var self = this;
+		var sessionPromise = this.attr("loginSession").save().then(function(session){
+
+			self.attr("loginSession", new Session({user: new User()}));
+			self.attr("app").attr("session", session);
+
+		});
+		this.attr("sessionPromise", sessionPromise);
+	},
+	/**
+	 * @function logout
+	 */
+	logout: function(){
+		this.attr("app").attr("session").destroy();
+		this.attr("app").attr("session", null);
+	},
+	/**
+	 * @function closeDropdown
+	 */
+	closeDropdown: function ( el ) {
+		$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
+	}
+});
 
 Component.extend({
 	tag: "bitballs-navigation",
 	template: require("./navigation.stache!"),
-	viewModel: {
-		define: {
-			loginSession: {
-				value: function(){
-					return new Session({user: new User()});
-				}
-			}
-		},
-		createSession: function(ev){
-			ev.preventDefault();
-			var self = this;
-			var sessionPromise = this.attr("loginSession").save().then(function(session){
-
-				self.attr("loginSession", new Session({user: new User()}));
-				self.attr("app").attr("session", session);
-
-			});
-			this.attr("sessionPromise", sessionPromise);
-		},
-		logout: function(){
-			this.attr("app").attr("session").destroy();
-			this.attr("app").attr("session", null);
-		},
-		closeDropdown: function ( el ) {
-			$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
-		}
-	}
+	viewModel: ViewModel
 });
+
+exports.ViewModel = ViewModel;

@@ -1,6 +1,6 @@
 /**
- * @module {can.Map} bitballs/app
- * @parent b
+ * @module {can.Map} bitballs/app AppViewModel
+ * @parent bitballs
  */
 import Map from "can/map/";
 import "can/map/define/";
