@@ -36,3 +36,28 @@ QUnit.test('Video url can be a YouTube url or key', function () {
         QUnit.equal(game.attr('videoUrl'), videoKey, 'Video key was extracted from input');
     });
 });
+
+QUnit.test('Rounds are not available if all their courts are assigned games', function () {
+    var gameList = new Game.List();
+
+    Game.courtNames.forEach(function (courtName) {
+        gameList.push({
+            round: Game.roundNames[0],
+            court: courtName
+        });
+    });
+
+    QUnit.equal(gameList.getAvailableRounds()[0], Game.roundNames[1],
+        'The first round is not available');
+});
+
+QUnit.test('Courts are not available if they are assigned games', function () {
+    var gameList = new Game.List([{
+        round: Game.roundNames[0],
+        court: Game.courtNames[0]
+    }]);
+
+    QUnit.equal(gameList.getAvailableCourts(Game.roundNames[0])[0], Game.courtNames[1],
+        'The first round is not available');
+});
+
