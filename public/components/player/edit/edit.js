@@ -30,7 +30,7 @@ exports.ViewModel = CanMap.extend({
 
 		promise.then(function(){
 			player.backup();
-			self.dispatch(self, "saved");
+			self.dispatch("saved");
 		});
 
 		this.attr('savePromise', promise);
