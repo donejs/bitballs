@@ -45,7 +45,7 @@ const AppState = Map.extend({
 						title: "Users Admin",
 						componentName: "users-admin",
 						attributes: "{(session)}='../session'",
-						moduleName: "users/users"
+						moduleName: "user/list/"
 					};
 
 				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
@@ -53,7 +53,7 @@ const AppState = Map.extend({
 						title: "Account",
 						componentName: "bitballs-user",
 						attributes: "{(session)}='../session'",
-						moduleName: "user/"
+						moduleName: "user/details/"
 					};
 
 				} else {

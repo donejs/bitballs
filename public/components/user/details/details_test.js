@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-import user from 'bitballs/components/user/user';
+import user from 'bitballs/components/user/details/';
 import 'bitballs/models/fixtures/users';
 
 var ViewModel = user.ViewModel;

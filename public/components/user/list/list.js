@@ -1,8 +1,8 @@
 import Component from 'can/component/';
 import CanMap from 'can/map/';
 import 'can/map/define/';
-import './users.less!';
-import template from './users.stache!';
+import './list.less!';
+import template from './list.stache!';
 import User from "bitballs/models/user";
 
 export const ViewModel = CanMap.extend({
