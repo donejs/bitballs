@@ -1,6 +1,6 @@
 import QUnit from 'steal-qunit';
 import details from './details';
-import defineFixtures, { tournaments } from 'bitballs/models/fixtures/tournament';
+import defineFixtures, { tournaments } from 'bitballs/models/fixtures/tournaments';
 
 var ViewModel = details.ViewModel;
 
@@ -11,7 +11,7 @@ QUnit.module('components/tournament/details/', {
     }
 });
 
-test('should load a tournament', (assert) => {
+QUnit.test('should load a tournament', (assert) => {
     let done = assert.async();
     let vm = new ViewModel({
         tournamentId: 2

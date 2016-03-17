@@ -5,6 +5,11 @@ import fixtureContent from "models/fixtures/games";
 import F from 'funcunit';
 import stache from 'can/view/stache/';
 import fixture from 'can-fixture';
+import $ from 'jquery';
+
+var deepEqual = QUnit.deepEqual,
+    ok = QUnit.ok,
+    notOk = QUnit.notOk;
 
 F.attach(QUnit);
 

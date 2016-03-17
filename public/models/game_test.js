@@ -31,9 +31,8 @@ QUnit.test('Video url can be a YouTube url or key', function () {
         'http://www.youtube.com/user/IngridMichaelsonVEVO#p/u/11/0zM3nApSvMg',
         'http://www.youtube-nocookie.com/v/0zM3nApSvMg?version=3&hl=en_US&rel=0'
     ];
-
-    can.each(sampleUrls, function(url) {
+    sampleUrls.forEach(function(url){
         game.attr('videoUrl', url);
-        equal(game.attr('videoUrl'), videoKey, 'Video key was extracted from input');
+        QUnit.equal(game.attr('videoUrl'), videoKey, 'Video key was extracted from input');
     });
 });

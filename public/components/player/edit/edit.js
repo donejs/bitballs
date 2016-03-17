@@ -1,11 +1,14 @@
 var Component = require("can/component/component");
+var Player = require("bitballs/models/player");
+var CanMap = require("can/map/");
+
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require('can/map/backup/');
 require("can/construct/super/");
-var Player = require("bitballs/models/player");
 
-exports.ViewModel = can.Map.extend({
+
+exports.ViewModel = CanMap.extend({
 	define: {
 		player: {
 			Value: Player,
@@ -27,7 +30,7 @@ exports.ViewModel = can.Map.extend({
 
 		promise.then(function(){
 			player.backup();
-			can.dispatch.call(self, "saved");
+			self.dispatch("saved");
 		});
 
 		this.attr('savePromise', promise);
@@ -36,7 +39,7 @@ exports.ViewModel = can.Map.extend({
 	},
 	cancel: function() {
 		this.attr('player').restore();
-		can.dispatch.call(this, "canceled");
+		this.dispatch("canceled");
 	}
 });
 

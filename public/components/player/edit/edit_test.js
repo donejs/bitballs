@@ -1,11 +1,10 @@
 import can from 'can';
-import stache from 'can/view/stache/';
 import QUnit from 'steal-qunit';
 import playerEdit from 'bitballs/components/player/edit/edit';
 import Player from 'bitballs/models/player';
 import F from 'funcunit';
-import route from "can/route/";
 import Session from "bitballs/models/session";
+import $ from "jquery";
 import './edit';
 
 import defineFixtures from 'bitballs/models/fixtures/players';
@@ -22,13 +21,10 @@ QUnit.module('components/player/edit/', function(hooks){
 		defineFixtures();
 	});
 
-
-
 	QUnit.test('Tests are running', function(assert){
 		assert.ok( true, "Passed!" );
 	});
 
-	var vm = new ViewModel();
 	QUnit.test('Can create new ViewModel', function(assert){
 		var vm = new ViewModel();
 		vm.attr("player.name","Justin");
@@ -72,7 +68,7 @@ QUnit.module('components/player/edit/', function(hooks){
 				player: playerModel
 			});
 
-		vm.savePlayer()
+		vm.savePlayer();
 		vm.attr("savePromise").fail(function(resp, type){
 			assert.equal(type, 'error', 'fail creation without password');
 			assert.equal(vm.attr('savePromise').state(), 'rejected');
@@ -105,7 +101,7 @@ QUnit.module('components/player/edit/', function(hooks){
 			vm.unbind("saved");
 			done();
 		});
-		vm.savePlayer()
+		vm.savePlayer();
 
 	});
 
@@ -132,7 +128,7 @@ QUnit.module('components/player/edit/', function(hooks){
 			.exists('Edit form is included for admin user');
 	});
 
-	QUnit.test('Properties are restored when canceled', function () {
+	QUnit.test('Properties are restored when canceled', function (assert) {
 		var initialName = 'Chris Gomez';
 		var initialWeight = 175;
 		var initialHeight = 69;
@@ -150,9 +146,9 @@ QUnit.module('components/player/edit/', function(hooks){
 
 		var player = vm.attr('player');
 
-		equal(player.attr('name'), initialName, 'Initial name is correct');
-		equal(player.attr('weight'), initialWeight, 'Initial weight is correct');
-		equal(player.attr('height'), initialHeight, 'Initial height is correct');
+		assert.equal(player.attr('name'), initialName, 'Initial name is correct');
+		assert.equal(player.attr('weight'), initialWeight, 'Initial weight is correct');
+		assert.equal(player.attr('height'), initialHeight, 'Initial height is correct');
 
 		player.attr({
 			name: editedName,
@@ -160,15 +156,15 @@ QUnit.module('components/player/edit/', function(hooks){
 			height: editedHeight
 		});
 
-		equal(player.attr('name'), editedName, 'Edited name is correct');
-		equal(player.attr('weight'), editedWeight, 'Edited weight is correct');
-		equal(player.attr('height'), editedHeight, 'Edited height is correct');
+		assert.equal(player.attr('name'), editedName, 'Edited name is correct');
+		assert.equal(player.attr('weight'), editedWeight, 'Edited weight is correct');
+		assert.equal(player.attr('height'), editedHeight, 'Edited height is correct');
 
 		vm.cancel();
 
-		equal(player.attr('name'), initialName, 'Restored name is correct');
-		equal(player.attr('weight'), initialWeight, 'Restored weight is correct');
-		equal(player.attr('height'), initialHeight, 'Restored height is correct');
+		assert.equal(player.attr('name'), initialName, 'Restored name is correct');
+		assert.equal(player.attr('weight'), initialWeight, 'Restored weight is correct');
+		assert.equal(player.attr('height'), initialHeight, 'Restored height is correct');
 	});
 
 });

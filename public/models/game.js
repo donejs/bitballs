@@ -2,7 +2,6 @@
  * @module {can.Map} bitballs/models/game Game
  * @parent bitballs.clientModels
  */
-var Map = require('can/map/');
 var superMap = require('can-connect/can/super-map/');
 var set = require("can-set");
 var tag = require('can-connect/can/tag/');
@@ -10,9 +9,13 @@ var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
 var Tournament = require("./tournament");
+var CanMap = require("can/map/");
+var List = require("can/list/");
+var can = require("can/util/");
+
 require("can/list/sort/");
 
-var Game = Map.extend({
+var Game = CanMap.extend({
 	roundNames: ["Round 1","Round 2","Round 3","Round 4","Round 5",
 		"Elimination", "Quarter Finals","Semi Finals","Championship"]
 },{
@@ -97,7 +100,7 @@ var Game = Map.extend({
 	}
 
 });
-Game.List = can.List.extend({Map: Game},{});
+Game.List = List.extend({Map: Game},{});
 
 Game.algebra = new set.Algebra(
 	new set.Translate("where","where"),

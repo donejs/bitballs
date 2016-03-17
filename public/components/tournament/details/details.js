@@ -1,5 +1,5 @@
 var Component = require("can/component/component");
-var Map = require("can/map/");
+var CanMap = require("can/map/");
 var Team = require("bitballs/models/team");
 var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
@@ -10,7 +10,7 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/route/");
 require("can/view/href/");
 
-exports.ViewModel = Map.extend({
+exports.ViewModel = CanMap.extend({
 	define: {
 		tournament: {
 			get: function(lastSet, setVal){
@@ -71,7 +71,7 @@ exports.ViewModel = Map.extend({
 					var allColors = this.attr("teamColors").slice(0);
 					teams.each(function(team){
 						var index = allColors.indexOf(team.attr("color"));
-						if(index != -1) {
+						if(index !== -1) {
 							allColors.splice(index, 1);
 						}
 					});
@@ -88,7 +88,7 @@ exports.ViewModel = Map.extend({
 		},
 		playersPromise: {
 			value: function(){
-				return Player.getList({orderBy: "name"})
+				return Player.getList({orderBy: "name"});
 			}
 		},
 		players: {
@@ -171,7 +171,7 @@ exports.ViewModel = Map.extend({
 
 
 			[1,2,3,4].forEach(function(index){
-				if(index != number) {
+				if(index !== number) {
 					usedIds[team.attr("player"+index+"Id")] = true;
 				}
 			});

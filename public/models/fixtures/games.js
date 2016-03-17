@@ -121,7 +121,7 @@ var responseData = {
 };
 
 fixture("/services/games/{id}", function(request, response) {
-    if (request.data.id == "1") {
+    if (request.data.id === "1" || request.data.id === 1) {
         response(responseData);
     }
 });

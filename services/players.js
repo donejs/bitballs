@@ -1,8 +1,3 @@
-
-var app = require("../services/app");
-var bookshelf = require("../models/bookshelf");
-var Player = require("../models/player")
-var adminOnly = require( "./adminOnly" );
 /**
  * @module {function} services/players /services/players
  * @parent bitballs.services
@@ -105,6 +100,9 @@ var adminOnly = require( "./adminOnly" );
  *
  *      {}
  */
+var app = require("../services/app");
+var Player = require("../models/player");
+var adminOnly = require( "./adminOnly" );
 
 var clean = function(data){
 	if(data.name===''){

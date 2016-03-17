@@ -46,5 +46,5 @@ QUnit.test('Register button exists', function () {
     var frag = can.stache('<bitballs-navigation></bitballs-navigation>')();
     var buttons = $(frag).find('.register-btn');
 
-    equal(buttons.length, 1, 'Register button found');
-})
+    QUnit.equal(buttons.length, 1, 'Register button found');
+});

@@ -5,3 +5,5 @@ var buildPromise = stealTools.build({
 },{
   bundleAssets: true
 });
+
+module.exports = buildPromise;

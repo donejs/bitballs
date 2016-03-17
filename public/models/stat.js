@@ -20,14 +20,16 @@
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-var Map = require('can/map/'),
-	superMap = require('can-connect/can/super-map/'),
+var superMap = require('can-connect/can/super-map/'),
 	tag = require('can-connect/can/tag/'),
-	set = require("can-set");
+	set = require("can-set"),
+	can = require("can/util/");
 
 require("can/map/define/");
+require("can/list/");
 
-var Stat = Map.extend(
+
+var Stat = can.Map.extend(
 /** @static */
 {
 	/**

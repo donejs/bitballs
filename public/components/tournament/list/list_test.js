@@ -5,7 +5,7 @@ import fixture from 'can-fixture';
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
 import tournamentList from './list';
-import defineFixtures from 'bitballs/models/fixtures/tournament';
+import defineFixtures from 'bitballs/models/fixtures/tournaments';
 
 F.attach(QUnit);
 
@@ -47,7 +47,7 @@ QUnit.test('Create button is disabled while posting data', function () {
     var resolveRequest;
 
     fixture('POST /services/tournaments', function (req, res) {
-        ok(expectingRequest, 'Request was made');
+        QUnit.ok(expectingRequest, 'Request was made');
 
         // Determine when the request resolves, later
         resolveRequest = res;
