@@ -30,8 +30,6 @@
  *
  */
 var Component = require("can/component/component");
-var stache = require("can/view/stache/");
-var route = require("can/route/");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 var $ = require("jquery");
