@@ -1,5 +1,6 @@
-var Component = require("can/component/component");
+var Component = require("can/component/");
 var template = require("./list.stache!");
+var CanMap = require("can/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
@@ -8,7 +9,7 @@ require("can/view/href/");
 
 var Player = require("bitballs/models/player");
 
-var ViewModel = exports.ViewModel = can.Map.extend({
+var ViewModel = exports.ViewModel = CanMap.extend({
 	define: {
 		players: {
 			value: function(){

@@ -4,12 +4,12 @@ var dbEnvironmentConfig = dbConfig[environmentKey];
 
 // Use the string itself or use the provided environment variable
 var connectionString = typeof dbEnvironmentConfig === 'string' ?
-    dbEnvironmentConfig :
-    process.env[dbEnvironmentConfig.ENV];
+	dbEnvironmentConfig :
+	process.env[dbEnvironmentConfig.ENV];
 
 var knex = require('knex')({
-  client: 'pg',
-  connection: connectionString
+	client: 'pg',
+	connection: connectionString
 });
 
 module.exports = require('bookshelf')(knex);

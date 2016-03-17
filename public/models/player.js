@@ -1,11 +1,15 @@
-var Map = require('can/map/');
+var can = require('can/util/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
 var set = require("can-set");
-require("can/map/define/");
 
-var Player = Map.extend({
+require('can/list/');
+require('can/map/');
+require("can/map/define/");
+require('can/map/backup/');
+
+var Player = can.Map.extend({
 	define: {
 		weight: {
 			type: 'number'
@@ -42,6 +46,9 @@ var Player = Map.extend({
 				}
 			}
 		}
+	},
+	init: function () {
+		this.backup();
 	}
 });
 Player.List = can.List.extend({Map: Player},{

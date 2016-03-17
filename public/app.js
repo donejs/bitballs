@@ -1,5 +1,8 @@
+/**
+ * @module {can.Map} bitballs/app AppViewModel
+ * @parent bitballs
+ */
 import Map from "can/map/";
-import Player from "./models/player";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
@@ -8,7 +11,7 @@ import "can/route/pushstate/";
 import stache from "can/view/stache/";
 import "./util/prefilter";
 
-const AppState = Map.extend({
+const AppViewModel = Map.extend({
 	define: {
 		title: {
 			get: function(){
@@ -46,7 +49,7 @@ const AppState = Map.extend({
 						title: "Users Admin",
 						componentName: "users-admin",
 						attributes: "{(session)}='../session'",
-						moduleName: "users/users"
+						moduleName: "user/list/"
 					};
 
 				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
@@ -54,7 +57,7 @@ const AppState = Map.extend({
 						title: "Account",
 						componentName: "bitballs-user",
 						attributes: "{(session)}='../session'",
-						moduleName: "user/"
+						moduleName: "user/details/"
 					};
 
 				} else {
@@ -103,9 +106,11 @@ stache.registerHelper("pageComponent", function(options){
 				"{{/if}}" +
 			"</can-import>";
 
-	return can.stache(template)(this, options.helpers, options.nodeList);
+	return stache(template)(this, options.helpers, options.nodeList);
 });
 
+route('tournaments/:tournamentId');
+route('games/:gameId');
 route(':page',{page: 'tournaments'});
 
-export default AppState;
+export default AppViewModel;
