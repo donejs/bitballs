@@ -214,8 +214,7 @@ exports.ViewModel = CanMap.extend({
 			self.attr("team", new Team());
 		});
 	},
-	roundNames: Game.roundNames,
-	courtNames: Game.courtNames,
+	Game: Game,
 	createGame: function(ev) {
 		ev.preventDefault();
 		var self = this;

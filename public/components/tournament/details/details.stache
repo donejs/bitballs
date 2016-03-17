@@ -13,11 +13,11 @@
 	</tr>
 </thead>
 <tbody>
-{{#each roundNames}}
+{{#each Game.roundNames}}
 	{{#if games.getGameCountForRound(.)}}
 		<tr>
 			<td>{{.}}</td>
-			{{#each courtNames}}
+			{{#each Game.courtNames}}
 				<td>
 					{{#games.getGameForRoundAndCourt ../. .}}
 						<a href="{{routeUrl gameId=id}}">
