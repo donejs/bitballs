@@ -1,3 +1,7 @@
+/**
+ * @module {can.Map} bitballs/app
+ * @parent b
+ */
 import Map from "can/map/";
 import "can/map/define/";
 import "bootstrap/dist/css/bootstrap.css!";
@@ -7,7 +11,7 @@ import "can/route/pushstate/";
 import stache from "can/view/stache/";
 import "./util/prefilter";
 
-const AppState = Map.extend({
+const AppViewModel = Map.extend({
 	define: {
 		title: {
 			get: function(){
@@ -109,4 +113,4 @@ route('tournaments/:tournamentId');
 route('games/:gameId');
 route(':page',{page: 'tournaments'});
 
-export default AppState;
+export default AppViewModel;
