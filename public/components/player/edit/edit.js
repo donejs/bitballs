@@ -72,7 +72,7 @@ exports.ViewModel = CanMap.extend(
 	 * @param {Event} [ev] A DOM Level 2 event that [`preventDefault`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
 	 * will be called on.
 	 *
-	 * @return {Promise<Player>}
+	 * @return {Promise<bitballs/models/player>}
 	 */
 	savePlayer: function(ev){
 		if (ev) {
@@ -105,8 +105,6 @@ exports.ViewModel = CanMap.extend(
 	 *
 	 * Restores the [bitballs/models/player] model to its state prior to editing.
 	 * Fires a "canceled" event.
-	 *
-	 * @return {undefined}
 	 */
 	cancel: function() {
 		this.attr('player').restore();
