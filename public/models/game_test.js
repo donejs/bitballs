@@ -47,7 +47,7 @@ QUnit.test('Rounds are not available if all their courts are assigned games', fu
         });
     });
 
-    QUnit.equal(gameList.getAvailableRounds()[0], Game.roundNames[1],
+    QUnit.deepEqual(gameList.getAvailableRounds(), Game.roundNames.slice(1),
         'The first round is not available');
 });
 
@@ -57,7 +57,7 @@ QUnit.test('Courts are not available if they are assigned games', function () {
         court: Game.courtNames[0]
     }]);
 
-    QUnit.equal(gameList.getAvailableCourts(Game.roundNames[0])[0], Game.courtNames[1],
-        'The first round is not available');
+    QUnit.deepEqual(gameList.getAvailableCourts(Game.roundNames[0]), Game.courtNames.slice(1),
+        'The first court is not available');
 });
 

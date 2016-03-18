@@ -1,6 +1,8 @@
 /**
  * @module {can.Map} bitballs/app AppViewModel
  * @parent bitballs
+ *
+ * @group bitballs/app.properties 0 properties
  */
 import Map from "can/map/";
 import "can/map/define/";
@@ -11,7 +13,9 @@ import "can/route/pushstate/";
 import stache from "can/view/stache/";
 import "./util/prefilter";
 
-const AppViewModel = Map.extend({
+const AppViewModel = Map.extend(
+/** @prototype */
+{
 	define: {
 		title: {
 			get: function(){
@@ -40,14 +44,14 @@ const AppViewModel = Map.extend({
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
-						attributes: "{app-state}='../.'",
+						attributes: "{is-admin}='app.isAdmin'",
 						moduleName: "tournament/list/"
 					};
 
 				} else if(this.attr("page") === "users") {
 					return {
-						title: "Users Admin",
-						componentName: "users-admin",
+						title: "Users List",
+						componentName: "user-list",
 						attributes: "{(session)}='../session'",
 						moduleName: "user/list/"
 					};
@@ -55,7 +59,7 @@ const AppViewModel = Map.extend({
 				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
 					return {
 						title: "Account",
-						componentName: "bitballs-user",
+						componentName: "user-details",
 						attributes: "{(session)}='../session'",
 						moduleName: "user/details/"
 					};
@@ -71,6 +75,10 @@ const AppViewModel = Map.extend({
 				}
 			}
 		},
+		/**
+		* @property {bitballs/models/session} bitballs/app.session session
+		* @parent bitballs/app.properties
+		**/
 		session: {
 			serialize: false,
 			value: function() {
@@ -82,6 +90,12 @@ const AppViewModel = Map.extend({
 		},
 		tournamentId: {type: "number"}
 	},
+	/**
+	 * @function isAdmin
+     *
+	 * @return {Boolean} The value of `user.isAdmin` on the [bitballs/app.session]
+	 * model, if present. Otherwise, `false`.
+	 */
 	isAdmin: function(){
 		var session = this.attr("session");
 		if(session) {
