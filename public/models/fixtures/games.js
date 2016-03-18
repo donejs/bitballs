@@ -1,6 +1,6 @@
 import fixture from "can-fixture";
 
-var responseData = {
+export const games = {
     id: 1,
     homeTeam: {
         id: 1,
@@ -120,18 +120,29 @@ var responseData = {
     }]
 };
 
-fixture("/services/games/{id}", function(request, response) {
-    if (request.data.id == "1") {
-        response(responseData);
-    }
-});
+export const defineFixtures = function () {
 
-fixture('GET /services/stats', function () {
-    return { data: responseData.stats };
-});
+    fixture('/services/games', function () {
+        return {
+            data: [games]
+        };
+    });
 
-fixture('DELETE /services/stats/{id}', function () {
-    return {};
-});
+    fixture("/services/games/{id}", function(request, response) {
+        if (request.data.id === "1" || request.data.id === 1) {
+            response(games);
+        }
+    });
 
-export default responseData;
+    fixture('GET /services/stats', function () {
+        return { data: games.stats };
+    });
+
+    fixture('DELETE /services/stats/{id}', function () {
+        return {};
+    });
+};
+
+defineFixtures();
+
+export default defineFixtures;

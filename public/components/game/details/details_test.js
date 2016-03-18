@@ -1,10 +1,15 @@
 import QUnit from "steal-qunit";
 import Session from "models/session";
 import details from "./details";
-import fixtureContent from "models/fixtures/games";
+import { games } from "models/fixtures/games";
 import F from 'funcunit';
 import stache from 'can/view/stache/';
 import fixture from 'can-fixture';
+import $ from 'jquery';
+
+var deepEqual = QUnit.deepEqual,
+    ok = QUnit.ok,
+    notOk = QUnit.notOk;
 
 F.attach(QUnit);
 
@@ -26,7 +31,7 @@ QUnit.test("loads game data", function() {
     QUnit.stop();
 
     this.vm.bind("game", function(ev, game) {
-        deepEqual(game.attr(), fixtureContent, "fetched game data matches fixture");
+        deepEqual(game.attr(), games, "fetched game data matches fixture");
         QUnit.start();
     });
 

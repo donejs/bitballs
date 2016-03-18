@@ -1,2 +1,4 @@
-import fixture from 'can-fixture';
-
+import "./games";
+import "./players";
+import "./tournaments";
+import "./users";

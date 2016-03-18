@@ -1,6 +1,5 @@
 var express = require('express');
 var app = require('./services/app');
-var url = require("url");
 var exec = require( "child_process" ).exec;
 var cookieParser = require('cookie-parser');
 
@@ -17,7 +16,7 @@ if ( process.argv.indexOf( "--slow" ) !== -1 ) {
 	});
 }
 
-require('./services/sessions');
+require('./services/session');
 
 require('./services/games');
 require('./services/players');

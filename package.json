@@ -9,7 +9,8 @@
     "develop": "node index.js --develop",
     "db-migrate": "db-migrate up",
     "document": "documentjs -d",
-    "test": "cd public/ && npm test",
+    "test": "npm run jshint && cd public/ && npm test",
+    "jshint": "jshint ./ --config .jshintrc",
     "install": "node install.js && npm run db-migrate"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "donejs": "^0.7.0-pre.1",
     "donejs-cli": "^0.6.6",
     "donejs-deploy": "^0.4.1",
+    "jshint": "^2.9.1",
     "maildev": "^0.12.1"
   },
   "donejs": {
@@ -78,6 +80,6 @@
   },
   "urls": {
     "prod": "https://bitballs.herokuapp.com/",
-    "dev": "http://localhost:5000"
+    "dev": "http://localhost:5000/"
   }
 }

@@ -1,5 +1,5 @@
 var Component = require("can/component/component");
-var Map = require("can/map/");
+var CanMap = require("can/map/");
 var Team = require("bitballs/models/team");
 var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
@@ -10,7 +10,16 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/route/");
 require("can/view/href/");
 
-exports.ViewModel = Map.extend({
+
+exports.ViewModel = CanMap.extend({
+	init: function () {
+		this.bind('userSelectedRound', function () {
+			this.attr('userSelectedCourt', null);
+		});
+		this.bind('gamesLength', function () {
+			this.attr('userSelectedRound', null);
+		});
+	},
 	define: {
 		tournament: {
 			get: function(lastSet, setVal){
@@ -29,21 +38,9 @@ exports.ViewModel = Map.extend({
 				this.attr("gamesPromise").then(setVal);
 			}
 		},
-		gamesGroupedByRound: {
-			get: function(){
-				console.log("grouping re-evaluate");
-				var rounds = {},
-					games = this.attr("games");
-				if(games) {
-					games.each(function(game){
-						var round = game.attr("round");
-						if(!rounds[round]) {
-							rounds[round] = [];
-						}
-						rounds[round].push(game);
-					});
-				}
-				return rounds;
+		gamesLength: {
+			get: function () {
+				return this.attr('games.length');
 			}
 		},
 		teamsPromise: {
@@ -71,7 +68,7 @@ exports.ViewModel = Map.extend({
 					var allColors = this.attr("teamColors").slice(0);
 					teams.each(function(team){
 						var index = allColors.indexOf(team.attr("color"));
-						if(index != -1) {
+						if(index !== -1) {
 							allColors.splice(index, 1);
 						}
 					});
@@ -88,7 +85,7 @@ exports.ViewModel = Map.extend({
 		},
 		playersPromise: {
 			value: function(){
-				return Player.getList({orderBy: "name"})
+				return Player.getList({orderBy: "name"});
 			}
 		},
 		players: {
@@ -110,6 +107,26 @@ exports.ViewModel = Map.extend({
 				return map;
 			},
 			type: "*"
+		},
+		selectedRound: {
+			set: function (setVal) {
+				this.attr('userSelectedRound', setVal);
+				return setVal;
+			},
+			get: function () {
+				return this.attr('userSelectedRound') ||
+					this.attr('games') && this.attr('games').getAvailableRounds()[0];
+			}
+		},
+		selectedCourt: {
+			set: function (setVal) {
+				this.attr('userSelectedCourt', setVal);
+				return setVal;
+			},
+			get: function () {
+				return this.attr('userSelectedCourt') ||
+					this.attr('games') && this.attr('games').getAvailableCourts(this.attr('selectedRound'))[0];
+			}
 		},
 		teamIdMap: {
 			get: function(){
@@ -171,7 +188,7 @@ exports.ViewModel = Map.extend({
 
 
 			[1,2,3,4].forEach(function(index){
-				if(index != number) {
+				if(index !== number) {
 					usedIds[team.attr("player"+index+"Id")] = true;
 				}
 			});
@@ -197,23 +214,17 @@ exports.ViewModel = Map.extend({
 			self.attr("team", new Team());
 		});
 	},
-	roundNames: Game.roundNames,
+	Game: Game,
 	createGame: function(ev) {
 		ev.preventDefault();
 		var self = this;
 		var game = this.attr("game");
 
-		// cleanup that https://github.com/bitovi/canjs/issues/1834 should do for us
-		if(!game.attr("court")) {
-			game.attr("court","1");
-		}
-
-		if(!game.attr("round")) {
-			game.attr("round",Game.roundNames[0]);
-		}
-
-		game.attr("tournamentId", this.attr("tournamentId"))
-			.save(function(){
+		game.attr({
+			round: this.attr('selectedRound'),
+			court: this.attr('selectedCourt'),
+			tournamentId: this.attr('tournamentId')
+		}).save(function(){
 			self.attr("game", new Game());
 		});
 	}

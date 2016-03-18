@@ -14,10 +14,6 @@ fixture("POST /services/users", function(request, response){
 });
 
 fixture("PUT /services/users/{id}", function(request, response){
-	console.log('[fixture] request', request);
-
-	console.log(request.data.password)
-
 	if(!request.data.password){
 		response(400, '{type: "Bad Request", message: "Can not create a user without a password"}');
 	}else{

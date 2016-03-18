@@ -2,22 +2,22 @@
 	<div class="navbar-collapse" id="bs-example-navbar-collapse-1">
 		<a href="/" class="pull-left main-logo">BitBalls</a>
 		<ul class="main-menu nav navbar-nav">
-		  <li role="presentation" {{#isActive page='tournaments'}}class='active'{{/isActive}}>
+		  <li role="presentation" {{#routeCurrent page='tournaments'}}class='active'{{/routeCurrent}}>
 				<a href="{{routeUrl page='tournaments'}}">Tournaments</a>
 		  </li>
-		  <li role="presentation" {{#isActive page='players'}}class='active'{{/isActive}}>
+		  <li role="presentation" {{#routeCurrent page='players'}}class='active'{{/routeCurrent}}>
 				<a href="{{routeUrl page='players'}}">Players</a>
 		  </li>
 		</ul>
 
 		<ul class="session-menu nav navbar-nav navbar-right">
-			{{#if appState.session}}
-				{{#if appState.session.isAdmin}}
-					<li {{#isActive page='users'}}class='active'{{/isActive}}>
+			{{#if app.session}}
+				{{#if app.session.isAdmin}}
+					<li {{#routeCurrent page='users'}}class='active'{{/routeCurrent}}>
 						<a href="{{routeUrl page='users'}}">Users</a>
 					</li>
 				{{/if}}
-				<li {{#isActive page='account'}}class='active'{{/isActive}}>
+				<li {{#routeCurrent page='account'}}class='active'{{/routeCurrent}}>
 					<a href="{{routeUrl page='account'}}">Account</a>
 				</li>
 				<li>
