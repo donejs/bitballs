@@ -1,31 +1,17 @@
-
 <div id="main"></div>
 
-
 <script type="text/stache" id="player-edit-test-template">
-	<player-edit session="{session}" player-id="{route.id}"></player-edit>
+	<player-edit is-admin="true" />
 </script>
 
 
 <script src='../../../node_modules/steal/steal.js' main="@empty">
-
 	import can from "can";
 	import stache from "can/view/stache/";
-	import route from "can/route/";
 	import "bitballs/components/player/edit/";
-	import Session from "bitballs/models/session";
 
-	var template = can.view('#player-edit-test-template'),
-		session = new Session({
-			user: {
-				isAdmin: true
-			}
-		});
-	
-	can.$("#main").html(  template({
-		route: route,
-		session: session
-	}) );
+	var template = can.view('#player-edit-test-template');
 
-	route.ready();
+	can.$("#main").html(template());
+
 </script>
