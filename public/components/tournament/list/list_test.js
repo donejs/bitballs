@@ -35,8 +35,8 @@ QUnit.test('creating tournament fails without a name', function(assert){
 
 QUnit.test('Create button is disabled while posting data', function () {
     var expectingRequest = true;
-    var frag = can.stache('<tournament-list {app-state}="appState" {tournament}="tournament" />')({
-        appState: {
+    var frag = can.stache('<tournament-list {is-admin}="app.isAdmin" {tournament}="tournament" />')({
+        app: {
             isAdmin: true
         },
         tournament: {
