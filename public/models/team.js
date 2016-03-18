@@ -1,3 +1,7 @@
+/**
+ * @module {can.Map} bitballs/models/team Team
+ * @parent bitballs.clientModels
+ */
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
@@ -7,9 +11,17 @@ require("can/map/define/");
 require("can/list/");
 
 
-var Team = can.Map.extend({
+var Team = can.Map.extend(
+/** @static */
+{
+	/**
+	 * @property {Array}
+	 * A list of available team colors.
+	 **/
 	colors: ["Black","White","Red","Green","Blue","Yellow","Brown","Gray","Orange","Purple"]
-},{
+},
+/** @prototype */
+{
 	define: {
 		tournamentId: {
 			type: "number"
@@ -42,7 +54,15 @@ var Team = can.Map.extend({
 			}
 		}
 	}
+	/**
+	 * @property {Number} id
+	 * A unique identifier.
+	 **/
 });
+/**
+ * @constructor {can.List} bitballs/models/team.static.List List
+ * @parent bitballs/models/team.static
+ */
 Team.List = can.List.extend({Map: Team},{
 	removeById: function(id){
 		var i  = 0;
