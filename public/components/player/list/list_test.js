@@ -24,7 +24,7 @@ QUnit.module("components/player/list/", {
 
 QUnit.test("players property loads players from server during instantiation", function (assert) {
 	var done = assert.async();
-	vm.attr("players").then(function (players) {
+	vm.attr("playersPromise").then(function (players) {
 		assert.ok(players.length, "we got some players");
 		done();
 	});
