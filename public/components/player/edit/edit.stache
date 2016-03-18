@@ -1,4 +1,4 @@
-{{#if session.isAdmin}}
+{{#if isAdmin}}
   <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
     {{#if player.isNew}}
       <h3>Create Player</h3>
