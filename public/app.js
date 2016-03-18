@@ -50,8 +50,8 @@ const AppViewModel = Map.extend(
 
 				} else if(this.attr("page") === "users") {
 					return {
-						title: "Users Admin",
-						componentName: "users-admin",
+						title: "Users List",
+						componentName: "user-list",
 						attributes: "{(session)}='../session'",
 						moduleName: "user/list/"
 					};

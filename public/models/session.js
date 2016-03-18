@@ -5,6 +5,8 @@
 var connect = require("can-connect");
 var $ = require("jquery");
 var can = require("can/util/");
+var tag = require('can-connect/can/tag/');
+
 require("can/map/define/");
 require("can/list/");
 require( "can-connect/constructor/" );
@@ -52,6 +54,8 @@ var options = {
 	}
 };
 
-connect( behaviors, options );
+var connection = connect( behaviors, options );
+
+tag('session-model', connection);
 
 module.exports = Session;
