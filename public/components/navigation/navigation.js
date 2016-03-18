@@ -64,7 +64,7 @@ var ViewModel = CanMap.extend(
 		 * The [bitballs/app] used to add or destroy the session.
 		 */
 		 /**
- 		 * @property {Promise} bitballs/components/navigation.sessionPromise sessionPromise
+ 		 * @property {Promise<bitballs/models/session>} bitballs/components/navigation.sessionPromise sessionPromise
  		 * @parent bitballs/components/navigation.properties
  		 *
  		 * The promise that resolves when the user is logged in.
@@ -75,9 +75,12 @@ var ViewModel = CanMap.extend(
 	 *
 	 * Creates the session on the server and when successful updates [bitballs/components/navigation.app]
 	 * with the session. Sets [bitballs/components/navigation.sessionPromise].
+	 * @param {Event} [ev] Optional DOM event that will be prevented if passed.
 	 */
 	createSession: function(ev){
-		ev.preventDefault();
+		if(ev) {
+			ev.preventDefault();
+		}
 		var self = this;
 		var sessionPromise = this.attr("loginSession").save().then(function(session){
 
