@@ -54,12 +54,12 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 			value: false
 		},
 		/**
-		 * @property {bitballs/models/player} bitballs/components/player/list.players players
+		 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
 		 * @parent bitballs/components/player/list.properties
 		 *
 		 * A [bitballs/models/player] model List.
 		 */
-		players: {
+		playersPromise: {
 			value: function(){
 				return Player.getList({orderBy: "name"});
 			}
@@ -73,8 +73,6 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 * @param {bitballs/models/player} player
 	 *   The player model that will be passed to the `<player-edit>`
 	 *   component.
-	 *
-	 * @return {undefined}
 	 */
 	editPlayer: function(player){
 		this.attr("editingPlayer", player);
@@ -83,8 +81,6 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 * @function removeEdit
 	 *
 	 * Deselects the [bitballs/models/player] model being edited.
-	 *
-	 * @return {undefined}
 	 */
 	removeEdit: function(){
 		this.removeAttr("editingPlayer");
