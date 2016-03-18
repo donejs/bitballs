@@ -105,6 +105,7 @@ QUnit.module('components/player/edit/', function(hooks){
 	});
 
 	QUnit.test('Form is only shown to admins', function () {
+
 		var vm = new can.Map({
 			isAdmin: false
 		});

@@ -12,15 +12,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#players.isPending}}
+		{{#playersPromise.isPending}}
 			<tr class='info'><td colspan='5'>Loading</td></tr>
-		{{/players.isPending}}
-		{{#if players.isResolved}}
-			{{#each players.value}}
+		{{/playersPromise.isPending}}
+		{{#if playersPromise.isResolved}}
+			{{#each playersPromise.value}}
 				<tr>
 					{{#eq . editingPlayer}}
 						<td>
-							<player-edit player="{.}"
+							<player-edit player="{.}" {is-admin}="isAdmin"
 								(saved)="removeEdit" (canceled)="removeEdit"/>
 						</td>
 					{{else}}
@@ -29,7 +29,7 @@
 						<td>{{weight}}</td>
 						<td>{{height}}</td>
 						<td>
-							{{#if session.isAdmin}}
+							{{#if isAdmin}}
 								<button type="button" class="btn btn-default" ($click)="editPlayer(.)">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
@@ -47,6 +47,6 @@
 		{{/if}}
 	</tbody>
 </table>
-{{#session.isAdmin}}
+{{#if isAdmin}}
 <player-edit/>
-{{/session.isAdmin}}
+{{/if}}

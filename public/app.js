@@ -68,7 +68,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Players",
 						componentName: "player-list",
-						attributes: "{(session)}='../session'",
+						attributes: "{is-admin}='app.isAdmin'",
 						moduleName: "player/list/"
 					};
 
