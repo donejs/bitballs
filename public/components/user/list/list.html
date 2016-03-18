@@ -1,6 +1,60 @@
 <script type="text/stache" can-autorender>
   <can-import from="bitballs/components/user/list/" />
-  <users-admin></users-admin>
+  <can-import from="bitballs/models/fixtures/users" />
+  <can-import from="bitballs/models/session" />
+
+  <session-model get="{}">
+  	{{#if isResolved}}
+  	<user-list {session}="./value"></user-list>
+  	{{/if}}
+  </session-model>
 </script>
 <script src="../../../node_modules/steal/steal.js"
-        main="can/view/autorender/"></script>
+        main="can/view/autorender/">
+    import "bootstrap/dist/css/bootstrap.css!";
+    import "bitballs/models/fixtures/users";
+	import fixture from 'can-fixture';
+
+
+	fixture("GET /services/users", function(request, response){
+		console.log('[fixture] request', request);
+
+		response({
+			data: [
+				{
+					"id": 3,
+					"email": "george@washington.gov",
+					"isAdmin": false,
+					"verified": false
+				},
+				{
+					"id": 2,
+					"email": "abe@lincoln.gov",
+					"verified": true,
+					"isAdmin": false
+				},
+				{
+					"id": 1,
+					"email": "you@yourdomain.com",
+					"verified": true,
+					"isAdmin": true
+				}
+			]
+		})
+	});
+
+	fixture("PUT /services/users/{id}", function(request, response){
+		response(request.data);
+	});
+
+	fixture("GET /services/session", function(request, response){
+		response({
+			user: {
+				"id": 1,
+				"email": "you@yourdomain.com",
+				isAdmin: true
+			}
+		});
+	});
+
+</script>
