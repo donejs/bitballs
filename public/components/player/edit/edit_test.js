@@ -3,7 +3,6 @@ import QUnit from 'steal-qunit';
 import playerEdit from 'bitballs/components/player/edit/edit';
 import Player from 'bitballs/models/player';
 import F from 'funcunit';
-import Session from "bitballs/models/session";
 import $ from "jquery";
 import './edit';
 
@@ -106,26 +105,19 @@ QUnit.module('components/player/edit/', function(hooks){
 	});
 
 	QUnit.test('Form is only shown to admins', function () {
-		var session = new Session({
-			user: {
-				isAdmin: false
-			}
+
+		var vm = new can.Map({
+			isAdmin: false
 		});
+		var frag = can.stache('<player-edit {is-admin}="isAdmin" />')(vm);
 
-		var frag = can.stache('<player-edit {session}="session" />')({
-			session: session
-		});
+		QUnit.equal($('player-edit .edit-form', frag).length, 0,
+			'Form is excluded for non-admin user');
 
-		$('#qunit-fixture').html(frag);
+		vm.attr('isAdmin', true);
 
-		F('player-edit .edit-form')
-			.missing('Edit form is excluded for non-admin user')
-			.then(function () {
-				session.attr('user', {
-					isAdmin: true
-				});
-			})
-			.exists('Edit form is included for admin user');
+		QUnit.equal($('player-edit .edit-form', frag).length, 1,
+			'Form is included for admin user');
 	});
 
 	QUnit.test('Properties are restored when canceled', function (assert) {

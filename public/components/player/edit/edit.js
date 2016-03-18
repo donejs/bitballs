@@ -1,3 +1,7 @@
+/**
+ * @module {Module} bitballs/components/player/edit <player-edit>
+ * @parent bitballs.components
+ **/
 var Component = require("can/component/component");
 var Player = require("bitballs/models/player");
 var CanMap = require("can/map/");
@@ -10,6 +14,10 @@ require("can/construct/super/");
 
 exports.ViewModel = CanMap.extend({
 	define: {
+		isAdmin: {
+			type: 'boolean',
+			value: false
+		},
 		player: {
 			Value: Player,
 			Type: Player
