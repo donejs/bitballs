@@ -40,7 +40,8 @@
   },
   "system": {
     "configDependencies": [
-      "live-reload"
+      "live-reload",
+      "node_modules/can-zone/register"
     ],
     "npmAlgorithm": "flat",
     "npmIgnore": [
