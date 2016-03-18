@@ -55,7 +55,7 @@ const AppViewModel = Map.extend({
 				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
 					return {
 						title: "Account",
-						componentName: "bitballs-user",
+						componentName: "user-details",
 						attributes: "{(session)}='../session'",
 						moduleName: "user/details/"
 					};

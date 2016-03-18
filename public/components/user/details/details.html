@@ -1,14 +1,16 @@
-<script type="text/stache" id="demo" can-autorender>
+<script type="text/stache" id="demo-html" can-autorender>
   <can-import from="bitballs/components/user/details/" />
   <can-import from="bitballs/models/user" />
 
-  <bitballs-user {(session)}="session"></bitballs-user>
+  <user-details {(session)}="session"></user-details>
 
   {{#if session.user}}
   	{{#unless session.user.verified}}
 	  	<hr />
 	  	<h2>User Verification</h2>
-		<button type="button" class="btn btn-default" ($click)="session.user.attr('verified', true)">
+		<button type="button" 
+                class="btn btn-default" 
+                ($click)="session.user.attr('verified', true)">
 			Verify User
 		</button> 
 	{{/unless}}
@@ -17,49 +19,49 @@
 </script>
 
 <script src="../../../node_modules/steal/steal.js"
-        main="can/view/autorender/">
-    import can from 'can';
-    import $ from 'jquery';
-    import fixture from 'can-fixture';
+        main="can/view/autorender/" id="demo-source">
+import can from 'can';
+import $ from 'jquery';
+import fixture from 'can-fixture';
 
-    var password,
-        vm = can.Map.extend({
-    	define: {
-    		session: {
-    			value: null
-    		}
-    	}
-    });
+var password,
+    vm = can.Map.extend({
+	define: {
+		session: {
+			value: null
+		}
+	}
+});
 
-    fixture('POST /services/users', function(request, response){
-    	var user = {
-    		id: 1,
-    		email: request.data.email,
-    		verified: false
-    	};
+fixture('POST /services/users', function(request, response){
+	var user = {
+		id: 1,
+		email: request.data.email,
+		verified: false
+	};
 
-    	password = request.data.password;
+	password = request.data.password;
 
-    	response(user);
-    });
+	response(user);
+});
 
-    fixture('PUT /services/users/{id}', function(request, response){
-    	if(request.data.password===password){
-    		password = request.data.newPassword;
-    		response({
-    			id: request.data.id,
-    			email: request.data.email,
-    			verified: request.data.verified
-    		});
-    	}else{
-    		response(401);
-    	}
-    });
+fixture('PUT /services/users/{id}', function(request, response){
+	if(request.data.password===password){
+		password = request.data.newPassword;
+		response({
+			id: request.data.id,
+			email: request.data.email,
+			verified: request.data.verified
+		});
+	}else{
+		response(401);
+	}
+});
 
-    fixture('DELETE /services/users/{id}', function(request, response){
-    	// inelegant, but better than worrying about real sessions in the user demo
-    	window.location.reload();
-    });
+fixture('DELETE /services/users/{id}', function(request, response){
+	// inelegant, but better than worrying about real sessions in the user demo
+	window.location.reload();
+});
 
-    $('#demo').viewModel(vm).attr();
+$('#demo-html').viewModel(vm).attr();
 </script>
