@@ -39,7 +39,7 @@ var Tournament = require("../models/tournament");
  * 			"id": 9,
  * 			"date": "2016-01-01"
  * 		}
- * 		
+ *
  * @signature `GET /services/tournaments/:id`
  *   Gets a tournament by id from the database.
  *
@@ -79,7 +79,7 @@ var Tournament = require("../models/tournament");
  */
 app.get('/services/tournaments', function(req, res){
 	Tournament.collection().query(req.query).fetch().then(function(tournaments){
-		res.send({data: tournaments});
+		res.send({data: tournaments.toJSON()});
 	});
 });
 

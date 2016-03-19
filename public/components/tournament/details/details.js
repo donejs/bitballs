@@ -216,17 +216,23 @@ exports.ViewModel = CanMap.extend({
 	},
 	Game: Game,
 	createGame: function(ev) {
+
 		ev.preventDefault();
+
 		var self = this;
 		var game = this.attr("game");
+		try {
+			game.attr({
+				round: this.attr('selectedRound'),
+				court: this.attr('selectedCourt'),
+				tournamentId: this.attr('tournamentId')
+			}).save(function(){
+				self.attr("game", new Game());
+			});
+		} catch(e) {
+			debugger;
+		}
 
-		game.attr({
-			round: this.attr('selectedRound'),
-			court: this.attr('selectedCourt'),
-			tournamentId: this.attr('tournamentId')
-		}).save(function(){
-			self.attr("game", new Game());
-		});
 	}
 });
 

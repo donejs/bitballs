@@ -13,31 +13,30 @@
 	</tr>
 </thead>
 <tbody>
-{{#each Game.roundNames}}
-	{{#if games.getGameCountForRound(.)}}
-		<tr>
-			<td>{{.}}</td>
-			{{#each Game.courtNames}}
-				<td>
-					{{#games.getGameForRoundAndCourt ../. .}}
-						<a href="{{routeUrl gameId=id}}">
-							{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
-						</a>
-						{{#if session.isAdmin}}
-							<button type="button" class="btn btn-danger btn-xs"
-								($click)="destroy()"
-								{{#isDestroying}}disabled{{/isDestroying}}>
-									<span class='glyphicon glyphicon-remove'/>
-							</button>
-						{{/if}}
-					{{/games.getGameForRoundAndCourt}}
-				</td>
-			{{/each}}
-		</tr>
-	{{/if}}
+{{#games.getRoundsWithGames}}
+
+	<tr>
+		<td>{{.}}</td>
+		{{#each Game.courtNames}}
+			<td>
+				{{#games.getGameForRoundAndCourt ../. .}}
+					<a href="{{routeUrl gameId=id}}">
+						{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
+					</a>
+					{{#if session.isAdmin}}
+						<button type="button" class="btn btn-danger btn-xs"
+							($click)="destroy()"
+							{{#isDestroying}}disabled{{/isDestroying}}>
+								<span class='glyphicon glyphicon-remove'/>
+						</button>
+					{{/if}}
+				{{/games.getGameForRoundAndCourt}}
+			</td>
+		{{/each}}
+	</tr>
 {{else}}
 	<tr><td class="text-center lead" colspan="5">No Games</td></tr>
-{{/each}}
+{{/games.getRoundsWithGames}}
 </tbody>
 </table>
 

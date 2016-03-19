@@ -48,5 +48,5 @@
 	</tbody>
 </table>
 {{#if isAdmin}}
-<player-edit/>
+<player-edit {is-admin}="isAdmin"/>
 {{/if}}

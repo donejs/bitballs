@@ -44,7 +44,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
-						attributes: "{is-admin}='app.isAdmin'",
+						attributes: "{is-admin}='../isAdmin'",
 						moduleName: "tournament/list/"
 					};
 
@@ -68,7 +68,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Players",
 						componentName: "player-list",
-						attributes: "{is-admin}='app.isAdmin'",
+						attributes: "{is-admin}='../isAdmin'",
 						moduleName: "player/list/"
 					};
 
