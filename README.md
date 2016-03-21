@@ -77,6 +77,8 @@ brew uninstall postgresql
 
 Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/). Make sure you host it listen to port `5432`.
 
+Then using `pgAdmin III` graphical database manager, which should have been installed with `postgres`, create a `bitballs` database.
+
 *Coming Soon*
 
 ### Download Source
