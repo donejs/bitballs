@@ -149,16 +149,13 @@ export const games = {
 export const defineFixtures = function () {
 
     fixture('/services/games', function () {
-        console.log('hi')
         return {
             data: [games]
         };
     });
 
     fixture("/services/games/{id}", function(request, response) {
-        console.log('yello')
         if (request.data.id === "1" || request.data.id === 1) {
-            console.log('howdy')
             response(games);
         }
     });

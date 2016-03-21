@@ -229,9 +229,7 @@ exports.ViewModel = CanMap.extend({
 			}).save(function(){
 				self.attr("game", new Game());
 			});
-		} catch(e) {
-			debugger;
-		}
+		} catch(e) {}
 
 	}
 });
