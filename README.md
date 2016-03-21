@@ -77,9 +77,20 @@ brew uninstall postgresql
 
 Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/). Make sure you host it listen to port `5432`.
 
-Then using `pgAdmin III` graphical database manager, which should have been installed with `postgres`, create a `bitballs` database.
+Open `pg_hba.conf`, which should be in _C:\Program Files\PostgreSQL\9.5\data_, and change from `md5` authentication to `trust`. For example, change:
 
-*Coming Soon*
+> #host    replication     postgres        ::1/128                 md5
+
+to:
+
+> #host    replication     postgres        ::1/128                 trust
+
+`trust` should not be used in a production environment.  We are only using it here as a substitute for the `peer` mode available in UNIX environments.
+
+
+
+Finally, using `pgAdmin III` graphical database manager, which should have been installed with `postgres`, create a `bitballs` database.
+
 
 ### Download Source
 
