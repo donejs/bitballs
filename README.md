@@ -79,11 +79,11 @@ Download and use the graphical installer available on [postgresql.org](http://ww
 
 Open `pg_hba.conf`, which should be in _C:\Program Files\PostgreSQL\9.5\data_, and change from `md5` authentication to `trust`. For example, change:
 
-> #host    replication     postgres        ::1/128                 md5
+> host    all             all             127.0.0.1/32            md5
 
 to:
 
-> #host    replication     postgres        ::1/128                 trust
+> host    all             all             127.0.0.1/32            trust
 
 `trust` should not be used in a production environment.  We are only using it here as a substitute for the `peer` mode available in UNIX environments.
 
