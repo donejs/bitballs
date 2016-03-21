@@ -380,8 +380,5 @@ exports.Component = Component.extend({
 			},1);
 
 		}
-	},
-	helpers: {
-
 	}
 });
