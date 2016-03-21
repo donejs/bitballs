@@ -85,7 +85,7 @@ to:
 
 > host    all             all             127.0.0.1/32            trust
 
-`trust` should not be used in a production environment.  We are only using it here as a substitute for the `peer` mode available in UNIX environments.
+`trust` should not be used in a production environment.  We are only using it here as a substitute for the `peer` mode available in UNIX environments. Read more about it [here](http://www.postgresql.org/docs/9.5/static/auth-methods.html).
 
 
 
