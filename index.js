@@ -2,6 +2,7 @@ var express = require('express');
 var app = require('./services/app');
 var exec = require( "child_process" ).exec;
 var cookieParser = require('cookie-parser');
+var path = require("path");
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -35,7 +36,7 @@ app.listen(app.get('port'), function() {
 
 if ( process.argv.indexOf( "--develop" ) !== -1 ) {
   //is dev mode so do live reload
-  var child = exec( "node_modules/.bin/steal-tools live-reload", {
+  var child = exec( path.join("node_modules",".bin","steal-tools live-reload"), {
     cwd: process.cwd() + "/public"
   });
 
