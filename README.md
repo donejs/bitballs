@@ -75,7 +75,7 @@ brew uninstall postgresql
 
 #### Installing PostgreSQL on Windows
 
-Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/).
+Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/). Make sure you host it listen to port `5432`.
 
 *Coming Soon*
 
