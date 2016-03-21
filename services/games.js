@@ -122,7 +122,11 @@ app.get('/services/games', function(req, res){
 
 app.get('/services/games/:id', function(req, res){
 	new Game({id: req.params.id}).fetch(req.query).then(function(game){
-		res.send(game.toJSON());
+		if(game){
+			res.send(game.toJSON());
+		}else {
+			res.status(404).send();
+		}
 	});
 });
 

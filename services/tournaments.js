@@ -85,7 +85,11 @@ app.get('/services/tournaments', function(req, res){
 
 app.get('/services/tournaments/:id', function(req, res){
 	new Tournament({id: req.params.id}).fetch().then(function(tournament){
-		res.send(tournament.toJSON());
+		if(tournament){
+			res.send(tournament.toJSON());
+		} else {
+			res.status(404).send();
+		}
 	});
 });
 
