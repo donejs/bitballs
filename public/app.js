@@ -36,7 +36,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournament",
 						componentName: "tournament-details",
-						attributes: "{tournament-id}='../tournamentId' {session}='../session'",
+						attributes: "{tournament-id}='../tournamentId' {is-admin}='../isAdmin'",
 						moduleName: "tournament/details/"
 					};
 
