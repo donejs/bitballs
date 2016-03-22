@@ -13,7 +13,9 @@ require('can/map/');
 require("can/map/define/");
 require('can/map/backup/');
 
-var Player = can.Map.extend({
+var Player = can.Map.extend(
+/** @prototype **/
+{
 	define: {
 		weight: {
 			type: 'number'
@@ -54,7 +56,16 @@ var Player = can.Map.extend({
 	init: function () {
 		this.backup();
 	}
+	/**
+	 * @property {Number} id
+	 * A unique identifier.
+	 **/
 });
+
+/**
+ * @constructor {can.List} bitballs/models/player.static.List List
+ * @parent bitballs/models/player.static
+ */
 Player.List = can.List.extend({Map: Player},{
 	findById: function(id){
 		for(var i = 0; i < this.length; i++) {

@@ -75,6 +75,8 @@ brew uninstall postgresql
 
 #### Installing PostgreSQL on Windows
 
+Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/).
+
 *Coming Soon*
 
 ### Download Source
