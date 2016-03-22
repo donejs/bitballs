@@ -68,13 +68,11 @@ exports.ViewModel = CanMap.extend(
 		});
 	},
 	define: {
-<<<<<<< HEAD
 		tournamentPromise: {
 			get: function(){
 				return Tournament.get({id: this.attr("tournamentId")});
 			}
 		},
-=======
 		/**
 		* @property {Boolean}
 		*
@@ -94,7 +92,6 @@ exports.ViewModel = CanMap.extend(
 		*
 		* The [bitballs/models/tournament] model that the component is bound to.
 		**/
->>>>>>> staging
 		tournament: {
 			get: function(lastSet, setVal){
 				this.attr('tournamentPromise').then(setVal);
@@ -426,7 +423,7 @@ exports.ViewModel = CanMap.extend(
 
 		var self = this;
 		var game = this.attr("game");
-		
+
 		game.attr({
 			round: this.attr('selectedRound'),
 			court: this.attr('selectedCourt'),
