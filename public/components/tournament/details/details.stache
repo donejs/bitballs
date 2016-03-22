@@ -41,7 +41,7 @@
 </tbody>
 </table>
 
-{{#if session.isAdmin}}
+{{#if isAdmin}}
 <h4>New Game</h4>
 <form ($submit)="createGame(%event)" action="">
 
@@ -101,7 +101,7 @@
 		<th>Player 2</th>
 		<th>Player 3</th>
 		<th>Player 4</th>
-		{{#if session.isAdmin}}
+		{{#if isAdmin}}
 		<th></th>
 		{{/if}}
 	</tr>
@@ -115,7 +115,7 @@
 		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
-		{{#if session.isAdmin}}
+		{{#if isAdmin}}
 			<td>
 				<button type="button" class="btn btn-danger"
 					($click)="destroy()"
@@ -126,12 +126,12 @@
 		{{/if}}
 	</tr>
 {{else}}
-	<tr><td class="text-center lead" colspan="{{#if session.isAdmin}}6{{else}}7{{/if}}">No Teams</td></tr>
+	<tr><td class="text-center lead" colspan="{{#if isAdmin}}6{{else}}7{{/if}}">No Teams</td></tr>
 {{/each}}
 </tbody>
 </table>
 
-{{#if session.isAdmin}}
+{{#if isAdmin}}
 <h4>New Team</h4>
 <form ($submit)="createTeam(%event)" action="">
 

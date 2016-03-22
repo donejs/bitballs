@@ -134,6 +134,10 @@ var Game = CanMap.extend(
 				return videoUrl;
 			}
 		}
+		/**
+		 * @property {Number} id
+		 * A unique identifier.
+		 **/
 	},
 	statsForPlayerId: function(id) {
 		if(typeof id === "function") {
