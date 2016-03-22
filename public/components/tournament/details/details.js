@@ -68,6 +68,11 @@ exports.ViewModel = CanMap.extend(
 		});
 	},
 	define: {
+		tournamentPromise: {
+			get: function(){
+				return Tournament.get({id: this.attr("tournamentId")});
+			}
+		},
 		/**
 		* @property {Boolean}
 		*
@@ -89,7 +94,7 @@ exports.ViewModel = CanMap.extend(
 		**/
 		tournament: {
 			get: function(lastSet, setVal){
-				Tournament.get({id: this.attr("tournamentId")}).then(setVal);
+				this.attr('tournamentPromise').then(setVal);
 			}
 		},
 		/**

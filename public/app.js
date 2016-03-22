@@ -28,7 +28,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Game",
 						componentName: "game-details",
-						attributes: "{(game-id)}='../gameId' {(session)}='../session'",
+						attributes: "{(game-id)}='../gameId'  {(session)}='../session' {(game-promise)}='../pagePromise'",
 						moduleName: "game/details/"
 					};
 
@@ -36,7 +36,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournament",
 						componentName: "tournament-details",
-						attributes: "{tournament-id}='../tournamentId' {is-admin}='../isAdmin'",
+						attributes: "{tournament-id}='../tournamentId' {is-admin}='../isAdmin' {(tournament-promise)}='../pagePromise'",
 						moduleName: "tournament/details/"
 					};
 
@@ -88,7 +88,24 @@ const AppViewModel = Map.extend(
 				});
 			}
 		},
-		tournamentId: {type: "number"}
+		tournamentId: {type: "number"},
+		statusCode: {
+			get: function(){
+				var pagePromise = this.attr('pagePromise');
+				if(pagePromise){
+					// pagePromise is guaranteed to be resolved here
+					// because done-ssr will not call the statusCode
+					// getter until the app is done loading
+					return pagePromise.state()==="rejected" ? 404 : 200;
+				}else{
+					return 200;
+				}
+			}
+		},
+		pagePromise: {
+			value: undefined,
+			serialize: false
+		}
 	},
 	/**
 	 * @function isAdmin
