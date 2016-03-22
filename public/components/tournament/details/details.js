@@ -418,7 +418,7 @@ exports.ViewModel = CanMap.extend(
 
 		var self = this;
 		var game = this.attr("game");
-
+		
 		game.attr({
 			round: this.attr('selectedRound'),
 			court: this.attr('selectedCourt'),
