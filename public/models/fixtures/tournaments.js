@@ -1,5 +1,6 @@
 import fixture from 'can-fixture';
 import $ from 'jquery';
+import can  from 'can/util/';
 
 export const tournaments = {
     data: [

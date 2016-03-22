@@ -1,12 +1,27 @@
-var Map = require('can/map/');
+/**
+ * @module {can.Map} bitballs/models/team Team
+ * @parent bitballs.clientModels
+ */
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var Player = require("./player");
+var can = require("can/util/");
+require("can/map/define/");
+require("can/list/");
 
-var Team = Map.extend({
+
+var Team = can.Map.extend(
+/** @static */
+{
+	/**
+	 * @property {Array}
+	 * A list of available team colors.
+	 **/
 	colors: ["Black","White","Red","Green","Blue","Yellow","Brown","Gray","Orange","Purple"]
-},{
+},
+/** @prototype */
+{
 	define: {
 		tournamentId: {
 			type: "number"
@@ -25,24 +40,32 @@ var Team = Map.extend({
 		},
 		players: {
 			get: function(){
-				
+
 				var players = [],
 					self = this;
-					
+
 				 ["player1","player2","player3","player4"].map(function(name){
 					if(self.attr(name)) {
 						players.push(self.attr(name));
 					}
 				});
-				
+
 				return new Player.List(players);
 			}
 		}
 	}
+	/**
+	 * @property {Number} id
+	 * A unique identifier.
+	 **/
 });
+/**
+ * @constructor {can.List} bitballs/models/team.static.List List
+ * @parent bitballs/models/team.static
+ */
 Team.List = can.List.extend({Map: Team},{
 	removeById: function(id){
-		var i  = 0; 
+		var i  = 0;
 		while(i < this.length) {
 			if(this[i].attr("id") === id) {
 				this.splice(i, 1);

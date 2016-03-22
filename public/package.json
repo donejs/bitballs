@@ -40,8 +40,8 @@
   },
   "system": {
     "configDependencies": [
-      "live-reload",
-      "node_modules/can-zone/register"
+      "node_modules/can-zone/register",
+      "live-reload"
     ],
     "npmAlgorithm": "flat",
     "npmIgnore": [
@@ -65,10 +65,10 @@
       "bitballs/components/game/details/",
       "bitballs/components/tournament/details/",
       "bitballs/components/tournament/list/",
-      "bitballs/components/user/",
+      "bitballs/components/user/details/",
+      "bitballs/components/user/list/",
       "bitballs/components/game/details/",
-      "bitballs/components/player/list/",
-      "bitballs/components/users/"
+      "bitballs/components/player/list/"
     ]
   }
 }

@@ -1,10 +1,27 @@
 import fixture from "can-fixture";
 
-var responseData = {
+export const games = {
     id: 1,
+    videoUrl: "AEUULIs_UWE",
+    homeTeamId: 1,
+    round: "Round 1",
+    tournament: {
+        id: 1,
+        date: "2012-01-01"
+    },
+    finalScore: {
+        home: 22,
+        away: 20
+    },
+    currentScore: {
+        home: 0,
+        away: 0
+    },
     homeTeam: {
         id: 1,
         player1Id:1,
+        name: "Solid as A Rock",
+        color: "I Blue Myself",
         player1:{
             id: 1,
             name: "George Bluth",
@@ -45,9 +62,12 @@ var responseData = {
             startRank: ""
         }
     },
+    awayTeamId: 2,
     awayTeam: {
         id: 2,
         player1Id:5,
+        name: "Bob Loblaw Balls, Y'all",
+        color: "Tobias's Favorite Shade of Pink",
         player1:{
             id: 5,
             name: "Lucille Two",
@@ -91,47 +111,64 @@ var responseData = {
     stats: [{
         id: 1,
         type: "1P",
-        playerId: 4
+        playerId: 4,
+        time: 20
     },
     {
         id: 2,
         type: "2P",
-        playerId: 4
+        playerId: 4,
+        time: 40
     },
     {
         id: 3,
         type: "1P",
-        playerId: 5
+        playerId: 5,
+        time: 60
     },
     {
         id: 4,
         type: "1P",
-        playerId: 6
+        playerId: 6,
+        time: 80
     },
     {
         id: 5,
         type: "1P",
-        playerId: 7
+        playerId: 7,
+        time: 100
     },
     {
         id: 6,
         type: "2P",
-        playerId: 8
+        playerId: 8,
+        time: 120
     }]
 };
 
-fixture("/services/games/{id}", function(request, response) {
-    if (request.data.id == "1") {
-        response(responseData);
-    }
-});
+export const defineFixtures = function () {
 
-fixture('GET /services/stats', function () {
-    return { data: responseData.stats };
-});
+    fixture('/services/games', function () {
+        return {
+            data: [games]
+        };
+    });
 
-fixture('DELETE /services/stats/{id}', function () {
-    return {};
-});
+    fixture("/services/games/{id}", function(request, response) {
+        if (request.data.id === "1" || request.data.id === 1) {
+            response(games);
+        }
+    });
 
-export default responseData;
+    fixture('GET /services/stats', function () {
+        return { data: games.stats };
+    });
+
+    fixture('DELETE /services/stats/{id}', function () {
+        return {};
+    });
+};
+
+defineFixtures();
+
+export default defineFixtures;

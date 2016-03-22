@@ -31,9 +31,33 @@ QUnit.test('Video url can be a YouTube url or key', function () {
         'http://www.youtube.com/user/IngridMichaelsonVEVO#p/u/11/0zM3nApSvMg',
         'http://www.youtube-nocookie.com/v/0zM3nApSvMg?version=3&hl=en_US&rel=0'
     ];
-
-    can.each(sampleUrls, function(url) {
+    sampleUrls.forEach(function(url){
         game.attr('videoUrl', url);
-        equal(game.attr('videoUrl'), videoKey, 'Video key was extracted from input');
+        QUnit.equal(game.attr('videoUrl'), videoKey, 'Video key was extracted from input');
     });
 });
+
+QUnit.test('Rounds are not available if all their courts are assigned games', function () {
+    var gameList = new Game.List();
+
+    Game.courtNames.forEach(function (courtName) {
+        gameList.push({
+            round: Game.roundNames[0],
+            court: courtName
+        });
+    });
+
+    QUnit.deepEqual(gameList.getAvailableRounds(), Game.roundNames.slice(1),
+        'The first round is not available');
+});
+
+QUnit.test('Courts are not available if they are assigned games', function () {
+    var gameList = new Game.List([{
+        round: Game.roundNames[0],
+        court: Game.courtNames[0]
+    }]);
+
+    QUnit.deepEqual(gameList.getAvailableCourts(Game.roundNames[0]), Game.courtNames.slice(1),
+        'The first court is not available');
+});
+

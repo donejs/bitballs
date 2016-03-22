@@ -1,13 +1,16 @@
 <div id="main"></div>
 
 <script src="../../../node_modules/steal/steal.js" main="@empty">
-    import "bitballs/models/fixtures/tournament";
+    import "bitballs/models/fixtures/tournaments";
+    import "bitballs/models/fixtures/players";
+    import "bitballs/models/fixtures/games";
+    import "bitballs/models/fixtures/teams";
     import "bitballs/components/tournament/details/";
     import $ from 'jquery';
     import stache from "can/view/stache/";
 
     localStorage.clear();
-    var template = stache('<tournament-details tournament-id="{id}" />');
+    var template = stache('<tournament-details {is-admin}="true" {tournament-id}="id" />');
 
     $("#main").html( template({ id: 2 }) );
 </script>

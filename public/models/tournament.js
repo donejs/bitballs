@@ -1,16 +1,21 @@
-var Map = require('can/map/');
+/**
+ * @module {can.Map} bitballs/models/tournament Tournament
+ * @parent bitballs.clientModels
+ */
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
+var moment = require('moment');
+var can = require("can/util/");
 require("can/map/define/");
+require("can/list/");
 
-
-var Tournament = Map.extend({
+var Tournament = can.Map.extend({
 	define: {
 		jsDate: {
 			get: function(){
 				var date = this.attr("date");
-				return date ? new Date(date) : null;
+				return date ? moment(date).toDate() : null;
 			}
 		},
 		year: {

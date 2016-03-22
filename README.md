@@ -1,6 +1,8 @@
 @page bitballs Bitballs
-@group bitballs.client Client
-@group bitballs.server Server
+@group bitballs.components Components
+@group bitballs.clientModels Client Models
+@group bitballs.services Services
+@group bitballs.serviceModels Service Models
 
 [![Build Status](https://travis-ci.org/donejs/bitballs.svg?branch=master)](https://travis-ci.org/donejs/bitballs)
 
@@ -73,7 +75,22 @@ brew uninstall postgresql
 
 #### Installing PostgreSQL on Windows
 
-*Coming Soon*
+Download and use the graphical installer available on [postgresql.org](http://www.postgresql.org/download/windows/). Make sure you host it listen to port `5432`.
+
+Open `pg_hba.conf`, which should be in _C:\Program Files\PostgreSQL\9.5\data_, and change from `md5` authentication to `trust`. For example, change:
+
+> host    all             all             127.0.0.1/32            md5
+
+to:
+
+> host    all             all             127.0.0.1/32            trust
+
+`trust` should not be used in a production environment.  We are only using it here as a substitute for the `peer` mode available in UNIX environments. Read more about it [here](http://www.postgresql.org/docs/9.5/static/auth-methods.html).
+
+
+
+Finally, using `pgAdmin III` graphical database manager, which should have been installed with `postgres`, create a `bitballs` database.
+
 
 ### Download Source
 
@@ -145,4 +162,3 @@ You're finished! Explore some of the app's features:
 - Live reload (`donejs develop`)
 - Run the tests (`donejs test`)
 - Generate the documentation (`donejs document`)
-

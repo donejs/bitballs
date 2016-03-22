@@ -8,7 +8,7 @@
 		<can-import from="bitballs/app" export-as="viewModel" />
 		<can-import from="bitballs/components/navigation/navigation" />
 		<div class="container">
-			<bitballs-navigation {app-state}="." />
+			<bitballs-navigation {app}="." />
 			{{{pageComponent}}}
 
 		</div>

@@ -1,13 +1,14 @@
 /**
  * @module {can.Map} bitballs/models/session Session
- * @parent bitballs.client
+ * @parent bitballs.clientModels
  */
-
-var Map = require('can/map/');
 var connect = require("can-connect");
+var $ = require("jquery");
+var can = require("can/util/");
 var tag = require('can-connect/can/tag/');
-var moment = require("moment");
+
 require("can/map/define/");
+require("can/list/");
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
 require( "can-connect/can/" );
@@ -19,7 +20,7 @@ require( "can-connect/data/url/" );
 
 var User = require("./user");
 
-var Session = Map.extend({
+var Session = can.Map.extend({
 	define: {
 		user: {
 			Type: User
@@ -53,6 +54,8 @@ var options = {
 	}
 };
 
-var sessionConnection = connect( behaviors, options );
+var connection = connect( behaviors, options );
+
+tag('session-model', connection);
 
 module.exports = Session;

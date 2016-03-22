@@ -1,3 +1,4 @@
+{{^if tournamentPromise.isRejected}}
 <h2>{{tournament.year}} Tournament</h2>
 <p>{{tournament.prettyDate}}</p>
 
@@ -13,50 +14,52 @@
 	</tr>
 </thead>
 <tbody>
-{{#eachOf gamesGroupedByRound}}
+{{#games.getRoundsWithGames}}
+
 	<tr>
-		<td>{{%key}}</td>
-		{{#each .}}
+		<td>{{.}}</td>
+		{{#each Game.courtNames}}
 			<td>
-				<a href="{{routeUrl gameId=id}}">
-					{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
-				</a>
-				{{#if session.isAdmin}}
-					<button type="button" class="btn btn-danger btn-xs"
-						($click)="destroy()"
-						{{#isDestroying}}disabled{{/isDestroying}}>
-							<span class='glyphicon glyphicon-remove'/>
-					</button>
-				{{/if}}
+				{{#games.getGameForRoundAndCourt ../. .}}
+					<a href="{{routeUrl gameId=id}}">
+						{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
+					</a>
+					{{#if session.isAdmin}}
+						<button type="button" class="btn btn-danger btn-xs"
+							($click)="destroy()"
+							{{#isDestroying}}disabled{{/isDestroying}}>
+								<span class='glyphicon glyphicon-remove'/>
+						</button>
+					{{/if}}
+				{{/games.getGameForRoundAndCourt}}
 			</td>
 		{{/each}}
 	</tr>
 {{else}}
 	<tr><td class="text-center lead" colspan="5">No Games</td></tr>
-{{/each}}
+{{/games.getRoundsWithGames}}
 </tbody>
 </table>
 
-{{#if session.isAdmin}}
+{{#if isAdmin}}
 <h4>New Game</h4>
 <form ($submit)="createGame(%event)" action="">
 
 	<div class="form-group">
-	    <label for="game-round">round</label>
-	    <select {($value)}="game.round" class="form-control" id="game-round">
-	    	{{#roundNames}}
+	    <label for="game-round">Round</label>
+	    <select {($value)}="selectedRound" class="form-control" id="game-round">
+	    	{{#games.getAvailableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
-	    	{{/roundNames}}
+	    	{{/games.getAvailableRounds}}
 	    </select>
 	</div>
 
 	<div class="form-group">
-	    <label for="game-court">court</label>
-	    <select {($value)}="game.court" class="form-control" id="game-court">
-    		<option value="1">1</option>
-	    	<option value="2">2</option>
-	    	<option value="3">3</option>
-	    	<option value="4">4</option>
+	    <label for="game-court">Court</label>
+	    <select {($value)}="selectedCourt" class="form-control" id="game-court">
+		{{#games.getAvailableCourts(selectedRound)}}
+			<option value="{{.}}">{{.}}</option>
+		{{/games.getAvailableCourts}}
 	    </select>
 	</div>
 
@@ -98,7 +101,7 @@
 		<th>Player 2</th>
 		<th>Player 3</th>
 		<th>Player 4</th>
-		{{#if session.isAdmin}}
+		{{#if isAdmin}}
 		<th></th>
 		{{/if}}
 	</tr>
@@ -112,7 +115,7 @@
 		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
 		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
-		{{#if session.isAdmin}}
+		{{#if isAdmin}}
 			<td>
 				<button type="button" class="btn btn-danger"
 					($click)="destroy()"
@@ -123,12 +126,12 @@
 		{{/if}}
 	</tr>
 {{else}}
-	<tr><td class="text-center lead" colspan="{{#if session.isAdmin}}6{{else}}7{{/if}}">No Teams</td></tr>
+	<tr><td class="text-center lead" colspan="{{#if isAdmin}}6{{else}}7{{/if}}">No Teams</td></tr>
 {{/each}}
 </tbody>
 </table>
 
-{{#if session.isAdmin}}
+{{#if isAdmin}}
 <h4>New Team</h4>
 <form ($submit)="createTeam(%event)" action="">
 
@@ -193,4 +196,7 @@
 
 	<button type="submit" class="btn btn-default" >Create</button>
 </form>
+{{/if}}
+{{else}}
+	Tournament not found.
 {{/if}}
