@@ -11,7 +11,7 @@ import route from 'can/route/';
 import Session from './models/session';
 import "can/route/pushstate/";
 import stache from "can/view/stache/";
-import "./util/prefilter";
+import "./util/";
 
 const AppViewModel = Map.extend(
 /** @prototype */
