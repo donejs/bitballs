@@ -403,10 +403,12 @@ exports.ViewModel = CanMap.extend(
 			this.attr("team").attr("color", this.attr("availableColors")[0]);
 		}
 
-		this.attr("team").attr("tournamentId", this.attr("tournamentId"))
+		var teamSavePromise = this.attr("team").attr("tournamentId", this.attr("tournamentId"))
 			.save(function(){
 			self.attr("team", new Team());
 		});
+
+		this.attr('teamSavePromise', teamSavePromise);
 	},
 	Game: Game,
 	/**
