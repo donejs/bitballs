@@ -1,6 +1,8 @@
 /**
  * @module {can.Map} bitballs/models/game Game
  * @parent bitballs.clientModels
+ *
+ * @group bitballs/models/game.properties 0 properties
  */
 var superMap = require('can-connect/can/super-map/');
 var set = require("can-set");
@@ -22,60 +24,62 @@ var Game = CanMap.extend(
 {
 	/**
 	 * @property {Array<String>}
-	 * An array of possible court names.
+	 * A sorted array of possible court names.
 	 */
 	courtNames: ["1", "2", "3", "4"],
 	/**
 	 * @property {Array<String>}
-	 * An array of possible round names in order.
+	 * A sorted array of possible round names.
 	 */
 	roundNames: ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5",
-		"Elimination", "Quarter Finals", "Semi Finals", "Championship"],
-	/**
-	 * @property {Object<String,Number>}
-	 * An object of a round name to its index.
-	 */
-	roundToIndexMap: {}
+		"Elimination", "Quarter Finals", "Semi Finals", "Championship"]
 },
 /** @prototype */
 {
 	define: {
 		/**
-		 * @property {Number}
+		 * @property {Number} bitballs/models/game.properties.tournamentId tournamentId
+		 * @parent bitballs/models/game.properties
 		 * The tournament's id the game belongs to.
 		 */
 		tournamentId: {type: "number"},
 		/**
-		 * @property {bitballs/models/tournament}
+		 * @property {bitballs/models/tournament} bitballs/models/game.properties.tournament tournament
+		 * @parent bitballs/models/game.properties
 		 * The tournament the game belongs to.  This can be loaded with `withRelated[]=tournament`.
 		 */
 		tournament: {Type: Tournament},
 		/**
-		 * @property {Number}
+		 * @property {Number} bitballs/models/game.properties.homeTeamId homeTeamId
+		 * @parent bitballs/models/game.properties
 		 * The home team's id.
 		 */
 		homeTeamId: {type: "number"},
 		/**
-		 * @property {Number}
+		 * @property {Number} bitballs/models/game.properties.awayTeamId awayTeamId
+		 * @parent bitballs/models/game.properties
 		 * The away team's id.
 		 */
 		awayTeamId: {type: "number"},
 		/**
-		 * @property {bitballs/models/team}
+		 * @property {bitballs/models/team} bitballs/models/game.properties.homeTeam homeTeam
+		 * @parent bitballs/models/game.properties
 		 * The home team. This can be loaded with `withRelated[]=homeTeam`.
 		 */
 		homeTeam: {
 			Type: Team
 		},
 		/**
-		 * @property {bitballs/models/team}
+		 * @property {bitballs/models/team} bitballs/models/game.properties.awayTeam awayTeam
+		 * @parent bitballs/models/game.properties
 		 * The away team. This can be loaded with `withRelated[]=awayTeam`.
 		 */
 		awayTeam: {
 			Type: Team
 		},
 		/**
-		 * @property {bitballs/models/team.static.List}
+		 * @property {bitballs/models/team.static.List} bitballs/models/game.properties.teams teams
+		 * @parent bitballs/models/game.properties
 		 * A list that contains the home and away team.
 		 */
 		teams: {
@@ -95,8 +99,9 @@ var Game = CanMap.extend(
 			}
 		},
 		/**
-		 * @property {bitballs/models/player.static.List}
-		 * A list that contains all players for this game.
+		 * @property {bitballs/models/player.static.List} bitballs/models/game.properties.players players
+		 * @parent bitballs/models/game.properties
+		 * A list that contains all [bitballs/models/player] models for this game.
 		 */
 		players: {
 			get: function(){
@@ -108,7 +113,8 @@ var Game = CanMap.extend(
 			}
 		},
 		/**
-		 * @property {bitballs/models/stat.static.List}
+		 * @property {bitballs/models/stat.static.List} bitballs/models/game.properties.stats stats
+		 * @parent bitballs/models/game.properties
 		 * The stats for this game. This can be loaded with `withRelated[]=stats`.
 		 */
 		stats: {
@@ -119,7 +125,8 @@ var Game = CanMap.extend(
 			}
 		},
 		/**
-		 * @property {String}
+		 * @property {String} bitballs/models/game.properties.videoUrl videoUrl
+		 * @parent bitballs/models/game.properties
 		 * The videoUrl code for the game.  When set to an actual URL, it will
 		 * extract the youtube code from the url.
 		 */
@@ -135,10 +142,14 @@ var Game = CanMap.extend(
 			}
 		}
 		/**
-		 * @property {Number} id
+		 * @property {Number} bitballs/models/game.properties.id id
+		 * @parent bitballs/models/game.properties
 		 * A unique identifier.
 		 **/
 	},
+	/**
+	 * @function
+	 **/
 	statsForPlayerId: function(id) {
 		if(typeof id === "function") {
 			id = id();
@@ -147,6 +158,9 @@ var Game = CanMap.extend(
 			return stat.attr("playerId") === id;
 		});
 	},
+	/**
+	 * @function
+	 **/
 	sortedStatsByPlayerId: function(){
 		if(this.attr("stats")) {
 			var playerIds = {};
@@ -165,23 +179,21 @@ var Game = CanMap.extend(
 
 });
 
-// Cache a static map of round names to round indices
-Game.roundNames.forEach(function(roundName, index){
-  Game.roundToIndexMap[roundName] = index;
-});
-
-
 /**
  * @constructor {can.List} bitballs/models/game.static.List List
  * @parent bitballs/models/game.static
+ *
+ * @group bitballs/models/game.static.List.properties 0 properties
  */
 Game.List = List.extend({Map: Game},
 /** @prototype */
 {
 	define: {
 		/**
-		 * @property {Object<roundName,Object<courtName,bitballs/models/game>>}
-		 * An object that maps round names to court names to games.
+		 * @property {Object<roundName,Object<courtName,bitballs/models/game>>} bitballs/models/game.static.List.properties.gamesGroupedByRound gamesGroupedByRound
+		 * @parent bitballs/models/game.static.List.properties
+		 *
+		 * An object that maps round names to court names to [bitballs/models/game] models.
 		 */
 		gamesGroupedByRound: {
 			type: '*',
@@ -209,6 +221,9 @@ Game.List = List.extend({Map: Game},
 	/**
 	 * @function
 	 *
+	 * Reads from the `_count` property for the given `roundName` in
+	 * [bitballs/models/game.static.List.properties.gamesGroupedByRound].
+	 *
 	 * @param {String} roundName
 	 * @return {Array<String>}
 	 */
@@ -220,15 +235,24 @@ Game.List = List.extend({Map: Game},
 	/**
 	 * @function
 	 *
-	 * Returns a sorted array of the rounds that have not been filled with games.
+	 * Returns a sorted array of rounds that don't reference a [bitballs/models/game]
+	 * in [bitballs/models/game.static.List.properties.gamesGroupedByRound].
 	 *
-	 * @return {Array<String>}
+	 * @return {Array<Object>}
 	 */
 	getAvailableRounds: function() {
 		return Game.roundNames.filter(function (roundName) {
 			return this.getGameCountForRound(roundName) < Game.courtNames.length;
 		}, this);
 	},
+	/**
+	 * @function
+	 *
+	 * Returns a sorted array of rounds that reference at least one [bitballs/models/game]
+	 * in [bitballs/models/game.static.List.properties.gamesGroupedByRound].
+	 *
+	 * @return {Array<Object>}
+	 **/
 	getRoundsWithGames: function() {
 		return Game.roundNames.filter(function (roundName) {
 			return this.getGameCountForRound(roundName) > 0;
@@ -236,9 +260,10 @@ Game.List = List.extend({Map: Game},
 	},
 	/**
 	 * @function
-	 * Returns a sorted array of the courts that have not been filled for the given round.
+	 * Returns a sorted array of courts in [bitballs/models/game.static.List.properties.gamesGroupedByRound]
+	 * that don't reference a [bitballs/models/game] for the given `roundName`.
 	 * @param {String} roundName
-	 * @return {Array<String>}
+	 * @return {Array<Object>}
 	 */
 	getAvailableCourts: function(roundName) {
 		return Game.courtNames.filter(function (courtName) {
@@ -247,14 +272,28 @@ Game.List = List.extend({Map: Game},
 	},
 	/**
 	 * @function
+	 *
+	 * Gets a reference to a [bitballs/models/game] in [bitballs/models/game.static.List.properties.gamesGroupedByRound]
+	 * using the provided `roundName` and `courtName`.
+	 *
+	 * @param {String} roundName
+	 * @param {String} courtName
+	 *
+	 * @return {bitballs/models/game}
 	 */
-	getGameForRoundAndCourt: function(roundName, court) {
+	getGameForRoundAndCourt: function(roundName, courtName) {
 		var gamesGroupedByRound = this.attr("gamesGroupedByRound"),
 			round = gamesGroupedByRound[roundName];
-		return round && round[court];
+		return round && round[courtName];
 	}
 });
 
+/**
+ * @property {set.Algebra} bitballs/models/game.static.algebra algebra
+ * @parent bitballs/models/game.static
+ *
+ * Set Algebra
+ */
 Game.algebra = new set.Algebra(
 	new set.Translate("where","where"),
 	set.comparators.sort('sortBy')

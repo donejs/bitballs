@@ -2,6 +2,8 @@
  * @module {can.Map} bitballs/models/user User
  * @parent bitballs.clientModels
  *
+ * @group bitballs/models/user.static 0 static
+ *
  * A [can.Map](https://canjs.com/docs/can.Map.html) that's connected to the [services/users] with
  * all of [can-connect/can/super-map](https://connect.canjs.com/doc/can-connect%7Ccan%7Csuper-map.html)'s
  * behaviors.
@@ -28,8 +30,19 @@ require("can/map/define/");
 require("can/list/");
 
 var User = can.Map.extend({});
+
+/**
+ * @constructor {can.List} bitballs/models/user.static.List List
+ * @parent bitballs/models/user.static
+ */
 User.List = can.List.extend({Map: User},{});
 
+/**
+ * @property {set.Algebra} bitballs/models/user.static.algebra algebra
+ * @parent bitballs/models/user.static
+ *
+ * Set Algebra
+ */
 User.algebra = new set.Algebra(
 	new set.Translate("where","where"),
 	set.comparators.sort('sortBy')

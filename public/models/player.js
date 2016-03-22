@@ -1,6 +1,8 @@
 /**
  * @module {can.Map} bitballs/models/player Player
  * @parent bitballs.clientModels
+ *
+ * @group bitballs/models/player.properties 0 properties
  */
 var can = require('can/util/');
 var superMap = require('can-connect/can/super-map/');
@@ -14,21 +16,49 @@ require("can/map/define/");
 require('can/map/backup/');
 
 var Player = can.Map.extend(
+/** @static */
+{},
 /** @prototype **/
 {
 	define: {
+		/**
+		 * @property {Number} bitballs/models/player.properties.weight weight
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The weight of a player in pounds.
+		 **/
 		weight: {
 			type: 'number'
 		},
+		/**
+		 * @property {Number} bitballs/models/player.properties.height height
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The height of a player in inches.
+		 **/
 		height: {
 			type: 'number'
 		},
+		/**
+		 * @property {Date|null} bitballs/models/player.properties.jsBirthday jsBirthday
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The [bitballs/models/player.properties.birthday birthday] property
+		 * represented as a JavaScript object.
+		 **/
 		jsBirthday: {
 			get: function(){
 				var date = this.attr("birthday");
 				return date ? new Date(date) : null;
 			}
 		},
+		/**
+		 * @property {String} bitballs/models/player.properties.birthDate birthDate
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The [bitballs/models/player.properties.birthday birthday] property
+		 * formatted as `YYYY-MM-DD`.
+		 **/
 		birthDate: {
 			get: function(){
 				var date = this.attr("birthday");
@@ -38,6 +68,13 @@ var Player = can.Map.extend(
 				this.attr("birthday", value);
 			}
 		},
+		/**
+		 * @property {Number} bitballs/models/player.properties.age age
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The number of full years since the date of the
+		 * [bitballs/models/player.properties.jsBirthday jsBirthday] property.
+		 **/
 		age: {
 			get: function(){
 				var birthDate = this.attr("jsBirthday");
@@ -52,21 +89,52 @@ var Player = can.Map.extend(
 				}
 			}
 		}
+		/**
+		 * @property {String} bitballs/models/player.properties.birthday birthday
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The player's date of birth. Formatted as `YYYY-MM-DD`.
+		 **/
+		/**
+		 * @property {String} bitballs/models/player.properties.name name
+		 * @parent bitballs/models/player.properties
+		 *
+		 * The name of the player.
+		 **/
+	 	/**
+		 * @property {Number} bitballs/models/player.properties.id id
+		 * @parent bitballs/models/player.properties
+		 *
+		 * A unique identifier.
+		 **/
+
 	},
+	/**
+	 * @function
+	 *
+	 * Backs up the model's properties on instantiation.
+	 **/
 	init: function () {
 		this.backup();
 	}
-	/**
-	 * @property {Number} id
-	 * A unique identifier.
-	 **/
 });
 
 /**
  * @constructor {can.List} bitballs/models/player.static.List List
  * @parent bitballs/models/player.static
  */
-Player.List = can.List.extend({Map: Player},{
+Player.List = can.List.extend({Map: Player},
+/** @prototype **/
+{
+	/**
+	 * @function
+	 *
+	 * Iterates the list of [bitballs/models/player] models in search of a
+	 * [bitballs/models/player] with the specified `id`.
+	 *
+	 * @param {Number} id
+	 * @return {bitballs/models/player}
+	 */
 	findById: function(id){
 		for(var i = 0; i < this.length; i++) {
 			if(this[i].attr("id") === id) {
@@ -76,6 +144,12 @@ Player.List = can.List.extend({Map: Player},{
 	}
 });
 
+/**
+ * @property {set.Algebra} bitballs/models/player.static.algebra algebra
+ * @parent bitballs/models/player.static
+ *
+ * Set Algebra
+ */
 Player.algebra = new set.Algebra(
 	new set.Translate("where","where"),
 	set.comparators.sort('orderBy')

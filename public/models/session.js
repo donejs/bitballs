@@ -1,6 +1,8 @@
 /**
  * @module {can.Map} bitballs/models/session Session
  * @parent bitballs.clientModels
+ *
+ * @group bitballs/models/session.properties 0 properties
  */
 var connect = require("can-connect");
 var $ = require("jquery");
@@ -20,16 +22,40 @@ require( "can-connect/data/url/" );
 
 var User = require("./user");
 
-var Session = can.Map.extend({
+var Session = can.Map.extend(
+/** @static **/
+{},
+/** @prototype **/
+{
 	define: {
+		/**
+		 * @property {bitballs/models/user} bitballs/models/session.properties.user user
+		 * @parent bitballs/models/session.properties
+		 *
+		 * The [bitballs/models/user] model this session represents.
+		 **/
 		user: {
 			Type: User
 		}
 	},
+
+	/**
+	 * @function
+	 *
+	 * Identifies whether or not the [bitballs/models/session.properties.user]
+	 * property is an administrator.
+	 *
+	 * @return {Boolean}
+	 **/
 	isAdmin: function(){
 		return this.attr("user") && this.attr("user").attr("isAdmin");
 	}
 });
+
+/**
+ * @constructor {can.List} bitballs/models/session.static.List List
+ * @parent bitballs/models/session.static
+ */
 Session.List = can.List.extend({Map: Session},{});
 
 var behaviors = [
