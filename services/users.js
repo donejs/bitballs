@@ -68,14 +68,14 @@ var appUrl = urls[envKey];
  * 		  "verified": Boolean // Whether user has verified an email address
  * 		}
  *
- * 	@signature `PUT /services/users/:id`
- * 	  Updates a user in the database. Logged in users can update themselves, but only admins can update any user.
+ *  @signature `PUT /services/users/:id`
+ *    Updates a user in the database. Logged in users can update themselves, but only admins can update any user.
  *
- * 		PUT /services/players/9
- *		   {
- * 		     "email": "addyfizzle@publicdefenders.org"
- * 		     "verificationHash": "H3HLJ2HIO4H3HLJ2HIO4H3HLJ2HIO4"
- * 		   }
+ *      PUT /services/players/9
+ *        {
+ *          "email": "addyfizzle@publicdefenders.org"
+ *          "verificationHash": "H3HLJ2HIO4H3HLJ2HIO4H3HLJ2HIO4"
+ *        }
  *
  * 	  @param {JSON} JSONBody The updates properties of the user object.
  * 	  @return {JSON} Returns JSON with the properties of the updated user, omitting sensitive information
