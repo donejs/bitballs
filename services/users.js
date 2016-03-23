@@ -53,7 +53,7 @@ var appUrl = urls[envKey];
  * 	 	  "verified": false
  * 		}
  *
- *  @signature `GET /services/users/:id
+ *  @signature `GET /services/users/:id`
  *     Gets a user by id from the database
  *
  * 			GET /services/users/9
@@ -87,7 +87,7 @@ var appUrl = urls[envKey];
  * 	 	    "isAdmin": false,
  * 	 	    "verified": true
  * 	      }
- * 		
+ *
  * 	@signature `DELETE /services/users/9`
  * 	  Deletes a user in the database. Logged in users can delete themselves, but only admins can delete any user.
  *
