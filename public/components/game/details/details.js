@@ -551,9 +551,12 @@ exports.Component = Component.extend({
 		 * @description  On window resize, update the position of the cursor in the stats container.
 		 */
 		"{window} resize": function(){
-			var player = this.viewModel.attr("youtubePlayer");
-			var currentTime = player.getCurrentTime();
-			this.updatePosition(currentTime);
+			var player = this.viewModel.attr("youtubePlayer"),
+				currentTime;
+			if (player.getCurrentTime) {
+				currentTime = player.getCurrentTime();
+				this.updatePosition(currentTime);
+			}
 		},
 		/**
 		 * @function
