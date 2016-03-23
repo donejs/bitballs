@@ -2,6 +2,8 @@
  * @module {can.Map} bitballs/models/stat Stat
  * @parent bitballs.clientModels
  *
+ * @group bitballs/models/stat.properties 0 properties
+ *
  * A [can.Map](https://canjs.com/docs/can.Map.html) that's connected to the [services/stats] with
  * all of [can-connect/can/super-map](https://connect.canjs.com/doc/can-connect%7Ccan%7Csuper-map.html)'s
  * behaviors.
@@ -51,11 +53,11 @@ var Stat = can.Map.extend(
 		{ name: "To"}
 	]
 },
-/** @prototype */
 {
 	define: {
 		/**
-		 * @property {Number} time
+		 * @property {Number} bitballs/models/stat.properties.time time
+		 * @parent bitballs/models/stat.properties
 		 *
 		 * The time of the stat, rounded to the nearest integer.
 		 */
