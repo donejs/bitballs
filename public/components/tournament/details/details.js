@@ -431,6 +431,46 @@ exports.ViewModel = CanMap.extend(
 		}).save(function(){
 			self.attr("game", new Game());
 		});
+	},
+
+	/**
+	 * @function
+	 * @description Delete a game from the database.
+	 * @param {bitballs/models/game} game The [bitballs/models/game] to delete.
+	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deleteGame(., "Are you sure?")"></span>
+	 * ```
+	 */
+	deleteGame: function (game, confirmMessage) {
+		if (! window.confirm(confirmMessage)) {
+			return;
+		}
+		game.destroy();
+	},
+
+	/**
+	 * @function
+	 * @description Delete a team from the database.
+	 * @param {bitballs/models/team} team The [bitballs/models/team] to delete.
+	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deleteTeam(., "Are you sure?")"></span>
+	 * ```
+	 */
+	deleteTeam: function (team, confirmMessage) {
+		if (! window.confirm(confirmMessage)) {
+			return;
+		}
+		team.destroy();
 	}
 });
 

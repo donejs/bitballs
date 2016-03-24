@@ -335,8 +335,13 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	gotoTimeMinus5: function(time, event) {
-		this.attr("youtubePlayer").seekTo(time - 5, true);
-		this.attr("youtubePlayer").playVideo();
+		var player = this.attr("youtubePlayer");
+		if (player.seekTo) {
+			player.seekTo(time - 5, true);
+		}
+		if (player.playVideo) {
+			player.playVideo();
+		}
 		if(event) {
 			event.stopPropagation();
 		}
@@ -344,17 +349,21 @@ exports.ViewModel = CanMap.extend(
 	/**
 	 * @function 
 	 * @description Delete a stat from the database.
-	 * @param  {bitballs/models/stat} stat  The stat to delete.
-	 * @param  {event} event The event that triggered the deletion.
+	 * @param {bitballs/models/stat} stat The [bitballs/models/stat] to delete.
+	 * @param {event} event The event that triggered the deletion.
+	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
 	 *
 	 * @body
 	 * 
 	 * Use in a template like:
 	 * ```
-	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
+	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event, "Are you sure?")"></span>
 	 * ```
 	 */
-	deleteStat: function (stat, event) {
+	deleteStat: function (stat, event, confirmMessage) {
+		if (! window.confirm(confirmMessage)) {
+			return;
+		}
 		stat.destroy();
 		if(event) {
 			event.stopPropagation();

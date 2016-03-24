@@ -84,6 +84,26 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 */
 	removeEdit: function(){
 		this.removeAttr("editingPlayer");
+	},
+
+	/**
+	 * @function
+	 * @description Delete a player from the database.
+	 * @param {bitballs/models/player} player The [bitballs/models/player] to delete.
+	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deletePlayer(., "Are you sure?")"></span>
+	 * ```
+	 */
+	deletePlayer: function (player, confirmMessage) {
+		if (! window.confirm(confirmMessage)) {
+			return;
+		}
+		player.destroy();
 	}
 });
 
