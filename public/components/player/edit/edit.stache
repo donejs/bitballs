@@ -1,3 +1,5 @@
+<can-import from="bitballs/util/numberToString" />
+
 {{#if isAdmin}}
   <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
     {{#if player.isNew}}
@@ -16,7 +18,7 @@
       	class="form-control" 
       	id="player-weight" 
       	placeholder="weight in pounds" 
-      	{($value)}="player.weight"/>
+      	{($value)}="numberToString(~player.weight)"/>
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
@@ -25,7 +27,7 @@
       	class="form-control" 
       	id="player-height" 
       	placeholder="height in inches (Ex: 71)" 
-      	{($value)}="player.height"/>
+      	{($value)}="numberToString(~player.height)"/>
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
