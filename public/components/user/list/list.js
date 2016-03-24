@@ -75,7 +75,9 @@ export const ViewModel = CanMap.extend({
 		 */
 	},
 	/**
-	 * @function setAdmin Sets the user's admin status.
+	 * @function
+	 *
+	 * Sets the user's admin status.
 	 * 
 	 * @param {bitballs/models/user} user The user object that will be set or unset as an admin.
 	 * @param {Boolean} isAdmin Whether the user should be set as an admin.
