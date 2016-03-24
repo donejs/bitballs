@@ -9,6 +9,8 @@
 		}
 	},
 	"siteDefaults": {
-		"static": "theme/static"
+		"static": "theme/static",
+		"source": "https://github.com/donejs/bitballs",	
+		"templates" : "theme/templates"
 	}
 }
