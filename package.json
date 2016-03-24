@@ -8,7 +8,7 @@
     "build": "node public/build.js",
     "develop": "node index.js --develop",
     "db-migrate": "db-migrate up",
-    "document": "documentjs -d",
+    "document": "documentjs -f",
     "test": "npm run jshint && cd public/ && npm test",
     "jshint": "jshint ./ --config .jshintrc",
     "install": "node install.js && npm run db-migrate"
