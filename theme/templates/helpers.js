@@ -10,7 +10,6 @@ module.exports = function(docMap, config, getCurrent){
 		urlSource: function(src, options){
 			var source = getCurrent().source;
 
-			console.log(source, src);
 			return source + "/tree/master/" + src;
 		}
 	}
