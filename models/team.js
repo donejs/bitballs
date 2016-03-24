@@ -1,5 +1,6 @@
 var bookshelf = require("../models/bookshelf");
 var Player = require("./player");
+var checkit = require('checkit');
 
 /**
  * @module {bookshelf.Model} models/team Team
@@ -23,6 +24,23 @@ var Team = bookshelf.Model.extend(
 	 * Indicates which database table Bookshelf.js will query against.
 	 **/
 	tableName: 'teams',
+	initialize: function(){
+		this.on('saving', this.validateSave);
+	},
+	/**
+	 * @function
+	 * 
+	 * Validates fields and produces informative error messages
+	 * if the team can not be saved.
+	 */
+	validateSave: function(){
+		return checkit({
+			player1Id: {rule: 'required', message: 'Player 1 is required'},
+			player2Id: {rule: 'required', message: 'Player 2 is required'},
+			player3Id: {rule: 'required', message: 'Player 3 is required'},
+			player4Id: {rule: 'required', message: 'Player 4 is required'}
+		}).run(this.attributes);
+	},
 	/**
 	 * @function
 	 *
