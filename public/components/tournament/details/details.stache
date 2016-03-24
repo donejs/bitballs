@@ -22,7 +22,7 @@
 			<td>
 				{{#games.getGameForRoundAndCourt ../. .}}
 					<a href="{{routeUrl gameId=id}}">
-						{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
+						{{#../teams.getById(homeTeamId)}}{{color}}{{/teams.getById}} v {{#../teams.getById(awayTeamId)}}{{color}}{{/teams.getById}}
 					</a>
 					{{#if session.isAdmin}}
 						<button type="button" class="btn btn-danger btn-xs"
@@ -111,10 +111,10 @@
 	<tr>
 		<td>{{name}}</td>
 		<td>{{color}}</td>
-		<td>{{#playerById player1Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
+		<td>{{#../players.getById(player1Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player2Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player3Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player4Id)}}{{name}}{{/}}</td>
 		{{#if isAdmin}}
 			<td>
 				<button type="button" class="btn btn-danger"
