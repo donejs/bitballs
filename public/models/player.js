@@ -126,21 +126,36 @@ var Player = can.Map.extend(
 Player.List = can.List.extend({Map: Player},
 /** @prototype **/
 {
+	define: {
+		/**
+		 * @property {Object}
+		 *
+		 * A map of player ids to [bitballs/models/player] models.
+		 **/
+		idMap: {
+			type: "*",
+			get: function(){
+
+				var map = {};
+
+				this.each(function(player){
+					map[player.attr("id")] = player;
+				});
+
+				return map;
+			}
+		}
+	},
 	/**
 	 * @function
 	 *
-	 * Iterates the list of [bitballs/models/player] models in search of a
-	 * [bitballs/models/player] with the specified `id`.
+	 * Returns a Player in the list of players given its id.
 	 *
 	 * @param {Number} id
-	 * @return {bitballs/models/player}
+	 * @return {bitballs/models/player|undefined} The player if it exists.
 	 */
-	findById: function(id){
-		for(var i = 0; i < this.length; i++) {
-			if(this[i].attr("id") === id) {
-				return this[i];
-			}
-		}
+	getById: function(id){
+		return this.attr("idMap")[id];
 	}
 });
 

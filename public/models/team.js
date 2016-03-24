@@ -109,6 +109,25 @@ var Team = can.Map.extend(
 Team.List = can.List.extend({Map: Team},
 /** @prototype **/
 {
+	define: {
+		/**
+		 * @property {Object}
+		 *
+		 * A map of team ids to [bitballs/models/team] models.
+		 **/
+		idMap: {
+			type: "*",
+			get: function(){
+				var map = {};
+
+				this.each(function(team){
+					map[team.attr("id")] = team;
+				});
+
+				return map;
+			}
+		}
+	},
 	/**
 	 * @function
 	 *
@@ -126,6 +145,15 @@ Team.List = can.List.extend({Map: Team},
 				i++;
 			}
 		}
+	},
+	/**
+	 * @function
+	 * Returns a Team in the list of teams given its id.
+	 * @param {Number} id
+	 * @return {bitballs/models/team|undefined} The team if it exists.
+	 */
+	getById: function(id){
+		return this.attr("idMap")[id];
 	}
 });
 
