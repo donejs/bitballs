@@ -33,6 +33,8 @@ steal("can/control","jquery","can/observe",function(Control, $){
 			
 			var ch = this.collectHeadings().each(function(ix) {
 				var el = $(this);
+				//change formatting here from default to match this:
+				// ## This is My Heading --> <h2 id="this-is-my-heading">
 				this.id = el.text().toLowerCase().replace(/[^\w]/g,"-").replace(/\s/g,"");
 				var num = +this.nodeName.substr(1);
 				var section = {
@@ -79,6 +81,7 @@ steal("can/control","jquery","can/observe",function(Control, $){
 			return cloned;
 		},
 		collectHeadings: function() {
+			//change the depth so we capture all our headings
 			var depth = ( window.docObject.outline && window.docObject.outline.depth ) || 3;
 			var headings = [];
 			for(var i = 0; i  < depth; i++) {
