@@ -12,5 +12,5 @@ module.exports = function(docMap, config, getCurrent){
 
 			return source + "/tree/master/" + src;
 		}
-	}
-}
+	};
+};
