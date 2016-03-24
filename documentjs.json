@@ -7,9 +7,5 @@
 			"parent": "bitballs",
 			"dest": "docs"
 		}
-	},
-	"siteDefaults": {
-		"source": "https://github.com/donejs/bitballs",	
-		"templates" : "theme/templates"
 	}
 }
