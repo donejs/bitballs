@@ -1,3 +1,5 @@
+<can-import from="bitballs/util/numberToString" />
+
 {{#if isAdmin}}
   <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
     {{#if player.isNew}}
