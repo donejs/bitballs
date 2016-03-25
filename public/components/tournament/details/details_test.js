@@ -1,6 +1,6 @@
 import QUnit from 'steal-qunit';
 import details from './details';
-import defineTournamentFixtures, { tournaments } from 'bitballs/models/fixtures/tournaments';
+import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import fixture from "can-fixture";

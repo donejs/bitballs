@@ -14,6 +14,7 @@ var ViewModel = tournamentList.ViewModel;
 QUnit.module('components/tournament/list/', {
 	beforeEach: function () {
 		localStorage.clear();
+		fixture.delay = 1;
 		defineFixtures();
 	}
 });
