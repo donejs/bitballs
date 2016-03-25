@@ -1,0 +1,7 @@
+<can-component tag="four-0-four">
+  <template>
+    <table  class="table">
+        <tr class='warning'><td colspan='5'>404: This is not the page you are looking for.</td></tr>
+    </table>
+  </template>
+</can-component>
