@@ -29,7 +29,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Game",
 						componentName: "game-details",
-						attributes: "{(game-id)}='../gameId'  {(session)}='../session' {(game-promise)}='../pagePromise'",
+						attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
 						moduleName: "game/details/"
 					};
 
@@ -37,7 +37,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournament",
 						componentName: "tournament-details",
-						attributes: "{tournament-id}='../tournamentId' {is-admin}='../isAdmin' {(tournament-promise)}='../pagePromise'",
+						attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
 						moduleName: "tournament/details/"
 					};
 
@@ -45,7 +45,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
-						attributes: "{is-admin}='../isAdmin'",
+						attributes: "{is-admin}='./isAdmin'",
 						moduleName: "tournament/list/"
 					};
 
@@ -53,7 +53,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Users List",
 						componentName: "user-list",
-						attributes: "{(session)}='../session'",
+						attributes: "{session}='./session'",
 						moduleName: "user/list/"
 					};
 
@@ -61,7 +61,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Account",
 						componentName: "user-details",
-						attributes: "{(session)}='../session'",
+						attributes: "{(session)}='./session'",
 						moduleName: "user/details/"
 					};
 
@@ -69,7 +69,7 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Players",
 						componentName: "player-list",
-						attributes: "{is-admin}='../isAdmin'",
+						attributes: "{is-admin}='./isAdmin'",
 						moduleName: "player/list/"
 					};
 
@@ -105,7 +105,7 @@ const AppViewModel = Map.extend(
 		* The status code used for server-side rendering.
 		**/
 		statusCode: {
-			get: function(){
+			get: function(lastSet, resolve){
 				var pageConfig = this.attr("pageComponentConfig");
 
 				if(pageConfig.statusCode) {
@@ -117,7 +117,11 @@ const AppViewModel = Map.extend(
 					// pagePromise is guaranteed to be resolved here
 					// because done-ssr will not call the statusCode
 					// getter until the app is done loading
-					return pagePromise.state()==="rejected" ? 404 : 200;
+					return pagePromise.then(function(){
+						resolve(200);
+					}, function(){
+						resolve(404);
+					});
 				}else{
 					return 200;
 				}
@@ -152,7 +156,7 @@ stache.registerHelper("pageComponent", function(options){
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"<"+pageComponent.componentName + " " + pageComponent.attributes + "/>" +
+					"{{#with ../.}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +
