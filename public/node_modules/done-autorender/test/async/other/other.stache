@@ -1,0 +1,5 @@
+<ul id="things">
+	{{#each things}}
+	<li class="thing">{{.}}</li>
+	{{/each}}
+</ul>

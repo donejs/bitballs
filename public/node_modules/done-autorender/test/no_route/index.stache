@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>Hello page</title>
+
+		{{asset "css"}}
+	</head>
+	<body>
+		<can-import from="test/basics/state" as="viewModel"/>
+
+		<span id="hello">Hello {{hello}}!</span>
+
+		<script src="../../node_modules/steal/steal.js"></script>
+	</body>
+</html>

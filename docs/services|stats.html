@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: services/stats.js
+	@module services/stats
+######################################################################## -->
+
+<!--[if lt IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8 lt-ie7" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie lt-ie9" lang="en">
+<![endif]-->
+<!--[if IE 9]>
+<html class="no-js ie ie9" lang="en">
+<![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Bitballs - /services/stats </title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="brand" href="./index.html">Bitballs</a>
+			</div>
+
+			<div class="pull-right">
+				<div class="bitovi-menu">
+					<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+					<ul class="dropdown-menu">
+						<li><a href="http://bitovi.com">Bitovi.com</a></li>
+						<li><a href="http://bitovi.com/blog/">Blog</a></li>
+						<li><a href="http://bitovi.com/design/">Design</a></li>
+						<li><a href="http://bitovi.com/development/">Development</a></li>
+						<li><a href="http://bitovi.com/training/">Training</a></li>
+						<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+						<li><a href="http://bitovi.com/people/">People</a></li>
+						<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		
+			
+			<li class="search-container active">
+			<a class="sidebar-title" href="index.html" data-search="Bitballs">
+				Bitballs
+			</a>
+			
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|app.html" data-search="AppViewModel">
+						AppViewModel
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Client Models</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|game.html" data-search="Game">
+						Game
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|player.html" data-search="Player">
+						Player
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|session.html" data-search="Session">
+						Session
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|stat.html" data-search="Stat">
+						Stat
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|team.html" data-search="Team">
+						Team
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|tournament.html" data-search="Tournament">
+						Tournament
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|models|user.html" data-search="User">
+						User
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Components</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|game|details.html" data-search="&lt;game-details&gt;">
+						&lt;game-details&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|navigation.html" data-search="&lt;bitballs-navigation&gt;">
+						&lt;bitballs-navigation&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|player|edit.html" data-search="&lt;player-edit&gt;">
+						&lt;player-edit&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|player|list.html" data-search="&lt;player-list&gt;">
+						&lt;player-list&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|tournament|details.html" data-search="&lt;tournament-details&gt;">
+						&lt;tournament-details&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|tournament|list.html" data-search="&lt;tournament-list&gt;">
+						&lt;tournament-list&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|user|details.html" data-search="&lt;user-details&gt;">
+						&lt;user-details&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|user|list.html" data-search="&lt;user-list&gt;">
+						&lt;user-list&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="bitballs|components|users.html" data-search="&lt;users-admin&gt;">
+						&lt;users-admin&gt;
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Service Models</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|game.html" data-search="Game">
+						Game
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|player.html" data-search="Player">
+						Player
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|stat.html" data-search="Stat">
+						Stat
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|team.html" data-search="Team">
+						Team
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|tournament.html" data-search="Tournament">
+						Tournament
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="models|user.html" data-search="User">
+						User
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Services</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|games.html" data-search="/services/games">
+						/services/games
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|players.html" data-search="/services/players">
+						/services/players
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|session.html" data-search="/services/session">
+						/services/session
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container active ">
+					<a class="module" href="services|stats.html" data-search="/services/stats">
+						/services/stats
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|teams.html" data-search="/services/teams">
+						/services/teams
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|tournaments.html" data-search="/services/tournaments">
+						/services/tournaments
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="module" href="services|users.html" data-search="/services/users">
+						/services/users
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+	</ul>
+
+		</li>
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>/services/stats</h1>
+	<ul class="tags">
+		<li>module</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+		<span class="module">services/stats</span>
+	
+	
+	
+	<h2><code>{function()}</code></h2>
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+		<li><a href="https://github.com/donejs/bitballs/tree/master/services/stats.js">source</a></li>
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+
+		
+			
+				<section class="signature">
+					<h2 id="sig_GET_services_stats">GET /services/stats
+</h2>
+<div class="signature-wrapper">
+<p>Gets stats from the database.</p>
+<pre><code>GET /services/stats?
+    where[gameId]=5&amp;
+    withRelated[]=player
+    sortBy=time
+</code></pre>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>where
+				<code>{Object}</code><span class="pull-right optional">Optional</span></h4>
+			<div class="description">
+				<p>Clause used to filter which stats are returned.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+		<li class="parameter">
+			<h4>withRelated
+				<code>{Array}</code><span class="pull-right optional">Optional</span></h4>
+			<div class="description">
+				<p>Clause used to add related data.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+		<li class="parameter">
+			<h4>sortBy
+				<code>{String}</code><span class="pull-right optional">Optional</span></h4>
+			<div class="description">
+				<p>Clause used to sort the returned stats.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+	<h3>Returns</h3>
+	<div class="returns">
+		<h4><code>{JSON}</code></h4>
+		<div class="description">
+			<p>An object that contains the stats:</p>
+<pre><code>{data: [{
+  id: Int,
+  gameId: Int,     // Related game
+  playerId: Int,   // Related player
+  type: String,    // &quot;1P&quot;, &quot;1PA&quot;, etc
+  time: Int,       // time of stat in seconds
+  value: Int,      // Not currently used, but available.
+}, ...]}
+</code></pre>
+
+		</div>
+		
+		
+	</div>
+	
+
+
+
+
+
+</div>
+
+				</section>
+			
+				<section class="signature">
+					<h2 id="sig_POST_services_stats">POST /services/stats
+</h2>
+<div class="signature-wrapper">
+<p>Creates a stat in the database.  Only admins are allowed to create stats.</p>
+<pre><code>POST /services/stats
+     {
+       &quot;gameId&quot;: 6,
+       &quot;playerId&quot;: 15,
+       &quot;type&quot;: &quot;1P&quot;,
+       &quot;time&quot;: 60
+     }
+</code></pre>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>JSONBody
+				<code>{JSON}</code></h4>
+			<div class="description">
+				<p>The raw JSON properties of a stat object.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+	<h3>Returns</h3>
+	<div class="returns">
+		<h4><code>{JSON}</code></h4>
+		<div class="description">
+			<p>Returns JSON with all the properties of the newly created object, including its id.</p>
+<pre><code>{
+  &quot;id&quot;: 9
+  &quot;gameId&quot;: 6,
+  &quot;playerId&quot;: 15,
+  &quot;type&quot;: &quot;1P&quot;,
+  &quot;time&quot;: 60
+}
+</code></pre>
+
+		</div>
+		
+		
+	</div>
+	
+
+
+
+
+
+</div>
+
+				</section>
+			
+				<section class="signature">
+					<h2 id="sig_GET_services_stats__id">GET /services/stats/:id
+</h2>
+<div class="signature-wrapper">
+<p>Gets a stat by id from the database.</p>
+<pre><code>GET /services/stats/5?
+    withRelated[]=player
+</code></pre>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>withRelated
+				<code>{Array}</code><span class="pull-right optional">Optional</span></h4>
+			<div class="description">
+				<p>Clause used to add related data.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+	<h3>Returns</h3>
+	<div class="returns">
+		<h4><code>{JSON}</code></h4>
+		<div class="description">
+			<p>An object that contains the stats:</p>
+<pre><code>{
+  id: Int,
+  gameId: Int,     // Related game
+  playerId: Int,   // Related player
+  type: String,    // &quot;1P&quot;, &quot;1PA&quot;, etc
+  time: Int,       // time of stat in seconds
+  value: Int,      // Not currently used, but available.
+}
+</code></pre>
+
+		</div>
+		
+		
+	</div>
+	
+
+
+
+
+
+</div>
+
+				</section>
+			
+				<section class="signature">
+					<h2 id="sig_PUT_services_stats__id">PUT /services/stats/:id
+</h2>
+<div class="signature-wrapper">
+<p>Updates a stat in the database.  Only admins are allowed to update stats.</p>
+<pre><code>PUT /services/stats/9
+    {
+      &quot;gameId&quot;: 6,
+      &quot;playerId&quot;: 15,
+      &quot;type&quot;: &quot;1P&quot;,
+      &quot;time&quot;: 120
+    }
+</code></pre>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>JSONBody
+				<code>{JSON}</code></h4>
+			<div class="description">
+				<p>The updated properties of the stat object.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+	<h3>Returns</h3>
+	<div class="returns">
+		<h4><code>{JSON}</code></h4>
+		<div class="description">
+			<p>Returns JSON with all the properties of the updated object, including its id.</p>
+<pre><code>{
+  &quot;id&quot;: 9
+  &quot;gameId&quot;: 6,
+  &quot;playerId&quot;: 15,
+  &quot;type&quot;: &quot;1P&quot;,
+  &quot;time&quot;: 60
+}
+</code></pre>
+
+		</div>
+		
+		
+	</div>
+	
+
+
+
+
+
+</div>
+
+				</section>
+			
+				<section class="signature">
+					<h2 id="sig_DELETE_services_stats__id">DELETE /services/stats/:id
+</h2>
+<div class="signature-wrapper">
+<p>Deletes a stat in the database.  Only admins are allowed to delete stats.</p>
+<pre><code>DELETE /services/stats/9
+</code></pre>
+
+
+
+	<h3>Returns</h3>
+	<div class="returns">
+		<h4><code>{JSON}</code></h4>
+		<div class="description">
+			<p>Returns an empty JSON object.</p>
+<pre><code> {}
+</code></pre>
+
+		</div>
+		
+		
+	</div>
+	
+
+
+
+
+
+</div>
+
+				</section>
+			
+		
+		
+		
+		
+
+		
+		
+
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+	
+	<footer>
+		<nav class="container">
+			<a class="brand javascriptmvc" href="index.html"></a>
+		</nav>
+	</footer>
+	
+	
+	<script type="text/javascript">
+		var docObject = {"name":"services/stats","type":"module","parent":"bitballs.services","src":"services/stats.js","line":0,"codeLine":96,"description":"","title":"/services/stats","types":[{"type":"function","returns":{"types":[{"type":"undefined"}]},"params":[]}],"signatures":[{"code":"GET /services/stats","description":"Gets stats from the database.\n\n    GET /services/stats?\n        where[gameId]=5&\n        withRelated[]=player\n        sortBy=time","params":[{"types":[{"type":"Object","options":[]}],"optional":true,"name":"where","description":"Clause used to filter which stats are returned."},{"types":[{"type":"Array","options":[]}],"optional":true,"name":"withRelated","description":"Clause used to add related data."},{"types":[{"type":"String"}],"optional":true,"name":"sortBy","description":"Clause used to sort the returned stats."}],"returns":{"types":[{"type":"JSON"}],"description":"An object that contains the stats:\n\n    {data: [{\n      id: Int,\n      gameId: Int,     // Related game\n      playerId: Int,   // Related player\n      type: String,    // \"1P\", \"1PA\", etc\n      time: Int,       // time of stat in seconds\n      value: Int,      // Not currently used, but available.\n    }, ...]}"}},{"code":"POST /services/stats","description":"Creates a stat in the database.  Only admins are allowed to create stats.\n\n    POST /services/stats\n         {\n           \"gameId\": 6,\n           \"playerId\": 15,\n           \"type\": \"1P\",\n           \"time\": 60\n         }","params":[{"types":[{"type":"JSON"}],"name":"JSONBody","description":"The raw JSON properties of a stat object."}],"returns":{"types":[{"type":"JSON"}],"description":"Returns JSON with all the properties of the newly created object, including its id.\n\n    {\n      \"id\": 9\n      \"gameId\": 6,\n      \"playerId\": 15,\n      \"type\": \"1P\",\n      \"time\": 60\n    }"}},{"code":"GET /services/stats/:id","description":"Gets a stat by id from the database.\n\n    GET /services/stats/5?\n        withRelated[]=player","params":[{"types":[{"type":"Array","options":[]}],"optional":true,"name":"withRelated","description":"Clause used to add related data."}],"returns":{"types":[{"type":"JSON"}],"description":"An object that contains the stats:\n\n    {\n      id: Int,\n      gameId: Int,     // Related game\n      playerId: Int,   // Related player\n      type: String,    // \"1P\", \"1PA\", etc\n      time: Int,       // time of stat in seconds\n      value: Int,      // Not currently used, but available.\n    }"}},{"code":"PUT /services/stats/:id","description":"Updates a stat in the database.  Only admins are allowed to update stats.\n\n    PUT /services/stats/9\n        {\n          \"gameId\": 6,\n          \"playerId\": 15,\n          \"type\": \"1P\",\n          \"time\": 120\n        }","params":[{"types":[{"type":"JSON"}],"name":"JSONBody","description":"The updated properties of the stat object."}],"returns":{"types":[{"type":"JSON"}],"description":"Returns JSON with all the properties of the updated object, including its id.\n\n    {\n      \"id\": 9\n      \"gameId\": 6,\n      \"playerId\": 15,\n      \"type\": \"1P\",\n      \"time\": 60\n    }"}},{"code":"DELETE /services/stats/:id","description":"Deletes a stat in the database.  Only admins are allowed to delete stats.\n\n    DELETE /services/stats/9","params":[],"returns":{"types":[{"type":"JSON"}],"description":"Returns an empty JSON object.\n\n     {}"}}],"source":"https://github.com/donejs/bitballs","templates":"/Users/akagomez/Sites/bitovi/bitballs/theme/templates","glob":{"ignore":["{node_modules,public/node_modules,migrations,public/dist}/**/*"],"pattern":"**/*.{md,js}","cwd":"/Users/akagomez/Sites/bitovi/bitballs"},"dest":"/Users/akagomez/Sites/bitovi/bitballs/docs","debug":true,"generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+	
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type='text/javascript' 
+				data-main="static"
+				data-config="./static/config.js"
+				src="./static/steal.production.js"
+	    		bundles-path="bundles"></script>
+	
+</body>
+
+</html>

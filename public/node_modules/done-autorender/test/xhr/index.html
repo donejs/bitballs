@@ -1,0 +1,20 @@
+<html>
+<head></head>
+<body>
+	<script>
+		var __oldOpen = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function(m, p){
+			if(p !== "foo://bar") {
+				return __oldOpen.apply(this, arguments);
+			}
+		};
+
+		XHR_CACHE = [
+			{ request: { url: "foo://bar" },
+				response: { responseText: '[{"name": "foo"},{"name":"bar"}]',
+					headers: "application/json" } }
+		];
+	</script>
+	<script src="../../node_modules/steal/steal.js" main="test/xhr/index.stache!done-autorender"></script>
+</body>
+</html>

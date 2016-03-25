@@ -1,0 +1,7 @@
+<div id="home">
+	Home page
+
+	{{#if showThing}}
+		<div id="thing">This is a thing</div>
+	{{/if}}
+</div>

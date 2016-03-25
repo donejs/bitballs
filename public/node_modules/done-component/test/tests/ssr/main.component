@@ -1,0 +1,11 @@
+<can-component tag="main-thing">
+	<style>
+		main-thing {
+			background: blue;
+			display: block;
+		}
+	</style>
+	<template>
+		<h1>Hello world</h1>
+	</template>
+</can-component>

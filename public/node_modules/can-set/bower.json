@@ -1,0 +1,20 @@
+{
+  "name": "can-set",
+  "description": "Set logic for CanJS",
+  "main": [
+    "dist/global/can-set.js"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "CanJS",
+    "set"
+  ],
+  "authors": [
+    "Bitovi"
+  ],
+  "license": "MIT"
+}

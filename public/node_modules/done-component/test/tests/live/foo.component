@@ -1,0 +1,11 @@
+<can-component tag="foo-bar">
+<style>
+#app {
+color: blue;
+height: 10;
+}
+</style>
+<template>
+Hello world
+</template>
+</can-component>

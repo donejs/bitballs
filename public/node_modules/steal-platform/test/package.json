@@ -1,0 +1,21 @@
+{
+  "name": "platform-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "steal": "^0.10.5",
+    "steal-cordova": "0.0.5",
+    "steal-platform": "0.0.2",
+    "steal-tools": "^0.10.7"
+  },
+  "system": {
+    "npmIgnore": [ "devDependencies" ],
+    "npmDependencies": [ "steal-platform" ]
+  }
+}

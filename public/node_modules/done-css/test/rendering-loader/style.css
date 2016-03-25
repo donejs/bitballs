@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'foo';
+  src: url('../fonts/foo.eot');
+  src: url('../fonts/foo.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/foo.eot.woff2') format('woff2'),
+       url('../fonts/foo.woff') format('woff'),
+       url('../fonts/foo.ttf') format('truetype'),
+       url('../fonts/foo.svg#bar') format('svg');
+}
+
+body {
+	background: blue;
+	font-family: foo;
+}

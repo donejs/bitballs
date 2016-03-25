@@ -1,0 +1,16 @@
+{
+  "name": "basics",
+  "version": "0.0.1",
+  "main": "main.js",
+  "dependencies": {
+    "can": "^2.3.0-pre.1",
+    "done-autorender": "^0.3.1",
+	"can-ssr": "^2.2.0",
+	"done-css": "^1.1.6"
+  },
+  "system": {
+    "paths": {
+      "component": "../../../component.js"
+    }
+  }
+}

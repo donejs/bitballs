@@ -1,0 +1,43 @@
+<!doctype html>
+<meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+<script src="../../node_modules/steal/steal.js"
+	bundles-path="test/basics/dist/bundles"
+	main="test/basics/basics"
+	load-bundles
+	env="browser-production"></script>
+<script>
+	(function(global){
+		global.process = {};
+
+		// Fake being in Node
+		var toString = Object.prototype.toString;
+		Object.prototype.toString = function(){
+			if(this === global.process) {
+				return "[object process]";
+			}
+			return toString.apply(this, arguments);
+		};
+
+		System._nodeRequire = function(name){
+			if(name === "path") {
+				return {
+					relative: function(a, b){
+						var p = b.substr(a.length);
+						// Invert the slashes to fake being in Windows
+						return p.replace(/\//g, "\\");
+					}
+				};
+			}
+		};
+
+		System.set("asset-register", System.newModule({
+			"default": function(name, type, callback){
+				var link = callback();
+				document.head.appendChild(link);
+			}
+		}));
+
+		System.renderingLoader = System.clone();
+	})(window);
+</script>
+<div id="app"></div>

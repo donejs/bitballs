@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: public/components/player/edit/edit.js
+	@module bitballs/components/player/edit
+######################################################################## -->
+
+<!--[if lt IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8 lt-ie7" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie lt-ie9" lang="en">
+<![endif]-->
+<!--[if IE 9]>
+<html class="no-js ie ie9" lang="en">
+<![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Bitballs - &lt;player-edit&gt; </title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="brand" href="./index.html">Bitballs</a>
+			</div>
+
+			<div class="pull-right">
+				<div class="bitovi-menu">
+					<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+					<ul class="dropdown-menu">
+						<li><a href="http://bitovi.com">Bitovi.com</a></li>
+						<li><a href="http://bitovi.com/blog/">Blog</a></li>
+						<li><a href="http://bitovi.com/design/">Design</a></li>
+						<li><a href="http://bitovi.com/development/">Development</a></li>
+						<li><a href="http://bitovi.com/training/">Training</a></li>
+						<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+						<li><a href="http://bitovi.com/people/">People</a></li>
+						<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="index.html" data-search="Bitballs">
+				Bitballs
+			</a>
+			
+		</li>
+		
+		
+			
+			<li class="search-container active">
+			<a class="sidebar-title" href="bitballs|components|player|edit.html" data-search="&lt;player-edit&gt;">
+				&lt;player-edit&gt;
+			</a>
+			
+	<ul>
+		
+			
+				
+					<li class="heading search-container">
+						<span>prototype</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="function" href="bitballs|components|player|edit.prototype.cancel.html" data-search="bitballs/components/player/edit.prototype.cancel">
+						cancel
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="function" href="bitballs|components|player|edit.prototype.savePlayer.html" data-search="bitballs/components/player/edit.prototype.savePlayer">
+						savePlayer
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>properties</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="property" href="bitballs|components|player|edit.isAdmin.html" data-search="isAdmin">
+						isAdmin
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="property" href="bitballs|components|player|edit.player.html" data-search="player">
+						player
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+	</ul>
+
+		</li>
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>&lt;player-edit&gt;</h1>
+	<ul class="tags">
+		<li>module</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+		<span class="module">bitballs/components/player/edit</span>
+	
+	
+	
+	<h2><code>{Module}</code></h2>
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+		<li><a href="https://github.com/donejs/bitballs/tree/master/public/components/player/edit/edit.js">source</a></li>
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+		<section class="description">
+			<p>Provides an interface for editing the values of a <a href="bitballs|models|player.html">Player</a> model.</p>
+
+		</section>
+		
+
+		
+			
+				<section class="signature">
+					<h2 id="sig__lt_player_edit_is_admin___gt_">&lt;player-edit {is-admin} /&gt;
+</h2>
+<div class="signature-wrapper">
+<p>Creates a form with inputs for each property in a <a href="bitballs|models|player.html">Player</a> model.</p>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>is-admin
+				<code>{Boolean}</code></h4>
+			<div class="description">
+				<p>Configures whether or not admin specific
+features are enabled.</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+
+
+
+
+</div>
+
+				</section>
+			
+		
+		
+		
+		
+
+		
+		<section class="comment">
+			<p>To create a <code>&lt;player-edit&gt;</code> element pass a boolean like <a href="bitballs|app.prototype.isAdmin.html">bitballs/app.prototype.isAdmin</a>:</p>
+<pre><code>&lt;player-edit
+    {is-admin}=&quot;app.isAdmin&quot; /&gt;
+</code></pre>
+<h2>Example</h2>
+<div class='demo_wrapper' data-demo-src='public/components/player/edit/edit.html'></div>
+
+		</section>
+		
+		
+
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+	
+	<footer>
+		<nav class="container">
+			<a class="brand javascriptmvc" href="index.html"></a>
+		</nav>
+	</footer>
+	
+	
+	<script type="text/javascript">
+		var docObject = {"name":"bitballs/components/player/edit","type":"module","parent":"bitballs.components","src":"public/components/player/edit/edit.js","line":0,"codeLine":30,"description":"Provides an interface for editing the values of a [bitballs/models/player] model.","title":"<player-edit>","types":[{"type":"Module"}],"signatures":[{"code":"<player-edit {is-admin} />","description":"Creates a form with inputs for each property in a [bitballs/models/player] model.","params":[{"types":[{"type":"Boolean"}],"name":"is-admin","description":"Configures whether or not admin specific\nfeatures are enabled."}]}],"comment":" ","source":"https://github.com/donejs/bitballs","templates":"/Users/akagomez/Sites/bitovi/bitballs/theme/templates","glob":{"ignore":["{node_modules,public/node_modules,migrations,public/dist}/**/*"],"pattern":"**/*.{md,js}","cwd":"/Users/akagomez/Sites/bitovi/bitballs"},"dest":"/Users/akagomez/Sites/bitovi/bitballs/docs","debug":true,"generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+	
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type='text/javascript' 
+				data-main="static"
+				data-config="./static/config.js"
+				src="./static/steal.production.js"
+	    		bundles-path="bundles"></script>
+	
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>test page</title>
+
+		{{asset "css"}}
+	</head>
+	<body>
+		<can-import from="routes"/>
+		<can-import from="appstate" as="viewModel" />
+		<can-import from="main.component!"/>
+
+		<main-thing></main-thing>
+	</body>
+</html>

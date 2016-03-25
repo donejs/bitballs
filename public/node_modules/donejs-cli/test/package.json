@@ -1,0 +1,16 @@
+{
+  "name": "donejs",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm run jshint && npm run mocha",
+    "verify": "echo \"Script ran $1 $2\""
+  },
+  "system": {
+    "directories": {
+      "lib": ""
+    }
+  }
+}
