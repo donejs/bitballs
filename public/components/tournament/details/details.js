@@ -414,15 +414,19 @@ exports.ViewModel = CanMap.extend(
 	 *
 	 * @param {Event} [ev] A DOM Level 2 event that [`preventDefault`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
 	 * will be called on.
+	 *
+	 * @return Promise
 	 **/
 	createGame: function(ev) {
 
-		ev.preventDefault();
+		if (ev) {
+			ev.preventDefault();
+		}
 
 		var self = this;
 		var game = this.attr("game");
-
-		game.attr({
+		
+		return game.attr({
 			round: this.attr('selectedRound'),
 			court: this.attr('selectedCourt'),
 			tournamentId: this.attr('tournamentId')

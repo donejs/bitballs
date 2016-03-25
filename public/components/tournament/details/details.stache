@@ -3,7 +3,7 @@
 <p>{{tournament.prettyDate}}</p>
 
 <h3>Games</h3>
-<table  class="table">
+<table class="games-table table">
 <thead>
 	<tr>
 		<th>Round</th>
@@ -14,8 +14,7 @@
 	</tr>
 </thead>
 <tbody>
-{{#games.getRoundsWithGames}}
-
+{{#each games.getRoundsWithGames}}
 	<tr>
 		<td>{{.}}</td>
 		{{#each Game.courtNames}}
@@ -37,7 +36,7 @@
 	</tr>
 {{else}}
 	<tr><td class="text-center lead" colspan="5">No Games</td></tr>
-{{/games.getRoundsWithGames}}
+{{/each}}
 </tbody>
 </table>
 
