@@ -176,12 +176,10 @@ exports.ViewModel = CanMap.extend(
 	 * destroys the user and when successful:
 	 * 	- Logs the user out, destroying the current session
 	 * 	- Changes the page route from "account" to "register"
-	 *
-	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
 	 */
-	deleteUser: function(confirmMessage) {
+	deleteUser: function() {
 		var self = this;
-		if (confirm(confirmMessage)) {
+		if (confirm('Are you sure you want to delete your account?')) {
 			this.attr("user").destroy(function() {
 				self.attr("session").destroy();
 				self.attr("session", null);
