@@ -113,7 +113,6 @@ const AppViewModel = Map.extend(
 				}
 
 				var pagePromise = this.attr('pagePromise');
-				console.log("getting page promise", typeof pagePromise);
 				if(pagePromise){
 					// pagePromise is guaranteed to be resolved here
 					// because done-ssr will not call the statusCode
