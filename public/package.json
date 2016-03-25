@@ -28,7 +28,7 @@
     "moment": "^2.10.6",
     "steal": "^0.15.0",
     "steal-qunit": "^0.1.1",
-    "steal-tools": "^0.14.0-pre.3",
+    "steal-tools": "^0.15.0",
     "steal-platform": "0.0.4",
     "done-ssr-middleware": "^0.1.0",
     "yeoman-environment": "^1.2.7"
