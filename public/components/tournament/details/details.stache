@@ -67,14 +67,14 @@
 	    <label for="game-home">Home team</label>
 	    <select {($value)}="game.homeTeamId" class="form-control" id="game-home">
 	    	<option value=''/>
-	    	{{#each ~availableTeamFor("home",game.round)}}
+	    	{{#each ~availableTeamFor("home", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
 	    	{{/each}}
 	    </select>
 		<label for="game-away">Away team</label>
 	    <select {($value)}="game.awayTeamId" class="form-control" id="game-away">
 	    	<option value=''/>
-	    	{{#each ~availableTeamFor("away",game.round)}}
+	    	{{#each ~availableTeamFor("away", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
 	    	{{/each}}
 	    </select>
