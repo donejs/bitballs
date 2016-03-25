@@ -93,6 +93,25 @@ exports.ViewModel = CanMap.extend(
 		this.attr("savePromise", promise);
 
 		return promise;
+	},
+	/**
+	 * @function
+	 * @description Delete a tournament from the database.
+	 * @param {bitballs/models/tournament} tournament The [bitballs/models/tournament] to delete.
+	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deleteTournament(., "Are you sure?")"></span>
+	 * ```
+	 */
+	deleteTournament: function (tournament, confirmMessage) {
+		if (! window.confirm(confirmMessage)) {
+			return;
+		}
+		tournament.destroy();
 	}
 });
 

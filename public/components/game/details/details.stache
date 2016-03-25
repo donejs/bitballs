@@ -31,7 +31,8 @@
 							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
 							{{type}}
 							{{#if session.isAdmin}}
-								<span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
+								<span class="destroy-btn glyphicon glyphicon-trash"
+									($click)="deleteStat(., %event, 'Are you sure you want to delete this stat?')"></span>
 							{{/if}}
 						</span>
 					{{/each}}

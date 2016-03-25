@@ -33,7 +33,8 @@
 								<button type="button" class="btn btn-default" ($click)="editPlayer(.)">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
-								<button type="button" class="btn btn-danger" ($click)="destroy()"
+								<button type="button" class="btn btn-danger"
+									($click)="deletePlayer(., 'Are you sure you want to delete this player?')"
 									{{#isDestroying}}disabled{{/isDestroying}}>
 									<span class='glyphicon glyphicon-remove'/>
 								</button>
