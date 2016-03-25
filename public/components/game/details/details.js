@@ -351,17 +351,16 @@ exports.ViewModel = CanMap.extend(
 	 * @description Delete a stat from the database.
 	 * @param {bitballs/models/stat} stat The [bitballs/models/stat] to delete.
 	 * @param {event} event The event that triggered the deletion.
-	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
 	 *
 	 * @body
 	 * 
 	 * Use in a template like:
 	 * ```
-	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event, "Are you sure?")"></span>
+	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
 	 * ```
 	 */
-	deleteStat: function (stat, event, confirmMessage) {
-		if (! window.confirm(confirmMessage)) {
+	deleteStat: function (stat, event) {
+		if (! window.confirm('Are you sure you want to delete this stat?')) {
 			return;
 		}
 		stat.destroy();

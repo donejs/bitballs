@@ -435,17 +435,16 @@ exports.ViewModel = CanMap.extend(
 	 * @function
 	 * @description Delete a game from the database.
 	 * @param {bitballs/models/game} game The [bitballs/models/game] to delete.
-	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
 	 *
 	 * @body
 	 *
 	 * Use in a template like:
 	 * ```
-	 * <span class="destroy-btn" ($click)="deleteGame(., "Are you sure?")"></span>
+	 * <span class="destroy-btn" ($click)="deleteGame(.)"></span>
 	 * ```
 	 */
-	deleteGame: function (game, confirmMessage) {
-		if (! window.confirm(confirmMessage)) {
+	deleteGame: function (game) {
+		if (! window.confirm('Are you sure you want to delete this game?')) {
 			return;
 		}
 		game.destroy();
@@ -455,17 +454,16 @@ exports.ViewModel = CanMap.extend(
 	 * @function
 	 * @description Delete a team from the database.
 	 * @param {bitballs/models/team} team The [bitballs/models/team] to delete.
-	 * @param {String} confirmMessage The message presented to the user in a `confirm()` dialog.
 	 *
 	 * @body
 	 *
 	 * Use in a template like:
 	 * ```
-	 * <span class="destroy-btn" ($click)="deleteTeam(., "Are you sure?")"></span>
+	 * <span class="destroy-btn" ($click)="deleteTeam(.)"></span>
 	 * ```
 	 */
-	deleteTeam: function (team, confirmMessage) {
-		if (! window.confirm(confirmMessage)) {
+	deleteTeam: function (team) {
+		if (! window.confirm('Are you sure you want to delete this team?')) {
 			return;
 		}
 		team.destroy();
