@@ -68,7 +68,8 @@
       "bitballs/components/user/details/",
       "bitballs/components/user/list/",
       "bitballs/components/game/details/",
-      "bitballs/components/player/list/"
+      "bitballs/components/player/list/",
+      "bitballs/components/404.component!"
     ]
   }
 }

@@ -24,6 +24,7 @@ const AppViewModel = Map.extend(
 		},
 		pageComponentConfig: {
 			get: function(){
+				var page = this.attr("page");
 				if(this.attr("gameId")) {
 					return {
 						title: "Game",
@@ -40,7 +41,7 @@ const AppViewModel = Map.extend(
 						moduleName: "tournament/details/"
 					};
 
-				} else if(this.attr("page") === "tournaments") {
+				} else if(page === "tournaments") {
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
@@ -48,7 +49,7 @@ const AppViewModel = Map.extend(
 						moduleName: "tournament/list/"
 					};
 
-				} else if(this.attr("page") === "users") {
+				} else if(page === "users") {
 					return {
 						title: "Users List",
 						componentName: "user-list",
@@ -56,7 +57,7 @@ const AppViewModel = Map.extend(
 						moduleName: "user/list/"
 					};
 
-				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
+				} else if(page === "register" || page === "account") {
 					return {
 						title: "Account",
 						componentName: "user-details",
@@ -64,7 +65,7 @@ const AppViewModel = Map.extend(
 						moduleName: "user/details/"
 					};
 
-				} else {
+				} else if(page === "players"){
 					return {
 						title: "Players",
 						componentName: "player-list",
@@ -72,12 +73,21 @@ const AppViewModel = Map.extend(
 						moduleName: "player/list/"
 					};
 
+				} else {
+					return {
+						title: "Page Not Found",
+						componentName: "four-0-four",
+						attributes: "",
+						moduleName: "404.component!",
+						statusCode: 404
+					};
 				}
 			}
 		},
 		/**
 		* @property {bitballs/models/session} bitballs/app.session session
 		* @parent bitballs/app.properties
+		* The session if one exists.
 		**/
 		session: {
 			serialize: false,
@@ -89,8 +99,19 @@ const AppViewModel = Map.extend(
 			}
 		},
 		tournamentId: {type: "number"},
+		/**
+		* @property {Number} bitballs/app.statusCode statusCode
+		* @parent bitballs/app.properties
+		* The status code used for server-side rendering.
+		**/
 		statusCode: {
 			get: function(){
+				var pageConfig = this.attr("pageComponentConfig");
+
+				if(pageConfig.statusCode) {
+					return pageConfig.statusCode;
+				}
+
 				var pagePromise = this.attr('pagePromise');
 				if(pagePromise){
 					// pagePromise is guaranteed to be resolved here
