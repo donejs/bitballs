@@ -1,30 +1,46 @@
 import QUnit from 'steal-qunit';
 import details from './details';
-import defineTournamentFixtures, { tournaments } from 'bitballs/models/fixtures/tournaments';
+import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import fixture from "can-fixture";
 import Game from 'bitballs/models/game';
+import clone from 'steal-clone';
+import Map from 'can/map/';
 
 var ViewModel = details.ViewModel;
+var vm;
 
 QUnit.module('components/tournament/details/', {
-    beforeEach: function () {
+    beforeEach: function (assert) {
+        let done = assert.async();
         localStorage.clear();
         defineTournamentFixtures();
         defineGameFixtures();
+
+        clone({
+            'bitballs/models/tournament': {
+                get() {
+                    return Promise.resolve(new Map({
+                        name: 'Test Name'
+                    }));
+                }
+            }
+        })
+        .import('./details')
+        .then(({ ViewModel }) => {
+            vm = new ViewModel({
+                tournamentId: 2
+            });
+            done();
+        });
     }
 });
 
 QUnit.test('should load a tournament', (assert) => {
     let done = assert.async();
-    let vm = new ViewModel({
-        tournamentId: 2
-    });
-
     vm.bind('tournament', function (ev, newVal) {
-        assert.equal(newVal.attr('name'), tournaments.data[0].name, 'with the correct name' );
-        assert.equal(newVal.attr('year'), tournaments.data[0].date.getYear() + 1900, 'with the correct year' );
+        assert.equal(newVal.attr('name'), 'Test Name', 'with the correct name' );
         done();
     });
 });
@@ -70,3 +86,4 @@ QUnit.test('The selected court defaults to the first available court', function 
             'The second court is selected');
     });
 });
+
