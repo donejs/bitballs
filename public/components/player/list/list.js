@@ -84,6 +84,25 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 */
 	removeEdit: function(){
 		this.removeAttr("editingPlayer");
+	},
+
+	/**
+	 * @function
+	 * @description Delete a player from the database.
+	 * @param {bitballs/models/player} player The [bitballs/models/player] to delete.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deletePlayer(.)"></span>
+	 * ```
+	 */
+	deletePlayer: function (player) {
+		if (! window.confirm('Are you sure you want to delete this player?')) {
+			return;
+		}
+		player.destroy();
 	}
 });
 

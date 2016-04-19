@@ -335,8 +335,13 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	gotoTimeMinus5: function(time, event) {
-		this.attr("youtubePlayer").seekTo(time - 5, true);
-		this.attr("youtubePlayer").playVideo();
+		var player = this.attr("youtubePlayer");
+		if (player.seekTo) {
+			player.seekTo(time - 5, true);
+		}
+		if (player.playVideo) {
+			player.playVideo();
+		}
 		if(event) {
 			event.stopPropagation();
 		}
@@ -344,8 +349,8 @@ exports.ViewModel = CanMap.extend(
 	/**
 	 * @function 
 	 * @description Delete a stat from the database.
-	 * @param  {bitballs/models/stat} stat  The stat to delete.
-	 * @param  {event} event The event that triggered the deletion.
+	 * @param {bitballs/models/stat} stat The [bitballs/models/stat] to delete.
+	 * @param {event} event The event that triggered the deletion.
 	 *
 	 * @body
 	 * 
@@ -355,6 +360,9 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	deleteStat: function (stat, event) {
+		if (! window.confirm('Are you sure you want to delete this stat?')) {
+			return;
+		}
 		stat.destroy();
 		if(event) {
 			event.stopPropagation();
@@ -551,9 +559,12 @@ exports.Component = Component.extend({
 		 * @description  On window resize, update the position of the cursor in the stats container.
 		 */
 		"{window} resize": function(){
-			var player = this.viewModel.attr("youtubePlayer");
-			var currentTime = player.getCurrentTime();
-			this.updatePosition(currentTime);
+			var player = this.viewModel.attr("youtubePlayer"),
+				currentTime;
+			if (player.getCurrentTime) {
+				currentTime = player.getCurrentTime();
+				this.updatePosition(currentTime);
+			}
 		},
 		/**
 		 * @function

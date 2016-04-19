@@ -22,11 +22,11 @@
 			<td>
 				{{#games.getGameForRoundAndCourt ../. .}}
 					<a href="{{routeUrl gameId=id}}">
-						{{#teamById homeTeamId}}{{color}}{{/teamById}} v {{#teamById awayTeamId}}{{color}}{{/teamById}}
+						{{#../teams.getById(homeTeamId)}}{{color}}{{/teams.getById}} v {{#../teams.getById(awayTeamId)}}{{color}}{{/teams.getById}}
 					</a>
 					{{#if session.isAdmin}}
 						<button type="button" class="btn btn-danger btn-xs"
-							($click)="destroy()"
+							($click)="deleteGame(.)"
 							{{#isDestroying}}disabled{{/isDestroying}}>
 								<span class='glyphicon glyphicon-remove'/>
 						</button>
@@ -67,14 +67,14 @@
 	    <label for="game-home">Home team</label>
 	    <select {($value)}="game.homeTeamId" class="form-control" id="game-home">
 	    	<option value=''/>
-	    	{{#each ~availableTeamFor("home",game.round)}}
+	    	{{#each ~availableTeamFor("home", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
 	    	{{/each}}
 	    </select>
 		<label for="game-away">Away team</label>
 	    <select {($value)}="game.awayTeamId" class="form-control" id="game-away">
 	    	<option value=''/>
-	    	{{#each ~availableTeamFor("away",game.round)}}
+	    	{{#each ~availableTeamFor("away", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
 	    	{{/each}}
 	    </select>
@@ -111,14 +111,14 @@
 	<tr>
 		<td>{{name}}</td>
 		<td>{{color}}</td>
-		<td>{{#playerById player1Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player2Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player3Id}}{{name}}{{/playerById}}</td>
-		<td>{{#playerById player4Id}}{{name}}{{/playerById}}</td>
+		<td>{{#../players.getById(player1Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player2Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player3Id)}}{{name}}{{/}}</td>
+		<td>{{#../players.getById(player4Id)}}{{name}}{{/}}</td>
 		{{#if isAdmin}}
 			<td>
 				<button type="button" class="btn btn-danger"
-					($click)="destroy()"
+					($click)="deleteTeam(.)"
 					{{#isDestroying}}disabled{{/isDestroying}}>
 						<span class='glyphicon glyphicon-remove'/>
 				</button>
@@ -195,6 +195,11 @@
 	</div>
 
 	<button type="submit" class="btn btn-default" >Create</button>
+	{{#if teamSavePromise.isRejected}}
+	{{#each teamSavePromise.reason.responseJSON}}
+		<p class="text-danger">{{.}}</p>
+	{{/each}}
+	{{/if}}
 </form>
 {{/if}}
 {{else}}

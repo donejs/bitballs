@@ -24,11 +24,12 @@ const AppViewModel = Map.extend(
 		},
 		pageComponentConfig: {
 			get: function(){
+				var page = this.attr("page");
 				if(this.attr("gameId")) {
 					return {
 						title: "Game",
 						componentName: "game-details",
-						attributes: "{(game-id)}='../gameId'  {(session)}='../session' {(game-promise)}='../pagePromise'",
+						attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
 						moduleName: "game/details/"
 					};
 
@@ -36,48 +37,57 @@ const AppViewModel = Map.extend(
 					return {
 						title: "Tournament",
 						componentName: "tournament-details",
-						attributes: "{tournament-id}='../tournamentId' {is-admin}='../isAdmin' {(tournament-promise)}='../pagePromise'",
+						attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
 						moduleName: "tournament/details/"
 					};
 
-				} else if(this.attr("page") === "tournaments") {
+				} else if(page === "tournaments") {
 					return {
 						title: "Tournaments",
 						componentName: "tournament-list",
-						attributes: "{is-admin}='../isAdmin'",
+						attributes: "{is-admin}='./isAdmin'",
 						moduleName: "tournament/list/"
 					};
 
-				} else if(this.attr("page") === "users") {
+				} else if(page === "users") {
 					return {
 						title: "Users List",
 						componentName: "user-list",
-						attributes: "{(session)}='../session'",
+						attributes: "{session}='./session'",
 						moduleName: "user/list/"
 					};
 
-				} else if(this.attr("page") === "register" || this.attr("page") === "account") {
+				} else if(page === "register" || page === "account") {
 					return {
 						title: "Account",
 						componentName: "user-details",
-						attributes: "{(session)}='../session'",
+						attributes: "{(session)}='./session'",
 						moduleName: "user/details/"
+					};
+
+				} else if(page === "players"){
+					return {
+						title: "Players",
+						componentName: "player-list",
+						attributes: "{is-admin}='./isAdmin'",
+						moduleName: "player/list/"
 					};
 
 				} else {
 					return {
-						title: "Players",
-						componentName: "player-list",
-						attributes: "{is-admin}='../isAdmin'",
-						moduleName: "player/list/"
+						title: "Page Not Found",
+						componentName: "four-0-four",
+						attributes: "",
+						moduleName: "404.component!",
+						statusCode: 404
 					};
-
 				}
 			}
 		},
 		/**
 		* @property {bitballs/models/session} bitballs/app.session session
 		* @parent bitballs/app.properties
+		* The session if one exists.
 		**/
 		session: {
 			serialize: false,
@@ -89,14 +99,29 @@ const AppViewModel = Map.extend(
 			}
 		},
 		tournamentId: {type: "number"},
+		/**
+		* @property {Number} bitballs/app.statusCode statusCode
+		* @parent bitballs/app.properties
+		* The status code used for server-side rendering.
+		**/
 		statusCode: {
-			get: function(){
+			get: function(lastSet, resolve){
+				var pageConfig = this.attr("pageComponentConfig");
+
+				if(pageConfig.statusCode) {
+					return pageConfig.statusCode;
+				}
+
 				var pagePromise = this.attr('pagePromise');
 				if(pagePromise){
 					// pagePromise is guaranteed to be resolved here
 					// because done-ssr will not call the statusCode
 					// getter until the app is done loading
-					return pagePromise.state()==="rejected" ? 404 : 200;
+					return pagePromise.then(function(){
+						resolve(200);
+					}, function(){
+						resolve(404);
+					});
 				}else{
 					return 200;
 				}
@@ -131,7 +156,7 @@ stache.registerHelper("pageComponent", function(options){
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"<"+pageComponent.componentName + " " + pageComponent.attributes + "/>" +
+					"{{#with ../.}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +

@@ -7,7 +7,7 @@
 		<h3><a href='{{routeUrl tournamentId=id}}'>{{year}}</a>
 			{{#if isAdmin}}
 			<button type="button" class="btn btn-danger"
-				($click)="destroy()"
+				($click)="deleteTournament(.)"
 				{{#isDestroying}}disabled{{/isDestroying}}>
 					<span class='glyphicon glyphicon-remove'/>
 			</button>

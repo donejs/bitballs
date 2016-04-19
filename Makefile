@@ -9,6 +9,7 @@ publish-docs:
 	git add -f public/node_modules/can-connect
 	git add -f public/node_modules/can-fixture
 	git add -f public/node_modules/can-set
+	git add -f public/node_modules/can-zone
 	git add -f public/node_modules/bootstrap
 	git add -f public/node_modules/done-autorender
 	git add -f public/node_modules/done-component

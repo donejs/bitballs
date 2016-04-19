@@ -179,7 +179,7 @@ exports.ViewModel = CanMap.extend(
 	 */
 	deleteUser: function() {
 		var self = this;
-		if (confirm("Are you sure you want to delete your account?")) {
+		if (confirm('Are you sure you want to delete your account?')) {
 			this.attr("user").destroy(function() {
 				self.attr("session").destroy();
 				self.attr("session", null);

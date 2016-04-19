@@ -1,6 +1,7 @@
 /**
  * @module {Module} bitballs/components/tournament/details <tournament-details>
  * @parent bitballs.components
+ * @group bitballs/components/tournament/details.properties 0 properties
  *
  * @description Provides an overview of the games, teams, rounds, and courts
  * that make up a tournament.
@@ -41,13 +42,6 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can/route/");
 require("can/view/href/");
 
-/**
- * @constructor bitballs/components/tournament/details.ViewModel ViewModel
- * @parent bitballs/components/tournament/details
- *
- * @description  A `<tournament-details>` component's viewModel.
- */
-
 exports.ViewModel = CanMap.extend(
 /** @prototype */
 {
@@ -68,13 +62,20 @@ exports.ViewModel = CanMap.extend(
 		});
 	},
 	define: {
+		/**
+		* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
+		* @parent bitballs/components/tournament/details.properties
+		*
+		* Configures whether or not admin specific features are enabled.
+		**/
 		tournamentPromise: {
 			get: function(){
 				return Tournament.get({id: this.attr("tournamentId")});
 			}
 		},
 		/**
-		* @property {Boolean}
+		* @property {Boolean} bitballs/components/tournament/details.isAdmin isAdmin
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* Configures whether or not admin specific features are enabled.
 		**/
@@ -83,12 +84,14 @@ exports.ViewModel = CanMap.extend(
 			value: false
 		},
 		/**
-		* @property {Number} tournamentId
+		* @property {Number} bitballs/components/tournament/details.tournamentId tournamentId
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The `id` used to fetch the [bitballs/models/tournament] model.
 		**/
 		/**
-		* @property {Boolean}
+		* @property {bitballs/models/tournament} bitballs/components/tournament/details.tournament tournament
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The [bitballs/models/tournament] model that the component is bound to.
 		**/
@@ -98,7 +101,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {Promise<bitballs/models/game.static.List>}
+		* @property {Promise<bitballs/models/game.static.List>} bitballs/components/tournament/details.gamesPromise gamesPromise
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A promise that fetches a [bitballs/models/game.static.List Game List] based on
 		* [bitballs/components/tournament/details.ViewModel.prototype.tournamentId tournamentId].
@@ -111,7 +115,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {bitballs/models/game.static.List}
+		* @property {bitballs/models/game.static.List} bitballs/components/tournament/details.games games
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A [bitballs/models/game.static.List Game List] instance.
 		**/
@@ -121,7 +126,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {Number}
+		* @property {Number} bitballs/components/tournament/details.gamesLength gamesLength
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The `length` of the [bitballs/components/tournament/details.ViewModel.prototype.games games]
 		* list.
@@ -132,7 +138,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {Promise<bitballs/models/team.static.List>}
+		* @property {Promise<bitballs/models/team.static.List>} bitballs/components/tournament/details.teamsPromise teamsPromise
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A promise that resolves to a [bitballs/models/team.static.List Team List] based on
 		* [bitballs/components/tournament/details.ViewModel.prototype.tournamentId tournamentId].
@@ -145,7 +152,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {bitballs/models/team.static.List}
+		* @property {bitballs/models/team.static.List} bitballs/components/tournament/details.teams teams
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A [bitballs/models/team.static.List Team List] instance.
 		**/
@@ -154,9 +162,9 @@ exports.ViewModel = CanMap.extend(
 				this.attr("teamsPromise").then(setVal);
 			}
 		},
-		// TODO: Make this a Team.List method
 		/**
-		* @property {Array}
+		* @property {Array} bitballs/components/tournament/details.availableColors availableColors
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A filtered list of colors from the [bitballs/models/team.static.colors Colors]
 		* list that aren't already associated with a [bitballs/models/team]
@@ -181,23 +189,26 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {bitballs/models/game}
+		* @property {bitballs/models/game} bitballs/components/tournament/details.game game
+		* @parent bitballs/components/tournament/details.properties
 		*
-		* A [bitballs/models/game] instance.
+		* A [bitballs/models/game] instance used to create a `Game`.
 		**/
 		game: {
 			Value: Game
 		},
 		/**
-		* @property {bitballs/models/team}
+		* @property {bitballs/models/team} bitballs/components/tournament/details.team team
+		* @parent bitballs/components/tournament/details.properties
 		*
-		* A [bitballs/models/team] instance.
+		* A [bitballs/models/team] instance used to create a `Team`.
 		**/
 		team: {
 			Value: Team
 		},
 		/**
-		* @property {Promise<bitballs/models/player.static.List>}
+		* @property {Promise<bitballs/models/player.static.List>} bitballs/components/tournament/details.playersPromise playersPromise
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A promise that resolves to a [bitballs/models/player.static.List Team List].
 		**/
@@ -207,7 +218,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {Player.List}
+		* @property {Player.List} bitballs/components/tournament/details.players players
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A [bitballs/models/player.static.List Player List] instance.
 		**/
@@ -216,29 +228,9 @@ exports.ViewModel = CanMap.extend(
 				this.attr("playersPromise").then(resolve);
 			}
 		},
-		// TODO: Make this a Player.List method
 		/**
-		* @property {Object}
-		*
-		* A map of [bitballs/models/player.prototype.id player id]'s to [bitballs/models/player] models.
-		**/
-		playerIdMap: {
-			type: "*",
-			get: function(){
-				var map = {},
-					players = this.attr("players");
-
-				if(players) {
-					players.each(function(player){
-						map[player.attr("id")] = player;
-					});
-				}
-
-				return map;
-			}
-		},
-		/**
-		* @property {String|null}
+		* @property {String|null} bitballs/components/tournament/details.userSelectedRound userSelectedRound
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The round selection made by the user.
 		**/
@@ -246,7 +238,8 @@ exports.ViewModel = CanMap.extend(
 			value: null
 		},
 		/**
-		* @property {String}
+		* @property {String} bitballs/components/tournament/details.selectedRound selectedRound
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The [bitballs/components/tournament/details.ViewModel.prototype.userSelectedRound userSelectedRound]
 		* or the first value in the list returned from [bitballs/models/game.static.List.prototype.getAvailableRounds getAvailableRounds].
@@ -262,7 +255,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {String|null}
+		* @property {String|null} bitballs/components/tournament/details.userSelectedCourt userSelectedCourt
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The court selection made by the user.
 		**/
@@ -270,7 +264,8 @@ exports.ViewModel = CanMap.extend(
 			value: null
 		},
 		/**
-		* @property {String}
+		* @property {String} bitballs/components/tournament/details.selectedCourt selectedCourt
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* The [bitballs/components/tournament/details.ViewModel.prototype.userSelectedCourt userSelectedCourt]
 		* or the first value in the list returned from [bitballs/models/game.static.List.prototype.getAvailableCourts getAvailableCourts]
@@ -287,7 +282,8 @@ exports.ViewModel = CanMap.extend(
 			}
 		},
 		/**
-		* @property {Object}
+		* @property {Object} bitballs/components/tournament/details.teamIdMap teamIdMap
+		* @parent bitballs/components/tournament/details.properties
 		*
 		* A map of [bitballs/models/team.prototype.id team id]'s to [bitballs/models/team] models.
 		**/
@@ -403,10 +399,12 @@ exports.ViewModel = CanMap.extend(
 			this.attr("team").attr("color", this.attr("availableColors")[0]);
 		}
 
-		this.attr("team").attr("tournamentId", this.attr("tournamentId"))
+		var teamSavePromise = this.attr("team").attr("tournamentId", this.attr("tournamentId"))
 			.save(function(){
 			self.attr("team", new Team());
 		});
+
+		this.attr('teamSavePromise', teamSavePromise);
 	},
 	Game: Game,
 	/**
@@ -423,7 +421,7 @@ exports.ViewModel = CanMap.extend(
 
 		var self = this;
 		var game = this.attr("game");
-		
+
 		game.attr({
 			round: this.attr('selectedRound'),
 			court: this.attr('selectedCourt'),
@@ -431,57 +429,49 @@ exports.ViewModel = CanMap.extend(
 		}).save(function(){
 			self.attr("game", new Game());
 		});
+	},
+
+	/**
+	 * @function
+	 * @description Delete a game from the database.
+	 * @param {bitballs/models/game} game The [bitballs/models/game] to delete.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deleteGame(.)"></span>
+	 * ```
+	 */
+	deleteGame: function (game) {
+		if (! window.confirm('Are you sure you want to delete this game?')) {
+			return;
+		}
+		game.destroy();
+	},
+
+	/**
+	 * @function
+	 * @description Delete a team from the database.
+	 * @param {bitballs/models/team} team The [bitballs/models/team] to delete.
+	 *
+	 * @body
+	 *
+	 * Use in a template like:
+	 * ```
+	 * <span class="destroy-btn" ($click)="deleteTeam(.)"></span>
+	 * ```
+	 */
+	deleteTeam: function (team) {
+		if (! window.confirm('Are you sure you want to delete this team?')) {
+			return;
+		}
+		team.destroy();
 	}
 });
-
-/**
- * @property bitballs/components/tournament/details.helpers helpers
- * @parent bitballs/components/tournament/details
- * @description  A `<tournament-details>` component's stache helpers.
- */
 
 exports.Component = Component.extend({
 	tag: "tournament-details",
 	template: require("./details.stache!"),
-	viewModel: exports.ViewModel,
-	helpers: {
-		/**
-		 * @function bitballs/components/tournament/details.helpers.playerById playerById
-		 * @parent bitballs/components/tournament/details.helpers
-		 *
-		 * Gets a [bitballs/models/player] model from a [bitballs/models/team]
-		 * model by its `id`.
-		 *
-		 * @param {can.Compute} id A player ID.
-		 * @param {Object} options Helper options.
-		 **/
-		playerById: function(id, options){
-			var idVal = id();
-			if(idVal != null) {
-				return options.fn( this.attr("playerIdMap")[idVal] );
-			} else {
-				return;
-			}
-
-		},
-		/**
-		 * @function bitballs/components/tournament/details.helpers.teamById teamById
-		 * @parent bitballs/components/tournament/details.helpers
-		 *
-		 * Gets a [bitballs/models/team] model from a [bitballs/models/game]
-		 * model by its `id`.
-		 *
-		 * @param {can.Compute} id A team ID.
-		 * @param {Object} options Helper options.
-		 **/
-		teamById: function(id, options){
-			var idVal = id();
-			if(idVal != null) {
-				return options.fn( this.attr("teamIdMap")[idVal] );
-			} else {
-				return;
-			}
-
-		}
-	}
+	viewModel: exports.ViewModel
 });

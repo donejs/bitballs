@@ -54,7 +54,7 @@ QUnit.test("correctly sums score", function() {
     });
 });
 
-QUnit.test('A stat can be deleted by an admin', function () {
+QUnit.test('A stat can only be deleted by an admin', function () {
 
     var session = new Session({
         isAdmin: false
@@ -66,6 +66,8 @@ QUnit.test('A stat can be deleted by an admin', function () {
     });
 
     $('#qunit-fixture').html(frag);
+
+    F.confirm(true);
 
     F('.stat-point .destroy-btn')
         .size(0, 'There is no destroy button')
@@ -101,6 +103,8 @@ QUnit.test('Deleting a stat does not change playback location', function () {
 
     vm.bind('game', function(ev, game) {
         QUnit.start();
+
+        F.confirm(true);
 
         F('.stat-point .destroy-btn')
             .exists('Destroy button exists')
