@@ -8,14 +8,10 @@ var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var Player = require("./player");
-var CanMap = require("can-map");
-var CanList = require("can-list");
-require("can-map-define");
+var DefineMap = require("can-define/map/map");
+var DefineList = require("can-define/list/list");
 
-
-var Team = CanMap.extend(
-/** @static */
-{
+var Team = DefineMap.extend('Team', {
 	/**
 	 * @property {Array}
 	 * A list of available team colors.
@@ -23,110 +19,131 @@ var Team = CanMap.extend(
 	colors: ["Black","White","Red","Green","Blue","Yellow","Brown","Gray","Orange","Purple"]
 },
 {
-	define: {
-		/**
-		 * @property {Number} bitballs/models/team.properties.tournamentId tournamentId
-		 * @parent bitballs/models/team.properties
-		 *
-		 * The `id` of [bitballs/models/tournament] that the team will be
-		 * associated with.
-		 **/
-		tournamentId: {
-			type: "number"
-		},
-		/**
-		 * @property {bitballs/models/player} bitballs/models/team.properties.player1 player1
-		 * @parent bitballs/models/team.properties
-		 *
-		 * A reference to a [bitballs/models/player] model.
-		 **/
-		player1: {
-			Type: Player
-		},
-		/**
-		 * @property {bitballs/models/player} bitballs/models/team.properties.player2 player2
-		 * @parent bitballs/models/team.properties
-		 *
-		 * A reference to a [bitballs/models/player] model.
-		 **/
-		player2: {
-			Type: Player
-		},
-		/**
-		 * @property {bitballs/models/player} bitballs/models/team.properties.player3 player3
-		 * @parent bitballs/models/team.properties
-		 *
-		 * A reference to a [bitballs/models/player] model.
-		 **/
-		player3: {
-			Type: Player
-		},
-		/**
-		 * @property {bitballs/models/player} bitballs/models/team.properties.player4 player4
-		 * @parent bitballs/models/team.properties
-		 *
-		 * A reference to a [bitballs/models/player] model.
-		 **/
-		player4: {
-			Type: Player
-		},
-		/**
-		 * @property {bitballs/models/player.static.List} bitballs/models/team.properties.players players
-		 * @parent bitballs/models/team.properties
-		 *
-		 * A list made up of the [bitballs/models/player] models referenced
-		 * by properties [bitballs/models/team.properties.player1],
-		 * [bitballs/models/team.properties.player2], [bitballs/models/team.properties.player3],
-		 * and [bitballs/models/team.properties.player4].
-		 **/
-		players: {
-			get: function(){
-
-				var players = [],
-					self = this;
-
-				 ["player1","player2","player3","player4"].map(function(name){
-					if(self.attr(name)) {
-						players.push(self.attr(name));
-					}
-				});
-
-				return new Player.List(players);
-			}
-		}
-	}
 	/**
 	 * @property {Number} bitballs/models/team.properties.id id
 	 * @parent bitballs/models/team.properties
 	 *
 	 * A unique identifier.
 	 **/
+	id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.tournamentId tournamentId
+	 * @parent bitballs/models/team.properties
+	 *
+	 * The `id` of [bitballs/models/tournament] that the team will be
+	 * associated with.
+	 **/
+	tournamentId: "number",
+	/**
+	 * @property {bitballs/models/player} bitballs/models/team.properties.player1 player1
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A reference to a [bitballs/models/player] model.
+	 **/
+	player1: Player,
+	/**
+	 * @property {bitballs/models/player} bitballs/models/team.properties.player2 player2
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A reference to a [bitballs/models/player] model.
+	 **/
+	player2: Player,
+	/**
+	 * @property {bitballs/models/player} bitballs/models/team.properties.player3 player3
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A reference to a [bitballs/models/player] model.
+	 **/
+	player3: Player,
+	/**
+	 * @property {bitballs/models/player} bitballs/models/team.properties.player4 player4
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A reference to a [bitballs/models/player] model.
+	 **/
+	player4: Player,
+	/**
+	 * @property {String} bitballs/models/team.properties.name name
+	 * @parent bitballs/models/team.properties
+	 *
+	 * Name of the team 
+	 **/
+	name: 'string',
+	/**
+	 * @property {String} bitballs/models/team.properties.color color
+	 * @parent bitballs/models/team.properties
+	 *
+	 * Team color
+	 **/
+	color: 'string',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player1Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 1.
+	 **/
+	player1Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player2Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 2.
+	 **/
+	player2Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player3Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 3.
+	 **/
+	player3Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player4Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 4.
+	 **/
+	player4Id: 'number',
+	/**
+	 * @property {bitballs/models/player.static.List} bitballs/models/team.properties.players players
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A list made up of the [bitballs/models/player] models referenced
+	 * by properties [bitballs/models/team.properties.player1],
+	 * [bitballs/models/team.properties.player2], [bitballs/models/team.properties.player3],
+	 * and [bitballs/models/team.properties.player4].
+	 **/
+	get players() {
+		var players = [],
+			self = this;
+			["player1","player2","player3","player4"].map(function(name){
+			if(self[name]) {
+				players.push(self[name]);
+			}
+		});
+		return new Player.List(players);
+	}
 });
 /**
  * @constructor {can-list} bitballs/models/team.static.List List
  * @parent bitballs/models/team.static
  */
-Team.List = CanList.extend({Map: Team},
+Team.List = DefineList.extend('TeamsList', {"#": Team},
 /** @prototype **/
 {
-	define: {
-		/**
-		 * @property {Object}
-		 *
-		 * A map of team ids to [bitballs/models/team] models.
-		 **/
-		idMap: {
-			type: "*",
-			get: function(){
-				var map = {};
+	/**
+	 * @property {Object}
+	 *
+	 * A map of team ids to [bitballs/models/team] models.
+	 **/
+	get idMap() {
+		var map = {};
 
-				this.each(function(team){
-					map[team.attr("id")] = team;
-				});
+		this.each(function(team){
+			map[team.id] = team;
+		});
 
-				return map;
-			}
-		}
+		return map;
 	},
 	/**
 	 * @function
@@ -139,7 +156,7 @@ Team.List = CanList.extend({Map: Team},
 	removeById: function(id){
 		var i  = 0;
 		while(i < this.length) {
-			if(this[i].attr("id") === id) {
+			if(this[i].id === id) {
 				this.splice(i, 1);
 			} else {
 				i++;
@@ -153,7 +170,7 @@ Team.List = CanList.extend({Map: Team},
 	 * @return {bitballs/models/team|undefined} The team if it exists.
 	 */
 	getById: function(id){
-		return this.attr("idMap")[id];
+		return this.idMap[id];
 	}
 });
 
@@ -171,7 +188,10 @@ Team.algebra = new set.Algebra(
 var teamConnection = superMap({
   Map: Team,
   List: Team.List,
-  url: "/services/teams",
+  url: {
+		resource: "/services/teams",
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "team",
   algebra: Team.algebra
 });

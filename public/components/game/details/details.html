@@ -11,5 +11,5 @@ import Session from "bitballs/models/session";
 import 'can-component';
 import 'can-view-autorender';
 
-$('#demo-html').viewModel().attr("session", new Session({user: {isAdmin: true}}))
+$('#demo-html').viewModel().session = new Session({user: {isAdmin: true}});
 </script>

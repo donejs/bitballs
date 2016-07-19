@@ -8,4 +8,3 @@ stache.registerConverter("numberToString",{
     source(newVal === "" ? null : +newVal);
   }
 });
-

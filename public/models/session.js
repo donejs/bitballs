@@ -4,13 +4,14 @@
  *
  * @group bitballs/models/session.properties 0 properties
  */
+
 var connect = require("can-connect");
 var $ = require("jquery");
-var CanMap = require("can-map");
-var CanList = require("can-list");
+var DefineMap = require("can-define/map/map");
+var DefineList = require("can-define/list/list");
 var tag = require('can-connect/can/tag/');
+var User = require("./user");
 
-require("can-map-define");
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
 require( "can-connect/constructor/store/" );
@@ -19,25 +20,15 @@ require( "can-connect/data/callbacks/" );
 require( "can-connect/data/parse/" );
 require( "can-connect/data/url/" );
 
-var User = require("./user");
 
-var Session = CanMap.extend(
-/** @static **/
-{},
-/** @prototype **/
-{
-	define: {
-		/**
-		 * @property {bitballs/models/user} bitballs/models/session.properties.user user
-		 * @parent bitballs/models/session.properties
-		 *
-		 * The [bitballs/models/user] model this session represents.
-		 **/
-		user: {
-			Type: User
-		}
-	},
-
+var Session = DefineMap.extend('Session', {
+	/**
+	 * @property {bitballs/models/user} bitballs/models/session.properties.user user
+	 * @parent bitballs/models/session.properties
+	 *
+	 * The [bitballs/models/user] model this session represents.
+	 **/
+	user: User,
 	/**
 	 * @function
 	 *
@@ -47,7 +38,7 @@ var Session = CanMap.extend(
 	 * @return {Boolean}
 	 **/
 	isAdmin: function(){
-		return this.attr("user") && this.attr("user").attr("isAdmin");
+		return this.user && this.user.isAdmin;
 	}
 });
 
@@ -55,7 +46,7 @@ var Session = CanMap.extend(
  * @constructor {can-list} bitballs/models/session.static.List List
  * @parent bitballs/models/session.static
  */
-Session.List = CanList.extend({Map: Session},{});
+Session.List = DefineList.extend('SessionList', {"#": Session});
 
 var behaviors = [
 	"constructor",
@@ -67,6 +58,7 @@ var behaviors = [
 	"constructor/callbacks-once"
 ];
 
+
 var options = {
 	ajax: $.ajax,
 	Map: Session,
@@ -75,9 +67,11 @@ var options = {
 	url: {
 		getData: "/services/session",
 		createData: "/services/session",
-		destroyData: "/services/session"
+		destroyData: "/services/session",
+		contentType: "application/x-www-form-urlencoded"
 	}
 };
+
 
 var connection = connect( behaviors, options );
 

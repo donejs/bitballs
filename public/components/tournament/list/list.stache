@@ -4,7 +4,7 @@
 		<div class='info'>Loading</div>
 	{{/if}}
 	{{#each value}}
-		<h3><a href='{{routeUrl (tournamentId=id)}}'>{{year}}</a>
+		<h3><a href='{{routeUrl ( tournamentId=id )}}'>{{year}}</a>
 			{{#if isAdmin}}
 			<button type="button" class="btn btn-danger"
 				($click)="deleteTournament(.)"
@@ -28,8 +28,8 @@
 			id="tournament-date"
 			placeholder="date"
 			{($value)}="tournament.date"/>
-	</div>
-	<button type="submit" class="create-btn btn btn-default" {{#if tournament.isSaving}}disabled{{/if}}>Create</button>
+	</div> 
+	<button type="submit" class="create-btn btn btn-default" {{#if savePromise.isPending}}disabled{{/if}}>Create</button>
 	{{#if savePromise.isRejected}}
 		{{#each savePromise.reason.responseJSON}}
 			<p class="text-danger">{{.}}</p>

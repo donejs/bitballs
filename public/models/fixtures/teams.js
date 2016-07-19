@@ -13,6 +13,10 @@ export const defineFixtures = function () {
 	fixture('services/teams', function () {
 		return teams;
 	});
+
+	fixture({method: "DELETE", url: 'services/teams/{id}'}, function() {
+		return [];
+	});
 };
 
 defineFixtures();
