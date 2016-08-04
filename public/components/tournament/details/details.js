@@ -53,13 +53,21 @@ exports.ViewModel = CanMap.extend(
 	 * [bitballs/components/tournament/details.ViewModel.prototype.userSelectedRound userSelectedRound]
 	 * and [bitballs/components/tournament/details.ViewModel.prototype.gamesLength gamesLength].
 	 */
-	init: function () {
-		this.bind('userSelectedRound', function () {
+	setupBindings: function () {
+		this.setSelectedCourtToNull = function () {
 			this.attr('userSelectedCourt', null);
-		});
-		this.bind('gamesLength', function () {
+		}.bind(this);
+
+		this.setSelectedRoundToNull = function () {
 			this.attr('userSelectedRound', null);
-		});
+		}.bind(this);
+
+		this.bind('userSelectedRound', this.setSelectedCourtToNull);
+		this.bind('gamesLength', this.setSelectedRoundToNull);
+	},
+	teardownBindings: function() {
+		this.unbind('userSelectedRound', this.setSelectedCourtToNull);
+		this.unbind('gamesLength', this.setSelectedRoundToNull);
 	},
 	define: {
 		/**
@@ -473,5 +481,13 @@ exports.ViewModel = CanMap.extend(
 exports.Component = Component.extend({
 	tag: "tournament-details",
 	template: require("./details.stache!"),
-	viewModel: exports.ViewModel
+	viewModel: exports.ViewModel,
+	events: {
+		inserted: function() {
+			this.viewModel.setupBindings();
+		},
+		removed: function() {
+			this.viewModel.teardownBindings();
+		}
+  }
 });

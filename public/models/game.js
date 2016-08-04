@@ -309,4 +309,6 @@ var gameConnection = superMap({
 
 tag("game-model", gameConnection);
 
+Game.connection = gameConnection;
+
 module.exports = Game;
