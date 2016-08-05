@@ -1,5 +1,5 @@
 
-var app = require("../services/app");
+var app = require("./app");
 var Game = require("../models/game");
 var adminOnly = require( "./adminOnly" );
 
