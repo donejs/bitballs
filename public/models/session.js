@@ -13,7 +13,6 @@ require("can/map/define/");
 require("can/list/");
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
-require( "can-connect/can/" );
 require( "can-connect/constructor/store/" );
 require( "can-connect/constructor/callbacks-once/" );
 require( "can-connect/data/callbacks/" );
@@ -60,12 +59,12 @@ Session.List = can.List.extend({Map: Session},{});
 
 var behaviors = [
 	"constructor",
-	"can-map",
-	"constructor-store",
-	"data-callbacks",
-	"data-parse",
-	"data-url",
-	"constructor-callbacks-once"
+	"can/map",
+	"constructor/store",
+	"data/callbacks",
+	"data/parse",
+	"data/url",
+	"constructor/callbacks-once"
 ];
 
 var options = {

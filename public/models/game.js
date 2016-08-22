@@ -15,7 +15,6 @@ var CanMap = require("can/map/");
 var List = require("can/list/");
 var can = require("can/util/");
 
-require("can/list/sort/");
 require('can/map/define/');
 
 
