@@ -11,7 +11,7 @@
  *
  *  @param {bitballs/model/session} session The session object. If a user is
  *  currently logged in, contains data about that user.
- * 
+ *
  *
  * @body
  *
@@ -28,16 +28,15 @@
  * @demo public/components/user/details/details.html
  */
 
-var Component = require("can/component/component"),
+var Component = require("can-component"),
 	User = require("bitballs/models/user"),
 	Session = require("bitballs/models/session"),
-	CanMap = require("can/map/"),
-	route = require("can/route/");
+	CanMap = require("can-map"),
+	route = require("can-route");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
-require("can/view/href/");
+require("can-map-define");
+require("can-route");
 
 /**
  * @constructor bitballs/components/user/details.ViewModel ViewModel
@@ -53,12 +52,12 @@ exports.ViewModel = CanMap.extend(
 {
 	define: {
 		/**
-		 * @property {can.Map}
-		 * 
+		 * @property {can-map}
+		 *
 		 * Provides a user instance. If a session is active, this
 		 * syncs the user with `session.user`. Otherwise, a user instance
 		 * is created since this property is used to bind with the user details form.
-		 *    
+		 *
 		 */
 		user: {
 			Value: User,
@@ -74,7 +73,7 @@ exports.ViewModel = CanMap.extend(
 		 *
 		 * If a user is logged in, the session data, including
 		 * data about the currently logged in user.
-		 * 
+		 *
 		 * @signature `bitballs/models/session`
 		 *
 		 * 	A session instance, which includes data about the logged in user like:

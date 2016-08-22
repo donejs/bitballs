@@ -1,19 +1,18 @@
 /**
- * @module {can.Map} bitballs/models/session Session
+ * @module {can-map} bitballs/models/session Session
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/session.properties 0 properties
  */
 var connect = require("can-connect");
 var $ = require("jquery");
-var can = require("can/util/");
+var CanMap = require("can-map");
+var CanList = require("can-list");
 var tag = require('can-connect/can/tag/');
 
-require("can/map/define/");
-require("can/list/");
+require("can-map-define");
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
-require( "can-connect/can/" );
 require( "can-connect/constructor/store/" );
 require( "can-connect/constructor/callbacks-once/" );
 require( "can-connect/data/callbacks/" );
@@ -22,7 +21,7 @@ require( "can-connect/data/url/" );
 
 var User = require("./user");
 
-var Session = can.Map.extend(
+var Session = CanMap.extend(
 /** @static **/
 {},
 /** @prototype **/
@@ -53,19 +52,19 @@ var Session = can.Map.extend(
 });
 
 /**
- * @constructor {can.List} bitballs/models/session.static.List List
+ * @constructor {can-list} bitballs/models/session.static.List List
  * @parent bitballs/models/session.static
  */
-Session.List = can.List.extend({Map: Session},{});
+Session.List = CanList.extend({Map: Session},{});
 
 var behaviors = [
 	"constructor",
-	"can-map",
-	"constructor-store",
-	"data-callbacks",
-	"data-parse",
-	"data-url",
-	"constructor-callbacks-once"
+	"can/map",
+	"constructor/store",
+	"data/callbacks",
+	"data/parse",
+	"data/url",
+	"constructor/callbacks-once"
 ];
 
 var options = {

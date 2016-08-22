@@ -6,7 +6,7 @@ import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import fixture from "can-fixture";
 import Game from 'bitballs/models/game';
 import clone from 'steal-clone';
-import Map from 'can/map/';
+import CanMap from 'can-map';
 
 var ViewModel = details.ViewModel;
 var vm;
@@ -21,7 +21,7 @@ QUnit.module('components/tournament/details/', {
         clone({
             'bitballs/models/tournament': {
                 get() {
-                    return Promise.resolve(new Map({
+                    return Promise.resolve(new CanMap({
                         name: 'Test Name'
                     }));
                 }

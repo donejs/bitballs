@@ -3,9 +3,10 @@ import Session from "models/session";
 import details from "./details";
 import { games } from "models/fixtures/games";
 import F from 'funcunit';
-import stache from 'can/view/stache/';
+import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
+import canViewModel from 'can-view-model';
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
@@ -81,8 +82,8 @@ QUnit.test('A stat can only be deleted by an admin', function () {
 });
 
 
-QUnit.test('Deleting a stat does not change playback location', function () {
-
+QUnit.test('Deleting a stat does not change playback location', function (assert) {
+    var done = assert.async();
     var gotoCalled = false;
     var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
         gameId: this.vm.attr('gameId'),
@@ -93,19 +94,15 @@ QUnit.test('Deleting a stat does not change playback location', function () {
 
     $('#qunit-fixture').html(frag);
 
-    QUnit.stop();
-
-    var vm = $('game-details').viewModel();
-
-    vm.gotoTimeMinus5 = function () {
+    
+    var vm = canViewModel($('game-details'));    
+    vm.gotoTimeMinus5 =  function (){
         gotoCalled = true;
     };
 
-    vm.bind('game', function(ev, game) {
-        QUnit.start();
-
+    $(vm).bind('game', function(ev, game) {
         F.confirm(true);
-
+        done();
         F('.stat-point .destroy-btn')
             .exists('Destroy button exists')
             .click()
@@ -113,4 +110,5 @@ QUnit.test('Deleting a stat does not change playback location', function () {
                 notOk(gotoCalled, 'Seek was not called');
             });
     });
+    $(vm).trigger('game');
 });

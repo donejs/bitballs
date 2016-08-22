@@ -5,11 +5,11 @@
 </script>
 
 <script src='../../../node_modules/steal/steal.js' main="@empty" id="demo-source">
-import can from "can";
-import stache from "can/view/stache/";
+import $ from "jquery";
+import stache from "can-stache";
 import "bitballs/components/player/edit/";
 
-var template = can.view('demo-html');
+var template = stache('demo-html');
 
-can.$("#main").html(template());
+$("#main").html(template());
 </script>

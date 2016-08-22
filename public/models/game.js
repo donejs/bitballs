@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/game Game
+ * @module {can-map} bitballs/models/game Game
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/game.properties 0 properties
@@ -11,12 +11,11 @@ var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat");
 var Tournament = require("./tournament");
-var CanMap = require("can/map/");
-var List = require("can/list/");
-var can = require("can/util/");
+var CanMap = require("can-map");
+var CanList = require("can-list");
+var can = require("can-util");
 
-require("can/list/sort/");
-require('can/map/define/');
+require('can-map-define');
 
 
 var Game = CanMap.extend(
@@ -168,7 +167,7 @@ var Game = CanMap.extend(
 				var id = stat.attr("playerId");
 				var stats = playerIds[id];
 				if(!stats) {
-					stats = playerIds[id] = new can.List([]).attr("comparator",'time');
+					stats = playerIds[id] = new CanList([]).attr("comparator",'time');
 				}
 				// makes sort work
 				stats.push(stat);
@@ -180,12 +179,12 @@ var Game = CanMap.extend(
 });
 
 /**
- * @constructor {can.List} bitballs/models/game.static.List List
+ * @constructor {can-list} bitballs/models/game.static.List List
  * @parent bitballs/models/game.static
  *
  * @group bitballs/models/game.static.List.properties 0 properties
  */
-Game.List = List.extend({Map: Game},
+Game.List = CanList.extend({Map: Game},
 /** @prototype */
 {
 	define: {

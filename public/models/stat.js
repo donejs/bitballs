@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/stat Stat
+ * @module {can-map} bitballs/models/stat Stat
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/stat.properties 0 properties
@@ -24,14 +24,13 @@
  */
 var superMap = require('can-connect/can/super-map/'),
 	tag = require('can-connect/can/tag/'),
-	set = require("can-set"),
-	can = require("can/util/");
+	set = require("can-set");
+var CanList = require('can-list');
+var CanMap = require('can-map');
 
-require("can/map/define/");
-require("can/list/");
+require("can-map-define");
 
-
-var Stat = can.Map.extend(
+var Stat = CanMap.extend(
 /** @static */
 {
 	/**
@@ -74,12 +73,12 @@ var Stat = can.Map.extend(
 });
 
 /**
- * @property {can.List} bitballs/models/stat.static.List List
+ * @property {can-list} bitballs/models/stat.static.List List
  * @parent bitballs/models/stat.static
  *
  * Methods on a List of stats.
  */
-Stat.List = can.List.extend({Map: Stat},{});
+Stat.List = CanList.extend({Map: Stat},{});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra

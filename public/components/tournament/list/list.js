@@ -28,14 +28,13 @@
  * @demo public/components/tournament/list/list.html
  *
  */
-var Component = require("can/component/component");
-var CanMap = require("can/map/");
+var Component = require("can-component");
+var CanMap = require("can-map");
 var Tournament = require("bitballs/models/tournament");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
-require("can/view/href/");
+require("can-map-define");
+require("can-route");
 
 exports.ViewModel = CanMap.extend(
 /** @prototype */
