@@ -28,41 +28,44 @@
  * @demo public/components/player/edit/edit.html
  *
  **/
-var Component = require("can/component/component");
+var Component = require("can-component");
 var Player = require("bitballs/models/player");
-var CanMap = require("can/map/");
+var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require('can/map/backup/');
-require("can/construct/super/");
+require('can-define-backup');
+require("can-construct");
 
 
-exports.ViewModel = CanMap.extend(
-/** @prototype **/
+exports.ViewModel = DefineMap.extend("PlayerEditVM",
 {
-	define: {
-		/**
-		* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
-		* @parent bitballs/components/player/edit.properties
-		*
-		* Configures whether or not admin specific features are enabled.
-		**/
-		isAdmin: {
-			type: 'boolean',
-			value: false
-		},
-		/**
-		* @property {bitballs/models/player} bitballs/components/player/edit.player player
-		* @parent bitballs/components/player/edit.properties
-		*
-		* The model that will be bound to the form.
-		**/
-		player: {
-			Value: Player,
-			Type: Player
-		}
+	/**
+	* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
+	* @parent bitballs/components/player/edit.properties
+	*
+	* Configures whether or not admin specific features are enabled.
+	**/
+	isAdmin: {
+		type: 'boolean',
+		value: false
 	},
+	/**
+	* @property {bitballs/models/player} bitballs/components/player/edit.player player
+	* @parent bitballs/components/player/edit.properties
+	*
+	* The model that will be bound to the form.
+	**/
+	player: {
+		Type: Player,
+		value: Player
+	},
+	/**
+	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
+	 * @parent bitballs/components/player/edit.properties
+	 *
+	 * A [bitballs/models/player] model.
+	 */
+	savePromise: 'any',
 	/**
 	 * @function savePlayer
 	 *
@@ -80,12 +83,12 @@ exports.ViewModel = CanMap.extend(
 		}
 
 		var self = this;
-		var player = this.attr("player"),
-			promise;
+		var player = this.player;
+		var promise;
 
 		if(player.isNew()) {
 			promise = player.save().then(function(){
-				self.attr("player", new Player());
+				self.player = new Player();
 			});
 		} else {
 			promise = player.save();
@@ -96,7 +99,7 @@ exports.ViewModel = CanMap.extend(
 			self.dispatch("saved");
 		});
 
-		this.attr('savePromise', promise);
+		this.savePromise = promise;
 
 		return promise;
 	},
@@ -107,13 +110,13 @@ exports.ViewModel = CanMap.extend(
 	 * Fires a "canceled" event.
 	 */
 	cancel: function() {
-		this.attr('player').restore();
+		this.player = this.player.restore();
 		this.dispatch("canceled");
 	}
 });
 
 exports.Component = Component.extend({
 	tag: "player-edit",
-	template: require("./edit.stache!"),
-	viewModel: exports.ViewModel
+	view: require("./edit.stache!"),
+	ViewModel: exports.ViewModel
 });

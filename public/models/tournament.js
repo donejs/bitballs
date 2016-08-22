@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/tournament Tournament
+ * @module {can-map} bitballs/models/tournament Tournament
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/tournament.properties 0 properties
@@ -8,54 +8,63 @@ var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var moment = require('moment');
-var can = require("can/util/");
-require("can/map/define/");
-require("can/list/");
+var DefineMap = require("can-define/map/map");
+var DefineList = require("can-define/list/list");
 
-var Tournament = can.Map.extend(
-/** @static **/
-{},
-{
-	define: {
-		/**
-		 * @property {Date} bitballs/models/tournament.properties.jsDate jsDate
-		 * @parent bitballs/models/tournament.properties
-		 *
-		 * The [bitballs/models/tournament.properties.date] converted to a
-		 * JavaScript Date object.
-		 **/
-		jsDate: {
-			get: function(){
-				var date = this.attr("date");
-				return date ? moment(date).toDate() : null;
-			}
-		},
-		/**
-		 * @property {Date} bitballs/models/tournament.properties.year year
-		 * @parent bitballs/models/tournament.properties
-		 *
-		 * The year referred to by [bitballs/models/tournament.properties.jsDate].
-		 **/
-		year: {
-			get: function(){
-				var jsDate = this.attr("jsDate");
-				return jsDate ? jsDate.getFullYear() : null;
-			}
-		}
-		/**
-		 * @property {String} bitballs/models/tournament.properties.date date
-		 * @parent bitballs/models/tournament.properties
-		 *
-		 * The date that the tournament is schedule to occur.
-		 **/
+
+var Tournament = DefineMap.extend('Tournament', {
+	/**
+	 * @property {Number} bitballs/models/tournament.properties.id id
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * A unique identifier.
+	 **/
+	id: 'number',
+	/**
+	 * @property {String} bitballs/models/tournament.properties.date date
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * The date that the tournament is schedule to occur.
+	 **/
+	date: 'string',
+	/**
+	 * @property {Date} bitballs/models/tournament.properties.jsDate jsDate
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * The [bitballs/models/tournament.properties.date] converted to a
+	 * JavaScript Date object.
+	 **/
+	get jsDate() {
+		var date = this.date;
+		return date ? moment(date).toDate() : null;
+	},
+	/**
+	 * @property {Date} bitballs/models/tournament.properties.year year
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * The year referred to by [bitballs/models/tournament.properties.jsDate].
+	 **/
+	get year() {
+		var jsDate = this.jsDate;
+		return jsDate ? jsDate.getFullYear() : null;
+	},
+	/**
+	 * @property {Date} bitballs/models/tournament.properties.prettyDate prettyDate
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * A formatted output of [bitballs/models/tournament.properties.date].
+	 **/
+	get prettyDate() {
+		var date = this.date;
+		return date ? moment(date).toDate() : null;
 	}
 });
 
 /**
- * @constructor {can.List} bitballs/models/tournament.static.List List
+ * @constructor {can-list} bitballs/models/tournament.static.List List
  * @parent bitballs/models/tournament.static
  */
-Tournament.List = can.List.extend({Map: Tournament},{});
+Tournament.List = DefineList.extend('TournamentList', {"#": Tournament});
 
 /**
  * @property {set.Algebra} bitballs/models/tournament.static.algebra algebra
@@ -71,7 +80,10 @@ Tournament.algebra = new set.Algebra(
 var tournamentConnection = superMap({
   Map: Tournament,
   List: Tournament.List,
-  url: "/services/tournaments",
+  url: {
+		resource: "/services/tournaments",
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "tournament",
   algebra: Tournament.algebra
 });
