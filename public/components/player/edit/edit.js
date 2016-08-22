@@ -28,14 +28,14 @@
  * @demo public/components/player/edit/edit.html
  *
  **/
-var Component = require("can/component/component");
+var Component = require("can-component");
 var Player = require("bitballs/models/player");
-var CanMap = require("can/map/");
+var CanMap = require("can-map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require('can/map/backup/');
-require("can/construct/super/");
+require("can-map-define");
+require('can-map-backup');
+require("can-construct");
 
 
 exports.ViewModel = CanMap.extend(

@@ -1,10 +1,11 @@
-import can from 'can';
 import QUnit from 'steal-qunit';
 import playerEdit from 'bitballs/components/player/edit/edit';
 import Player from 'bitballs/models/player';
 import F from 'funcunit';
 import $ from "jquery";
 import './edit';
+import stache from "can-stache";
+import CanMap from "can-map";
 
 import defineFixtures from 'bitballs/models/fixtures/players';
 
@@ -106,10 +107,10 @@ QUnit.module('components/player/edit/', function(hooks){
 
 	QUnit.test('Form is only shown to admins', function () {
 
-		var vm = new can.Map({
+		var vm = new CanMap({
 			isAdmin: false
 		});
-		var frag = can.stache('<player-edit {is-admin}="isAdmin" />')(vm);
+		var frag = stache('<player-edit {is-admin}="isAdmin" />')(vm);
 
 		QUnit.equal($('player-edit .edit-form', frag).length, 0,
 			'Form is excluded for non-admin user');

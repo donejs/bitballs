@@ -29,15 +29,15 @@
  * @demo public/components/navigation/navigation.html
  *
  */
-var Component = require("can/component/component");
+var Component = require("can-component");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 var $ = require("jquery");
-var CanMap = require("can/map/");
+var CanMap = require("can-map");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("bootstrap/js/dropdown");
-require("can/route/");
+require("can-route");
 require("./navigation.less!");
 
 
