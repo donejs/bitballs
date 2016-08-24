@@ -35,7 +35,6 @@ var Tournament = require("bitballs/models/tournament");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require("can/route/");
-require("can/view/href/");
 
 exports.ViewModel = CanMap.extend(
 /** @prototype */

@@ -10,7 +10,8 @@ import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can/route/';
 import Session from './models/session';
 import "can/route/pushstate/";
-import stache from "can/view/stache/";
+import stache from "can-stache";
+import 'can-stache/helpers/route';
 import "./util/prefilter";
 
 const AppViewModel = Map.extend(

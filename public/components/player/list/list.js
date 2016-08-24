@@ -35,7 +35,6 @@ var CanMap = require("can/map/");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
 require("can/route/");
-require("can/view/href/");
 
 var Player = require("bitballs/models/player");
 

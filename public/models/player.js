@@ -13,7 +13,7 @@ var set = require("can-set");
 require('can/list/');
 require('can/map/');
 require("can/map/define/");
-require('can/map/backup/');
+require('can-map-backup');
 
 var Player = can.Map.extend(
 /** @static */

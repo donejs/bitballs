@@ -34,8 +34,8 @@ var CanMap = require("can/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can/map/define/");
-require('can/map/backup/');
-require("can/construct/super/");
+require('can-map-backup');
+require("can-construct");
 
 
 exports.ViewModel = CanMap.extend(
