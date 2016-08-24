@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import can from 'can';
-import 'can/view/stache/stache';
+import stache from 'can-stache';
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
 import testUtils from 'bitballs/test/utils';
@@ -10,7 +9,7 @@ F.attach(QUnit);
 
 QUnit.module('components/navigation/', {
     beforeEach: function () {
-        var frag = can.stache('<bitballs-navigation></bitballs-navigation>')();
+        var frag = stache('<bitballs-navigation></bitballs-navigation>')();
         testUtils.insertAndPopulateIframe('#qunit-fixture', frag);
     },
     afterEach: function () {
@@ -43,7 +42,7 @@ QUnit.test('Layout preserved at smaller screen resolutions', function (assert) {
 });
 
 QUnit.test('Register button exists', function () {
-    var frag = can.stache('<bitballs-navigation></bitballs-navigation>')();
+    var frag = stache('<bitballs-navigation></bitballs-navigation>')();
     var buttons = $(frag).find('.register-btn');
 
     QUnit.equal(buttons.length, 1, 'Register button found');
