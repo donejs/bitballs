@@ -1,8 +1,8 @@
-import can from "can";
-import "can/view/stache/";
+import stache from "can-stache";
+import expression from "can-stache/src/expression";
 
-can.stache.registerHelper("numberToString", function(newVal, source){
-	if(newVal instanceof can.expression.SetIdentifier) {
+stache.registerHelper("numberToString", function(newVal, source){
+	if(newVal instanceof expression.SetIdentifier) {
 		source(newVal.value === "" ? null : +newVal.value);
 	} else {
 		source = newVal;

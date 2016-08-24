@@ -49,6 +49,9 @@
       "node_modules/can-zone/register",
       "live-reload"
     ],
+    "map" : {
+      "can/util/jquery/jquery" : "jquery"
+    },
     "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",

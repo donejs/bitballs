@@ -21,7 +21,7 @@
 		{{#each Game.courtNames}}
 			<td>
 				{{#games.getGameForRoundAndCourt ../. .}}
-					<a href="{{routeUrl gameId=id}}">
+					<a href="{{routeUrl (gameId=id)}}">
 						{{#../teams.getById(homeTeamId)}}{{color}}{{/teams.getById}} v {{#../teams.getById(awayTeamId)}}{{color}}{{/teams.getById}}
 					</a>
 					{{#if session.isAdmin}}

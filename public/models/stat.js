@@ -26,12 +26,12 @@ var superMap = require('can-connect/can/super-map/'),
 	tag = require('can-connect/can/tag/'),
 	set = require("can-set"),
 	can = require("can/util/");
+var CanList = require('can/list/');
+var CanMap = require('can/map/');
 
 require("can/map/define/");
-require("can/list/");
 
-
-var Stat = can.Map.extend(
+var Stat = CanMap.extend(
 /** @static */
 {
 	/**
@@ -79,7 +79,7 @@ var Stat = can.Map.extend(
  *
  * Methods on a List of stats.
  */
-Stat.List = can.List.extend({Map: Stat},{});
+Stat.List = CanList.extend({Map: Stat},{});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra

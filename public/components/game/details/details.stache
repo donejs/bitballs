@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<h3> <a href="{{routeUrl tournamentId=game.tournamentId}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
+			<h3> <a href="{{routeUrl (tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
 			<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
 			<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p>
 			<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
