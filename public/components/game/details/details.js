@@ -23,9 +23,9 @@
  *
  */
 
-var Component = require("can/component/component");
-var CanMap = require("can/map/");
-var List = require("can/list/");
+var Component = require("can-component");
+var CanMap = require("can-map");
+var List = require("can-list");
 var Game = require("bitballs/models/game");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
@@ -34,8 +34,8 @@ var $ = require("jquery");
 
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
+require("can-map-define");
+require("can-route");
 
 /**
  * @constructor bitballs/components/game/details.ViewModel ViewModel
@@ -97,7 +97,7 @@ exports.ViewModel = CanMap.extend(
 		},
 		/**
 		 * @property {bitballs/models/game}
-		 * 
+		 *
 		 * Provides a game instance once the game promise resolves.
 		 */
 		game: {
@@ -107,7 +107,7 @@ exports.ViewModel = CanMap.extend(
 		},
 		/**
 		 * @property {Object}
-		 * 
+		 *
 		 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
 		 */
 		youtubePlayer: {
@@ -123,7 +123,7 @@ exports.ViewModel = CanMap.extend(
 		},
 		/**
 		 * @property {Object<{home: Number, away: Number}>}
-		 * 
+		 *
 		 * The final score of the game, which is totalled based on the
 		 * game stats.
 		 */
@@ -148,10 +148,10 @@ exports.ViewModel = CanMap.extend(
 		},
 		/**
 		 * @property {Object<{home: Number, away: Number}>}
-		 * 
+		 *
 		 * The score of the game at the current time in the video,
 		 * which is totalled based on the game stats up to that point.
-		 */		
+		 */
 		currentScore: {
 			get: function(){
 				var game = this.attr("game");
@@ -271,7 +271,7 @@ exports.ViewModel = CanMap.extend(
 	 * @body
 	 * Use in a template like:
 	 * ```
-	 * <button type="submit" class="btn btn-primary" >Add</button> 
+	 * <button type="submit" class="btn btn-primary" >Add</button>
 	 * <a class="btn btn-default" ($click)="removeStat()">Cancel</a>
 	 * ```
 	 */
@@ -312,7 +312,7 @@ exports.ViewModel = CanMap.extend(
 	 *   <a class="btn btn-default" ($click)="addTime(10)">+10 s</a>
 	 * </div>
 	 * ```
-	 */	
+	 */
 	minusTime: function(time){
 		this.attr("stat.time", this.attr("stat.time")-time);
 	},
@@ -347,13 +347,13 @@ exports.ViewModel = CanMap.extend(
 		}
 	},
 	/**
-	 * @function 
+	 * @function
 	 * @description Delete a stat from the database.
 	 * @param {bitballs/models/stat} stat The [bitballs/models/stat] to delete.
 	 * @param {event} event The event that triggered the deletion.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
@@ -369,13 +369,13 @@ exports.ViewModel = CanMap.extend(
 		}
 	},
 	/**
-	 * @function 
+	 * @function
 	 * @description  Get the percentage of total game time for a certain time for positioning stats.
 	 * @param  {Number} time The time of the stat.
 	 * @return {Number} The percentage through the total game time the current time is.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * <span style="left: \{{statPercent time}}%">
@@ -397,7 +397,7 @@ exports.ViewModel = CanMap.extend(
 	 * @return {can.List} The list of stats for the player.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * \{{#eachOf statsForPlayerId(id)}}
@@ -425,7 +425,7 @@ exports.Component = Component.extend({
 	/**
 	 * @constructor {can.Component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
-	 * 
+	 *
 	 * @description A `<game-details>` component's events object.
 	 */
 	events: {

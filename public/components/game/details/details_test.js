@@ -3,7 +3,7 @@ import Session from "models/session";
 import details from "./details";
 import { games } from "models/fixtures/games";
 import F from 'funcunit';
-import stache from 'can/view/stache/';
+import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
 
