@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/team Team
+ * @module {can-map} bitballs/models/team Team
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/team.properties 0 properties
@@ -9,11 +9,12 @@ var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var Player = require("./player");
 var can = require("can/util/");
-require("can/map/define/");
-require("can/list/");
+var CanMap = require("can-map");
+var CanList = require("can-list");
+require("can-map-define");
 
 
-var Team = can.Map.extend(
+var Team = CanMap.extend(
 /** @static */
 {
 	/**
@@ -103,10 +104,10 @@ var Team = can.Map.extend(
 	 **/
 });
 /**
- * @constructor {can.List} bitballs/models/team.static.List List
+ * @constructor {can-list} bitballs/models/team.static.List List
  * @parent bitballs/models/team.static
  */
-Team.List = can.List.extend({Map: Team},
+Team.List = CanList.extend({Map: Team},
 /** @prototype **/
 {
 	define: {

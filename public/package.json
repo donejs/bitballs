@@ -27,6 +27,7 @@
     "can-route": "^3.0.0-pre.13",
     "can-set": "^0.6.0-pre.2",
     "can-stache": "^3.0.0-pre.15",
+    "can-util": "^3.0.0-pre.34",
     "can-view-autorender": "^3.0.0-pre.4",
     "can-view-model": "^3.0.0-pre.6",
     "done-autorender": "^0.9.0-pre.0",

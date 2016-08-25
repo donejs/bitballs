@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/user User
+ * @module {can-map} bitballs/models/user User
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/user.static 0 static
@@ -25,17 +25,18 @@
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
-var can = require("can/util/");
-require("can/map/define/");
-require("can/list/");
+var can = require("can-util");
+var CanMap = require('can-map');
+var CanList = require("can-list");
+require("can-map-define");
 
-var User = can.Map.extend({});
+var User = CanMap.extend({});
 
 /**
- * @constructor {can.List} bitballs/models/user.static.List List
+ * @constructor {can-list} bitballs/models/user.static.List List
  * @parent bitballs/models/user.static
  */
-User.List = can.List.extend({Map: User},{});
+User.List = CanList.extend({Map: User},{});
 
 /**
  * @property {set.Algebra} bitballs/models/user.static.algebra algebra

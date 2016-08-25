@@ -1,20 +1,20 @@
 /**
- * @module {can.Map} bitballs/app AppViewModel
+ * @module {can-map} bitballs/app AppViewModel
  * @parent bitballs
  *
  * @group bitballs/app.properties 0 properties
  */
-import Map from "can/map/";
-import "can/map/define/";
+import CanMap from "can-map";
+import "can-map-define";
 import "bootstrap/dist/css/bootstrap.css!";
-import route from 'can/route/';
+import route from 'can-route';
 import Session from './models/session';
-import "can/route/pushstate/";
+import "can-route/pushstate/";
 import stache from "can-stache";
 import 'can-stache/helpers/route';
 import "./util/prefilter";
 
-const AppViewModel = Map.extend(
+const AppViewModel = CanMap.extend(
 /** @prototype */
 {
 	define: {

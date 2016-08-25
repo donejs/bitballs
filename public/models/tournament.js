@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/tournament Tournament
+ * @module {can-map} bitballs/models/tournament Tournament
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/tournament.properties 0 properties
@@ -8,11 +8,12 @@ var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var moment = require('moment');
-var can = require("can/util/");
-require("can/map/define/");
-require("can/list/");
+var can = require("can-util");
+var CanMap = require("can-map");
+var CanList = require("can-list");
+require("can-map-define");
 
-var Tournament = can.Map.extend(
+var Tournament = CanMap.extend(
 /** @static **/
 {},
 {
@@ -52,10 +53,10 @@ var Tournament = can.Map.extend(
 });
 
 /**
- * @constructor {can.List} bitballs/models/tournament.static.List List
+ * @constructor {can-list} bitballs/models/tournament.static.List List
  * @parent bitballs/models/tournament.static
  */
-Tournament.List = can.List.extend({Map: Tournament},{});
+Tournament.List = CanList.extend({Map: Tournament},{});
 
 /**
  * @property {set.Algebra} bitballs/models/tournament.static.algebra algebra
