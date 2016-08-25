@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import QUnit from 'steal-qunit';
 import stache from "can-stache";
 import "./numberToString";

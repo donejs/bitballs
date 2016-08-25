@@ -117,10 +117,22 @@ var Game = CanMap.extend(
 		 * The stats for this game. This can be loaded with `withRelated[]=stats`.
 		 */
 		stats: {
-			Type: Stat.List,
 			set: function(stats){
-				stats.__listSet = {where: {gameId: this.attr("id")}};
-				return stats;
+				var nStats = this.attr('stats') || [];
+				stats.forEach(function(stat){
+					if(!(stat instanceof Stat)){
+						nStats.push(new Stat(stat));
+					} else {
+						nStats.push(stat);
+					}
+				});
+
+				if(!(nStats instanceof Stat.List)){
+					nStats = new Stat.List(nStats);
+				}
+				
+				nStats.__listSet = {where: {gameId: this.attr("id")}};
+				return nStats;
 			}
 		},
 		/**

@@ -5,7 +5,6 @@ stache.registerConverter("numberToString",{
     return source() + "";
   },
   set: function(newVal, source){
-		console.log(newVal, source);
     source(newVal === "" ? null : +newVal);
   }
 });
