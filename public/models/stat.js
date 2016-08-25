@@ -24,8 +24,7 @@
  */
 var superMap = require('can-connect/can/super-map/'),
 	tag = require('can-connect/can/tag/'),
-	set = require("can-set"),
-	can = require("can-util");
+	set = require("can-set");
 var CanList = require('can-list');
 var CanMap = require('can-map');
 

@@ -6,7 +6,6 @@
  */
 var connect = require("can-connect");
 var $ = require("jquery");
-var can = require("can-util");
 var CanMap = require("can-map");
 var CanList = require("can-list");
 var tag = require('can-connect/can/tag/');

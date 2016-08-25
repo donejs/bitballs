@@ -8,7 +8,6 @@ var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var Player = require("./player");
-var can = require("can/util/");
 var CanMap = require("can-map");
 var CanList = require("can-list");
 require("can-map-define");

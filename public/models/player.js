@@ -4,7 +4,6 @@
  *
  * @group bitballs/models/player.properties 0 properties
  */
-var can = require('can/util/');
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
