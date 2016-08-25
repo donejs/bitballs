@@ -3,7 +3,7 @@ var PlayerList = require("./list");
 var defineFixtures = require("bitballs/models/fixtures/players").defineFixtures;
 var F = require('funcunit');
 var fixture = require('can-fixture');
-var stache = require("can/view/stache/");
+var stache = require("can-stache");
 var $ = require("jquery");
 
 F.attach(QUnit);

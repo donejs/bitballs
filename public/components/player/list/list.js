@@ -28,13 +28,13 @@
  * @demo public/components/player/list/list.html
  *
  **/
-var Component = require("can/component/");
+var Component = require("can-component");
 var template = require("./list.stache!");
-var CanMap = require("can/map/");
+var CanMap = require("can-map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
+require("can-map-define");
+require("can-route");
 
 var Player = require("bitballs/models/player");
 
