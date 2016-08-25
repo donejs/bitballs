@@ -52,7 +52,7 @@ exports.ViewModel = CanMap.extend(
 {
 	define: {
 		/**
-		 * @property {can.Map}
+		 * @property {can-map}
 		 *
 		 * Provides a user instance. If a session is active, this
 		 * syncs the user with `session.user`. Otherwise, a user instance

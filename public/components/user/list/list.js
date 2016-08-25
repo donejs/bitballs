@@ -49,7 +49,7 @@ export const ViewModel = CanMap.extend({
 	 */
 	define: {
 		/**
-		 * @property {can.List<bitballs/models/user>}
+		 * @property {can-list<bitballs/models/user>}
 		 *
 		 * Provides list of users, like:
 		 *

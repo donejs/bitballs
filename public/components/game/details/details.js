@@ -393,8 +393,8 @@ exports.ViewModel = CanMap.extend(
 	/**
 	 * @function
 	 * @description Gets a list of stats for a player
-	 * @param  {String|can.compute<String>} id The id of the player.
-	 * @return {can.List} The list of stats for the player.
+	 * @param  {String|can-compute<String>} id The id of the player.
+	 * @return {can-list} The list of stats for the player.
 	 *
 	 * @body
 	 *
@@ -423,7 +423,7 @@ exports.Component = Component.extend({
 	template: require("./details.stache!"),
 	viewModel: exports.ViewModel,
 	/**
-	 * @constructor {can.Component.events} bitballs/components/game/details.events Events
+	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
 	 *
 	 * @description A `<game-details>` component's events object.
