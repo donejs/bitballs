@@ -1,15 +1,16 @@
-import can from 'can';
+import $ from 'jquery'
 import QUnit from 'steal-qunit';
-import "can/view/stache/";
+import stache from "can-stache";
 import "./numberToString";
+import CanMap from 'can-map';
 
 QUnit.module('util/numberToString');
 
 QUnit.test("numberToString helper", function(assert){
 
-	var template = can.view.stache('<input {($value)}="numberToString(~age)">');
+	var template = stache('<input id="yeah" {($value)}="numberToString(~age)">');
 
-	var map = new can.Map({age: 25});
+	var map = new CanMap({age: 25});
 
 	var frag = template(map);
 
@@ -21,9 +22,12 @@ QUnit.test("numberToString helper", function(assert){
 	assert.equal(frag.firstChild.value, "33");
 	assert.equal(map.attr("age"), 33);
 
-	frag.firstChild.value = "1";
-
-	can.trigger(frag.firstChild, "change");
+	var event;
+	event = document.createEvent("HTMLEvents");
+	event.initEvent("change", true, true);
+	
+	frag.firstChild.value = '1';
+	frag.firstChild.dispatchEvent(event);
 
 	assert.equal(frag.firstChild.value, "1");
 	assert.equal(map.attr("age"), 1);
