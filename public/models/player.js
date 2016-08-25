@@ -1,5 +1,5 @@
 /**
- * @module {can.Map} bitballs/models/player Player
+ * @module {can-map} bitballs/models/player Player
  * @parent bitballs.clientModels
  *
  * @group bitballs/models/player.properties 0 properties
@@ -9,13 +9,13 @@ var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var moment = require("moment");
 var set = require("can-set");
+var CanList = require('can-list');
+var CanMap = require('can-map');
 
-require('can/list/');
-require('can/map/');
-require("can/map/define/");
+require("can-map-define");
 require('can-map-backup');
 
-var Player = can.Map.extend(
+var Player = CanMap.extend(
 /** @static */
 {},
 /** @prototype **/
@@ -120,10 +120,10 @@ var Player = can.Map.extend(
 });
 
 /**
- * @constructor {can.List} bitballs/models/player.static.List List
+ * @constructor {can-list} bitballs/models/player.static.List List
  * @parent bitballs/models/player.static
  */
-Player.List = can.List.extend({Map: Player},
+Player.List = CanList.extend({Map: Player},
 /** @prototype **/
 {
 	define: {
