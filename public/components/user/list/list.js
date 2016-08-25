@@ -29,9 +29,9 @@
  * @demo public/components/user/list/list.html
  */
 
-import Component from 'can/component/';
-import CanMap from 'can/map/';
-import 'can/map/define/';
+import Component from 'can-component';
+import CanMap from 'can-map';
+import 'can-map-define';
 import './list.less!';
 import template from './list.stache!';
 import User from "bitballs/models/user";
@@ -50,7 +50,7 @@ export const ViewModel = CanMap.extend({
 	define: {
 		/**
 		 * @property {can.List<bitballs/models/user>}
-		 * 
+		 *
 		 * Provides list of users, like:
 		 *
 		 *   {data: [{
@@ -59,7 +59,7 @@ export const ViewModel = CanMap.extend({
 		 *   	"isAdmin": Boolean,
 		 *   	"verified": Boolean
 		 *   }, ...]}
-		 *   
+		 *
 		 */
 		users: {
 			get: function(list) {
@@ -70,7 +70,7 @@ export const ViewModel = CanMap.extend({
 			}
 		}
 		/**
-		 * @property {bitballs/models/session} session 
+		 * @property {bitballs/models/session} session
 		 *   The session object if a user is logged in. The user must be an admin to view the user list.
 		 */
 	},
@@ -78,7 +78,7 @@ export const ViewModel = CanMap.extend({
 	 * @function
 	 *
 	 * Sets the user's admin status.
-	 * 
+	 *
 	 * @param {bitballs/models/user} user The user object that will be set or unset as an admin.
 	 * @param {Boolean} isAdmin Whether the user should be set as an admin.
 	 *

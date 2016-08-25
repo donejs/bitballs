@@ -28,15 +28,15 @@
  * @demo public/components/user/details/details.html
  */
 
-var Component = require("can/component/component"),
+var Component = require("can-component"),
 	User = require("bitballs/models/user"),
 	Session = require("bitballs/models/session"),
-	CanMap = require("can/map/"),
-	route = require("can/route/");
+	CanMap = require("can-map"),
+	route = require("can-route");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
+require("can-map-define");
+require("can-route");
 
 /**
  * @constructor bitballs/components/user/details.ViewModel ViewModel
