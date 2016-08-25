@@ -1,11 +1,11 @@
-import can from "can";
-import "can/view/stache/";
+import stache from "can-stache";
 
-can.stache.registerHelper("numberToString", function(newVal, source){
-	if(newVal instanceof can.expression.SetIdentifier) {
-		source(newVal.value === "" ? null : +newVal.value);
-	} else {
-		source = newVal;
-		return source() + "";
-	}
+stache.registerConverter("numberToString",{
+  get: function(source){
+    return source() + "";
+  },
+  set: function(newVal, source){
+		console.log(newVal, source);
+    source(newVal === "" ? null : +newVal);
+  }
 });
