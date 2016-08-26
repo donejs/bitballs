@@ -24,7 +24,7 @@
 					<a href="{{routeUrl (gameId=id)}}">
 						{{#../teams.getById(homeTeamId)}}{{color}}{{/teams.getById}} v {{#../teams.getById(awayTeamId)}}{{color}}{{/teams.getById}}
 					</a>
-					{{#if session.isAdmin}}
+					{{#if isAdmin}}
 						<button type="button" class="btn btn-danger btn-xs"
 							($click)="deleteGame(.)"
 							{{#isDestroying}}disabled{{/isDestroying}}>
