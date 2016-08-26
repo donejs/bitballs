@@ -32,7 +32,7 @@ const AppViewModel = DefineMap.extend('App',
 		get: function(){
 			var page = this.page;
 			if(this.gameId) {
-				
+
 				return {
 					title: "Game",
 					componentName: "game-details",
@@ -105,8 +105,10 @@ const AppViewModel = DefineMap.extend('App',
 			});
 		}
 	},
-	tournamentId: {type: "number"},
-		
+	tournamentId: {
+		type: "number"
+	},
+
 	/**
 	* @property {Number} bitballs/app.statusCode statusCode
 	* @parent bitballs/app.properties

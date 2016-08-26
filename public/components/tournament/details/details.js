@@ -323,8 +323,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		if(!round) {
 			return teams;
 		}
-		// Re-evaluate if teams are added/removed
-		//teams.attr("length");
+		
 		var remainingTeams = teams.slice(0);
 
 		games.forEach(function(game){

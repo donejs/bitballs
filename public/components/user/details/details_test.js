@@ -9,8 +9,8 @@ QUnit.module('components/user/', {
 	}
 });
 
-QUnit.test('saveUser', function(assert) {
-	assert.expect(1);
+QUnit.test('create new user', function(assert) {
+	assert.expect(5);
 	var done = assert.async();
 
 	var vm = new ViewModel();
@@ -20,8 +20,8 @@ QUnit.test('saveUser', function(assert) {
 
 	// session is not created before user is saved:
 	assert.ok(vm.user.isNew(), 'User should be new.');
-	// todo: skipped test
-	// equal(typeof vm.attr('session'), 'undefined', 'Session should not exist before user gets created.');
+	
+	assert.equal(vm.session, null, 'Session should not exist before user gets created.');
 
 	vm.saveUser().then(function(){
 		assert.equal(vm.session.user.email, 'test@bitovi.com', 'Session email should be set after user gets created.');
