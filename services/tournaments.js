@@ -94,7 +94,7 @@ app.get('/services/tournaments/:id', function(req, res){
 });
 
 app.put('/services/tournaments/:id', adminOnly( "Must be an admin to update tournaments" ), function(req, res){
-	new Tournament({id: req.params.id}).save(req.body).then(function(tournament){
+	new Tournament({id: req.params.id}).save(JSON.parse(req.body)).then(function(tournament){
 		res.send(tournament.toJSON());
 	});
 });
@@ -106,7 +106,7 @@ app['delete']('/services/tournaments/:id', adminOnly( "Must be an admin to delet
 });
 
 app.post('/services/tournaments', adminOnly( "Must be an admin to create tournaments" ), function(req, res) {
-	new Tournament(req.body).save().then(function(tournament){
+	new Tournament(JSON.parse(req.body)).save().then(function(tournament){
 		res.send({id: tournament.get('id')});
 	}, function(e){
 		res.status(500).send(e);
