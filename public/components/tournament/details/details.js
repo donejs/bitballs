@@ -228,13 +228,6 @@ exports.ViewModel = DefineMap.extend(
 				return availableRounds;
 			}).merge(gamesLengthStream);
 		}
-		// stream: ['games.length', function (gamesLengthStream) {
-		// 	var vm = this;
-		// 	return gamesLengthStream.map(function (value) {
-		// 		var availableRounds = vm.games && vm.games.getAvailableRounds()[0];
-		// 		return availableRounds;
-		// 	})
-		// }]
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedCourt selectedCourt
@@ -298,7 +291,7 @@ exports.ViewModel = DefineMap.extend(
 			return teams;
 		}
 		// Re-evaluate if teams are added/removed
-		teams.length;
+		// teams.length;
 		var remainingTeams = teams.slice(0);
 
 		games.forEach(function(game){
@@ -381,7 +374,7 @@ exports.ViewModel = DefineMap.extend(
 	},
 	Game: {
 		value: function () {
-			return Game
+			return Game;
 		}
 	},
 	/**
