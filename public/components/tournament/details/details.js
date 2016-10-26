@@ -37,7 +37,8 @@ var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
 var Tournament = require("bitballs/models/tournament");
 
-require("can-compute-stream");
+require("can-stream");
+require("can-define-stream");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-route");
 
@@ -218,13 +219,22 @@ exports.ViewModel = DefineMap.extend(
 	* or the first value in the list returned from [bitballs/models/game.static.List.prototype.getAvailableRounds getAvailableRounds].
 	**/
 	selectedRound: {
-		stream: ['games.length', function (gamesLengthStream) {
+		type: 'string',
+		stream: function(stream) {
 			var vm = this;
-			return gamesLengthStream.map(function (value) {
+			var gamesLengthStream = this.stream('games.length');
+			return stream.map(function(value) {
 				var availableRounds = vm.games && vm.games.getAvailableRounds()[0];
 				return availableRounds;
-			})
-		}]
+			}).merge(gamesLengthStream);
+		}
+		// stream: ['games.length', function (gamesLengthStream) {
+		// 	var vm = this;
+		// 	return gamesLengthStream.map(function (value) {
+		// 		var availableRounds = vm.games && vm.games.getAvailableRounds()[0];
+		// 		return availableRounds;
+		// 	})
+		// }]
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedCourt selectedCourt
@@ -235,16 +245,15 @@ exports.ViewModel = DefineMap.extend(
 	* given the [bitballs/components/tournament/details.ViewModel.prototype.selectedRound selectedRound].
 	**/
 	selectedCourt: {
-		stream: ['selectedRound', 'games.length', function (selectedRoundStream, gamesLengthStream) {
+		stream: function(stream) {
 			var vm = this;
-			return gamesLengthStream.merge(selectedRoundStream)
-				.map(function (value) {
-					console.log(vm.selectedRound)
-					var selectedCourt =
-						vm.games && vm.games.getAvailableCourts(vm.selectedRound)[0];
-					return selectedCourt;
-				})
-		}]
+			var selectedRoundStream = this.stream('selectedRound');
+			var gamesLengthStream = this.stream('games.length');
+			return stream.merge(selectedRoundStream).merge(gamesLengthStream).map(function(value){
+				var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound)[0];
+				return selectedCourt;
+			});
+		}
 	},
 	/**
 	* @property {Object} bitballs/components/tournament/details.teamIdMap teamIdMap
@@ -389,7 +398,7 @@ exports.ViewModel = DefineMap.extend(
 
 		var self = this;
 		var game = this.game;
-
+		
 		game.attr({
 			round: this.selectedRound,
 			court: this.selectedCourt,

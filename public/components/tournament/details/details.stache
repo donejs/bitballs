@@ -44,7 +44,7 @@
 {{#if isAdmin}}
 <h4>New Game</h4>
 <form ($submit)="createGame(%event)" action="">
-
+	
 	<div class="form-group">
 	    <label for="game-round">Round</label>
 	    <select {($value)}="selectedRound" class="form-control" id="game-round">
