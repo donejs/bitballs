@@ -26,9 +26,9 @@ QUnit.test('creating tournament fails without a name', function(assert){
 	var vm = new ViewModel();
 
 	vm.createTournament();
-	vm.attr('savePromise').fail(function(resp, type){
-		assert.equal(type, 'error', 'fail creation without date');
-		assert.equal(vm.attr('savePromise').state(), 'rejected');
+	vm.savePromise.then(done, function(resp, type){
+		assert.equal(resp.statusText, 'error', 'fail creation without date');
+		assert.equal(resp.status, '400', 'rejected');
 		done();
 	});
 });

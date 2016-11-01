@@ -51,7 +51,10 @@ User.algebra = new set.Algebra(
 var userConnection = superMap({
   Map: User,
   List: User.List,
-  url: "/services/users",
+  url: {
+		resource: "/services/users",
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "user",
   algebra: User.algebra
 });

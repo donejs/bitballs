@@ -301,9 +301,12 @@ Game.algebra = new set.Algebra(
 var gameConnection = superMap({
   Map: Game,
   List: Game.List,
-  url: "/services/games",
+  url: {
+		resource: "/services/games",
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "game",
-  algebra: Game.algebra
+  algebra: Game.algebra,
 });
 
 tag("game-model", gameConnection);

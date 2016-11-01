@@ -40,7 +40,7 @@ QUnit.module('components/tournament/details/', {
 QUnit.test('should load a tournament', (assert) => {
     let done = assert.async();
     vm.bind('tournament', function (ev, newVal) {
-        assert.equal(newVal.attr('name'), 'Test Name', 'with the correct name' );
+        assert.equal(newVal.name, 'Test Name', 'with the correct name' );
         done();
     });
 });
@@ -62,9 +62,10 @@ QUnit.test('The selected round defaults to the first available round', function 
     });
 
     QUnit.stop();
-    vm.attr('gamesPromise').then(function (games) {
+    vm.gamesPromise.then(function (games) {
         QUnit.start();
-        QUnit.equal(vm.attr('selectedRound'), Game.roundNames[1],
+        vm.on('selectedRound', function(){});
+        QUnit.equal(vm.selectedRound, Game.roundNames[1],
             'The second round is selected');
     });
 });
@@ -82,10 +83,10 @@ QUnit.test('The selected court defaults to the first available court', function 
     });
 
     QUnit.stop();
-    vm.attr('gamesPromise').then(function (games) {
+    vm.gamesPromise.then(function (games) {
         QUnit.start();
-        QUnit.equal(vm.attr('selectedCourt'), Game.courtNames[1],
+        vm.on('selectedCourt', function(){});
+        QUnit.equal(vm.selectedCourt, Game.courtNames[1],
             'The second court is selected');
     });
 });
-

@@ -30,7 +30,7 @@
  **/
 var Component = require("can-component");
 var Player = require("bitballs/models/player");
-var CanMap = require("can-map");
+var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
@@ -38,30 +38,28 @@ require('can-map-backup');
 require("can-construct");
 
 
-exports.ViewModel = CanMap.extend(
+exports.ViewModel = DefineMap.extend(
 /** @prototype **/
 {
-	define: {
-		/**
-		* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
-		* @parent bitballs/components/player/edit.properties
-		*
-		* Configures whether or not admin specific features are enabled.
-		**/
-		isAdmin: {
-			type: 'boolean',
-			value: false
-		},
-		/**
-		* @property {bitballs/models/player} bitballs/components/player/edit.player player
-		* @parent bitballs/components/player/edit.properties
-		*
-		* The model that will be bound to the form.
-		**/
-		player: {
-			Value: Player,
-			Type: Player
-		}
+	/**
+	* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
+	* @parent bitballs/components/player/edit.properties
+	*
+	* Configures whether or not admin specific features are enabled.
+	**/
+	isAdmin: {
+		type: 'boolean',
+		value: false
+	},
+	/**
+	* @property {bitballs/models/player} bitballs/components/player/edit.player player
+	* @parent bitballs/components/player/edit.properties
+	*
+	* The model that will be bound to the form.
+	**/
+	player: {
+		Value: Player,
+		Type: Player
 	},
 	/**
 	 * @function savePlayer
@@ -80,12 +78,12 @@ exports.ViewModel = CanMap.extend(
 		}
 
 		var self = this;
-		var player = this.attr("player"),
-			promise;
+		var player = this.player,
+				promise;
 
 		if(player.isNew()) {
 			promise = player.save().then(function(){
-				self.attr("player", new Player());
+				self.player = new Player();
 			});
 		} else {
 			promise = player.save();
@@ -96,9 +94,13 @@ exports.ViewModel = CanMap.extend(
 			self.dispatch("saved");
 		});
 
-		this.attr('savePromise', promise);
+		this.savePromise = promise;
 
 		return promise;
+	},
+
+	savePromise: {
+		type: '*'
 	},
 	/**
 	 * @function cancel
@@ -107,7 +109,8 @@ exports.ViewModel = CanMap.extend(
 	 * Fires a "canceled" event.
 	 */
 	cancel: function() {
-		this.attr('player').restore();
+		this.player.restore();
+
 		this.dispatch("canceled");
 	}
 });

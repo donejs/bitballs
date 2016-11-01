@@ -24,8 +24,9 @@
  */
 
 var Component = require("can-component");
-var CanMap = require("can-map");
-var List = require("can-list");
+var DefineMap = require("can-define/map/");
+var DefineList = require("can-define/list/");
+
 var Game = require("bitballs/models/game");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
@@ -44,12 +45,12 @@ require("can-route");
  * @description  A `<game-details>` component's viewModel.
  */
 
-exports.ViewModel = CanMap.extend(
+exports.ViewModel = DefineMap.extend(
 /**
  * @prototype
  */
 {
-	define: {
+
 		/**
 		 * @property {Promise<bitballs/models/game>|undefined}
 		 *
@@ -80,7 +81,7 @@ exports.ViewModel = CanMap.extend(
 		gamePromise: {
 			get: function() {
 				return Game.get({
-					id: this.attr("gameId"),
+					id: this.gameId,
 					withRelated: ["stats",
 						"tournament",
 						"homeTeam.player1",
@@ -102,7 +103,7 @@ exports.ViewModel = CanMap.extend(
 		 */
 		game: {
 			get: function(last, set){
-				this.attr('gamePromise').then(set);
+				this.gamePromise.then(set);
 			}
 		},
 		/**
@@ -129,16 +130,16 @@ exports.ViewModel = CanMap.extend(
 		 */
 		finalScore: {
 			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+				var game = this.game;
+				if(game && game.stats) {
+					var playerMap = this.playerIdToHomeOrAwayMap;
 					var scores = {home: 0, away: 0};
-					game.attr("stats").each(function(stat){
-						if(stat.attr("type") === "1P") {
-							scores[playerMap[ stat.attr("playerId")]]++;
+					game.stats.each(function(stat){
+						if(stat.type === "1P") {
+							scores[playerMap[stat.playerId]]++;
 						}
-						if(stat.attr("type") === "2P") {
-							scores[playerMap[ stat.attr("playerId")]] += 2;
+						if(stat.type === "2P") {
+							scores[playerMap[ stat.playerId ]] += 2;
 						}
 					});
 					return scores;
@@ -154,20 +155,20 @@ exports.ViewModel = CanMap.extend(
 		 */
 		currentScore: {
 			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
+				var game = game;
+				if(game && game.stats) {
+					var playerMap = this.playerIdToHomeOrAwayMap;
 					var scores = {home: 0, away: 0};
 
-					var time = this.attr("time");
+					var time = this.time;
 
-					game.attr("stats").each(function(stat){
-						if(stat.attr("time") <= time) {
-							if(stat.attr("type") === "1P") {
-								scores[playerMap[ stat.attr("playerId")] ]++;
+					game.stats.each(function(stat){
+						if(stat.time <= time) {
+							if(stat.type === "1P") {
+								scores[playerMap[ stat.playerId] ]++;
 							}
-							if(stat.attr("type") === "2P") {
-								scores[playerMap[ stat.attr("playerId")]] += 2;
+							if(stat.type === "2P") {
+								scores[playerMap[ stat.playerId]] += 2;
 							}
 						}
 					});
@@ -185,12 +186,12 @@ exports.ViewModel = CanMap.extend(
 		playerIdToHomeOrAwayMap: {
 			type: "*",
 			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("homeTeam") && game.attr("awayTeam")) {
+				var game = this.game;
+				if(game && game.homeTeam && game.awayTeam) {
 					var map = {};
 					for(var i = 1; i <= 4; i++) {
-						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
-						map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
+						map[ game.homeTeam["player" + i + "Id"] ] = "home";
+						map[ game.awayTeam["player" + i + "Id"] ] = "away";
 					}
 					return map;
 				}
@@ -204,13 +205,13 @@ exports.ViewModel = CanMap.extend(
 		sortedStatsByPlayerId: {
 			type: "*",
 			get: function(){
-				var game = this.attr("game");
+				var game = this.game;
 				if(game) {
 					return game.sortedStatsByPlayerId();
 				}
 			}
-		}
-	},
+		},
+
 	/**
 	 * @function
 	 * @description Displays the stat menu for a particular player and time.
@@ -225,20 +226,19 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-		if(!this.attr("session") || !this.attr("session").isAdmin()) {
+		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
-		var youtubePlayer = this.attr("youtubePlayer");
+		var youtubePlayer = this.youtubePlayer;
 		var time = youtubePlayer.getCurrentTime();
 		youtubePlayer.pauseVideo();
 
-
-		this.attr("stat", new Stat({
+		this.stat = new Stat({
 			time: time,
-			playerId: player.attr("id"),
-			gameId: this.attr("game.id"),
+			playerId: player.id,
+			gameId: this.game.id,
 			player: player
-		}));
+		});
 	},
 	/**
 	 * @function
@@ -254,14 +254,14 @@ exports.ViewModel = CanMap.extend(
 	createStat: function(ev) {
 		ev.preventDefault();
 		var self = this;
-		var stat = this.attr("stat");
+		var stat = this.stat;
 
 
 		stat.save(function(){
-			self.removeAttr("stat");
+			self.removestat;
 		}, function(e){
 			console.log(e);
-			self.removeAttr("stat");
+			self.removestat;
 		});
 	},
 	/**
@@ -276,7 +276,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	removeStat: function(){
-		this.removeAttr("stat");
+		this.removestat;
 	},
 	/**
 	 * @function
@@ -295,7 +295,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	addTime: function(time){
-		this.attr("stat.time", this.attr("stat.time")+time);
+		this.stat.time = this.stat.time + time;
 	},
 	/**
 	 * @function
@@ -314,7 +314,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	minusTime: function(time){
-		this.attr("stat.time", this.attr("stat.time")-time);
+		this.stat.time = this.state.time - time;
 	},
 	/**
 	 * @function
@@ -335,7 +335,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	gotoTimeMinus5: function(time, event) {
-		var player = this.attr("youtubePlayer");
+		var player = this.youtubePlayer;
 		if (player.seekTo) {
 			player.seekTo(time - 5, true);
 		}
@@ -382,7 +382,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	statPercent: function(time){
-		var duration = this.attr("duration");
+		var duration = this.duration;
 		if(duration) {
 			return time() / duration * 100;
 		} else {
@@ -409,11 +409,11 @@ exports.ViewModel = CanMap.extend(
 		if(typeof id === "function") {
 			id = id();
 		}
-		var statsById = this.attr("sortedStatsByPlayerId");
+		var statsById = this.sortedStatsByPlayerId;
 		if(statsById) {
-			return statsById[id] || new List();
+			return statsById[id] || new DefineList([]);
 		} else {
-			return new List();
+			return new DefineList([]);
 		}
 	}
 });
@@ -438,18 +438,18 @@ exports.Component = Component.extend({
 			youtubeAPI().then(function(YT){
 				self.YT = YT;
 			}).then(function () {
-				return self.scope.attr('gamePromise');
+				return self.scope.gamePromise;
 			}).then(function () {
 				var player = new self.YT.Player('youtube-player', {
 					height: '390',
 					width: '640',
-					videoId: self.scope.attr("game.videoUrl"),
+					videoId: self.scope.game.videoUrl,
 					events: {
 					  'onReady': self.onPlayerReady.bind(self),
 					  'onStateChange': self.onPlayerStateChange.bind(self)
 					}
 				});
-				self.scope.attr("youtubePlayer", player);
+				self.scope.youtubePlayer = player;
 			})["catch"](function(e){
 				if ( platform.isNode ) {
 					return;
@@ -472,7 +472,7 @@ exports.Component = Component.extend({
 		 * @description The onPlayerReady handler for the YouTube Player.
 		 */
 		onPlayerReady: function(){
-			var youtubePlayer = this.scope.attr("youtubePlayer"),
+			var youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
 			//this.scope.attr("youtubePlayer").playVideo();
@@ -481,7 +481,7 @@ exports.Component = Component.extend({
 			var getDuration = function(){
 				var duration = youtubePlayer.getDuration();
 				if(duration) {
-					self.scope.attr("duration", duration);
+					self.scope.duration = duration;
 				} else {
 					setTimeout(getDuration, 100);
 				}
@@ -495,12 +495,12 @@ exports.Component = Component.extend({
 		 */
 		onPlayerStateChange: function(ev){
 			var viewModel = this.viewModel,
-				player = viewModel.attr("youtubePlayer"),
+				player = viewModel.youtubePlayer,
 				self = this;
 			var timeUpdate = function(){
 				var currentTime = player.getCurrentTime();
-				if(viewModel.attr("stat")) {
-					viewModel.attr("stat").attr("time", currentTime);
+				if(viewModel.stat) {
+					viewModel.stat.time = currentTime;
 				}
 				self.timeUpdate = setTimeout(timeUpdate, 100);
 				self.updatePosition(currentTime);
@@ -508,10 +508,10 @@ exports.Component = Component.extend({
 
 
 			if(ev.data === self.YT.PlayerState.PLAYING) {
-				this.scope.attr("playing", true);
+				this.scope.playing = true;
 				timeUpdate();
 			} else {
-				this.scope.attr("playing", false);
+				this.scope.playing = false;
 				clearTimeout(this.timeUpdate);
 			}
 
@@ -523,9 +523,9 @@ exports.Component = Component.extend({
 		 * @description Updates the position of the cursor on the stats container.
 		 */
 		updatePosition: function(time){
-			var duration = this.scope.attr("duration");
+			var duration = this.scope.duration;
 			if(duration) {
-				this.viewModel.attr("time", time);
+				this.viewModel.time = time;
 				var fraction = time /duration;
 				var containers = this.element.find(".stats-container");
 				var width = containers.width();
@@ -542,10 +542,10 @@ exports.Component = Component.extend({
 		 * @description On time change, update the Youtube Player.
 		 */
 		"{stat} time": function(){
-			var time = this.scope.attr("stat.time");
+			var time = this.scope.stat.time;
 			if(typeof time === "number" && time >= 0) {
 
-				var player = this.scope.attr("youtubePlayer");
+				var player = this.scope.youtubePlayer;
 				var playerTime = player.getCurrentTime();
 				if(Math.abs(time-playerTime) > 2) {
 					player.seekTo(time, true);
@@ -559,7 +559,7 @@ exports.Component = Component.extend({
 		 * @description  On window resize, update the position of the cursor in the stats container.
 		 */
 		"{window} resize": function(){
-			var player = this.viewModel.attr("youtubePlayer"),
+			var player = this.viewModel.youtubePlayer,
 				currentTime;
 			if (player.getCurrentTime) {
 				currentTime = player.getCurrentTime();

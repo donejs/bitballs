@@ -27,7 +27,7 @@ QUnit.module('components/player/edit/', function(hooks){
 
 	QUnit.test('Can create new ViewModel', function(assert){
 		var vm = new ViewModel();
-		vm.attr("player.name","Justin");
+		vm.player.name = "Justin";
 		assert.ok( !!vm , "Passed!" );
 	});
 
@@ -69,9 +69,11 @@ QUnit.module('components/player/edit/', function(hooks){
 			});
 
 		vm.savePlayer();
-		vm.attr("savePromise").fail(function(resp, type){
-			assert.equal(type, 'error', 'fail creation without password');
-			assert.equal(vm.attr('savePromise').state(), 'rejected');
+		vm.savePromise.then(function(resp, type) {
+			done();
+		}, function(resp) {
+			assert.equal(resp.status, '400');
+			assert.equal(resp.statusText, 'error');
 			done();
 		});
 	});
@@ -92,15 +94,15 @@ QUnit.module('components/player/edit/', function(hooks){
 			});
 
 		//update player info
-		vm.attr("player.name", "Test Player (modified)");
+		vm.player.name = "Test Player (modified)";
 
 		vm.bind("saved", function(){
 			player.name = "Test Player (modified)";
-
-			assert.deepEqual(playerModel.attr(), player, "Player updated");
+			assert.deepEqual(vm.player.name, player.name, "Player updated");
 			vm.unbind("saved");
 			done();
 		});
+
 		vm.savePlayer();
 
 	});
@@ -115,8 +117,8 @@ QUnit.module('components/player/edit/', function(hooks){
 		QUnit.equal($('player-edit .edit-form', frag).length, 0,
 			'Form is excluded for non-admin user');
 
-		vm.attr('isAdmin', true);
-
+		vm.isAdmin = true;
+		
 		QUnit.equal($('player-edit .edit-form', frag).length, 1,
 			'Form is included for admin user');
 	});
@@ -137,27 +139,25 @@ QUnit.module('components/player/edit/', function(hooks){
 			}
 		});
 
-		var player = vm.attr('player');
+		var player = vm.player;
 
-		assert.equal(player.attr('name'), initialName, 'Initial name is correct');
-		assert.equal(player.attr('weight'), initialWeight, 'Initial weight is correct');
-		assert.equal(player.attr('height'), initialHeight, 'Initial height is correct');
+		assert.equal(player.name, initialName, 'Initial name is correct');
+		assert.equal(player.weight, initialWeight, 'Initial weight is correct');
+		assert.equal(player.height, initialHeight, 'Initial height is correct');
 
-		player.attr({
-			name: editedName,
-			weight: editedWeight,
-			height: editedHeight
-		});
+		player.name = editedName;
+		player.weight = editedWeight;
+		player.height = editedHeight;
 
-		assert.equal(player.attr('name'), editedName, 'Edited name is correct');
-		assert.equal(player.attr('weight'), editedWeight, 'Edited weight is correct');
-		assert.equal(player.attr('height'), editedHeight, 'Edited height is correct');
+		assert.equal(player.name, editedName, 'Edited name is correct');
+		assert.equal(player.weight, editedWeight, 'Edited weight is correct');
+		assert.equal(player.height, editedHeight, 'Edited height is correct');
 
 		vm.cancel();
 
-		assert.equal(player.attr('name'), initialName, 'Restored name is correct');
-		assert.equal(player.attr('weight'), initialWeight, 'Restored weight is correct');
-		assert.equal(player.attr('height'), initialHeight, 'Restored height is correct');
+		assert.equal(player.name, initialName, 'Restored name is correct');
+		assert.equal(player.weight, initialWeight, 'Restored weight is correct');
+		assert.equal(player.height, initialHeight, 'Restored height is correct');
 	});
 
 });

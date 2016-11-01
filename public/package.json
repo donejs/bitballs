@@ -43,7 +43,7 @@
     "generator-donejs": "0.6.4",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
-    "steal": "^0.15.0",
+    "steal": "^0.16.41",
     "steal-platform": "0.0.4",
     "steal-qunit": "^0.1.1",
     "steal-stache": "^3.0.0-pre.3",

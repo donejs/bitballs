@@ -71,7 +71,10 @@ Tournament.algebra = new set.Algebra(
 var tournamentConnection = superMap({
   Map: Tournament,
   List: Tournament.List,
-  url: "/services/tournaments",
+  url: {
+		resource: "/services/tournaments", 
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "tournament",
   algebra: Tournament.algebra
 });

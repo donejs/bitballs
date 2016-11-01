@@ -75,7 +75,8 @@ var options = {
 	url: {
 		getData: "/services/session",
 		createData: "/services/session",
-		destroyData: "/services/session"
+		destroyData: "/services/session",
+		contentType: "application/x-www-form-urlencoded"
 	}
 };
 

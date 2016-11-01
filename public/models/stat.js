@@ -94,7 +94,10 @@ Stat.algebra = new set.Algebra(
 var statConnection = superMap({
 	Map: Stat,
 	List: Stat.List,
-	url: "/services/stats",
+	url: {
+		resource: "/services/stats",
+		contentType: "application/x-www-form-urlencoded"
+	},
 	name: "stat",
 	algebra: Stat.algebra
 });

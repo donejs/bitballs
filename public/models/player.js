@@ -172,7 +172,10 @@ Player.algebra = new set.Algebra(
 var playerConnection = superMap({
   Map: Player,
   List: Player.List,
-  url: "/services/players",
+  url: {
+		resource: "/services/players",
+		contentType:'application/x-www-form-urlencoded'
+	},
   name: "player",
   algebra: Player.algebra
 });

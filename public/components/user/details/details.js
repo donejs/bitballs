@@ -31,8 +31,8 @@
 var Component = require("can-component"),
 	User = require("bitballs/models/user"),
 	Session = require("bitballs/models/session"),
-	CanMap = require("can-map"),
-	route = require("can-route");
+	route = require("can-route"),
+	DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
@@ -45,12 +45,12 @@ require("can-route");
  * @description  A `<user-details>` component's viewModel.
  */
 
-exports.ViewModel = CanMap.extend(
+exports.ViewModel = DefineMap.extend(
 /**
  * @prototype
  */
 {
-	define: {
+
 		/**
 		 * @property {can-map}
 		 *
@@ -62,8 +62,8 @@ exports.ViewModel = CanMap.extend(
 		user: {
 			Value: User,
 			get: function(val) {
-				if (this.attr('session.user')) {
-					return this.attr('session.user');
+				if (this.session) {
+					return this.session.user;
 				}
 				return val;
 			}
@@ -109,16 +109,15 @@ exports.ViewModel = CanMap.extend(
 		 */
 		userStatus: {
 			get: function() {
-				if (this.attr("user").isNew()) {
-                    return "new";
-                }
-				if (!this.attr("user.verified")) {
-                    return "pending";
-                }
+				if (this.user.isNew()) {
+          return "new";
+        }
+				if (!this.user.verified) {
+          return "pending";
+				}
 				return "verified";
 			}
-		}
-	},
+		},
 	/**
 	 * @function saveUser
 	 *
@@ -138,35 +137,39 @@ exports.ViewModel = CanMap.extend(
             ev.preventDefault();
         }
 		var self = this,
-			isNew = this.attr("user").isNew(),
-			promise = this.attr("user").save().then(function(user) {
+			isNew = this.user.isNew(),
+			promise = this.user.save().then(function(user) {
 
 				user.attr({
 					password: "",
 					verificationHash: ""
 				});
-				user.removeAttr("newPassword");
+				user.password = "";
+				user.verificationHash = "";
+				user.newPassword = null;
 
-				if (!self.attr("session")) {
+				if (!self.session) {
 					// Create session:
-					self.attr("session", new Session({
-						user: user
-					}));
-				} else {
-					// Update session:
-					self.attr("session").attr({
+					self.session = new Session({
 						user: user
 					});
+				} else {
+					// Update session:
+					self.session.user = user;
 				}
 
 				if (isNew) {
-					route.attr("page", "account");
+					route.page = "account";
 				}
 			});
 
-		this.attr('savePromise', promise);
+		this.savePromise = promise;
 
 		return promise;
+	},
+
+	savePromise: {
+		type: '*'
 	},
 	/**
 	 * @function deleteUser
@@ -179,10 +182,10 @@ exports.ViewModel = CanMap.extend(
 	deleteUser: function() {
 		var self = this;
 		if (confirm('Are you sure you want to delete your account?')) {
-			this.attr("user").destroy(function() {
-				self.attr("session").destroy();
-				self.attr("session", null);
-				route.attr("page", "register");
+			this.user.destroy(function() {
+				self.session.destroy();
+				self.session = null;
+				route.page = "register";
 			});
 		}
 	}
@@ -190,6 +193,6 @@ exports.ViewModel = CanMap.extend(
 
 exports.Component = Component.extend({
 	tag: "user-details",
-	template: require("./details.stache!"),
-	viewModel: exports.ViewModel
+	view: require("./details.stache!"),
+	ViewModel: exports.ViewModel
 });

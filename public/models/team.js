@@ -171,7 +171,10 @@ Team.algebra = new set.Algebra(
 var teamConnection = superMap({
   Map: Team,
   List: Team.List,
-  url: "/services/teams",
+  url: {
+		resource: "/services/teams",
+		contentType: "application/x-www-form-urlencoded"
+	},
   name: "team",
   algebra: Team.algebra
 });

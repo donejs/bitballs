@@ -24,7 +24,7 @@ QUnit.module("components/player/list/", {
 
 QUnit.test("players property loads players from server during instantiation", function (assert) {
 	var done = assert.async();
-	vm.attr("playersPromise").then(function (players) {
+	vm.playersPromise.then(function (players) {
 		assert.ok(players.length, "we got some players");
 		done();
 	});
@@ -33,14 +33,14 @@ QUnit.test("players property loads players from server during instantiation", fu
 QUnit.test("editPlayer sets editingPlayer to passed in player", function (assert) {
 	var player = { name: "Ryan" };
 	vm.editPlayer(player);
-	assert.deepEqual(vm.attr("editingPlayer").attr(), player, "editingPlayer was set");
+	assert.deepEqual(vm.editingPlayer, player, "editingPlayer was set");
 });
 
 QUnit.test("removeEdit removes editingPlayer", function (assert) {
 	var player = { name: "Ryan" };
-	vm.attr("editingPlayer", player);
+	vm.editingPlayer = player;
 	vm.removeEdit();
-	assert.notOk(vm.attr("editingPlayer"), "editingPlayer was removed");
+	assert.notOk(vm.editingPlayer, "editingPlayer was removed");
 });
 
 QUnit.test('Loading message shown while players list is loaded', function (assert) {

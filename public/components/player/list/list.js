@@ -30,7 +30,7 @@
  **/
 var Component = require("can-component");
 var template = require("./list.stache!");
-var CanMap = require("can-map");
+var DefineMap = require("can-define/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
@@ -38,32 +38,35 @@ require("can-route");
 
 var Player = require("bitballs/models/player");
 
-var ViewModel = exports.ViewModel = CanMap.extend(
+var ViewModel = exports.ViewModel = DefineMap.extend(
 /** @prototype */
 {
-	define: {
-		/**
-		 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
-		 * @parent bitballs/components/player/list.properties
-		 *
-		 * Configures whether or not admin specific features are enabled.
-		 **/
-		isAdmin: {
-			type: 'boolean',
-			value: false
-		},
-		/**
-		 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
-		 * @parent bitballs/components/player/list.properties
-		 *
-		 * A [bitballs/models/player] model List.
-		 */
-		playersPromise: {
-			value: function(){
-				return Player.getList({orderBy: "name"});
-			}
+
+	/**
+	 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
+	 * @parent bitballs/components/player/list.properties
+	 *
+	 * Configures whether or not admin specific features are enabled.
+	 **/
+	isAdmin: {
+		type: 'boolean',
+		value: false
+	},
+	editingPlayer: {
+		type: '*'
+	},
+	/**
+	 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
+	 * @parent bitballs/components/player/list.properties
+	 *
+	 * A [bitballs/models/player] model List.
+	 */
+	playersPromise: {
+		value: function(){
+			return Player.getList({orderBy: "name"});
 		}
 	},
+
 	/**
 	 * @function editPlayer
 	 *
@@ -74,7 +77,8 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 *   component.
 	 */
 	editPlayer: function(player){
-		this.attr("editingPlayer", player);
+		this.editingPlayer = player;
+		//this.attr('editingPlayer', player);
 	},
 	/**
 	 * @function removeEdit
@@ -82,7 +86,8 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 * Deselects the [bitballs/models/player] model being edited.
 	 */
 	removeEdit: function(){
-		this.removeAttr("editingPlayer");
+		this.editingPlayer = undefined;
+		//this.removeAttr("editingPlayer"); //what's the equivalent of 'removeAttr' in 3.0?
 	},
 
 	/**
