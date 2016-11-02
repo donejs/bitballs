@@ -5,7 +5,6 @@ import F from 'funcunit';
 import $ from "jquery";
 import './edit';
 import stache from "can-stache";
-import CanMap from "can-map";
 import DefineMap from "can-define/map/map";
 
 import defineFixtures from 'bitballs/models/fixtures/players';
@@ -119,7 +118,7 @@ QUnit.module('components/player/edit/', function(hooks){
 			'Form is excluded for non-admin user');
 
 		vm.isAdmin = true;
-		
+
 		QUnit.equal($('player-edit .edit-form', frag).length, 1,
 			'Form is included for admin user');
 	});

@@ -253,15 +253,14 @@ exports.ViewModel = DefineMap.extend(
 	 */
 	createStat: function(ev) {
 		ev.preventDefault();
-		var self = this;
+		//var self = this;
 		var stat = this.stat;
 
 
 		stat.save(function(){
-			self.removestat;
+			//self.removestat;
 		}, function(e){
-			console.log(e);
-			self.removestat;
+			//self.removestat;
 		});
 	},
 	/**
@@ -276,7 +275,7 @@ exports.ViewModel = DefineMap.extend(
 	 * ```
 	 */
 	removeStat: function(){
-		this.removestat;
+		this.removestat = null;
 	},
 	/**
 	 * @function

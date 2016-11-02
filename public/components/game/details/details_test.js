@@ -8,7 +8,6 @@ import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
 import canViewModel from 'can-view-model';
-import DefineMap from 'can-define/map/map';
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
