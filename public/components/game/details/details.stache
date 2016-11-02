@@ -30,7 +30,7 @@
 						<span ($click)="gotoTimeMinus5(time, %event)"
 							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
 							{{type}}
-							{{#if session.isAdmin}}
+							{{#if session.isAdmin }}
 								<span class="destroy-btn glyphicon glyphicon-trash"
 									($click)="deleteStat(., %event)"></span>
 							{{/if}}

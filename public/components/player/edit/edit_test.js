@@ -6,6 +6,7 @@ import $ from "jquery";
 import './edit';
 import stache from "can-stache";
 import CanMap from "can-map";
+import DefineMap from "can-define/map/map";
 
 import defineFixtures from 'bitballs/models/fixtures/players';
 
@@ -109,7 +110,7 @@ QUnit.module('components/player/edit/', function(hooks){
 
 	QUnit.test('Form is only shown to admins', function () {
 
-		var vm = new CanMap({
+		var vm = new DefineMap({
 			isAdmin: false
 		});
 		var frag = stache('<player-edit {is-admin}="isAdmin" />')(vm);

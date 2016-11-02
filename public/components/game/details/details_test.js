@@ -1,5 +1,6 @@
 import QUnit from "steal-qunit";
 import Session from "models/session";
+import User from "models/user";
 import details from "./details";
 import { games } from "models/fixtures/games";
 import F from 'funcunit';
@@ -58,31 +59,29 @@ QUnit.test("correctly sums score", function() {
 
 QUnit.test('A stat can only be deleted by an admin', function () {
 
-    var session = new Session({
-        isAdmin: false
-    });
+    var session = new Session({user: new User({ isAdmin: false }) });
 
 
-
-    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
+    var vm = {
         gameId: this.vm.gameId,
         session: session
-    });
+    };
+    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')(vm);
 
     $('#qunit-fixture').html(frag);
 
     F.confirm(true);
 
-  
+
     F('.stat-point .destroy-btn')
         .size(0, 'There is no destroy button')
         .then(function () {
-            session.isAdmin = true;
+            vm.session.attr('user').attr('isAdmin', true);
             ok(true, 'The user is given admin privileges');
         })
-        .size(5, 'Destroy buttons are inserted')
+        .size(6, 'Destroy buttons are inserted')
         .click()
-        .size(4, 'Clicking the destroy button removed a stat');
+        .size(5, 'Clicking the destroy button removed a stat');
 
 
 });

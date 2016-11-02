@@ -420,8 +420,8 @@ exports.ViewModel = DefineMap.extend(
 
 exports.Component = Component.extend({
 	tag: "game-details",
-	template: require("./details.stache!"),
-	viewModel: exports.ViewModel,
+	view: require("./details.stache!"),
+	ViewModel: exports.ViewModel,
 	/**
 	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
