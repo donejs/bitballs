@@ -45,79 +45,75 @@ require("can-route");
  * @description  A `<user-details>` component's viewModel.
  */
 
-exports.ViewModel = DefineMap.extend(
-/**
- * @prototype
- */
-{
+exports.ViewModel = DefineMap.extend({
 
-		/**
-		 * @property {can-map}
-		 *
-		 * Provides a user instance. If a session is active, this
-		 * syncs the user with `session.user`. Otherwise, a user instance
-		 * is created since this property is used to bind with the user details form.
-		 *
-		 */
-		user: {
-			Value: User,
-			get: function(val) {
-				if (this.session) {
-					return this.session.user;
-				}
-				return val;
+	/**
+	 * @property {can-map}
+	 *
+	 * Provides a user instance. If a session is active, this
+	 * syncs the user with `session.user`. Otherwise, a user instance
+	 * is created since this property is used to bind with the user details form.
+	 *
+	 */
+	user: {
+		Value: User,
+		get: function(val) {
+			if (this.session) {
+				return this.session.user;
 			}
-		},
-		/**
-		 * @property {bitballs/models/session|null}
-		 *
-		 * If a user is logged in, the session data, including
-		 * data about the currently logged in user.
-		 *
-		 * @signature `bitballs/models/session`
-		 *
-		 * 	A session instance, which includes data about the logged in user like:
-		 *
-		 *      {
-		 *      	user: {
-		 *      		email: "tomrobbins@tommyrotten.net",
-		 *      		id: 4,
-		 *      		verified: false,
-		 *      		isAdmin: false
-		 *      	}
-		 *      }
-		 *
-		 * @signature `null`
-		 *
-		 * 	If the user is not currently logged in, `null`.
-		 */
-		session: {
-			value: null
-		},
-		/**
-		 * @property {String}
-		 *
-		 * The status of the user. One of the following:
-		 *
-		 *  - "new": user has not been created
-		 *  - "pending": user has been created, but has not verified their email address
-		 *  - "verified": user has verified their email address
-		 *
-		 *  With a new user, the component shows a registration form.
-		 *  With a pending user, the component shows the email address.
-		 *  With a verified user, the component shows a form allowing the user to change their password.
-		 */
-		userStatus: {
-			get: function() {
-				if (this.user.isNew()) {
-          return "new";
-        }
-				if (!this.user.verified) {
-          return "pending";
-				}
-				return "verified";
+			return val;
+		}
+	},
+	/**
+	 * @property {bitballs/models/session|null}
+	 *
+	 * If a user is logged in, the session data, including
+	 * data about the currently logged in user.
+	 *
+	 * @signature `bitballs/models/session`
+	 *
+	 * 	A session instance, which includes data about the logged in user like:
+	 *
+	 *      {
+	 *      	user: {
+	 *      		email: "tomrobbins@tommyrotten.net",
+	 *      		id: 4,
+	 *      		verified: false,
+	 *      		isAdmin: false
+	 *      	}
+	 *      }
+	 *
+	 * @signature `null`
+	 *
+	 * 	If the user is not currently logged in, `null`.
+	 */
+	session: {
+		value: null
+	},
+	/**
+	 * @property {String}
+	 *
+	 * The status of the user. One of the following:
+	 *
+	 *  - "new": user has not been created
+	 *  - "pending": user has been created, but has not verified their email address
+	 *  - "verified": user has verified their email address
+	 *
+	 *  With a new user, the component shows a registration form.
+	 *  With a pending user, the component shows the email address.
+	 *  With a verified user, the component shows a form allowing the user to change their password.
+	 */
+	userStatus: {
+		get: function() {
+			if (this.user.isNew()) {
+        return "new";
+      }
+			if (!this.user.verified) {
+        return "pending";
 			}
-		},
+			return "verified";
+		}
+	},
 	/**
 	 * @function saveUser
 	 *

@@ -58,11 +58,7 @@ QUnit.test('creating tournament fails without a name', function(assert){
 //     });
 //
 //     $('#qunit-fixture').html(frag);
-// 		$('#qunit-fixture').css({
-// 			"position": "relative",
-// 			"top": "0px",
-// 			"left": "0px"
-// 		});
+//
 //     // Click the button multiple times and ensure it's disabled
 //     // during requests
 //     F('tournament-list .create-btn')
@@ -73,13 +69,12 @@ QUnit.test('creating tournament fails without a name', function(assert){
 // 		console.log("obaid: ", F('tournament-list .create-btn').attr('disabled'));
 //
 // 		F('tournament-list .create-btn')
-// 				.wait(3999999)
-// 				.attr('disabled', 'disabled', 'Create button is disabled');
-// 				// .then(function() {
-// 				// 	resolveRequest({});
-// 				// })
-// 				// .attr('disabled', undefined,
-//         //     'Create button is enabled after the request is resolved');
+// 				.attr('disabled', 'disabled', 'Create button is disabled')
+// 				.then(function() {
+// 					resolveRequest({});
+// 				})
+// 				.attr('disabled', undefined,
+//             'Create button is enabled after the request is resolved');
 //
 //
 // });

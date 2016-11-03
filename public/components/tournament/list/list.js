@@ -29,45 +29,47 @@
  *
  */
 var Component = require("can-component");
-var CanMap = require("can-map");
+var DefineMap = require("can-define/map/map");
 var Tournament = require("bitballs/models/tournament");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
 require("can-route");
 
-exports.ViewModel = CanMap.extend(
+exports.ViewModel = DefineMap.extend(
 /** @prototype */
 {
-	define: {
-		/**
-		* @property {bitballs/models/tournament} bitballs/components/tournament/list.tournament tournament
-		* @parent bitballs/components/tournament/list.properties
-		*
-		* The [bitballs/models/tournament] model that backs the tournament
-		* creation form.
-		**/
-		tournament: {
-			Type: Tournament,
-			Value: Tournament
-		},
-		/**
-		* @property {Boolean} bitballs/components/tournament/list.isAdmin isAdmin
-		* @parent bitballs/components/tournament/list.properties
-		*
-		* Configures whether or not admin specific features are enabled.
-		**/
-		isAdmin: {
-			type: 'boolean',
-			value: false,
-		},
-		/**
-		* @property {Promise<Tournament>} bitballs/components/tournament/list.savePromise savePromise
-		* @parent bitballs/components/tournament/list.properties
-		*
-		* A promise that resolves when [bitballs/component/tournament/list.prototype.createTournament]
-		* is called and the [bitballs/models/tournament] model is persisted to the server.
-		**/
+
+	/**
+	* @property {bitballs/models/tournament} bitballs/components/tournament/list.tournament tournament
+	* @parent bitballs/components/tournament/list.properties
+	*
+	* The [bitballs/models/tournament] model that backs the tournament
+	* creation form.
+	**/
+	tournament: {
+		Type: Tournament,
+		Value: Tournament
+	},
+	/**
+	* @property {Boolean} bitballs/components/tournament/list.isAdmin isAdmin
+	* @parent bitballs/components/tournament/list.properties
+	*
+	* Configures whether or not admin specific features are enabled.
+	**/
+	isAdmin: {
+		type: 'boolean',
+		value: false,
+	},
+	/**
+	* @property {Promise<Tournament>} bitballs/components/tournament/list.savePromise savePromise
+	* @parent bitballs/components/tournament/list.properties
+	*
+	* A promise that resolves when [bitballs/component/tournament/list.prototype.createTournament]
+	* is called and the [bitballs/models/tournament] model is persisted to the server.
+	**/
+	savePromise: {
+		type: '*'
 	},
 	/**
 	 * @function createTournament
@@ -85,12 +87,11 @@ exports.ViewModel = CanMap.extend(
 		}
 		var self = this;
 
-		var promise = this.attr("tournament").save().then(function(player) {
-			self.attr("tournament", new Tournament());
+		var promise = this.tournament.save().then(function(player) {
+			self.tournament = new Tournament();
 		});
 
-		this.attr("savePromise", promise);
-
+		this.savePromise = promise;
 		return promise;
 	},
 	/**
@@ -115,7 +116,7 @@ exports.ViewModel = CanMap.extend(
 
 exports.Component = Component.extend({
 	tag: "tournament-list",
-	template: require("./list.stache!"),
-	viewModel: exports.ViewModel,
+	view: require("./list.stache!"),
+	ViewModel: exports.ViewModel,
 	leakScope: false
 });

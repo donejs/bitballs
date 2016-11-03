@@ -30,11 +30,12 @@
  */
 
 import Component from 'can-component';
-import CanMap from 'can-map';
+import DefineMap from 'can-define/map/map';
 import 'can-map-define';
 import './list.less!';
 import template from './list.stache!';
 import User from "bitballs/models/user";
+import Session from "bitballs/models/session";
 
 /**
  * @constructor bitballs/components/user/list.ViewModel ViewModel
@@ -43,36 +44,34 @@ import User from "bitballs/models/user";
  * @description A `<user-list>` component's ViewModel.
  */
 
-export const ViewModel = CanMap.extend({
+export const ViewModel = DefineMap.extend({
 	/**
-	 * @prototype
+	 * @property {can-list<bitballs/models/user>}
+	 *
+	 * Provides list of users, like:
+	 *
+	 *   {data: [{
+	 *   	"id": Int,
+	 *   	"email": String,
+	 *   	"isAdmin": Boolean,
+	 *   	"verified": Boolean
+	 *   }, ...]}
+	 *
 	 */
-	define: {
-		/**
-		 * @property {can-list<bitballs/models/user>}
-		 *
-		 * Provides list of users, like:
-		 *
-		 *   {data: [{
-		 *   	"id": Int,
-		 *   	"email": String,
-		 *   	"isAdmin": Boolean,
-		 *   	"verified": Boolean
-		 *   }, ...]}
-		 *
-		 */
-		users: {
-			get: function(list) {
-				if (list) {
-                    return list;
-                }
-				return User.getList({});
-			}
+	users: {
+		get: function(list) {
+			if (list) {
+        return list;
+      }
+			return User.getList({});
 		}
-		/**
-		 * @property {bitballs/models/session} session
-		 *   The session object if a user is logged in. The user must be an admin to view the user list.
-		 */
+	},
+	/**
+	 * @property {bitballs/models/session} session
+	 *   The session object if a user is logged in. The user must be an admin to view the user list.
+	 */
+	session: {
+		Type: Session
 	},
 	/**
 	 * @function
@@ -91,6 +90,6 @@ export const ViewModel = CanMap.extend({
 
 export default Component.extend({
 	tag: 'user-list',
-	viewModel: ViewModel,
-	template
+	ViewModel: ViewModel,
+	view: template
 });
