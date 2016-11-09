@@ -108,9 +108,7 @@ var Player = DefineMap.extend('Player', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: {
-		type: 'string',
-	},
+	id: 'number',
 	/**
 	 * @function
 	 *

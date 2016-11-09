@@ -298,9 +298,8 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		stream: function(setStream) {
 			var vm = this;
 			var selectedRoundStream = this.stream(".selectedRound");
-			var gamesLenghtStream = this.stream("games.length");
-
-			return setStream.merge(selectedRoundStream);/*.map(function(val) {
+			
+			return setStream.merge(selectedRoundStream).map(function(val) {
 				if(!val) {
 					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound)[0];
 					return selectedCourt;
@@ -308,7 +307,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 				else {
 					return val;
 				}
-			});*/
+			});
 		}
 	},
 
@@ -455,7 +454,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		game.round = this.selectedRound;
 		game.court = this.selectedCourt;
 		game.tournamentId = this.tournamentId;
-		debugger;
+		
 		game.save(function(){
 			self.game = new Game();
 		});

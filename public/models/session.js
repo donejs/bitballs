@@ -4,8 +4,7 @@
  *
  * @group bitballs/models/session.properties 0 properties
  */
-var superMap = require('can-connect/can/super-map/');
-var set = require("can-set");
+
 var connect = require("can-connect");
 var $ = require("jquery");
 var DefineMap = require("can-define/map/map");

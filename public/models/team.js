@@ -106,16 +106,16 @@ var Team = DefineMap.extend('Team', {
 		type: 'string'
 	},
 	player1Id: {
-		type: 'string',
+		type: 'number',
 	},
 	player2Id: {
-		type: 'string',
+		type: 'number',
 	},
 	player3Id: {
-		type: 'string',
+		type: 'number',
 	},
 	player4Id: {
-		type: 'string',
+		type: 'number',
 	}
 });
 /**
