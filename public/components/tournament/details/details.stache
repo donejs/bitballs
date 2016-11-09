@@ -1,6 +1,5 @@
 {{^if tournamentPromise.isRejected}}
 <h2>{{tournament.year}} Tournament</h2>
-{{d(.)}}
 <h3>Games</h3>
 <table  class="table">
 <thead>

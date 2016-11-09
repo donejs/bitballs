@@ -46,10 +46,6 @@ require("can-route");
 exports.ViewModel = DefineMap.extend('TournamentDetails',
 /** @prototype */
 {
-	//REMOVE ME
-	d: function(){
-		console.info(arguments);
-	},
 	/**
 	 * Called internally during view model initialization. Binds
 	 * [bitballs/components/tournament/details.ViewModel.prototype.userSelectedCourt userSelectedCourt]
@@ -300,13 +296,14 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 			var selectedRoundStream = this.stream(".selectedRound");
 			
 			return setStream.merge(selectedRoundStream).map(function(val) {
-				if(!val) {
-					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound)[0];
-					return selectedCourt;
+				if(vm.games) {
+					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
+					if(selectedCourt[val]) {
+						return selectedCourt[val];
+					}
+					return selectedCourt[0]; //Reset it to the first court available.
 				}
-				else {
-					return val;
-				}
+				return val;
 			});
 		}
 	},
