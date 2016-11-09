@@ -112,6 +112,6 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 
 exports.Component = Component.extend({
 	tag: "player-list",
-	template: template,
-	viewModel: ViewModel
+	view: template,
+	ViewModel: ViewModel
 });

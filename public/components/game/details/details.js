@@ -26,7 +26,7 @@
 var Component = require("can-component");
 var DefineMap = require("can-define/map/");
 var DefineList = require("can-define/list/");
-
+var Session = require("bitballs/models/session");
 var Game = require("bitballs/models/game");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
@@ -45,172 +45,174 @@ require("can-route");
  * @description  A `<game-details>` component's viewModel.
  */
 
-exports.ViewModel = DefineMap.extend(
+exports.ViewModel = DefineMap.extend('GameDetailsVM',
 /**
  * @prototype
  */
 {
-
-		/**
-		 * @property {Promise<bitballs/models/game>|undefined}
-		 *
-		 * Provides a Game instance with all the stats for the
-		 * game and all the player information!
-		 *
-		 * @signature `Promise<bitballs/models/game>`
-		 *
-		 *   Given a valid `gameId`, the game promise.
-		 *
-		 * @signature `undefined`
-		 *
-		 *   Given an invalid `gameId`, the game promise.
-		 *
-		 *
-		 * @body
-		 *
-		 * ```
-		 * var gameDetailsVM = new GameDetailsViewModel({
-		 *   gameId: 5
-		 * });
-		 * gameDetailsVM.attr("gamePromise").then(function(game){
-		 *   game.attr("date") //-> Date
-		 * })
-		 * ```
-		 *
-		 */
-		gamePromise: {
-			get: function() {
-				return Game.get({
-					id: this.gameId,
-					withRelated: ["stats",
-						"tournament",
-						"homeTeam.player1",
-						"homeTeam.player2",
-						"homeTeam.player3",
-						"homeTeam.player4",
-						"awayTeam.player1",
-						"awayTeam.player2",
-						"awayTeam.player3",
-						"awayTeam.player4"
-					]
+	d: function() {
+		console.info(arguments);
+	},
+	session: Session,
+	stat: 'any',
+	/**
+	 * @property {Promise<bitballs/models/game>|undefined}
+	 *
+	 * Provides a Game instance with all the stats for the
+	 * game and all the player information!
+	 *
+	 * @signature `Promise<bitballs/models/game>`
+	 *
+	 *   Given a valid `gameId`, the game promise.
+	 *
+	 * @signature `undefined`
+	 *
+	 *   Given an invalid `gameId`, the game promise.
+	 *
+	 *
+	 * @body
+	 *
+	 * ```
+	 * var gameDetailsVM = new GameDetailsViewModel({
+	 *   gameId: 5
+	 * });
+	 * gameDetailsVM.attr("gamePromise").then(function(game){
+	 *   game.attr("date") //-> Date
+	 * })
+	 * ```
+	 *
+	 */
+	gamePromise: {
+		get: function() {
+			return Game.get({
+				id: this.gameId,
+				withRelated: ["stats",
+					"tournament",
+					"homeTeam.player1",
+					"homeTeam.player2",
+					"homeTeam.player3",
+					"homeTeam.player4",
+					"awayTeam.player1",
+					"awayTeam.player2",
+					"awayTeam.player3",
+					"awayTeam.player4"
+				]
+			});
+		}
+	},
+	/**
+	 * @property {bitballs/models/game}
+	 *
+	 * Provides a game instance once the game promise resolves.
+	 */
+	game: {
+		get: function(last, set){
+			this.gamePromise.then(set);
+		}
+	},
+	/**
+	 * @property {Object}
+	 *
+	 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
+	 */
+	youtubePlayer: {
+		type: "*"
+	},
+	/**
+	 * @property {Array<{name: String}>}
+	 *
+	 * Array of statType objects from [bitballs/models/stat]
+	 */
+	statTypes: {
+		value: Stat.statTypes
+	},
+	/**
+	 * @property {Object<{home: Number, away: Number}>}
+	 *
+	 * The final score of the game, which is totalled based on the
+	 * game stats.
+	 */
+	finalScore: {
+		get: function(){
+			var game = this.game;
+			if(game && game.stats) {
+				var playerMap = this.playerIdToHomeOrAwayMap;
+				var scores = {home: 0, away: 0};
+				game.stats.each(function(stat){
+					if(stat.type === "1P") {
+						scores[playerMap[stat.playerId]]++;
+					}
+					if(stat.type === "2P") {
+						scores[playerMap[ stat.playerId ]] += 2;
+					}
 				});
+				return scores;
 			}
 		},
-		/**
-		 * @property {bitballs/models/game}
-		 *
-		 * Provides a game instance once the game promise resolves.
-		 */
-		game: {
-			get: function(last, set){
-				this.gamePromise.then(set);
-			}
-		},
-		/**
-		 * @property {Object}
-		 *
-		 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
-		 */
-		youtubePlayer: {
-			type: "*"
-		},
-		/**
-		 * @property {Array<{name: String}>}
-		 *
-		 * Array of statType objects from [bitballs/models/stat]
-		 */
-		statTypes: {
-			value: Stat.statTypes
-		},
-		/**
-		 * @property {Object<{home: Number, away: Number}>}
-		 *
-		 * The final score of the game, which is totalled based on the
-		 * game stats.
-		 */
-		finalScore: {
-			get: function(){
-				var game = this.game;
-				if(game && game.stats) {
-					var playerMap = this.playerIdToHomeOrAwayMap;
-					var scores = {home: 0, away: 0};
-					game.stats.each(function(stat){
+		type:"*"
+	},
+	/**
+	 * @property {Object<{home: Number, away: Number}>}
+	 *
+	 * The score of the game at the current time in the video,
+	 * which is totalled based on the game stats up to that point.
+	 */
+	currentScore: {
+		get: function(){
+			var game = game;
+			if(game && game.stats) {
+				var playerMap = this.playerIdToHomeOrAwayMap;
+				var scores = {home: 0, away: 0};
+
+				var time = this.time;
+
+				game.stats.each(function(stat){
+					if(stat.time <= time) {
 						if(stat.type === "1P") {
-							scores[playerMap[stat.playerId]]++;
+							scores[playerMap[ stat.playerId] ]++;
 						}
 						if(stat.type === "2P") {
-							scores[playerMap[ stat.playerId ]] += 2;
+							scores[playerMap[ stat.playerId]] += 2;
 						}
-					});
-					return scores;
-				}
-			},
-			type:"*"
-		},
-		/**
-		 * @property {Object<{home: Number, away: Number}>}
-		 *
-		 * The score of the game at the current time in the video,
-		 * which is totalled based on the game stats up to that point.
-		 */
-		currentScore: {
-			get: function(){
-				var game = game;
-				if(game && game.stats) {
-					var playerMap = this.playerIdToHomeOrAwayMap;
-					var scores = {home: 0, away: 0};
-
-					var time = this.time;
-
-					game.stats.each(function(stat){
-						if(stat.time <= time) {
-							if(stat.type === "1P") {
-								scores[playerMap[ stat.playerId] ]++;
-							}
-							if(stat.type === "2P") {
-								scores[playerMap[ stat.playerId]] += 2;
-							}
-						}
-					});
-					return scores;
-				}
-			},
-			type:"*"
-		},
-		/**
-		 * @property {Object}
-		 *
-		 * An object mapping each player id to "home" or "away" to enable
-		 * totalling of scores based on stats.
-		 */
-		playerIdToHomeOrAwayMap: {
-			type: "*",
-			get: function(){
-				var game = this.game;
-				if(game && game.homeTeam && game.awayTeam) {
-					var map = {};
-					for(var i = 1; i <= 4; i++) {
-						map[ game.homeTeam["player" + i + "Id"] ] = "home";
-						map[ game.awayTeam["player" + i + "Id"] ] = "away";
 					}
-					return map;
-				}
+				});
+				return scores;
 			}
 		},
-		/**
-		 * @property {Object}
-		 *
-		 * An object of stats sorted by player id from [bitballs/models/stat]
-		 */
-		sortedStatsByPlayerId: {
-			type: "*",
-			get: function(){
-				var game = this.game;
-				if(game) {
-					return game.sortedStatsByPlayerId();
+		type:"*"
+	},
+	/**
+	 * @property {Object}
+	 *
+	 * An object mapping each player id to "home" or "away" to enable
+	 * totalling of scores based on stats.
+	 */
+	playerIdToHomeOrAwayMap: {
+		type: "*",
+		get: function(){
+			var game = this.game;
+			if(game && game.homeTeam && game.awayTeam) {
+				var map = {};
+				for(var i = 1; i <= 4; i++) {
+					map[ game.homeTeam["player" + i + "Id"] ] = "home";
+					map[ game.awayTeam["player" + i + "Id"] ] = "away";
 				}
+				return map;
 			}
-		},
+		}
+	},
+	/**
+	 * @property {Object}
+	 *
+	 * An object of stats sorted by player id from [bitballs/models/stat]
+	 */
+	sortedStatsByPlayerId: {
+		type: "any",
+		get: function(){
+			var game = this.game;
+			return game.sortedStatsByPlayerId();
+		}
+	},
 
 	/**
 	 * @function
@@ -226,6 +228,7 @@ exports.ViewModel = DefineMap.extend(
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
+		
 		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
@@ -239,6 +242,8 @@ exports.ViewModel = DefineMap.extend(
 			gameId: this.game.id,
 			player: player
 		});
+
+		
 	},
 	/**
 	 * @function
@@ -253,14 +258,14 @@ exports.ViewModel = DefineMap.extend(
 	 */
 	createStat: function(ev) {
 		ev.preventDefault();
-		//var self = this;
+		var self = this;
 		var stat = this.stat;
 
 
 		stat.save(function(){
-			//self.removestat;
+			self.stat = false;
 		}, function(e){
-			//self.removestat;
+			self.stat = false;
 		});
 	},
 	/**
@@ -275,7 +280,7 @@ exports.ViewModel = DefineMap.extend(
 	 * ```
 	 */
 	removeStat: function(){
-		this.removestat = null;
+		this.stat = null;
 	},
 	/**
 	 * @function
@@ -313,7 +318,7 @@ exports.ViewModel = DefineMap.extend(
 	 * ```
 	 */
 	minusTime: function(time){
-		this.stat.time = this.state.time - time;
+		this.stat.time = this.stat.time - time;
 	},
 	/**
 	 * @function
@@ -387,7 +392,9 @@ exports.ViewModel = DefineMap.extend(
 		} else {
 			return "0";
 		}
-
+	},
+	duration: {
+		type: '*'
 	},
 	/**
 	 * @function
@@ -421,6 +428,8 @@ exports.Component = Component.extend({
 	tag: "game-details",
 	view: require("./details.stache!"),
 	ViewModel: exports.ViewModel,
+	YT: false,
+	youtubePlayer: false,
 	/**
 	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
@@ -437,6 +446,7 @@ exports.Component = Component.extend({
 			youtubeAPI().then(function(YT){
 				self.YT = YT;
 			}).then(function () {
+
 				return self.scope.gamePromise;
 			}).then(function () {
 				var player = new self.YT.Player('youtube-player', {
@@ -525,11 +535,11 @@ exports.Component = Component.extend({
 			var duration = this.scope.duration;
 			if(duration) {
 				this.viewModel.time = time;
-				var fraction = time /duration;
-				var containers = this.element.find(".stats-container");
-				var width = containers.width();
-				var firstOffset = containers.first().offset();
-				var height = containers.last().offset().top - firstOffset.top + containers.last().height();
+				var fraction = time / duration;
+				var containers = this.element.getElementsByClassName("stats-container");
+				var width = $(containers[0]).width();
+				var firstOffset = $(containers[0]).offset();
+				var height = $(containers[containers.length - 1]).offset().top - firstOffset.top + $(containers[containers.length - 1]).height();
 				$("#player-pos").offset({
 					left: firstOffset.left + fraction*width,
 					top: firstOffset.top

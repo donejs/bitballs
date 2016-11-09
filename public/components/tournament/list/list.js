@@ -36,7 +36,7 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
 require("can-route");
 
-exports.ViewModel = DefineMap.extend(
+exports.ViewModel = DefineMap.extend('TournamentList',
 /** @prototype */
 {
 
@@ -48,7 +48,6 @@ exports.ViewModel = DefineMap.extend(
 	* creation form.
 	**/
 	tournament: {
-		Type: Tournament,
 		Value: Tournament
 	},
 	/**

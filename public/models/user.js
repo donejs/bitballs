@@ -25,17 +25,39 @@
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
-var CanMap = require('can-map');
-var CanList = require("can-list");
+var DefineMap = require('can-define/map/map');
+var DefineList = require("can-define/list/list");
 require("can-map-define");
 
-var User = CanMap.extend({});
+var User = DefineMap.extend('User', {
+	email: {
+		type: 'string',
+	},
+	password: {
+		type: 'string'
+	},
+	id: {
+		type: '*',
+	},
+	name: {
+		type: 'string',
+	},
+	isAdmin: {
+		type: '*'
+	},
+	verified: {
+		type: '*'
+	},
+	verificationHash: {
+		type: 'string'
+	}
+});
 
 /**
  * @constructor {can-list} bitballs/models/user.static.List List
  * @parent bitballs/models/user.static
  */
-User.List = CanList.extend({Map: User},{});
+User.List = DefineList.extend({Map: User},{});
 
 /**
  * @property {set.Algebra} bitballs/models/user.static.algebra algebra
@@ -52,9 +74,9 @@ var userConnection = superMap({
   Map: User,
   List: User.List,
   url: {
-		resource: "/services/users",
-		contentType: "application/x-www-form-urlencoded"
-	},
+	resource: "/services/users",
+	contentType: "application/x-www-form-urlencoded"
+  },
   name: "user",
   algebra: User.algebra
 });

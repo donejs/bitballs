@@ -27,6 +27,8 @@ QUnit.test("players property loads players from server during instantiation", fu
 	vm.playersPromise.then(function (players) {
 		assert.ok(players.length, "we got some players");
 		done();
+	}, function(err) {
+		debugger;
 	});
 });
 

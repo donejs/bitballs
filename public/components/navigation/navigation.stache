@@ -9,6 +9,7 @@
 				<a href="{{routeUrl (page='players')}}">Players</a>
 		  </li>
 		</ul>
+	
 
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if app.session}}

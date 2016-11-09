@@ -84,7 +84,8 @@ export const ViewModel = DefineMap.extend({
 	 * @return {Promise<bitballs/models/user} The save promise that resolves to a user.
 	 */
 	setAdmin: function(user, isAdmin) {
-		return user.attr("isAdmin", isAdmin).save();
+		user.isAdmin = isAdmin;
+		return user.save();
 	}
 });
 

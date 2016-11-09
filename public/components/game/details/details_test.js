@@ -37,6 +37,9 @@ QUnit.test("loads game data", function() {
         QUnit.start();
     });
 
+    this.vm.gamePromise.then(function(){
+      this;
+    })
     this.vm.gamePromise.catch(function(err) {
         ok(false, "game fetch failed");
         QUnit.start();
@@ -60,13 +63,16 @@ QUnit.test('A stat can only be deleted by an admin', function () {
 
     var session = new Session({user: new User({ isAdmin: false }) });
 
-
-    var vm = {
+     var vm = this.vm;
+    var vm2 = {
         gameId: this.vm.gameId,
         session: session
     };
     var frag = stache('<game-details {game-id}="gameId" {session}="session" />')(vm);
 
+    vm.gamePromise.then(function() {
+      debugger;
+    });
     $('#qunit-fixture').html(frag);
 
     F.confirm(true);
@@ -75,7 +81,8 @@ QUnit.test('A stat can only be deleted by an admin', function () {
     F('.stat-point .destroy-btn')
         .size(0, 'There is no destroy button')
         .then(function () {
-            vm.session.attr('user').attr('isAdmin', true);
+          debugger;
+            vm.session.user.isAdmin = true;
             ok(true, 'The user is given admin privileges');
         })
         .size(6, 'Destroy buttons are inserted')

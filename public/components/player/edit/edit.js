@@ -90,7 +90,7 @@ exports.ViewModel = DefineMap.extend(
 		}
 
 		promise.then(function(){
-			player.backup();
+			// player.backup();
 			self.dispatch("saved");
 		});
 
@@ -109,7 +109,8 @@ exports.ViewModel = DefineMap.extend(
 	 * Fires a "canceled" event.
 	 */
 	cancel: function() {
-		this.player.restore();
+		//@TODO: create a can-define-backup lib.
+		// this.player.restore();
 
 		this.dispatch("canceled");
 	}
@@ -117,6 +118,6 @@ exports.ViewModel = DefineMap.extend(
 
 exports.Component = Component.extend({
 	tag: "player-edit",
-	template: require("./edit.stache!"),
-	viewModel: exports.ViewModel
+	view: require("./edit.stache!"),
+	ViewModel: exports.ViewModel
 });
