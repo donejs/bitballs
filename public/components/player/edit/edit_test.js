@@ -21,6 +21,8 @@ QUnit.module('components/player/edit/', function(hooks){
 		defineFixtures();
 	});
 
+
+
 	QUnit.test('Tests are running', function(assert){
 		assert.ok( true, "Passed!" );
 	});
@@ -47,7 +49,7 @@ QUnit.module('components/player/edit/', function(hooks){
 
 		vm.bind("saved", function(){
 			player.id = 1;
-			assert.deepEqual(player, playerModel.attr(),  "New player saved");
+			assert.deepEqual(player, playerModel.serialize(),  "New player saved");
 			vm.unbind("saved");
 			done();
 		});

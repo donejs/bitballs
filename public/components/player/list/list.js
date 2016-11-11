@@ -77,8 +77,8 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 	 *   component.
 	 */
 	editPlayer: function(player){
+		player.backup();
 		this.editingPlayer = player;
-		//this.attr('editingPlayer', player);
 	},
 	/**
 	 * @function removeEdit
@@ -87,7 +87,6 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 	 */
 	removeEdit: function(){
 		this.editingPlayer = undefined;
-		//this.removeAttr("editingPlayer"); //what's the equivalent of 'removeAttr' in 3.0?
 	},
 
 	/**

@@ -7,6 +7,7 @@ import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
 import canViewModel from 'can-view-model';
+import User from "models/user";
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
@@ -55,17 +56,18 @@ QUnit.test("correctly sums score", function() {
     });
 });
 
+
 QUnit.test('A stat can only be deleted by an admin', function () {
 
-    //var session = new Session({user: new User({ isAdmin: false }) });
+    var session = new Session({user: new User({ isAdmin: false }) });
 
     var vm = this.vm;
+    vm.session = session;
     var frag = stache('<game-details {game-id}="gameId" {session}="session" />')(vm);
 
     $('#qunit-fixture').html(frag);
 
     F.confirm(true);
-
 
     F('.stat-point .destroy-btn')
         .size(0, 'There is no destroy button')

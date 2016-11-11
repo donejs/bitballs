@@ -54,7 +54,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		console.info(arguments);
 	},
 	session: Session,
-	stat: 'any',
+	stat: Stat,
 	/**
 	 * @property {Promise<bitballs/models/game>|undefined}
 	 *

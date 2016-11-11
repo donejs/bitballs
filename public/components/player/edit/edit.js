@@ -58,8 +58,7 @@ exports.ViewModel = DefineMap.extend(
 	* The model that will be bound to the form.
 	**/
 	player: {
-		Value: Player,
-		Type: Player
+		Value: Player
 	},
 	/**
 	 * @function savePlayer
@@ -78,8 +77,8 @@ exports.ViewModel = DefineMap.extend(
 		}
 
 		var self = this;
-		var player = this.player,
-				promise;
+		var player = this.player;
+		var promise;
 
 		if(player.isNew()) {
 			promise = player.save().then(function(){
@@ -90,7 +89,7 @@ exports.ViewModel = DefineMap.extend(
 		}
 
 		promise.then(function(){
-			// player.backup();
+			player.backup();
 			self.dispatch("saved");
 		});
 
@@ -109,9 +108,7 @@ exports.ViewModel = DefineMap.extend(
 	 * Fires a "canceled" event.
 	 */
 	cancel: function() {
-		//@TODO: create a can-define-backup lib.
-		// this.player.restore();
-
+		this.player.restore();
 		this.dispatch("canceled");
 	}
 });

@@ -174,9 +174,9 @@ var playerConnection = superMap({
   Map: Player,
   List: Player.List,
   url: {
-		resource: "/services/players",
-		contentType:'application/x-www-form-urlencoded'
-	},
+	resource: "/services/players",
+	contentType:'application/x-www-form-urlencoded'
+  },
   name: "player",
   algebra: Player.algebra
 });

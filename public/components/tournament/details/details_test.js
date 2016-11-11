@@ -5,8 +5,6 @@ import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import fixture from "can-fixture";
 import Game from 'bitballs/models/game';
-import clone from 'steal-clone';
-import CanMap from 'can-map';
 
 var ViewModel = details.ViewModel;
 var vm;
@@ -18,29 +16,21 @@ QUnit.module('components/tournament/details/', {
         defineTournamentFixtures();
         defineGameFixtures();
 
-        clone({
-            'bitballs/models/tournament': {
-                get() {
-                    return Promise.resolve(new CanMap({
-                        name: 'Test Name'
-                    }));
-                }
-            }
-        })
-        .import('./details')
-        .then(({ ViewModel }) => {
-            vm = new ViewModel({
+        vm = new ViewModel({
                 tournamentId: 2
             });
-            done();
-        });
+
+        
+        done();
+
+        
     }
 });
 
 QUnit.test('should load a tournament', (assert) => {
     let done = assert.async();
     vm.bind('tournament', function (ev, newVal) {
-        assert.equal(newVal.name, 'Test Name', 'with the correct name' );
+        assert.equal(newVal.name, 'EBaller Virus', 'with the correct name' );
         done();
     });
 });
@@ -61,10 +51,10 @@ QUnit.test('The selected round defaults to the first available round', function 
         return gamesResponse;
     });
 
+    vm.on("selectedRound", function(){});
     QUnit.stop();
     vm.gamesPromise.then(function (games) {
         QUnit.start();
-        vm.on('selectedRound', function(){});
         QUnit.equal(vm.selectedRound, Game.roundNames[1],
             'The second round is selected');
     });
@@ -83,6 +73,7 @@ QUnit.test('The selected court defaults to the first available court', function 
     });
 
     QUnit.stop();
+    vm.on("selectedCourt", function(){});
     vm.gamesPromise.then(function (games) {
         QUnit.start();
         vm.on('selectedCourt', function(){});

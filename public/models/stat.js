@@ -29,7 +29,8 @@ var DefineMap = require('can-define/map/map');
 var DefineList = require('can-define/list/list');
 var Player = require("bitballs/models/player");
 
-require("can-map-define");
+// require("can-map-define");
+// require("can-map-backup");
 
 var Stat = DefineMap.extend('Stat',
 {
@@ -82,7 +83,7 @@ var Stat = DefineMap.extend('Stat',
  *
  * Methods on a List of stats.
  */
-Stat.List = DefineList.extend({Map: Stat});
+Stat.List = DefineList.extend({"#": Stat});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra
@@ -96,10 +97,14 @@ Stat.algebra = new set.Algebra(
 );
 
 var statConnection = superMap({
+	idProp: "id",
 	Map: Stat,
 	List: Stat.List,
 	url: {
-		resource: "/services/stats",
+		// resource: "/services/stats",
+		getData: "/services/stats",
+		createData: "/services/stats",
+		destroyData: "/services/stats/{id}",
 		contentType: "application/x-www-form-urlencoded"
 	},
 	name: "stat",

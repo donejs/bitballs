@@ -47,37 +47,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 /** @prototype */
 {
 	/**
-	 * Called internally during view model initialization. Binds
-	 * [bitballs/components/tournament/details.ViewModel.prototype.userSelectedCourt userSelectedCourt]
-	 * to [bitballs/components/tournament/details.ViewModel.prototype.userSelectedRound userSelectedRound]
-	 * and sets the value to `null` when a change occurs. Similarly for
-	 * [bitballs/components/tournament/details.ViewModel.prototype.userSelectedRound userSelectedRound]
-	 * and [bitballs/components/tournament/details.ViewModel.prototype.gamesLength gamesLength].
-	 */
-	setupBindings: function () {
-		
-		// this.setSelectedCourtToNull = function () {
-		// 	this.userSelectedCourt = null;
-		// }.bind(this);
-
-		// this.setSelectedRoundToNull = function () {
-		// 	this.userSelectedRound = null;
-		// }.bind(this);
-
-		// this.on('userSelectedRound', this.setSelectedCourtToNull);
-		// this.on('gamesLength', this.setSelectedRoundToNull);
-	},
-	teardownBindings: function() {
-		//this.unbind('userSelectedRound', this.setSelectedCourtToNull);
-		//this.unbind('gamesLength', this.setSelectedRoundToNull);
-	},
-
-	courtNames: {
-		get: function() {
-			return Game.courtNames;
-		}
-	},
-	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
 	* @parent bitballs/components/tournament/details.properties
 	*
@@ -212,6 +181,12 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	game: {
 		Value: Game
 	},
+	/**
+	* @property {bitballs/models/session} bitballs/components/tournament/details.session session
+	* @parent bitballs/components/tournament/details.properties
+	*
+	* A [bitballs/models/session] instance used to track a `Session`
+	**/
 	session: Session,
 	/**
 	* @property {bitballs/models/team} bitballs/components/tournament/details.team team
@@ -267,7 +242,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 			return setStream.merge(firstAvailableRoundStream);
 		}
 	},
-
 	get firstAvailableRound() {
 		var availableRounds = this.games && this.games.getAvailableRounds()[0];
 		return availableRounds;
@@ -294,7 +268,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		stream: function(setStream) {
 			var vm = this;
 			var selectedRoundStream = this.stream(".selectedRound");
-			
+
 			return setStream.merge(selectedRoundStream).map(function(val) {
 				if(vm.games) {
 					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
@@ -307,7 +281,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 			});
 		}
 	},
-
 	/**
 	* @property {Object} bitballs/components/tournament/details.teamIdMap teamIdMap
 	* @parent bitballs/components/tournament/details.properties
@@ -328,7 +301,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 			return map;
 		}
 	},
-
 	/**
 	 * @function availableTeamFor
 	 *
@@ -432,7 +404,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		});
 
 	},
-	//Game: Game,
 	/**
 	 * Sets properties on the [bitballs/components/tournament/details.ViewModel.prototype.game game]
 	 * model then persists it to the server. Once the "save" request resolves a new [bitballs/models/game] instance
@@ -493,7 +464,6 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		if (! window.confirm('Are you sure you want to delete this team?')) {
 			return;
 		}
-		
 		team.destroy();
 	}
 });
@@ -501,13 +471,5 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 exports.Component = Component.extend({
 	tag: "tournament-details",
 	view: require("./details.stache!"),
-	ViewModel: exports.ViewModel,
-	events: {
-		inserted: function() {
-			this.viewModel.setupBindings();
-		},
-		removed: function() {
-			this.viewModel.teardownBindings();
-		}
-  }
+	ViewModel: exports.ViewModel
 });

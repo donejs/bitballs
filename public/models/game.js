@@ -117,10 +117,7 @@ var Game = DefineMap.extend('Game',
 	stats: {
 		Type: Stat.List,
 		set: function(stats){
-			if(stats) {
-				stats.__listSet = {where: {gameId: this.id }};	
-			}
-			
+			stats.__listSet = {where: {gameId: this.id }};	
 			return stats;
 		}
 	},
