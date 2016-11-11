@@ -37,7 +37,7 @@ QUnit.test('should load a tournament', (assert) => {
 
 QUnit.test('The selected round defaults to the first available round', function () {
     var vm = new ViewModel();
-    vm.setupBindings();
+    
     var gamesResponse = { data: [] };
 
     Game.courtNames.forEach(function (courtName) {
@@ -62,7 +62,7 @@ QUnit.test('The selected round defaults to the first available round', function 
 
 QUnit.test('The selected court defaults to the first available court', function () {
     var vm = new ViewModel();
-    vm.setupBindings();
+    
     var gamesResponse = { data: [{
         round: Game.roundNames[0],
         court: Game.courtNames[0]

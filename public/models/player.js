@@ -9,11 +9,9 @@ var tag = require('can-connect/can/tag/');
 var moment = require("moment");
 var set = require("can-set");
 var DefineList = require('can-define/list/list');
-var DefineMap = require('can-define/map/map');
-
+var DefineMap = require('can-define-backup');
 
 require("can-map-define");
-require('can-map-backup');
 
 var Player = DefineMap.extend('Player', {
 	/**

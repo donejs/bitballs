@@ -5,7 +5,7 @@ var F = require('funcunit');
 var fixture = require('can-fixture');
 var stache = require("can-stache");
 var $ = require("jquery");
-
+var Player = require("bitballs/models/player");
 F.attach(QUnit);
 
 var vm;
@@ -31,7 +31,7 @@ QUnit.test("players property loads players from server during instantiation", fu
 });
 
 QUnit.test("editPlayer sets editingPlayer to passed in player", function (assert) {
-	var player = { name: "Ryan" };
+	var player = new Player({ name: "Ryan" });
 	vm.editPlayer(player);
 	assert.deepEqual(vm.editingPlayer, player, "editingPlayer was set");
 });

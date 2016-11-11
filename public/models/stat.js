@@ -29,8 +29,8 @@ var DefineMap = require('can-define/map/map');
 var DefineList = require('can-define/list/list');
 var Player = require("bitballs/models/player");
 
-// require("can-map-define");
-// require("can-map-backup");
+require("can-map-define");
+require("can-define-backup");
 
 var Stat = DefineMap.extend('Stat',
 {

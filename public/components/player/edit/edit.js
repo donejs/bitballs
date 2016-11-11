@@ -34,7 +34,7 @@ var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-map-define");
-require('can-map-backup');
+require('can-define-backup');
 require("can-construct");
 
 
