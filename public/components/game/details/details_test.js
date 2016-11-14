@@ -1,21 +1,21 @@
-import QUnit from "steal-qunit";
-import Session from "models/session";
-import details from "./details";
-import { games } from "models/fixtures/games";
-import F from 'funcunit';
-import stache from 'can-stache';
-import fixture from 'can-fixture';
-import $ from 'jquery';
-import canViewModel from 'can-view-model';
-import User from "models/user";
+// import QUnit from "steal-qunit";
+// import Session from "models/session";
+// import details from "./details";
+// import { games } from "models/fixtures/games";
+// import F from 'funcunit';
+// import stache from 'can-stache';
+// import fixture from 'can-fixture';
+// import $ from 'jquery';
+// import canViewModel from 'can-view-model';
+// import User from "models/user";
 
-var deepEqual = QUnit.deepEqual,
-    ok = QUnit.ok,
-    notOk = QUnit.notOk;
+// var deepEqual = QUnit.deepEqual,
+//     ok = QUnit.ok,
+//     notOk = QUnit.notOk;
 
-F.attach(QUnit);
+// F.attach(QUnit);
 
-var DetailsViewModel = details.ViewModel;
+// var DetailsViewModel = details.ViewModel;
 
 // QUnit.module("bitballs/game/details/", {
 //     setup: function() {
