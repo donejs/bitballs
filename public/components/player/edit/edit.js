@@ -61,6 +61,15 @@ exports.ViewModel = DefineMap.extend(
 		Value: Player
 	},
 	/**
+	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
+	 * @parent bitballs/components/player/edit.properties
+	 *
+	 * A [bitballs/models/player] model.
+	 */
+	savePromise: {
+		type: '*'
+	},
+	/**
 	 * @function savePlayer
 	 *
 	 * Creates/updates the player on the server and when successful sets [bitballs/components/player/edit.player]
@@ -96,10 +105,6 @@ exports.ViewModel = DefineMap.extend(
 		this.savePromise = promise;
 
 		return promise;
-	},
-
-	savePromise: {
-		type: '*'
 	},
 	/**
 	 * @function cancel

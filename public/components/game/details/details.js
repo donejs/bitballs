@@ -46,14 +46,20 @@ require("can-route");
  */
 
 exports.ViewModel = DefineMap.extend('GameDetailsVM',
-/**
- * @prototype
- */
 {
-	d: function() {
-		console.info(arguments);
-	},
+	/**
+	* @property {bitballs/models/session} bitballs/components/game/details.session session
+	* @parent bitballs/components/game/details.properties
+	*
+	* A [bitballs/models/session] instance used to track a `Session`
+	**/
 	session: Session,
+	/**
+	* @property {bitballs/models/stat} bitballs/components/game/details.stat stat
+	* @parent bitballs/components/game/details.properties
+	*
+	* A [bitballs/models/session] instance used to track a `stat`
+	**/
 	stat: Stat,
 	/**
 	 * @property {Promise<bitballs/models/game>|undefined}
