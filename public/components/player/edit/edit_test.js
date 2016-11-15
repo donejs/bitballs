@@ -109,23 +109,6 @@ QUnit.module('components/player/edit/', function(hooks){
 
 	});
 
-	QUnit.test('Form is only shown to admins', function () {
-
-		var vm = new DefineMap({
-			isAdmin: false
-		});
-		var frag = stache('<player-edit {is-admin}="isAdmin" />')(vm);
-
-		QUnit.equal($('player-edit .edit-form', frag).length, 0,
-			'Form is excluded for non-admin user');
-
-		vm.isAdmin = true;
-
-		QUnit.equal($('player-edit .edit-form', frag).length, 1,
-			'Form is included for admin user');
-	});
-
-/*
 	QUnit.test('Properties are restored when canceled', function (assert) {
 		var initialName = 'Chris Gomez';
 		var initialWeight = 175;
@@ -162,5 +145,21 @@ QUnit.module('components/player/edit/', function(hooks){
 		assert.equal(player.weight, initialWeight, 'Restored weight is correct');
 		assert.equal(player.height, initialHeight, 'Restored height is correct');
 	});
-*/
+
+
+	QUnit.test('Form is only shown to admins', function () {
+
+		var vm = new DefineMap({
+			isAdmin: false
+		});
+		var frag = stache('<player-edit {is-admin}="isAdmin" />')(vm);
+
+		QUnit.equal($('player-edit .edit-form', frag).length, 0,
+			'Form is excluded for non-admin user');
+
+		vm.isAdmin = true;
+
+		QUnit.equal($('player-edit .edit-form', frag).length, 1,
+			'Form is included for admin user');
+	});
 });

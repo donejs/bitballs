@@ -113,7 +113,7 @@ var Player = DefineMap.extend('Player', {
 	 * Backs up the model's properties on instantiation.
 	 **/
 	init: function () {
-		//this.backup();
+		this.backup();
 	}
 });
 

@@ -58,7 +58,7 @@ exports.ViewModel = DefineMap.extend(
 	* The model that will be bound to the form.
 	**/
 	player: {
-		Value: Player
+		Type: Player
 	},
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
