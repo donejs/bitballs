@@ -58,7 +58,8 @@ exports.ViewModel = DefineMap.extend(
 	* The model that will be bound to the form.
 	**/
 	player: {
-		Type: Player
+		Type: Player,
+		value: Player
 	},
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
@@ -113,7 +114,7 @@ exports.ViewModel = DefineMap.extend(
 	 * Fires a "canceled" event.
 	 */
 	cancel: function() {
-		this.player.restore();
+		this.player = this.player.restore();
 		this.dispatch("canceled");
 	}
 });

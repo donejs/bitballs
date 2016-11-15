@@ -127,6 +127,8 @@ QUnit.module('components/player/edit/', function(hooks){
 
 		var player = vm.player;
 
+		player.backup();
+		
 		assert.equal(player.name, initialName, 'Initial name is correct');
 		assert.equal(player.weight, initialWeight, 'Initial weight is correct');
 		assert.equal(player.height, initialHeight, 'Initial height is correct');
