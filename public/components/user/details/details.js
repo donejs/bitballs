@@ -46,7 +46,6 @@ require("can-route");
  */
 
 exports.ViewModel = DefineMap.extend({
-
 	/**
 	 * @property {can-map}
 	 *
@@ -63,6 +62,43 @@ exports.ViewModel = DefineMap.extend({
 			}
 			return val;
 		}
+	},
+	/**
+	 * @function saveUser
+	 *
+	 * If the user is being created, creates a new user and when successful:
+	 * 	- Creates a new session
+	 * 	- Logs the new user in
+	 * 	- Changes the page route from "register" to "account"
+	 *
+	 * If the user's password is being updated, updates the password and
+	 * when successful, clears the form.
+	 *
+	 * @return {Promise<>} A promise that allows the component to display errors, if any.
+	 *
+	 */
+	saveUser: function(ev) {
+        if(ev) { ev.preventDefault(); }
+		var self = this,
+			isNew = this.user.isNew(),
+			promise = this.user.save().then(function(user) {
+				user.password = "";
+				user.verificationHash = "";
+				user.newPassword = null;
+
+				if (!self.session) {
+					self.session = new Session({
+						user: user
+					});
+				} else {
+					self.session.user = user;
+				}
+				if (isNew) {
+					route.page = "account";
+				}
+			});
+		this.savePromise = promise;
+		return promise;
 	},
 	/**
 	 * @property {bitballs/models/session|null}
@@ -114,56 +150,6 @@ exports.ViewModel = DefineMap.extend({
 			return "verified";
 		}
 	},
-	/**
-	 * @function saveUser
-	 *
-	 * If the user is being created, creates a new user and when successful:
-	 * 	- Creates a new session
-	 * 	- Logs the new user in
-	 * 	- Changes the page route from "register" to "account"
-	 *
-	 * If the user's password is being updated, updates the password and
-	 * when successful, clears the form.
-	 *
-	 * @return {Promise<>} A promise that allows the component to display errors, if any.
-	 *
-	 */
-	saveUser: function(ev) {
-        if(ev) {
-            ev.preventDefault();
-        }
-		var self = this,
-			isNew = this.user.isNew(),
-			promise = this.user.save().then(function(user) {
-
-				user.attr({
-					password: "",
-					verificationHash: ""
-				});
-				user.password = "";
-				user.verificationHash = "";
-				user.newPassword = null;
-
-				if (!self.session) {
-					// Create session:
-					self.session = new Session({
-						user: user
-					});
-				} else {
-					// Update session:
-					self.session.user = user;
-				}
-
-				if (isNew) {
-					route.page = "account";
-				}
-			});
-
-		this.savePromise = promise;
-
-		return promise;
-	},
-
 	savePromise: {
 		type: '*'
 	},

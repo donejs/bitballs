@@ -48,6 +48,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 	* creation form.
 	**/
 	tournament: {
+		Type: Tournament,
 		Value: Tournament
 	},
 	/**
@@ -89,7 +90,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 		var promise = this.tournament.save().then(function(player) {
 			self.tournament = new Tournament();
 		});
-
+		
 		this.savePromise = promise;
 		return promise;
 	},

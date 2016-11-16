@@ -92,7 +92,7 @@ var ViewModel = DefineMap.extend(
 			self.app.session = session;
 		});
 		this.sessionPromise = sessionPromise;
-		
+
 	},
 	/**
 	 * @function logout

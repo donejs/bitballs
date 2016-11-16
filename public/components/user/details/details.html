@@ -10,7 +10,7 @@
 	  	<h2>User Verification</h2>
 		<button type="button"
                 class="btn btn-default"
-                ($click)="session.user.attr('verified', true)">
+                ($click)="session.user.verified = true">
 			Verify User
 		</button>
 	{{/unless}}
@@ -63,5 +63,5 @@ fixture('DELETE /services/users/{id}', function(request, response){
 	window.location.reload();
 });
 
-$('#demo-html').viewModel(vm).attr();
+$('#demo-html').viewModel(vm).serialize();
 </script>

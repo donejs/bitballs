@@ -82,8 +82,8 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * var gameDetailsVM = new GameDetailsViewModel({
 	 *   gameId: 5
 	 * });
-	 * gameDetailsVM.attr("gamePromise").then(function(game){
-	 *   game.attr("date") //-> Date
+	 * gameDetailsVM.gamePromise.then(function(game){
+	 *   game.date //-> Date
 	 * })
 	 * ```
 	 *
@@ -490,7 +490,7 @@ exports.Component = Component.extend({
 			var youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
-			//this.scope.attr("youtubePlayer").playVideo();
+			this.youtubePlayer.playVideo();
 
 			// get duration
 			var getDuration = function(){

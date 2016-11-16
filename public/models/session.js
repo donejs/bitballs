@@ -32,7 +32,8 @@ var Session = DefineMap.extend('Session', {
 	 * The [bitballs/models/user] model this session represents.
 	 **/
 	user: {
-		Type: User
+		Type: User,
+		Value: User
 	},
 
 	/**
