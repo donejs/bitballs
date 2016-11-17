@@ -171,7 +171,7 @@ passport.use('signup', new LocalStrategy({
 app.post('/services/users',
 	function ( req, res, next ){
 		// lets create a JS Representation of body-parsers JSON Body result
-	        req.bodyJS = JSON.parse(req.body)
+	        req.bodyJS = JSON.parse(req.body);
 		if ( !req.bodyJS.password ) {
 			res.status(404).send({ type: "Bad Request", message: "Password is required" });
 		} else {
