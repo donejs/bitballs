@@ -107,7 +107,7 @@ app.get('/services/session', function(req, res) {
 
 app.post('/services/session', function(req, res, next) {
 	
-	req.bodyJS = JSON.parse(req.body)
+	req.bodyJS = JSON.parse(req.body);
 	
 	var 
 	  email = req.bodyJS.user.email,
