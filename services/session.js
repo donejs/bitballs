@@ -106,8 +106,12 @@ app.get('/services/session', function(req, res) {
 });
 
 app.post('/services/session', function(req, res, next) {
-	var email = req.body.user.email,
-		password = req.body.user.password;
+	
+	req.bodyJS = JSON.parse(req.body);
+	
+	var 
+	  email = req.bodyJS.user.email,
+	  password = req.bodyJS.user.password;
 
 	new User({
 		'email': email
