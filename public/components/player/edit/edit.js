@@ -33,7 +33,6 @@ var Player = require("bitballs/models/player");
 var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
 require('can-define-backup');
 require("can-construct");
 
@@ -68,7 +67,7 @@ exports.ViewModel = DefineMap.extend(
 	 * A [bitballs/models/player] model.
 	 */
 	savePromise: {
-		type: '*'
+		type: 'any'
 	},
 	/**
 	 * @function savePlayer

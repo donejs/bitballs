@@ -32,8 +32,8 @@ QUnit.module("bitballs/game/details/", {
 QUnit.test("loads game data", function() {
     QUnit.stop();
 
-    this.vm.bind("game", function(ev, game) {
-        deepEqual(game.serialize(), games, "fetched game data matches fixture");
+    this.vm.on("game", function(ev, game) {
+        deepEqual(game.get(), games, "fetched game data matches fixture");
         QUnit.start();
     });
 
@@ -47,7 +47,7 @@ QUnit.test("correctly sums score", function() {
     QUnit.stop();
 
     var vm = this.vm;
-    vm.bind("game", function(ev, game) {
+    vm.on("game", function(ev, game) {
         deepEqual(vm.finalScore, {
             home: 3,
             away: 5
@@ -111,5 +111,5 @@ QUnit.test('Deleting a stat does not change playback location', function (assert
                 notOk(gotoCalled, 'Seek was not called');
             });
     });
-    $(vm).trigger('game');
+    vm.dispatch('game');
 });

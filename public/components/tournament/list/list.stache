@@ -4,7 +4,7 @@
 		<div class='info'>Loading</div>
 	{{/if}}
 	{{#each value}}
-		<h3><a href='{{routeUrl (tournamentId=id)}}'>{{year}}</a>
+		<h3><a href='{{routeUrl ( tournamentId=id )}}'>{{year}}</a>
 			{{#if isAdmin}}
 			<button type="button" class="btn btn-danger"
 				($click)="deleteTournament(.)"

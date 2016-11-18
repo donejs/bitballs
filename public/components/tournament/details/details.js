@@ -38,7 +38,6 @@ var Tournament = require("bitballs/models/tournament");
 var Session = require("bitballs/models/session");
 var DefineMap = require("can-define/map/map");
 
-require("can-map-define");
 require("can-define-stream");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-route");
@@ -154,22 +153,19 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	* list that aren't already associated with a [bitballs/models/team]
 	* model in the [bitballs/components/tournament/details.ViewModel.prototype.teams Teams] list.
 	**/
-	availableColors: {
-		type: '*',
-		get: function(){
-			var teams = this.teams;
-			if(!teams) {
-				return Team.colors;
-			} else {
-				var allColors = Team.colors.slice(0);
-				teams.each(function(team){
-					var index = allColors.indexOf(team.color);
-					if(index !== -1) {
-						allColors.splice(index, 1);
-					}
-				});
-				return allColors;
-			}
+	get availableColors() {
+		var teams = this.teams;
+		if(!teams) {
+			return Team.colors;
+		} else {
+			var allColors = Team.colors.slice(0);
+			teams.each(function(team){
+				var index = allColors.indexOf(team.color);
+				if(index !== -1) {
+					allColors.splice(index, 1);
+				}
+			});
+			return allColors;
 		}
 	},
 	/**
@@ -287,19 +283,16 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	*
 	* A map of [bitballs/models/team.prototype.id team id]'s to [bitballs/models/team] models.
 	**/
-	teamIdMap: {
-		type: "*",
-		get: function(){
-			var map = {};
-			var teams = this.teams;
-			if(teams) {
-				teams.each(function(team){
-					map[team.id] = team;
-				});
-			}
-
-			return map;
+	get teamIdMap() {
+		var map = {};
+		var teams = this.teams;
+		if(teams) {
+			teams.each(function(team){
+				map[team.id] = team;
+			});
 		}
+
+		return map;
 	},
 	/**
 	 * @function availableTeamFor
@@ -418,9 +411,11 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 		var self = this;
 		var game = this.game;
 
-		game.round = this.selectedRound;
-		game.court = this.selectedCourt;
-		game.tournamentId = this.tournamentId;
+		game.set({
+			round: this.selectedRound,
+			court: this.selectedCourt,
+			tournamentId: this.tournamentId
+		});
 		
 		game.save(function(){
 			self.game = new Game();

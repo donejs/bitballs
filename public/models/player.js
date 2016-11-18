@@ -11,7 +11,7 @@ var set = require("can-set");
 var DefineList = require('can-define/list/list');
 var DefineMap = require('can-define-backup');
 
-require("can-map-define");
+
 
 var Player = DefineMap.extend('Player', {
 	/**
@@ -20,18 +20,14 @@ var Player = DefineMap.extend('Player', {
 	 *
 	 * The weight of a player in pounds.
 	 **/
-	weight: {
-		type: 'number'
-	},
+	weight: 'number',
 	/**
 	 * @property {Number} bitballs/models/player.properties.height height
 	 * @parent bitballs/models/player.properties
 	 *
 	 * The height of a player in inches.
 	 **/
-	height: {
-		type: 'number'
-	},
+	height: 'number',
 	/**
 	 * @property {Date|null} bitballs/models/player.properties.jsBirthday jsBirthday
 	 * @parent bitballs/models/player.properties
@@ -39,11 +35,9 @@ var Player = DefineMap.extend('Player', {
 	 * The [bitballs/models/player.properties.birthday birthday] property
 	 * represented as a JavaScript object.
 	 **/
-	jsBirthday: {
-		get: function(){
-			var date = this.birthday;
-			return date ? new Date(date) : null;
-		}
+	get jsBirthday() {
+		var date = this.birthday;
+		return date ? new Date(date) : null;
 	},
 	/**
 	 * @property {String} bitballs/models/player.properties.birthDate birthDate
@@ -52,14 +46,12 @@ var Player = DefineMap.extend('Player', {
 	 * The [bitballs/models/player.properties.birthday birthday] property
 	 * formatted as `YYYY-MM-DD`.
 	 **/
-	birthDate: {
-		get: function(){
-			var date = this.birthday;
-			return date ? moment(date).format('YYYY-MM-DD') : "";
-		},
-		set: function(value){
-			this.birthday = value;
-		}
+	get birthDate() {
+		var date = this.birthday;
+		return date ? moment(date).format('YYYY-MM-DD') : "";
+	},
+	set birthDate(value) {
+		this.birthday = value;
 	},
 	/**
 	 * @property {Number} bitballs/models/player.properties.age age
@@ -68,18 +60,16 @@ var Player = DefineMap.extend('Player', {
 	 * The number of full years since the date of the
 	 * [bitballs/models/player.properties.jsBirthday jsBirthday] property.
 	 **/
-	age: {
-		get: function(){
-			var birthDate = this.jsBirthday;
-			if(birthDate) {
-				var today = new Date();
-			    var age = today.getFullYear() - birthDate.getFullYear();
-			    var m = today.getMonth() - birthDate.getMonth();
-			    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-			        age--;
-			    }
-			    return age;
+	get age() {
+		var birthDate = this.jsBirthday;
+		if(birthDate) {
+			var today = new Date();
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+				age--;
 			}
+			return age;
 		}
 	},
 	/**
@@ -88,18 +78,14 @@ var Player = DefineMap.extend('Player', {
 	 *
 	 * The player's date of birth. Formatted as `YYYY-MM-DD`.
 	 **/
-	birthday: {
-		type: '*'
-	},
+	birthday: 'any',
 	/**
 	 * @property {String} bitballs/models/player.properties.name name
 	 * @parent bitballs/models/player.properties
 	 *
 	 * The name of the player.
 	 **/
-	name: {
-		type: 'string'
-	},
+	name: 'string',
  	/**
 	 * @property {Number} bitballs/models/player.properties.id id
 	 * @parent bitballs/models/player.properties
@@ -121,27 +107,22 @@ var Player = DefineMap.extend('Player', {
  * @constructor {can-list} bitballs/models/player.static.List List
  * @parent bitballs/models/player.static
  */
-Player.List = DefineList.extend({Map: Player},
+Player.List = DefineList.extend(
 /** @prototype **/
 {
-	
+	"#": Player,
 	/**
 	 * @property {Object}
 	 *
 	 * A map of player ids to [bitballs/models/player] models.
 	 **/
-	idMap: {
-		type: "*",
-		get: function(){
-
-			var map = {};
-
-			this.each(function(player){
-				map[player.id] = player;
-			});
-			
-			return map;
-		}
+	get idMap() {
+		var map = {};
+		this.each(function(player){
+			map[player.id] = player;
+		});
+		
+		return map;
 	},
 	
 	/**

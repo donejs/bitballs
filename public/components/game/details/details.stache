@@ -1,4 +1,4 @@
-{{^if gamePromise.isPending}}
+{{^if gamePromise.isRejected}}
 
 	<div class="row">
 	  	<div class="col-md-8">

@@ -11,7 +11,7 @@ var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var tag = require('can-connect/can/tag/');
 
-require("can-map-define");
+
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
 require( "can-connect/constructor/store/" );
@@ -23,18 +23,13 @@ require( "can-connect/data/url/" );
 var User = require("./user");
 
 var Session = DefineMap.extend('Session', {
-	seal: false,
-},{
 	/**
 	 * @property {bitballs/models/user} bitballs/models/session.properties.user user
 	 * @parent bitballs/models/session.properties
 	 *
 	 * The [bitballs/models/user] model this session represents.
 	 **/
-	user: {
-		Type: User,
-		Value: User
-	},
+	user: User,
 
 	/**
 	 * @function
@@ -53,7 +48,7 @@ var Session = DefineMap.extend('Session', {
  * @constructor {can-list} bitballs/models/session.static.List List
  * @parent bitballs/models/session.static
  */
-Session.List = DefineList.extend({Map: Session});
+Session.List = DefineList.extend({"#": Session});
 
 var behaviors = [
 	"constructor",

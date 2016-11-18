@@ -10,7 +10,7 @@ var set = require("can-set");
 var moment = require('moment');
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
-require("can-map-define");
+
 
 var Tournament = DefineMap.extend('Tournament', {
 	id: 'number',
@@ -21,11 +21,9 @@ var Tournament = DefineMap.extend('Tournament', {
 	 * The [bitballs/models/tournament.properties.date] converted to a
 	 * JavaScript Date object.
 	 **/
-	jsDate: {
-		get: function(){
-			var date = this.date;
-			return date ? moment(date).toDate() : null;
-		}
+	get jsDate() {
+		var date = this.date;
+		return date ? moment(date).toDate() : null;
 	},
 	/**
 	 * @property {Date} bitballs/models/tournament.properties.year year
@@ -33,17 +31,13 @@ var Tournament = DefineMap.extend('Tournament', {
 	 *
 	 * The year referred to by [bitballs/models/tournament.properties.jsDate].
 	 **/
-	year: {
-		get: function(){
-			var jsDate = this.jsDate;
-			return jsDate ? jsDate.getFullYear() : null;
-		}
+	get year() {
+		var jsDate = this.jsDate;
+		return jsDate ? jsDate.getFullYear() : null;
 	},
-	prettyDate: {
-		get: function(){
-			var date = this.date;
-			return date ? moment(date).toDate() : null;
-		}
+	get prettyDate() {
+		var date = this.date;
+		return date ? moment(date).toDate() : null;
 	},
 	/**
 	 * @property {String} bitballs/models/tournament.properties.date date
@@ -51,16 +45,14 @@ var Tournament = DefineMap.extend('Tournament', {
 	 *
 	 * The date that the tournament is schedule to occur.
 	 **/
-	date: {
-		type: 'string'
-	}
+	date: 'string'
 });
 
 /**
  * @constructor {can-list} bitballs/models/tournament.static.List List
  * @parent bitballs/models/tournament.static
  */
-Tournament.List = DefineList.extend({"#": Tournament},{});
+Tournament.List = DefineList.extend({"#": Tournament});
 
 /**
  * @property {set.Algebra} bitballs/models/tournament.static.algebra algebra

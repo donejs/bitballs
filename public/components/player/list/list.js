@@ -33,7 +33,6 @@ var template = require("./list.stache!");
 var DefineMap = require("can-define/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
 require("can-route");
 
 var Player = require("bitballs/models/player");
@@ -53,7 +52,7 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 		value: false
 	},
 	editingPlayer: {
-		type: '*'
+		type: 'any'
 	},
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise

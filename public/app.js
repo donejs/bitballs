@@ -5,7 +5,6 @@
  * @group bitballs/app.properties 0 properties
  */
 import DefineMap from "can-define/map/map";
-import "can-map-define";
 import "bootstrap/dist/css/bootstrap.css!";
 import route from 'can-route';
 import Session from './models/session';
@@ -16,79 +15,75 @@ import "./util/prefilter";
 
 const AppViewModel = DefineMap.extend('App',
 /** @prototype */
-{
-	title: {
-		get: function(){
-			return "BitBalls | " + this.pageComponentConfig.title;
-		}
-	},
+{	
+	get title(){
+		return "BitBalls | " + this.pageComponentConfig.title;
+	},	
 	page: {
 		type: 'string',
 	},
 	gameId: {
 		type: '*',
 	},
-	pageComponentConfig: {
-		get: function(){
-			var page = this.page;
-			if(this.gameId) {
+	get pageComponentConfig() {
+		var page = this.page;
+		if(this.gameId) {
 
-				return {
-					title: "Game",
-					componentName: "game-details",
-					attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
-					moduleName: "game/details/"
-				};
+			return {
+				title: "Game",
+				componentName: "game-details",
+				attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
+				moduleName: "game/details/"
+			};
 
-			} else if(this.tournamentId) {
-				return {
-					title: "Tournament",
-					componentName: "tournament-details",
-					attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
-					moduleName: "tournament/details/"
-				};
+		} else if(this.tournamentId) {
+			return {
+				title: "Tournament",
+				componentName: "tournament-details",
+				attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
+				moduleName: "tournament/details/"
+			};
 
-			} else if(page === "tournaments") {
-				return {
-					title: "Tournaments",
-					componentName: "tournament-list",
-					attributes: "{is-admin}='./isAdmin'",
-					moduleName: "tournament/list/"
-				};
+		} else if(page === "tournaments") {
+			return {
+				title: "Tournaments",
+				componentName: "tournament-list",
+				attributes: "{is-admin}='./isAdmin'",
+				moduleName: "tournament/list/"
+			};
 
-			} else if(page === "users") {
-				return {
-					title: "Users List",
-					componentName: "user-list",
-					attributes: "{session}='./session'",
-					moduleName: "user/list/"
-				};
+		} else if(page === "users") {
+			return {
+				title: "Users List",
+				componentName: "user-list",
+				attributes: "{session}='./session'",
+				moduleName: "user/list/"
+			};
 
-			} else if(page === "register" || page === "account") {
-				return {
-					title: "Account",
-					componentName: "user-details",
-					attributes: "{(session)}='./session'",
-					moduleName: "user/details/"
-				};
+		} else if(page === "register" || page === "account") {
+			return {
+				title: "Account",
+				componentName: "user-details",
+				attributes: "{(session)}='./session'",
+				moduleName: "user/details/"
+			};
 
-			} else if(page === "players"){
-				return {
-					title: "Players",
-					componentName: "player-list",
-					attributes: "{is-admin}='./isAdmin'",
-					moduleName: "player/list/"
-				};
+		} else if(page === "players"){
+			return {
+				title: "Players",
+				componentName: "player-list",
+				attributes: "{is-admin}='./isAdmin'",
+				moduleName: "player/list/"
+			};
 
-			} else {
-				return {
-					title: "Page Not Found",
-					componentName: "four-0-four",
-					attributes: "",
-					moduleName: "404.component!",
-					statusCode: 404
-				};
-			}
+		} else {
+			return {
+				title: "Page Not Found",
+				componentName: "four-0-four",
+				attributes: "",
+				moduleName: "404.component!",
+				statusCode: 404
+			};
 		}
 	},
 	/**
@@ -114,8 +109,9 @@ const AppViewModel = DefineMap.extend('App',
 	* @parent bitballs/app.properties
 	* The status code used for server-side rendering.
 	**/
+	//get statusCode(lastSet, resolve) {
 	statusCode: {
-		get: function(lastSet, resolve){
+		get: function(lastSet, resolve) {
 			var pageConfig = this.pageComponentConfig;
 
 			if(pageConfig.statusCode) {
@@ -179,6 +175,5 @@ stache.registerHelper("pageComponent", function(options){
 route('tournaments/{tournamentId}');
 route('games/{gameId}');
 route('{page}',{page: 'tournaments'});
-route.ready();
 
 export default AppViewModel;

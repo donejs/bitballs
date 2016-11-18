@@ -15,7 +15,7 @@ var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var can = require("can-util");
 
-require('can-map-define');
+
 
 
 var Game = DefineMap.extend('Game',
@@ -39,75 +39,68 @@ var Game = DefineMap.extend('Game',
 	 * @parent bitballs/models/game.properties
 	 * The tournament's id the game belongs to.
 	 */
-	tournamentId: {type: "number"},
+	tournamentId: "number",
 	/**
 	 * @property {bitballs/models/tournament} bitballs/models/game.properties.tournament tournament
 	 * @parent bitballs/models/game.properties
 	 * The tournament the game belongs to.  This can be loaded with `withRelated[]=tournament`.
 	 */
-	tournament: {Type: Tournament},
+	tournament: Tournament,
 	/**
 	 * @property {Number} bitballs/models/game.properties.homeTeamId homeTeamId
 	 * @parent bitballs/models/game.properties
 	 * The home team's id.
 	 */
-	homeTeamId: {type: "number"},
+	homeTeamId: "number",
 	/**
 	 * @property {Number} bitballs/models/game.properties.awayTeamId awayTeamId
 	 * @parent bitballs/models/game.properties
 	 * The away team's id.
 	 */
-	awayTeamId: {type: "number"},
+	awayTeamId: "number",
 	/**
 	 * @property {bitballs/models/team} bitballs/models/game.properties.homeTeam homeTeam
 	 * @parent bitballs/models/game.properties
 	 * The home team. This can be loaded with `withRelated[]=homeTeam`.
 	 */
-	homeTeam: {
-		Type: Team
-	},
+	homeTeam: Team,
 	/**
 	 * @property {bitballs/models/team} bitballs/models/game.properties.awayTeam awayTeam
 	 * @parent bitballs/models/game.properties
 	 * The away team. This can be loaded with `withRelated[]=awayTeam`.
 	 */
-	awayTeam: {
-		Type: Team
-	},
+	awayTeam: Team,
 	/**
 	 * @property {bitballs/models/team.static.List} bitballs/models/game.properties.teams teams
 	 * @parent bitballs/models/game.properties
 	 * A list that contains the home and away team.
 	 */
-	teams: {
-		get: function(){
+	get teams() {
 
-			var teams = [],
-				home = this.homeTeam,
-				away = this.awayTeam;
+		var teams = [],
+			home = this.homeTeam,
+			away = this.awayTeam;
 
-			if(home) {
-				teams.push(home);
-			}
-			if(away) {
-				teams.push(away);
-			}
-			return new Team.List(teams);
+		if(home) {
+			teams.push(home);
 		}
+		if(away) {
+			teams.push(away);
+		}
+		return new Team.List(teams);
+	
 	},
 	/**
 	 * @property {bitballs/models/player.static.List} bitballs/models/game.properties.players players
 	 * @parent bitballs/models/game.properties
 	 * A list that contains all [bitballs/models/player] models for this game.
 	 */
-	players: {
-		get: function(){
-			var players = [];
-			this.teams.forEach(function(team){
-				[].push.apply(players, can.makeArray( team.players ) );
-			});
-			return new Player.List(players);
-		}
+	get players() {
+		var players = [];
+		this.teams.forEach(function(team){
+			[].push.apply(players, can.makeArray( team.players ) );
+		});
+		return new Player.List(players);
 	},
 	/**
 	 * @property {bitballs/models/stat.static.List} bitballs/models/game.properties.stats stats
@@ -148,9 +141,9 @@ var Game = DefineMap.extend('Game',
 	 * @function
 	 **/
 	statsForPlayerId: function(id) {
-		if(typeof id === "function") {
-			id = id();
-		}
+		// if(typeof id === "function") {
+		// 	id = id();
+		// }
 		return this.stats.filter(function(stat){
 			return stat.playerId === id;
 		});
@@ -165,7 +158,7 @@ var Game = DefineMap.extend('Game',
 				var id = stat.playerId;
 				var stats = playerIds[id];
 				if(!stats) {
-					stats = new DefineList([]);
+					stats = new DefineList();
 					stats.comparator = 'time';
 					playerIds[id] = stats;
 				}
@@ -175,12 +168,8 @@ var Game = DefineMap.extend('Game',
 			return playerIds;
 		}
 	},
-	round: {
-		type: 'string',
-	},
-	court: {
-		type: 'string',
-	}
+	round: 'string',
+	court: 'string'
 });
 
 /**
@@ -199,26 +188,23 @@ Game.List = DefineList.extend({Map: Game},
 	 *
 	 * An object that maps round names to court names to [bitballs/models/game] models.
 	 */
-	gamesGroupedByRound: {
-		type: '*',
-		get: function() {
-			var rounds = {};
-			this.forEach(function (game) {
-				var roundName = game.round;
-				var courtName = game.court;
+	get gamesGroupedByRound() {
+		var rounds = {};
+		this.forEach(function (game) {
+			var roundName = game.round;
+			var courtName = game.court;
 
-				// Get, or define the Round pseudo-model
-				rounds[roundName] = rounds[roundName] || {
-					_count: 0
-				};
+			// Get, or define the Round pseudo-model
+			rounds[roundName] = rounds[roundName] || {
+				_count: 0
+			};
 
-				// Store the game and increment the count
-				rounds[roundName][courtName] = game;
-				rounds[roundName]._count++;
-			});
+			// Store the game and increment the count
+			rounds[roundName][courtName] = game;
+			rounds[roundName]._count++;
+		});
 
-			return rounds;
-		}
+		return rounds;
 	},
 	/**
 	 * @function

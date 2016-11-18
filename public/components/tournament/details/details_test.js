@@ -20,16 +20,13 @@ QUnit.module('components/tournament/details/', {
                 tournamentId: 2
             });
 
-        
-        done();
-
-        
+        done();        
     }
 });
 
 QUnit.test('should load a tournament', (assert) => {
     let done = assert.async();
-    vm.bind('tournament', function (ev, newVal) {
+    vm.on('tournament', function (ev, newVal) {
         assert.equal(newVal.name, 'EBaller Virus', 'with the correct name' );
         done();
     });

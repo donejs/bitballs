@@ -47,9 +47,9 @@ QUnit.module('components/player/edit/', function(hooks){
 				player:playerModel
 			});
 
-		vm.bind("saved", function(){
+		vm.on("saved", function(){
 			player.id = 1;
-			assert.deepEqual(player, playerModel.serialize(),  "New player saved");
+			assert.deepEqual(player, playerModel.get(),  "New player saved");
 			vm.unbind("saved");
 			done();
 		});
@@ -98,7 +98,7 @@ QUnit.module('components/player/edit/', function(hooks){
 		//update player info
 		vm.player.name = "Test Player (modified)";
 
-		vm.bind("saved", function(){
+		vm.on("saved", function(){
 			player.name = "Test Player (modified)";
 			assert.deepEqual(vm.player.name, player.name, "Player updated");
 			vm.unbind("saved");

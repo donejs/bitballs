@@ -35,7 +35,6 @@ var $ = require("jquery");
 
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
 require("can-route");
 
 /**
@@ -88,23 +87,21 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 *
 	 */
-	gamePromise: {
-		get: function() {
-			return Game.get({
-				id: this.gameId,
-				withRelated: ["stats",
-					"tournament",
-					"homeTeam.player1",
-					"homeTeam.player2",
-					"homeTeam.player3",
-					"homeTeam.player4",
-					"awayTeam.player1",
-					"awayTeam.player2",
-					"awayTeam.player3",
-					"awayTeam.player4"
-				]
-			});
-		}
+	get gamePromise() {
+		return Game.get({
+			id: this.gameId,
+			withRelated: ["stats",
+				"tournament",
+				"homeTeam.player1",
+				"homeTeam.player2",
+				"homeTeam.player3",
+				"homeTeam.player4",
+				"awayTeam.player1",
+				"awayTeam.player2",
+				"awayTeam.player3",
+				"awayTeam.player4"
+			]
+		});
 	},
 	/**
 	 * @property {bitballs/models/game}
@@ -112,7 +109,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * Provides a game instance once the game promise resolves.
 	 */
 	game: {
-		get: function(last, set){
+		get: function(last, set) {
 			this.gamePromise.then(set);
 		}
 	},
@@ -122,7 +119,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
 	 */
 	youtubePlayer: {
-		type: "*"
+		type: 'any'
 	},
 	/**
 	 * @property {Array<{name: String}>}
@@ -138,24 +135,21 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * The final score of the game, which is totalled based on the
 	 * game stats.
 	 */
-	finalScore: {
-		get: function(){
-			var game = this.game;
-			if(game && game.stats) {
-				var playerMap = this.playerIdToHomeOrAwayMap;
-				var scores = {home: 0, away: 0};
-				game.stats.each(function(stat){
-					if(stat.type === "1P") {
-						scores[playerMap[stat.playerId]]++;
-					}
-					if(stat.type === "2P") {
-						scores[playerMap[ stat.playerId ]] += 2;
-					}
-				});
-				return scores;
-			}
-		},
-		type:"*"
+	get finalScore(){
+		var game = this.game;
+		if(game && game.stats) {
+			var playerMap = this.playerIdToHomeOrAwayMap;
+			var scores = {home: 0, away: 0};
+			game.stats.each(function(stat){
+				if(stat.type === "1P") {
+					scores[playerMap[stat.playerId]]++;
+				}
+				if(stat.type === "2P") {
+					scores[playerMap[ stat.playerId ]] += 2;
+				}
+			});
+			return scores;
+		}
 	},
 	/**
 	 * @property {Object<{home: Number, away: Number}>}
@@ -163,29 +157,26 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * The score of the game at the current time in the video,
 	 * which is totalled based on the game stats up to that point.
 	 */
-	currentScore: {
-		get: function(){
-			var game = game;
-			if(game && game.stats) {
-				var playerMap = this.playerIdToHomeOrAwayMap;
-				var scores = {home: 0, away: 0};
+	get currentScore() {
+		var game = game;
+		if(game && game.stats) {
+			var playerMap = this.playerIdToHomeOrAwayMap;
+			var scores = {home: 0, away: 0};
 
-				var time = this.time;
+			var time = this.time;
 
-				game.stats.each(function(stat){
-					if(stat.time <= time) {
-						if(stat.type === "1P") {
-							scores[playerMap[ stat.playerId] ]++;
-						}
-						if(stat.type === "2P") {
-							scores[playerMap[ stat.playerId]] += 2;
-						}
+			game.stats.each(function(stat){
+				if(stat.time <= time) {
+					if(stat.type === "1P") {
+						scores[playerMap[ stat.playerId] ]++;
 					}
-				});
-				return scores;
-			}
-		},
-		type:"*"
+					if(stat.type === "2P") {
+						scores[playerMap[ stat.playerId]] += 2;
+					}
+				}
+			});
+			return scores;
+		}
 	},
 	/**
 	 * @property {Object}
@@ -193,18 +184,15 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * An object mapping each player id to "home" or "away" to enable
 	 * totalling of scores based on stats.
 	 */
-	playerIdToHomeOrAwayMap: {
-		type: "*",
-		get: function(){
-			var game = this.game;
-			if(game && game.homeTeam && game.awayTeam) {
-				var map = {};
-				for(var i = 1; i <= 4; i++) {
-					map[ game.homeTeam["player" + i + "Id"] ] = "home";
-					map[ game.awayTeam["player" + i + "Id"] ] = "away";
-				}
-				return map;
+	get playerIdToHomeOrAwayMap() {
+		var game = this.game;
+		if(game && game.homeTeam && game.awayTeam) {
+			var map = {};
+			for(var i = 1; i <= 4; i++) {
+				map[ game.homeTeam["player" + i + "Id"] ] = "home";
+				map[ game.awayTeam["player" + i + "Id"] ] = "away";
 			}
+			return map;
 		}
 	},
 	/**
@@ -212,12 +200,9 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 *
 	 * An object of stats sorted by player id from [bitballs/models/stat]
 	 */
-	sortedStatsByPlayerId: {
-		type: "any",
-		get: function(){
-			var game = this.game;
-			return game.sortedStatsByPlayerId();
-		}
+	get sortedStatsByPlayerId() {
+		var game = this.game;
+		return game.sortedStatsByPlayerId();
 	},
 
 	/**
@@ -269,9 +254,9 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 
 
 		stat.save(function(){
-			self.stat = false;
+			self.stat = null;
 		}, function(e){
-			self.stat = false;
+			self.stat = null;
 		});
 	},
 	/**
@@ -400,7 +385,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		}
 	},
 	duration: {
-		type: '*'
+		type: 'any'
 	},
 	/**
 	 * @function
@@ -423,9 +408,9 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		}
 		var statsById = this.sortedStatsByPlayerId;
 		if(statsById) {
-			return statsById[id] || new DefineList([]);
+			return statsById[id] || new DefineList();
 		} else {
-			return new DefineList([]);
+			return new DefineList();
 		}
 	}
 });
@@ -434,8 +419,8 @@ exports.Component = Component.extend({
 	tag: "game-details",
 	view: require("./details.stache!"),
 	ViewModel: exports.ViewModel,
-	YT: false,
-	youtubePlayer: false,
+	// YT: false,
+	// youtubePlayer: false,
 	/**
 	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
@@ -453,18 +438,18 @@ exports.Component = Component.extend({
 				self.YT = YT;
 			}).then(function () {
 
-				return self.scope.gamePromise;
+				return self.viewModel.gamePromise;
 			}).then(function () {
 				var player = new self.YT.Player('youtube-player', {
 					height: '390',
 					width: '640',
-					videoId: self.scope.game.videoUrl,
+					videoId: self.viewModel.game.videoUrl,
 					events: {
 					  'onReady': self.onPlayerReady.bind(self),
 					  'onStateChange': self.onPlayerStateChange.bind(self)
 					}
 				});
-				self.scope.youtubePlayer = player;
+				self.viewModel.youtubePlayer = player;
 			})["catch"](function(e){
 				if ( platform.isNode ) {
 					return;
@@ -496,7 +481,7 @@ exports.Component = Component.extend({
 			var getDuration = function(){
 				var duration = youtubePlayer.getDuration();
 				if(duration) {
-					self.scope.duration = duration;
+					self.viewModel.duration = duration;
 				} else {
 					setTimeout(getDuration, 100);
 				}

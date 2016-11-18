@@ -31,7 +31,6 @@
 
 import Component from 'can-component';
 import DefineMap from 'can-define/map/map';
-import 'can-map-define';
 import './list.less!';
 import template from './list.stache!';
 import User from "bitballs/models/user";
@@ -61,8 +60,8 @@ export const ViewModel = DefineMap.extend({
 	users: {
 		get: function(list) {
 			if (list) {
-        return list;
-      }
+        		return list;
+      		}
 			return User.getList({});
 		}
 	},
@@ -70,9 +69,7 @@ export const ViewModel = DefineMap.extend({
 	 * @property {bitballs/models/session} session
 	 *   The session object if a user is logged in. The user must be an admin to view the user list.
 	 */
-	session: {
-		Type: Session
-	},
+	session: Session,
 	/**
 	 * @function
 	 *

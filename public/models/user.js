@@ -27,37 +27,23 @@ var tag = require('can-connect/can/tag/');
 var set = require("can-set");
 var DefineMap = require('can-define/map/map');
 var DefineList = require("can-define/list/list");
-require("can-map-define");
+
 
 var User = DefineMap.extend('User', {
-	email: {
-		type: 'string',
-	},
-	password: {
-		type: 'string'
-	},
-	id: {
-		type: '*',
-	},
-	name: {
-		type: 'string',
-	},
-	isAdmin: {
-		type: '*'
-	},
-	verified: {
-		type: '*'
-	},
-	verificationHash: {
-		type: 'string'
-	}
+	email: 'string',
+	password: 'string',
+	id: 'any',
+	name: 'string',
+	isAdmin: 'any',
+	verified: 'any',
+	verificationHash: 'string'
 });
 
 /**
  * @constructor {can-list} bitballs/models/user.static.List List
  * @parent bitballs/models/user.static
  */
-User.List = DefineList.extend({Map: User},{});
+User.List = DefineList.extend({"#": User});
 
 /**
  * @property {set.Algebra} bitballs/models/user.static.algebra algebra

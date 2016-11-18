@@ -20,16 +20,14 @@
 
 <script src="../../../node_modules/steal/steal.js"
         main="can/view/autorender/" id="demo-source">
-import CanMap from 'can-map';
+import DefineMap from 'can-define/map/map';
 import $ from 'jquery';
 import fixture from 'can-fixture';
 
 var password,
-    vm = CanMap.extend({
-	define: {
-		session: {
-			value: null
-		}
+    vm = DefineMap.extend({
+	session: {
+		value: null
 	}
 });
 
@@ -63,5 +61,5 @@ fixture('DELETE /services/users/{id}', function(request, response){
 	window.location.reload();
 });
 
-$('#demo-html').viewModel(vm).serialize();
+$('#demo-html').viewModel(vm).get();
 </script>

@@ -33,8 +33,7 @@ var DefineMap = require("can-define/map/map");
 var Tournament = require("bitballs/models/tournament");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
-require("can-route");
+require("can-stache/helpers/route");
 
 exports.ViewModel = DefineMap.extend('TournamentList',
 /** @prototype */
@@ -68,9 +67,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 	* A promise that resolves when [bitballs/component/tournament/list.prototype.createTournament]
 	* is called and the [bitballs/models/tournament] model is persisted to the server.
 	**/
-	savePromise: {
-		type: '*'
-	},
+	savePromise: 'any',
 	/**
 	 * @function createTournament
 	 *

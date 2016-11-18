@@ -63,18 +63,14 @@ var ViewModel = DefineMap.extend(
 	 *
 	 * The [bitballs/app] used to add or destroy the session.
 	 */
-	app: {
-		type: '*'
-	},
+	app:  'any',
 	/**
 	* @property {Promise<bitballs/models/session>} bitballs/components/navigation.sessionPromise sessionPromise
 	* @parent bitballs/components/navigation.properties
 	*
 	* The promise that resolves when the user is logged in.
 	*/
-	session: {
-		Type: Session
-	},
+	session: Session,
 	/**
 	 * @function createSession
 	 *
@@ -112,9 +108,7 @@ var ViewModel = DefineMap.extend(
 	closeDropdown: function ( el ) {
 		$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
 	},
-	sessionPromise: {
-		type: '*'
-	}
+	sessionPromise: 'any'
 });
 
 Component.extend({

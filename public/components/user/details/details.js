@@ -35,7 +35,6 @@ var Component = require("can-component"),
 	DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
 require("can-route");
 
 /**
@@ -142,16 +141,16 @@ exports.ViewModel = DefineMap.extend({
 	userStatus: {
 		get: function() {
 			if (this.user.isNew()) {
-        return "new";
-      }
+        		return "new";
+      		}
 			if (!this.user.verified) {
-        return "pending";
+        		return "pending";
 			}
 			return "verified";
 		}
 	},
 	savePromise: {
-		type: '*'
+		type: 'any'
 	},
 	/**
 	 * @function deleteUser
