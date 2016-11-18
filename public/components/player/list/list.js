@@ -37,10 +37,8 @@ require("can-route");
 
 var Player = require("bitballs/models/player");
 
-var ViewModel = exports.ViewModel = DefineMap.extend(
-/** @prototype */
+var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
 {
-
 	/**
 	 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
 	 * @parent bitballs/components/player/list.properties
@@ -51,9 +49,12 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 		type: 'boolean',
 		value: false
 	},
-	editingPlayer: {
-		type: 'any'
-	},
+	/**
+	 * @property {bitballs/models/Player} bitballs/models/player editingPlayer
+	 * 
+	 * holds the current player instance that is being edited
+	 */
+	editingPlayer: Player,
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
 	 * @parent bitballs/components/player/list.properties
@@ -65,7 +66,6 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 			return Player.getList({orderBy: "name"});
 		}
 	},
-
 	/**
 	 * @function editPlayer
 	 *
@@ -85,9 +85,8 @@ var ViewModel = exports.ViewModel = DefineMap.extend(
 	 * Deselects the [bitballs/models/player] model being edited.
 	 */
 	removeEdit: function(){
-		this.editingPlayer = undefined;
+		this.editingPlayer = null;
 	},
-
 	/**
 	 * @function
 	 * @description Delete a player from the database.

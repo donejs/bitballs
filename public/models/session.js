@@ -10,7 +10,7 @@ var $ = require("jquery");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var tag = require('can-connect/can/tag/');
-
+var User = require("./user");
 
 require( "can-connect/constructor/" );
 require( "can-connect/can/map/" );
@@ -20,7 +20,6 @@ require( "can-connect/data/callbacks/" );
 require( "can-connect/data/parse/" );
 require( "can-connect/data/url/" );
 
-var User = require("./user");
 
 var Session = DefineMap.extend('Session', {
 	/**

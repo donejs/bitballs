@@ -14,17 +14,47 @@ import 'can-stache/helpers/route';
 import "./util/prefilter";
 
 const AppViewModel = DefineMap.extend('App',
-/** @prototype */
 {	
+	/**
+	* @property {String} bitballs/app.title title
+	* @parent bitballs/app.properties
+	* The app title based on current page
+	**/
 	get title(){
 		return "BitBalls | " + this.pageComponentConfig.title;
-	},	
-	page: {
-		type: 'string',
 	},
-	gameId: {
-		type: '*',
+	/**
+	* @property {String} bitballs/app.page page
+	* @parent bitballs/app.properties
+	* Current page
+	**/
+	page: 'string',
+	/**
+	* @property {Number} bitballs/app.gameId gameId
+	* @parent bitballs/app.properties
+	* Current GameID
+	**/
+	gameId: 'number',
+	/**
+	* @property {Number} bitballs/app.tournamentId tournamentId
+	* @parent bitballs/app.properties
+	* Current tournament id
+	**/
+	tournamentId: 'number',
+	/**
+	* @property {Promise} bitballs/app.pagePromise pagePromise
+	* @parent bitballs/app.properties
+	* Promise object
+	**/
+	pagePromise: {
+		value: undefined,
+		serialize: false
 	},
+	/**
+	* @property {object} bitballs/app.pageComponentConfig pageComponentConfig
+	* @parent bitballs/app.properties
+	* page specific config object
+	**/
 	get pageComponentConfig() {
 		var page = this.page;
 		if(this.gameId) {
@@ -100,16 +130,11 @@ const AppViewModel = DefineMap.extend('App',
 			});
 		}
 	},
-	tournamentId: {
-		type: "number"
-	},
-
 	/**
 	* @property {Number} bitballs/app.statusCode statusCode
 	* @parent bitballs/app.properties
 	* The status code used for server-side rendering.
 	**/
-	//get statusCode(lastSet, resolve) {
 	statusCode: {
 		get: function(lastSet, resolve) {
 			var pageConfig = this.pageComponentConfig;
@@ -132,10 +157,6 @@ const AppViewModel = DefineMap.extend('App',
 				return 200;
 			}
 		}
-	},
-	pagePromise: {
-		value: undefined,
-		serialize: false
 	},
 	/**
 	 * @function isAdmin
@@ -167,8 +188,6 @@ stache.registerHelper("pageComponent", function(options){
 					"Loading..." +
 				"{{/if}}" +
 			"</can-import>";
-
-
 	return stache(template)(this, options.helpers, options.nodeList);
 });
 

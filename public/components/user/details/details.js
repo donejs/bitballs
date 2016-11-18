@@ -46,7 +46,40 @@ require("can-route");
 
 exports.ViewModel = DefineMap.extend({
 	/**
-	 * @property {can-map}
+	 * @property {bitballs/models/session|null}
+	 *
+	 * If a user is logged in, the session data, including
+	 * data about the currently logged in user.
+	 *
+	 * @signature `bitballs/models/session`
+	 *
+	 * 	A session instance, which includes data about the logged in user like:
+	 *
+	 *      {
+	 *      	user: {
+	 *      		email: "tomrobbins@tommyrotten.net",
+	 *      		id: 4,
+	 *      		verified: false,
+	 *      		isAdmin: false
+	 *      	}
+	 *      }
+	 *
+	 * @signature `null`
+	 *
+	 * 	If the user is not currently logged in, `null`.
+	 */
+	session: {
+		value: null
+	},
+	/**
+	* @property {Promise} bitballs/components/user/details.savePromise savePromise
+	* @parent bitballs/components/users/details.properties
+	*
+	* The promise that resolves when the user is saved
+	*/
+	savePromise: 'any',
+	/**
+	 * @property {can-define}
 	 *
 	 * Provides a user instance. If a session is active, this
 	 * syncs the user with `session.user`. Otherwise, a user instance
@@ -100,32 +133,6 @@ exports.ViewModel = DefineMap.extend({
 		return promise;
 	},
 	/**
-	 * @property {bitballs/models/session|null}
-	 *
-	 * If a user is logged in, the session data, including
-	 * data about the currently logged in user.
-	 *
-	 * @signature `bitballs/models/session`
-	 *
-	 * 	A session instance, which includes data about the logged in user like:
-	 *
-	 *      {
-	 *      	user: {
-	 *      		email: "tomrobbins@tommyrotten.net",
-	 *      		id: 4,
-	 *      		verified: false,
-	 *      		isAdmin: false
-	 *      	}
-	 *      }
-	 *
-	 * @signature `null`
-	 *
-	 * 	If the user is not currently logged in, `null`.
-	 */
-	session: {
-		value: null
-	},
-	/**
 	 * @property {String}
 	 *
 	 * The status of the user. One of the following:
@@ -138,19 +145,14 @@ exports.ViewModel = DefineMap.extend({
 	 *  With a pending user, the component shows the email address.
 	 *  With a verified user, the component shows a form allowing the user to change their password.
 	 */
-	userStatus: {
-		get: function() {
-			if (this.user.isNew()) {
-        		return "new";
-      		}
-			if (!this.user.verified) {
-        		return "pending";
-			}
-			return "verified";
+	get userStatus() {
+		if (this.user.isNew()) {
+			return "new";
 		}
-	},
-	savePromise: {
-		type: 'any'
+		if (!this.user.verified) {
+			return "pending";
+		}
+		return "verified";
 	},
 	/**
 	 * @function deleteUser

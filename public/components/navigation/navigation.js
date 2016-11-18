@@ -41,8 +41,7 @@ require("can-route");
 require("./navigation.less!");
 
 
-var ViewModel = DefineMap.extend(
-/** @prototype */
+var ViewModel = DefineMap.extend('NavigationVM',
 {
 
 	/**
@@ -70,6 +69,12 @@ var ViewModel = DefineMap.extend(
 	*
 	* The promise that resolves when the user is logged in.
 	*/
+	sessionPromise: 'any',
+	/**
+	 * @property {bitballs/models/session} bitballs/models/session session
+	 * 
+	 * Current session for the app
+	 */
 	session: Session,
 	/**
 	 * @function createSession
@@ -107,8 +112,7 @@ var ViewModel = DefineMap.extend(
 	 */
 	closeDropdown: function ( el ) {
 		$( el ).closest( ".session-menu" ).find( ".open .dropdown-toggle" ).dropdown( "toggle" );
-	},
-	sessionPromise: 'any'
+	}
 });
 
 Component.extend({

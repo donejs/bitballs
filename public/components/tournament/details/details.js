@@ -43,7 +43,6 @@ require("bootstrap/dist/css/bootstrap.css!");
 require("can-route");
 
 exports.ViewModel = DefineMap.extend('TournamentDetails',
-/** @prototype */
 {
 	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
@@ -51,10 +50,8 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	*
 	* Configures whether or not admin specific features are enabled.
 	**/
-	tournamentPromise: {
-		get: function(){
-			return Tournament.get({id: this.tournamentId });
-		}
+	get tournamentPromise() {
+		return Tournament.get({id: this.tournamentId });
 	},
 	/**
 	* @property {Boolean} bitballs/components/tournament/details.isAdmin isAdmin
@@ -90,12 +87,10 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	* A promise that fetches a [bitballs/models/game.static.List Game List] based on
 	* [bitballs/components/tournament/details.ViewModel.prototype.tournamentId tournamentId].
 	**/
-	gamesPromise: {
-		get: function(){
-			return Game.getList({
-				where: {tournamentId: this.tournamentId}
-			});
-		}
+	get gamesPromise() {
+		return Game.getList({
+			where: {tournamentId: this.tournamentId}
+		});
 	},
 	/**
 	* @property {bitballs/models/game.static.List} bitballs/components/tournament/details.games games
@@ -115,10 +110,8 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	* The `length` of the [bitballs/components/tournament/details.ViewModel.prototype.games games]
 	* list.
 	**/
-	gamesLength: {
-		get: function () {
-			return this.games ? this.games.length : 0;
-		}
+	get gamesLength() {
+		return this.games ? this.games.length : 0;
 	},
 	/**
 	* @property {Promise<bitballs/models/team.static.List>} bitballs/components/tournament/details.teamsPromise teamsPromise
@@ -127,12 +120,10 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 	* A promise that resolves to a [bitballs/models/team.static.List Team List] based on
 	* [bitballs/components/tournament/details.ViewModel.prototype.tournamentId tournamentId].
 	**/
-	teamsPromise: {
-		get: function(){
-			return Team.getList({
-				where: {tournamentId: this.tournamentId}
-			});
-		}
+	get teamsPromise() {
+		return Team.getList({
+			where: {tournamentId: this.tournamentId}
+		});
 	},
 	/**
 	* @property {bitballs/models/team.static.List} bitballs/components/tournament/details.teams teams

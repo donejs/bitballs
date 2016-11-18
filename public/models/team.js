@@ -11,8 +11,6 @@ var Player = require("./player");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 
-
-
 var Team = DefineMap.extend('Team', {
 	/**
 	 * @property {Array}
@@ -21,6 +19,13 @@ var Team = DefineMap.extend('Team', {
 	colors: ["Black","White","Red","Green","Blue","Yellow","Brown","Gray","Orange","Purple"]
 },
 {
+	/**
+	 * @property {Number} bitballs/models/team.properties.id id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * A unique identifier.
+	 **/
+	id: 'any',
 	/**
 	 * @property {Number} bitballs/models/team.properties.tournamentId tournamentId
 	 * @parent bitballs/models/team.properties
@@ -58,6 +63,48 @@ var Team = DefineMap.extend('Team', {
 	 **/
 	player4: Player,
 	/**
+	 * @property {String} bitballs/models/team.properties.name name
+	 * @parent bitballs/models/team.properties
+	 *
+	 * Name of the team 
+	 **/
+	name: 'string',
+	/**
+	 * @property {String} bitballs/models/team.properties.color color
+	 * @parent bitballs/models/team.properties
+	 *
+	 * Team color
+	 **/
+	color: 'string',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player1Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 1.
+	 **/
+	player1Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player2Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 2.
+	 **/
+	player2Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player3Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 3.
+	 **/
+	player3Id: 'number',
+	/**
+	 * @property {Number} bitballs/models/team.properties.player4Id player1Id
+	 * @parent bitballs/models/team.properties
+	 *
+	 * id of the player 4.
+	 **/
+	player4Id: 'number',
+	/**
 	 * @property {bitballs/models/player.static.List} bitballs/models/team.properties.players players
 	 * @parent bitballs/models/team.properties
 	 *
@@ -77,20 +124,7 @@ var Team = DefineMap.extend('Team', {
 		});
 
 		return new Player.List(players);
-	},
-	/**
-	 * @property {Number} bitballs/models/team.properties.id id
-	 * @parent bitballs/models/team.properties
-	 *
-	 * A unique identifier.
-	 **/
-	id: 'any',
-	name: 'any',
-	color: 'string',
-	player1Id: 'number',
-	player2Id: 'number',
-	player3Id: 'number',
-	player4Id: 'number'
+	}
 });
 /**
  * @constructor {can-list} bitballs/models/team.static.List List

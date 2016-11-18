@@ -37,8 +37,7 @@ require('can-define-backup');
 require("can-construct");
 
 
-exports.ViewModel = DefineMap.extend(
-/** @prototype **/
+exports.ViewModel = DefineMap.extend("PlayerEditVM",
 {
 	/**
 	* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
@@ -66,9 +65,7 @@ exports.ViewModel = DefineMap.extend(
 	 *
 	 * A [bitballs/models/player] model.
 	 */
-	savePromise: {
-		type: 'any'
-	},
+	savePromise: 'any',
 	/**
 	 * @function savePlayer
 	 *

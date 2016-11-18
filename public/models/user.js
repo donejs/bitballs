@@ -30,12 +30,54 @@ var DefineList = require("can-define/list/list");
 
 
 var User = DefineMap.extend('User', {
+	/**
+	 * @property {Number} bitballs/models/user.properties.id id
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A unique identifier.
+	 **/
+	id: 'number',
+	/**
+	 * @property {String} bitballs/models/user.properties.email email
+	 * @parent bitballs/models/user.properties
+	 *
+	 * Email address representing the user
+	 **/
 	email: 'string',
+	/**
+	 * @property {String} bitballs/models/user.properties.password password
+	 * @parent bitballs/models/user.properties
+	 *
+	 * Password for the user
+	 **/
 	password: 'string',
-	id: 'any',
+	/**
+	 * @property {String} bitballs/models/user.properties.name name
+	 * @parent bitballs/models/user.properties
+	 *
+	 * User's full name as returned by the server
+	 **/
 	name: 'string',
-	isAdmin: 'any',
-	verified: 'any',
+	/**
+	 * @property {Boolean} bitballs/models/user.properties.isAdmin isAdmin
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A boolean representing if the user has admin rights
+	 **/
+	isAdmin: 'boolean',
+	/**
+	 * @property {Boolean} bitballs/models/user.properties.verified verified
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A boolean representing if the user is verified
+	 **/
+	verified: 'boolean',
+	/**
+	 * @property {String} bitballs/models/user.properties.verificationHash verificationHash
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A unique hash representing user verification
+	 **/
 	verificationHash: 'string'
 });
 

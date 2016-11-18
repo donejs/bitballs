@@ -13,7 +13,20 @@ var DefineList = require("can-define/list/list");
 
 
 var Tournament = DefineMap.extend('Tournament', {
+	/**
+	 * @property {Number} bitballs/models/tournament.properties.id id
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * A unique identifier.
+	 **/
 	id: 'number',
+	/**
+	 * @property {String} bitballs/models/tournament.properties.date date
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * The date that the tournament is schedule to occur.
+	 **/
+	date: 'string',
 	/**
 	 * @property {Date} bitballs/models/tournament.properties.jsDate jsDate
 	 * @parent bitballs/models/tournament.properties
@@ -35,17 +48,16 @@ var Tournament = DefineMap.extend('Tournament', {
 		var jsDate = this.jsDate;
 		return jsDate ? jsDate.getFullYear() : null;
 	},
+	/**
+	 * @property {Date} bitballs/models/tournament.properties.prettyDate prettyDate
+	 * @parent bitballs/models/tournament.properties
+	 *
+	 * A formatted output of [bitballs/models/tournament.properties.date].
+	 **/
 	get prettyDate() {
 		var date = this.date;
 		return date ? moment(date).toDate() : null;
-	},
-	/**
-	 * @property {String} bitballs/models/tournament.properties.date date
-	 * @parent bitballs/models/tournament.properties
-	 *
-	 * The date that the tournament is schedule to occur.
-	 **/
-	date: 'string'
+	}
 });
 
 /**

@@ -45,6 +45,11 @@ import Session from "bitballs/models/session";
 
 export const ViewModel = DefineMap.extend({
 	/**
+	 * @property {bitballs/models/session} session
+	 *   The session object if a user is logged in. The user must be an admin to view the user list.
+	 */
+	session: Session,
+	/**
 	 * @property {can-list<bitballs/models/user>}
 	 *
 	 * Provides list of users, like:
@@ -65,11 +70,6 @@ export const ViewModel = DefineMap.extend({
 			return User.getList({});
 		}
 	},
-	/**
-	 * @property {bitballs/models/session} session
-	 *   The session object if a user is logged in. The user must be an admin to view the user list.
-	 */
-	session: Session,
 	/**
 	 * @function
 	 *

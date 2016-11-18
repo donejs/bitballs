@@ -47,6 +47,16 @@ require("can-route");
 exports.ViewModel = DefineMap.extend('GameDetailsVM',
 {
 	/**
+	 * @property {Object}
+	 *
+	 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
+	 */
+	youtubePlayer: 'any',
+	/**
+	 * @property {String} object to hold the current duration
+	 */
+	duration: 'any',
+	/**
 	* @property {bitballs/models/session} bitballs/components/game/details.session session
 	* @parent bitballs/components/game/details.properties
 	*
@@ -112,14 +122,6 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		get: function(last, set) {
 			this.gamePromise.then(set);
 		}
-	},
-	/**
-	 * @property {Object}
-	 *
-	 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
-	 */
-	youtubePlayer: {
-		type: 'any'
 	},
 	/**
 	 * @property {Array<{name: String}>}
@@ -384,9 +386,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			return "0";
 		}
 	},
-	duration: {
-		type: 'any'
-	},
+	
 	/**
 	 * @function
 	 * @description Gets a list of stats for a player
@@ -419,8 +419,6 @@ exports.Component = Component.extend({
 	tag: "game-details",
 	view: require("./details.stache!"),
 	ViewModel: exports.ViewModel,
-	// YT: false,
-	// youtubePlayer: false,
 	/**
 	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
@@ -514,8 +512,6 @@ exports.Component = Component.extend({
 				this.scope.playing = false;
 				clearTimeout(this.timeUpdate);
 			}
-
-
 		},
 		/**
 		 * @function
@@ -574,7 +570,6 @@ exports.Component = Component.extend({
 			setTimeout(function(){
 				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
 			},1);
-
 		}
 	}
 });

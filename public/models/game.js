@@ -16,8 +16,6 @@ var DefineList = require("can-define/list/list");
 var can = require("can-util");
 
 
-
-
 var Game = DefineMap.extend('Game',
 {
 	/**
@@ -33,6 +31,11 @@ var Game = DefineMap.extend('Game',
 		"Elimination", "Quarter Finals", "Semi Finals", "Championship"]
 },
 {
+	/**
+	 * @property {Number} bitballs/models/game.properties.id id
+	 * @parent bitballs/models/game.properties
+	 * A unique identifier.
+	 **/
 	id: 'number',
 	/**
 	 * @property {Number} bitballs/models/game.properties.tournamentId tournamentId
@@ -71,12 +74,25 @@ var Game = DefineMap.extend('Game',
 	 */
 	awayTeam: Team,
 	/**
+	 * @property {String} bitballs/models/game.properties.round round
+	 * @parent bitballs/models/game.properties
+	 * 
+	 * The game round value
+	 */
+	round: 'string',
+	/**
+	 * @property {String} bitballs/models/game.properties.court court
+	 * @parent bitballs/models/game.properties
+	 * 
+	 * The game court value
+	 */
+	court: 'string',
+	/**
 	 * @property {bitballs/models/team.static.List} bitballs/models/game.properties.teams teams
 	 * @parent bitballs/models/game.properties
 	 * A list that contains the home and away team.
 	 */
 	get teams() {
-
 		var teams = [],
 			home = this.homeTeam,
 			away = this.awayTeam;
@@ -88,7 +104,6 @@ var Game = DefineMap.extend('Game',
 			teams.push(away);
 		}
 		return new Team.List(teams);
-	
 	},
 	/**
 	 * @property {bitballs/models/player.static.List} bitballs/models/game.properties.players players
@@ -132,12 +147,6 @@ var Game = DefineMap.extend('Game',
 		}
 	},
 	/**
-	 * @property {Number} bitballs/models/game.properties.id id
-	 * @parent bitballs/models/game.properties
-	 * A unique identifier.
-	 **/
-
-	/**
 	 * @function
 	 **/
 	statsForPlayerId: function(id) {
@@ -167,9 +176,7 @@ var Game = DefineMap.extend('Game',
 			});
 			return playerIds;
 		}
-	},
-	round: 'string',
-	court: 'string'
+	}
 });
 
 /**
@@ -178,10 +185,9 @@ var Game = DefineMap.extend('Game',
  *
  * @group bitballs/models/game.static.List.properties 0 properties
  */
-Game.List = DefineList.extend({Map: Game},
-/** @prototype */
+Game.List = DefineList.extend(
 {
-
+	"#": Game,
 	/**
 	 * @property {Object<roundName,Object<courtName,bitballs/models/game>>} bitballs/models/game.static.List.properties.gamesGroupedByRound gamesGroupedByRound
 	 * @parent bitballs/models/game.static.List.properties

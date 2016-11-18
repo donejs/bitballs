@@ -29,7 +29,6 @@ var DefineMap = require('can-define/map/map');
 var DefineList = require('can-define/list/list');
 var Player = require("bitballs/models/player");
 
-
 require("can-define-backup");
 
 var Stat = DefineMap.extend('Stat',
@@ -54,6 +53,11 @@ var Stat = DefineMap.extend('Stat',
 		]
 },
 {
+	/**
+	 * @property {Number} bitballs/models/stat.properties.id id
+	 * @parent bitballs/models/stat.properties
+	 * A unique identifier.
+	 **/
 	id: 'number',
 	/**
 	 * @property {Number} bitballs/models/stat.properties.time time
@@ -66,19 +70,42 @@ var Stat = DefineMap.extend('Stat',
 			return Math.round(newVal);
 		}
 	},
-	// TODO: remove?
+	/**
+	 * @property {bitballs/models/player} bitballs/models/stat.properties.player player
+	 * @parent bitballs/models/player.properties
+	 *
+	 * Player related to the stats
+	 */
 	player: {
 		Type: Player,
 		serialize: false
 	},
+	/**
+	 * @property {Number} bitballs/models/stat.properties.playerId playerId
+	 * @parent bitballs/models/player.properties
+	 *
+	 * Player id of the current stats
+	 */
 	playerId: 'number',
+	/**
+	 * @property {Number} bitballs/models/stat.properties.gameId gameId
+	 * @parent bitballs/models/player.properties
+	 *
+	 * Game id of the current stat
+	 */
 	gameId: 'number',
+	/**
+	 * @property {Any} bitballs/models/stat.properties.type type
+	 * @parent bitballs/models/player.properties
+	 *
+	 * Type of the stat
+	 */
 	type: 'any'
 });
 
 
 /**
- * @property {can-list} bitballs/models/stat.static.List List
+ * @property {can-define/list} bitballs/models/stat.static.List List
  * @parent bitballs/models/stat.static
  *
  * Methods on a List of stats.
@@ -101,7 +128,6 @@ var statConnection = superMap({
 	Map: Stat,
 	List: Stat.List,
 	url: {
-		// resource: "/services/stats",
 		getData: "/services/stats",
 		createData: "/services/stats",
 		destroyData: "/services/stats/{id}",
