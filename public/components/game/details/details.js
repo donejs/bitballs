@@ -234,9 +234,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			playerId: player.id,
 			gameId: this.game.id,
 			player: player
-		});
-
-		
+		});		
 	},
 	/**
 	 * @function
@@ -403,9 +401,6 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	statsForPlayerId: function(id){
-		if(typeof id === "function") {
-			id = id();
-		}
 		var statsById = this.sortedStatsByPlayerId;
 		if(statsById) {
 			return statsById[id] || new DefineList();
@@ -473,7 +468,7 @@ exports.Component = Component.extend({
 			var youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
-			this.youtubePlayer.playVideo();
+			youtubePlayer.playVideo();
 
 			// get duration
 			var getDuration = function(){
@@ -546,7 +541,6 @@ exports.Component = Component.extend({
 				if(Math.abs(time-playerTime) > 2) {
 					player.seekTo(time, true);
 				}
-
 			}
 
 		},

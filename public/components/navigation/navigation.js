@@ -43,19 +43,6 @@ require("./navigation.less!");
 
 var ViewModel = DefineMap.extend('NavigationVM',
 {
-
-	/**
-	 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
-	 * @parent bitballs/components/navigation.properties
-	 *
-	 * A placeholder session with a nested [bitballs/models/user user] property that
-	 * is used for two-way binding the login form's username and password.
-	 */
-	loginSession: {
-		value: function(){
-			return new Session({user: new User()});
-		}
-	},
 	/**
 	 * @property {bitballs/app} bitballs/components/navigation.app app
 	 * @parent bitballs/components/navigation.properties
@@ -77,6 +64,18 @@ var ViewModel = DefineMap.extend('NavigationVM',
 	 */
 	session: Session,
 	/**
+	 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
+	 * @parent bitballs/components/navigation.properties
+	 *
+	 * A placeholder session with a nested [bitballs/models/user user] property that
+	 * is used for two-way binding the login form's username and password.
+	 */
+	loginSession: {
+		value: function(){
+			return new Session({user: new User()});
+		}
+	},
+	/**
 	 * @function createSession
 	 *
 	 * Creates the session on the server and when successful updates [bitballs/components/navigation.app]
@@ -93,7 +92,6 @@ var ViewModel = DefineMap.extend('NavigationVM',
 			self.app.session = session;
 		});
 		this.sessionPromise = sessionPromise;
-
 	},
 	/**
 	 * @function logout

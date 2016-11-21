@@ -64,7 +64,7 @@ var Tournament = DefineMap.extend('Tournament', {
  * @constructor {can-list} bitballs/models/tournament.static.List List
  * @parent bitballs/models/tournament.static
  */
-Tournament.List = DefineList.extend({"#": Tournament});
+Tournament.List = DefineList.extend('TournamentList', {"#": Tournament});
 
 /**
  * @property {set.Algebra} bitballs/models/tournament.static.algebra algebra

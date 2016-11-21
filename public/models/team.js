@@ -116,13 +116,11 @@ var Team = DefineMap.extend('Team', {
 	get players() {
 		var players = [],
 			self = this;
-
 			["player1","player2","player3","player4"].map(function(name){
 			if(self[name]) {
 				players.push(self[name]);
 			}
 		});
-
 		return new Player.List(players);
 	}
 });
@@ -130,10 +128,9 @@ var Team = DefineMap.extend('Team', {
  * @constructor {can-list} bitballs/models/team.static.List List
  * @parent bitballs/models/team.static
  */
-Team.List = DefineList.extend(
+Team.List = DefineList.extend('TeamsList', {"#": Team},
 /** @prototype **/
 {
-	"#": Team,
 	/**
 	 * @property {Object}
 	 *

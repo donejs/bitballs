@@ -60,17 +60,6 @@ var Stat = DefineMap.extend('Stat',
 	 **/
 	id: 'number',
 	/**
-	 * @property {Number} bitballs/models/stat.properties.time time
-	 * @parent bitballs/models/stat.properties
-	 *
-	 * The time of the stat, rounded to the nearest integer.
-	 */
-	time: {
-		set: function(newVal){
-			return Math.round(newVal);
-		}
-	},
-	/**
 	 * @property {bitballs/models/player} bitballs/models/stat.properties.player player
 	 * @parent bitballs/models/player.properties
 	 *
@@ -100,7 +89,18 @@ var Stat = DefineMap.extend('Stat',
 	 *
 	 * Type of the stat
 	 */
-	type: 'any'
+	type: 'any',
+	/**
+	 * @property {Number} bitballs/models/stat.properties.time time
+	 * @parent bitballs/models/stat.properties
+	 *
+	 * The time of the stat, rounded to the nearest integer.
+	 */
+	time: {
+		set: function(newVal){
+			return Math.round(newVal);
+		}
+	}
 });
 
 
@@ -110,7 +110,7 @@ var Stat = DefineMap.extend('Stat',
  *
  * Methods on a List of stats.
  */
-Stat.List = DefineList.extend({"#": Stat});
+Stat.List = DefineList.extend('StatsList', {"#": Stat});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra

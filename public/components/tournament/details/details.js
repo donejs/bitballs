@@ -44,6 +44,9 @@ require("can-route");
 
 exports.ViewModel = DefineMap.extend('TournamentDetails',
 {
+	d: function() {
+		console.log("d: ", arguments);
+	},
 	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
 	* @parent bitballs/components/tournament/details.properties
@@ -158,6 +161,16 @@ exports.ViewModel = DefineMap.extend('TournamentDetails',
 			});
 			return allColors;
 		}
+	},
+	/**
+	* @property {Array} bitballs/components/tournament/details.courtNames courtNames
+	* @parent bitballs/components/tournament/details.properties
+	* 
+	* A list of courtNames from the [bitballs/models/game.static.courtNames courtNames]
+	* list that are available.
+	**/
+	get courtNames() {
+		return Game.courtNames;
 	},
 	/**
 	* @property {bitballs/models/game} bitballs/components/tournament/details.game game

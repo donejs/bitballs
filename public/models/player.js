@@ -15,6 +15,27 @@ var DefineMap = require('can-define-backup');
 
 var Player = DefineMap.extend('Player', {
 	/**
+	 * @property {Number} bitballs/models/player.properties.id id
+	 * @parent bitballs/models/player.properties
+	 *
+	 * A unique identifier.
+	 **/
+	id: 'number',
+	/**
+	 * @property {String} bitballs/models/player.properties.birthday birthday
+	 * @parent bitballs/models/player.properties
+	 *
+	 * The player's date of birth. Formatted as `YYYY-MM-DD`.
+	 **/
+	birthday: 'any',
+	/**
+	 * @property {String} bitballs/models/player.properties.name name
+	 * @parent bitballs/models/player.properties
+	 *
+	 * The name of the player.
+	 **/
+	name: 'string',
+	/**
 	 * @property {Number} bitballs/models/player.properties.weight weight
 	 * @parent bitballs/models/player.properties
 	 *
@@ -28,6 +49,14 @@ var Player = DefineMap.extend('Player', {
 	 * The height of a player in inches.
 	 **/
 	height: 'number',
+	/**
+	 * @function
+	 *
+	 * Backs up the model's properties on instantiation.
+	 **/
+	init: function () {
+		this.backup();
+	},
 	/**
 	 * @property {Date|null} bitballs/models/player.properties.jsBirthday jsBirthday
 	 * @parent bitballs/models/player.properties
@@ -71,35 +100,6 @@ var Player = DefineMap.extend('Player', {
 			}
 			return age;
 		}
-	},
-	/**
-	 * @property {String} bitballs/models/player.properties.birthday birthday
-	 * @parent bitballs/models/player.properties
-	 *
-	 * The player's date of birth. Formatted as `YYYY-MM-DD`.
-	 **/
-	birthday: 'any',
-	/**
-	 * @property {String} bitballs/models/player.properties.name name
-	 * @parent bitballs/models/player.properties
-	 *
-	 * The name of the player.
-	 **/
-	name: 'string',
- 	/**
-	 * @property {Number} bitballs/models/player.properties.id id
-	 * @parent bitballs/models/player.properties
-	 *
-	 * A unique identifier.
-	 **/
-	id: 'number',
-	/**
-	 * @function
-	 *
-	 * Backs up the model's properties on instantiation.
-	 **/
-	init: function () {
-		this.backup();
 	}
 });
 
@@ -107,10 +107,9 @@ var Player = DefineMap.extend('Player', {
  * @constructor {can-list} bitballs/models/player.static.List List
  * @parent bitballs/models/player.static
  */
-Player.List = DefineList.extend(
+Player.List = DefineList.extend('PlayerList', {"#": Player},
 /** @prototype **/
 {
-	"#": Player,
 	/**
 	 * @property {Object}
 	 *

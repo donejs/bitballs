@@ -85,7 +85,7 @@ var User = DefineMap.extend('User', {
  * @constructor {can-list} bitballs/models/user.static.List List
  * @parent bitballs/models/user.static
  */
-User.List = DefineList.extend({"#": User});
+User.List = DefineList.extend('UserList', {"#": User});
 
 /**
  * @property {set.Algebra} bitballs/models/user.static.algebra algebra

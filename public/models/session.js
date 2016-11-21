@@ -29,7 +29,6 @@ var Session = DefineMap.extend('Session', {
 	 * The [bitballs/models/user] model this session represents.
 	 **/
 	user: User,
-
 	/**
 	 * @function
 	 *
@@ -47,7 +46,7 @@ var Session = DefineMap.extend('Session', {
  * @constructor {can-list} bitballs/models/session.static.List List
  * @parent bitballs/models/session.static
  */
-Session.List = DefineList.extend({"#": Session});
+Session.List = DefineList.extend('SessionList', {"#": Session});
 
 var behaviors = [
 	"constructor",

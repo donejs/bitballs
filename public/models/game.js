@@ -185,9 +185,8 @@ var Game = DefineMap.extend('Game',
  *
  * @group bitballs/models/game.static.List.properties 0 properties
  */
-Game.List = DefineList.extend(
+Game.List = DefineList.extend('GamesList', {"#": Game},
 {
-	"#": Game,
 	/**
 	 * @property {Object<roundName,Object<courtName,bitballs/models/game>>} bitballs/models/game.static.List.properties.gamesGroupedByRound gamesGroupedByRound
 	 * @parent bitballs/models/game.static.List.properties
