@@ -42,11 +42,8 @@ require("can-define-stream");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-stache/helpers/route");
 
-exports.ViewModel = DefineMap.extend('TournamentDetails',
+exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 {
-	d: function() {
-		console.log("d: ", arguments);
-	},
 	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
 	* @parent bitballs/components/tournament/details.properties

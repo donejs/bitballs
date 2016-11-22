@@ -25,7 +25,7 @@ var Team = DefineMap.extend('Team', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: 'any',
+	id: 'number',
 	/**
 	 * @property {Number} bitballs/models/team.properties.tournamentId tournamentId
 	 * @parent bitballs/models/team.properties

@@ -1,13 +1,12 @@
 language: node_js
-node_js: node
+node_js: "6"
 addons:
-  chrome: latest
+  firefox: latest
   postgresql: '9.4'
 install:
   - npm install
 before_install:
   - 'export DISPLAY=:99.0'
-  - 'DEBUG=testee*'
   - sh -e /etc/init.d/xvfb start
   - "psql -c 'create database bitballs;' -U postgres"
 before_deploy:
