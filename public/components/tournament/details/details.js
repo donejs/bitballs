@@ -44,9 +44,6 @@ require("can-stache/helpers/route");
 
 exports.ViewModel = DefineMap.extend('TournamentDetails',
 {
-	d: function() {
-		console.log("d: ", arguments);
-	},
 	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
 	* @parent bitballs/components/tournament/details.properties
