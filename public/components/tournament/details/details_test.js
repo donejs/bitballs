@@ -3,8 +3,8 @@ import details from './details';
 import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
-import fixture from "can-fixture";
-import Game from 'bitballs/models/game';
+// import fixture from "can-fixture";
+// import Game from 'bitballs/models/game';
 
 var ViewModel = details.ViewModel;
 var vm;
@@ -17,8 +17,8 @@ QUnit.module('components/tournament/details/', {
         defineGameFixtures();
 
         vm = new ViewModel({
-                tournamentId: 2
-            });
+            tournamentId: 2
+        });
 
         done();        
     }
