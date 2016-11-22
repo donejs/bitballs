@@ -1,36 +1,36 @@
-// import QUnit from 'steal-qunit';
-// import details from './details';
-// import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
-// import 'bitballs/models/fixtures/players';
-// import defineGameFixtures  from 'bitballs/models/fixtures/games';
-// import fixture from "can-fixture";
-// import Game from 'bitballs/models/game';
+import QUnit from 'steal-qunit';
+import details from './details';
+import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
+import 'bitballs/models/fixtures/players';
+import defineGameFixtures  from 'bitballs/models/fixtures/games';
+import fixture from "can-fixture";
+import Game from 'bitballs/models/game';
 
-// var ViewModel = details.ViewModel;
-// var vm;
+var ViewModel = details.ViewModel;
+var vm;
 
-// QUnit.module('components/tournament/details/', {
-//     beforeEach: function (assert) {
-//         let done = assert.async();
-//         localStorage.clear();
-//         defineTournamentFixtures();
-//         defineGameFixtures();
+QUnit.module('components/tournament/details/', {
+    beforeEach: function (assert) {
+        let done = assert.async();
+        localStorage.clear();
+        defineTournamentFixtures();
+        defineGameFixtures();
 
-//         vm = new ViewModel({
-//                 tournamentId: 2
-//             });
+        vm = new ViewModel({
+                tournamentId: 2
+            });
 
-//         done();        
-//     }
-// });
+        done();        
+    }
+});
 
-// QUnit.test('should load a tournament', (assert) => {
-//     let done = assert.async();
-//     vm.on('tournament', function (ev, newVal) {
-//         assert.equal(newVal.name, 'EBaller Virus', 'with the correct name' );
-//         done();
-//     });
-// });
+QUnit.test('should load a tournament', (assert) => {
+    let done = assert.async();
+    vm.on('tournament', function (ev, newVal) {
+        assert.equal(newVal.name, 'EBaller Virus', 'with the correct name' );
+        done();
+    });
+});
 
 // QUnit.test('The selected round defaults to the first available round', function () {
 //     var vm = new ViewModel();
