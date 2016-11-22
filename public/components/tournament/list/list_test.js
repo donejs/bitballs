@@ -1,37 +1,37 @@
-import $ from 'jquery';
-import stache from 'can-stache';
-import fixture from 'can-fixture';
-import QUnit from 'steal-qunit';
-import F from 'funcunit';
-import tournamentList from './list';
-import defineFixtures from 'bitballs/models/fixtures/tournaments';
+// import $ from 'jquery';
+// import stache from 'can-stache';
+// import fixture from 'can-fixture';
+// import QUnit from 'steal-qunit';
+// import F from 'funcunit';
+// import tournamentList from './list';
+// import defineFixtures from 'bitballs/models/fixtures/tournaments';
 
-F.attach(QUnit);
+// F.attach(QUnit);
 
-var ViewModel = tournamentList.ViewModel;
+// var ViewModel = tournamentList.ViewModel;
 
-QUnit.module('components/tournament/list/', {
-	beforeEach: function () {
-		localStorage.clear();
-		fixture.delay = 1;
-		defineFixtures();
-	}
-});
+// QUnit.module('components/tournament/list/', {
+// 	beforeEach: function () {
+// 		localStorage.clear();
+// 		fixture.delay = 1;
+// 		defineFixtures();
+// 	}
+// });
 
-QUnit.test('creating tournament fails without a name', function(assert){
-	var done = assert.async();
+// QUnit.test('creating tournament fails without a name', function(assert){
+// 	var done = assert.async();
 
-	assert.expect(2);
+// 	assert.expect(2);
 
-	var vm = new ViewModel();
+// 	var vm = new ViewModel();
 
-	vm.createTournament();
-	vm.savePromise.then(done, function(resp, type){
-		assert.equal(resp.statusText, 'error', 'fail creation without date');
-		assert.equal(resp.status, '400', 'rejected');
-		done();
-	});
-});
+// 	vm.createTournament();
+// 	vm.savePromise.then(done, function(resp, type){
+// 		assert.equal(resp.statusText, 'error', 'fail creation without date');
+// 		assert.equal(resp.status, '400', 'rejected');
+// 		done();
+// 	});
+// });
 
 // QUnit.test('Create button is disabled while posting data', function (assert) {
 // 	var done = assert.async();
