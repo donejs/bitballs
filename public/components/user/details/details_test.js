@@ -15,8 +15,10 @@ QUnit.test('create new user', function(assert) {
 
 	var vm = new ViewModel();
 
-	vm.user.email = 'test@bitovi.com';
-	vm.user.password = '123';
+	vm.user.set({
+		email: 'test@bitovi.com',
+		password: '123'
+	});
 
 	// session is not created before user is saved:
 	assert.ok(vm.user.isNew(), 'User should be new.');

@@ -101,7 +101,7 @@ QUnit.test('Deleting a stat does not change playback location', function (assert
         gotoCalled = true;
     };
 
-    $(vm).bind('game', function(ev, game) {
+    $(vm).on('game', function(ev, game) {
         F.confirm(true);
         done();
         F('.stat-point .destroy-btn')

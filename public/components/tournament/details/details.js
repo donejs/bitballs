@@ -40,7 +40,7 @@ var DefineMap = require("can-define/map/map");
 
 require("can-define-stream");
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-route");
+require("can-stache/helpers/route");
 
 exports.ViewModel = DefineMap.extend('TournamentDetails',
 {
