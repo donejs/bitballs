@@ -6,7 +6,7 @@
   "author": "Bitovi",
   "scripts": {
     "install": "node build.js",
-    "test": "rm -rf ~/.mozilla && DEBUG=testee* testee test.html --browsers firefox --reporter Spec"
+    "test": "rm -rf ~/.mozilla && DEBUG=testee* testee test.html --timeout 500 --browsers firefox --reporter Spec"
   },
   "main": "index.stache!done-autorender",
   "files": [
