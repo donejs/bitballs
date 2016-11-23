@@ -24,13 +24,13 @@ QUnit.module('components/tournament/details/', {
         // done();
 
         clone({
-            // 'bitballs/models/tournament': {
-            //     get: function() {
-            //         return Promise.resolve(new DefineMap('MyMap', {sealed: false}, {
-            //             name: 'Test Name'
-            //         }));
-            //     }
-            // }
+            'bitballs/models/tournament': {
+                get: function() {
+                    return Promise.resolve(new DefineMap('MyMap', {sealed: false}, {
+                        name: 'Test Name'
+                    }));
+                }
+            }
         })
         .import('./details')
         .then(({ ViewModel }) => {
