@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-// import details from './details';
+import details from './details';
 import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
@@ -17,18 +17,11 @@ QUnit.module('components/tournament/details/', {
         localStorage.clear();
         defineTournamentFixtures();
         defineGameFixtures();
-        
-        
-        // vm = new ViewModel({
-        //     tournamentId: 2
-        // });
-        // done();
 
         clone({
             'bitballs/models/tournament': {
                 get() {
-                    
-                    return Promise.resolve(new DefineMap({
+                    return Promise.resolve(new DefineMap('MyMap', {sealed: false}, {
                         name: 'Test Name'
                     }));
                 }
@@ -40,7 +33,7 @@ QUnit.module('components/tournament/details/', {
                 tournamentId: 2
             });
             done();
-        });     
+        });   
     }
 });
 

@@ -48,7 +48,9 @@ var Game = DefineMap.extend('Game',
 	 * @parent bitballs/models/game.properties
 	 * The tournament the game belongs to.  This can be loaded with `withRelated[]=tournament`.
 	 */
-	tournament: Tournament,
+	tournament: {
+		Type: Tournament
+	},
 	/**
 	 * @property {Number} bitballs/models/game.properties.homeTeamId homeTeamId
 	 * @parent bitballs/models/game.properties
