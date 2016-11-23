@@ -18,15 +18,10 @@ QUnit.module('components/tournament/details/', {
         defineTournamentFixtures();
         defineGameFixtures();
 
-        // vm = new ViewModel({
-        //     tournamentId: 2
-        // });
-        // done();
-
         clone({
             'bitballs/models/tournament': {
                 get: function() {
-                    return Promise.resolve(new DefineMap('MyMap', {sealed: false}, {
+                    return Promise.resolve(new DefineMap({sealed: false},{
                         name: 'Test Name'
                     }));
                 }
