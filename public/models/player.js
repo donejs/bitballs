@@ -107,9 +107,10 @@ var Player = DefineMap.extend('Player', {
  * @constructor {can-list} bitballs/models/player.static.List List
  * @parent bitballs/models/player.static
  */
-Player.List = DefineList.extend('PlayerList', {"#": Player},
+Player.List = DefineList.extend('PlayerList',
 /** @prototype **/
 {
+	"#": Player,
 	/**
 	 * @property {Object}
 	 *
@@ -120,10 +121,10 @@ Player.List = DefineList.extend('PlayerList', {"#": Player},
 		this.each(function(player){
 			map[player.id] = player;
 		});
-		
+
 		return map;
 	},
-	
+
 	/**
 	 * @function
 	 *
@@ -148,17 +149,17 @@ Player.algebra = new set.Algebra(
 	set.comparators.sort('orderBy')
 );
 
-var playerConnection = superMap({
+Player.connection = superMap({
   Map: Player,
   List: Player.List,
   url: {
 	resource: "/services/players",
-	contentType:'application/x-www-form-urlencoded'
+	contentType: 'application/x-www-form-urlencoded'
   },
   name: "player",
   algebra: Player.algebra
 });
 
-tag("player-model", playerConnection);
+tag("player-model", Player.connection);
 
 module.exports = Player;

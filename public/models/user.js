@@ -51,6 +51,14 @@ var User = DefineMap.extend('User', {
 	 * Password for the user
 	 **/
 	password: 'string',
+
+	/**
+	 * @property {String} bitballs/models/user.properties.newPassword newPassword
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A placeholder for the user's new password.
+	 **/
+	newPassword: 'string',
 	/**
 	 * @property {String} bitballs/models/user.properties.name name
 	 * @parent bitballs/models/user.properties
@@ -98,7 +106,7 @@ User.algebra = new set.Algebra(
 	set.comparators.sort('sortBy')
 );
 
-var userConnection = superMap({
+User.connection = superMap({
   Map: User,
   List: User.List,
   url: {
@@ -109,6 +117,6 @@ var userConnection = superMap({
   algebra: User.algebra
 });
 
-tag("user-model", userConnection);
+tag("user-model", User.connection);
 
 module.exports = User;
