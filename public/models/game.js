@@ -48,9 +48,7 @@ var Game = DefineMap.extend('Game',
 	 * @parent bitballs/models/game.properties
 	 * The tournament the game belongs to.  This can be loaded with `withRelated[]=tournament`.
 	 */
-	tournament: {
-		Type: Tournament
-	},
+	tournament: Tournament,
 	/**
 	 * @property {Number} bitballs/models/game.properties.homeTeamId homeTeamId
 	 * @parent bitballs/models/game.properties
@@ -78,14 +76,14 @@ var Game = DefineMap.extend('Game',
 	/**
 	 * @property {String} bitballs/models/game.properties.round round
 	 * @parent bitballs/models/game.properties
-	 * 
+	 *
 	 * The game round value
 	 */
 	round: 'string',
 	/**
 	 * @property {String} bitballs/models/game.properties.court court
 	 * @parent bitballs/models/game.properties
-	 * 
+	 *
 	 * The game court value
 	 */
 	court: 'string',
@@ -127,7 +125,7 @@ var Game = DefineMap.extend('Game',
 	stats: {
 		Type: Stat.List,
 		set: function(stats){
-			stats.__listSet = {where: {gameId: this.id }};	
+			stats.__listSet = {where: {gameId: this.id }};
 			return stats;
 		}
 	},
@@ -152,9 +150,6 @@ var Game = DefineMap.extend('Game',
 	 * @function
 	 **/
 	statsForPlayerId: function(id) {
-		// if(typeof id === "function") {
-		// 	id = id();
-		// }
 		return this.stats.filter(function(stat){
 			return stat.playerId === id;
 		});
@@ -165,7 +160,7 @@ var Game = DefineMap.extend('Game',
 	sortedStatsByPlayerId: function(){
 		if(this.stats) {
 			var playerIds = {};
-			this.stats.each(function(stat){
+			this.stats.forEach(function(stat){
 				var id = stat.playerId;
 				var stats = playerIds[id];
 				if(!stats) {
@@ -187,8 +182,9 @@ var Game = DefineMap.extend('Game',
  *
  * @group bitballs/models/game.static.List.properties 0 properties
  */
-Game.List = DefineList.extend('GamesList', {"#": Game},
+Game.List = DefineList.extend('GamesList',
 {
+	"#": Game,
 	/**
 	 * @property {Object<roundName,Object<courtName,bitballs/models/game>>} bitballs/models/game.static.List.properties.gamesGroupedByRound gamesGroupedByRound
 	 * @parent bitballs/models/game.static.List.properties
@@ -295,7 +291,7 @@ Game.algebra = new set.Algebra(
 	set.comparators.sort('sortBy')
 );
 
-var gameConnection = superMap({
+Game.connection = superMap({
   Map: Game,
   List: Game.List,
   url: {
@@ -306,8 +302,6 @@ var gameConnection = superMap({
   algebra: Game.algebra,
 });
 
-tag("game-model", gameConnection);
-
-Game.connection = gameConnection;
+tag("game-model", Game.connection);
 
 module.exports = Game;

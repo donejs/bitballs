@@ -123,7 +123,7 @@ Stat.algebra = new set.Algebra(
 	set.comparators.sort('sortBy')
 );
 
-var statConnection = superMap({
+Stat.connection = superMap({
 	idProp: "id",
 	Map: Stat,
 	List: Stat.List,
@@ -137,6 +137,6 @@ var statConnection = superMap({
 	algebra: Stat.algebra
 });
 
-tag("stat-model", statConnection);
+tag("stat-model", Stat.connection);
 
 module.exports = Stat;
