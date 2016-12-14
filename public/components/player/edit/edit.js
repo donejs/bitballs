@@ -57,7 +57,7 @@ exports.ViewModel = DefineMap.extend("PlayerEditVM",
 	**/
 	player: {
 		Type: Player,
-		value: Player
+		Value: Player
 	},
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
