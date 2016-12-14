@@ -77,7 +77,7 @@ Tournament.algebra = new set.Algebra(
 	set.comparators.sort('sortBy')
 );
 
-var tournamentConnection = superMap({
+Tournament.connection = superMap({
   Map: Tournament,
   List: Tournament.List,
   url: {
@@ -88,6 +88,6 @@ var tournamentConnection = superMap({
   algebra: Tournament.algebra
 });
 
-tag("tournament-model", tournamentConnection);
+tag("tournament-model", Tournament.connection);
 
 module.exports = Tournament;

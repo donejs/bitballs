@@ -66,7 +66,7 @@ var Team = DefineMap.extend('Team', {
 	 * @property {String} bitballs/models/team.properties.name name
 	 * @parent bitballs/models/team.properties
 	 *
-	 * Name of the team 
+	 * Name of the team
 	 **/
 	name: 'string',
 	/**
@@ -128,9 +128,10 @@ var Team = DefineMap.extend('Team', {
  * @constructor {can-list} bitballs/models/team.static.List List
  * @parent bitballs/models/team.static
  */
-Team.List = DefineList.extend('TeamsList', {"#": Team},
+Team.List = DefineList.extend('TeamsList',
 /** @prototype **/
 {
+	"#": Team,
 	/**
 	 * @property {Object}
 	 *
