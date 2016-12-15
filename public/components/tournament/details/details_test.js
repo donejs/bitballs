@@ -6,6 +6,7 @@ import clone from 'steal-clone';
 import DefineMap from 'can-define/map/map';
 import fixture from "can-fixture";
 import Game from 'bitballs/models/game';
+import details from './details';
 
 var ViewModel = details.ViewModel;
 var vm;
