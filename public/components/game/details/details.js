@@ -249,9 +249,8 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	createStat: function(ev) {
 		ev.preventDefault();
-		//var self = this;
+		var self = this;
 		var stat = this.stat;
-
 
 		stat.save(function(){
 			self.stat = null;

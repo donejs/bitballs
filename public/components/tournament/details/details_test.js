@@ -5,7 +5,10 @@ import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import clone from 'steal-clone';
 import DefineMap from 'can-define/map/map';
+import fixture from "can-fixture";
+import Game from 'bitballs/models/game';
 
+var ViewModel = details.ViewModel;
 var vm;
 
 QUnit.module('components/tournament/details/', {

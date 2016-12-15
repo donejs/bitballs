@@ -35,7 +35,6 @@ var Component = require("can-component"),
 	DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-map-define");
 require("can-route");
 
 /**
@@ -46,56 +45,6 @@ require("can-route");
  */
 
 exports.ViewModel = DefineMap.extend({
-	/**
-	 * @property {bitballs/models/session|null}
-	 *
-	 * If a user is logged in, the session data, including
-	 * data about the currently logged in user.
-	 *
-	 * @signature `bitballs/models/session`
-	 *
-	 * 	A session instance, which includes data about the logged in user like:
-	 *
-	 *      {
-	 *      	user: {
-	 *      		email: "tomrobbins@tommyrotten.net",
-	 *      		id: 4,
-	 *      		verified: false,
-	 *      		isAdmin: false
-	 *      	}
-	 *      }
-	 *
-	 * @signature `null`
-	 *
-	 * 	If the user is not currently logged in, `null`.
-	 */
-	session: {
-		value: null
-	},
-	/**
-	* @property {Promise} bitballs/components/user/details.savePromise savePromise
-	* @parent bitballs/components/users/details.properties
-	*
-	* The promise that resolves when the user is saved
-	*/
-	savePromise: 'any',
-	/**
-	 * @property {can-define}
-	 *
-	 * Provides a user instance. If a session is active, this
-	 * syncs the user with `session.user`. Otherwise, a user instance
-	 * is created since this property is used to bind with the user details form.
-	 *
-	 */
-	user: {
-		Value: User,
-		get: function(val) {
-			if (this.session) {
-				return this.session.user;
-			}
-			return val;
-		}
-	},
 	/**
 	 * @property {bitballs/models/session|null}
 	 *
