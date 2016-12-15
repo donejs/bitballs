@@ -29,46 +29,51 @@
  * @demo public/components/navigation/navigation.html
  *
  */
-var Component = require("can/component/component");
+var Component = require("can-component");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 var $ = require("jquery");
-var CanMap = require("can/map/");
+var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
 require("bootstrap/js/dropdown");
-require("can/route/");
+require("can-route");
 require("./navigation.less!");
 
 
-var ViewModel = CanMap.extend(
-/** @prototype */
+var ViewModel = DefineMap.extend('NavigationVM',
 {
-	define: {
-		/**
-		 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
-		 * @parent bitballs/components/navigation.properties
-		 *
-		 * A placeholder session with a nested [bitballs/models/user user] property that
-		 * is used for two-way binding the login form's username and password.
-		 */
-		loginSession: {
-			value: function(){
-				return new Session({user: new User()});
-			}
+	/**
+	 * @property {bitballs/app} bitballs/components/navigation.app app
+	 * @parent bitballs/components/navigation.properties
+	 *
+	 * The [bitballs/app] used to add or destroy the session.
+	 */
+	app:  'any',
+	/**
+	* @property {Promise<bitballs/models/session>} bitballs/components/navigation.sessionPromise sessionPromise
+	* @parent bitballs/components/navigation.properties
+	*
+	* The promise that resolves when the user is logged in.
+	*/
+	sessionPromise: 'any',
+	/**
+	 * @property {bitballs/models/session} bitballs/models/session session
+	 * 
+	 * Current session for the app
+	 */
+	session: Session,
+	/**
+	 * @property {bitballs/models/session} bitballs/components/navigation.loginSession loginSession
+	 * @parent bitballs/components/navigation.properties
+	 *
+	 * A placeholder session with a nested [bitballs/models/user user] property that
+	 * is used for two-way binding the login form's username and password.
+	 */
+	loginSession: {
+		value: function(){
+			return new Session({user: new User()});
 		}
-		/**
-		 * @property {bitballs/app} bitballs/components/navigation.app app
-		 * @parent bitballs/components/navigation.properties
-		 *
-		 * The [bitballs/app] used to add or destroy the session.
-		 */
-		 /**
- 		 * @property {Promise<bitballs/models/session>} bitballs/components/navigation.sessionPromise sessionPromise
- 		 * @parent bitballs/components/navigation.properties
- 		 *
- 		 * The promise that resolves when the user is logged in.
- 		 */
 	},
 	/**
 	 * @function createSession
@@ -82,13 +87,11 @@ var ViewModel = CanMap.extend(
 			ev.preventDefault();
 		}
 		var self = this;
-		var sessionPromise = this.attr("loginSession").save().then(function(session){
-
-			self.attr("loginSession", new Session({user: new User()}));
-			self.attr("app").attr("session", session);
-
+		var sessionPromise = this.loginSession.save().then(function(session){
+			self.loginSession = new Session({user: new User()});
+			self.app.session = session;
 		});
-		this.attr("sessionPromise", sessionPromise);
+		this.sessionPromise = sessionPromise;
 	},
 	/**
 	 * @function logout
@@ -97,9 +100,9 @@ var ViewModel = CanMap.extend(
 	 * then removes it from the session.
 	 */
 	logout: function(){
-		var sessionPromise = this.attr("app").attr("session").destroy();
-		this.attr("sessionPromise", sessionPromise);
-		this.attr("app").attr("session", null);
+		var sessionPromise = this.app.session.destroy();
+		this.sessionPromise = sessionPromise;
+		this.app.session = null;
 	},
 	/**
 	 * @function closeDropdown
@@ -112,8 +115,8 @@ var ViewModel = CanMap.extend(
 
 Component.extend({
 	tag: "bitballs-navigation",
-	template: require("./navigation.stache!"),
-	viewModel: ViewModel
+	view: require("./navigation.stache!"),
+	ViewModel: ViewModel
 });
 
 exports.ViewModel = ViewModel;

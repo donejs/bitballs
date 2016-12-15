@@ -9,22 +9,29 @@ QUnit.module('components/user/', {
 	}
 });
 
-QUnit.test('saveUser', function(assert) {
+QUnit.test('create new user', function(assert) {
+	assert.expect(5);
 	var done = assert.async();
 
 	var vm = new ViewModel();
-	vm.attr('user').attr({email: 'test@bitovi.com', password: '123'});
+
+	vm.user.set({
+		email: 'test@bitovi.com',
+		password: '123'
+	});
 
 	// session is not created before user is saved:
-	assert.ok(vm.attr('user').isNew(), 'User should be new.');
-	// todo: skipped test
-	// equal(typeof vm.attr('session'), 'undefined', 'Session should not exist before user gets created.');
+	assert.ok(vm.user.isNew(), 'User should be new.');
+	
+	assert.equal(vm.session, null, 'Session should not exist before user gets created.');
 
 	vm.saveUser().then(function(){
-		assert.equal(vm.attr('session.user.email'), 'test@bitovi.com', 'Session email should be set after user gets created.');
-		assert.notOk(vm.attr('user').isNew(), 'User should not be new any more.');
-		assert.equal(vm.attr('user.password'), '', 'User\'s password property should be cleared after user gets created/updated.');
+		assert.equal(vm.session.user.email, 'test@bitovi.com', 'Session email should be set after user gets created.');
+		assert.notOk(vm.user.isNew(), 'User should not be new any more.');
+		assert.equal(vm.user.password, '', 'User\'s password property should be cleared after user gets created/updated.');
 
+		done();
+	}, function() {
 		done();
 	});
 });
@@ -34,14 +41,17 @@ QUnit.test('saveUser without password fails', function(assert) {
 
 	var vm = new ViewModel();
 
-	vm.attr('user').attr({email: 'test@bitovi.com'});
 
+	vm.user.email = 'test@bitovi.com';
 	assert.expect(2);
 
 	vm.saveUser();
-	vm.attr('savePromise').fail(function(resp, type){
-		assert.equal(type, 'error', 'fail creation without password');
-		assert.equal(vm.attr('savePromise').state(), 'rejected');
+	vm.savePromise.then(function(resp, type){
+		done();
+	}, function(resp) {
+		assert.equal(resp.statusText, 'error', 'fail creation without password');
+		assert.equal(resp.status, 400, 'rejected');
 		done();
 	});
+
 });

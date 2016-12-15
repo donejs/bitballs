@@ -3,9 +3,11 @@ import Session from "models/session";
 import details from "./details";
 import { games } from "models/fixtures/games";
 import F from 'funcunit';
-import stache from 'can/view/stache/';
+import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
+import canViewModel from 'can-view-model';
+import User from "models/user";
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
@@ -30,12 +32,12 @@ QUnit.module("bitballs/game/details/", {
 QUnit.test("loads game data", function() {
     QUnit.stop();
 
-    this.vm.bind("game", function(ev, game) {
-        deepEqual(game.attr(), games, "fetched game data matches fixture");
+    this.vm.on("game", function(ev, game) {
+        deepEqual(game.get(), games, "fetched game data matches fixture");
         QUnit.start();
     });
 
-    this.vm.attr("gamePromise").catch(function(err) {
+    this.vm.gamePromise.catch(function(err) {
         ok(false, "game fetch failed");
         QUnit.start();
     });
@@ -45,8 +47,8 @@ QUnit.test("correctly sums score", function() {
     QUnit.stop();
 
     var vm = this.vm;
-    vm.bind("game", function(ev, game) {
-        deepEqual(vm.attr('finalScore'), {
+    vm.on("game", function(ev, game) {
+        deepEqual(vm.finalScore, {
             home: 3,
             away: 5
         });
@@ -54,16 +56,14 @@ QUnit.test("correctly sums score", function() {
     });
 });
 
+
 QUnit.test('A stat can only be deleted by an admin', function () {
 
-    var session = new Session({
-        isAdmin: false
-    });
+    var session = new Session({user: new User({ isAdmin: false }) });
 
-    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
-        gameId: this.vm.attr('gameId'),
-        session: session
-    });
+    var vm = this.vm;
+    vm.session = session;
+    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')(vm);
 
     $('#qunit-fixture').html(frag);
 
@@ -72,20 +72,22 @@ QUnit.test('A stat can only be deleted by an admin', function () {
     F('.stat-point .destroy-btn')
         .size(0, 'There is no destroy button')
         .then(function () {
-            session.attr('isAdmin', true);
+            vm.session.user.isAdmin = true;
             ok(true, 'The user is given admin privileges');
         })
         .size(6, 'Destroy buttons are inserted')
         .click()
         .size(5, 'Clicking the destroy button removed a stat');
+
+
 });
 
 
-QUnit.test('Deleting a stat does not change playback location', function () {
-
+QUnit.test('Deleting a stat does not change playback location', function (assert) {
+    var done = assert.async();
     var gotoCalled = false;
     var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
-        gameId: this.vm.attr('gameId'),
+        gameId: this.vm.gameId,
         session: new Session({
             isAdmin: true
         })
@@ -93,19 +95,16 @@ QUnit.test('Deleting a stat does not change playback location', function () {
 
     $('#qunit-fixture').html(frag);
 
-    QUnit.stop();
 
-    var vm = $('game-details').viewModel();
-
-    vm.gotoTimeMinus5 = function () {
+    
+    var vm = canViewModel($('game-details'));
+    vm.gotoTimeMinus5 =  function (){
         gotoCalled = true;
     };
 
-    vm.bind('game', function(ev, game) {
-        QUnit.start();
-
+    $(vm).on('game', function(ev, game) {
         F.confirm(true);
-
+        done();
         F('.stat-point .destroy-btn')
             .exists('Destroy button exists')
             .click()
@@ -113,4 +112,5 @@ QUnit.test('Deleting a stat does not change playback location', function () {
                 notOk(gotoCalled, 'Seek was not called');
             });
     });
+    vm.dispatch('game');
 });

@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import can from 'can';
-import 'can/view/stache/stache';
+import stache from 'can-stache';
 import fixture from 'can-fixture';
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
@@ -27,16 +26,17 @@ QUnit.test('creating tournament fails without a name', function(assert){
 	var vm = new ViewModel();
 
 	vm.createTournament();
-	vm.attr('savePromise').fail(function(resp, type){
-		assert.equal(type, 'error', 'fail creation without date');
-		assert.equal(vm.attr('savePromise').state(), 'rejected');
+	vm.savePromise.then(done, function(resp, type){
+		assert.equal(resp.statusText, 'error', 'fail creation without date');
+		assert.equal(resp.status, '400', 'rejected');
 		done();
 	});
 });
 
-QUnit.test('Create button is disabled while posting data', function () {
-    var expectingRequest = true;
-    var frag = can.stache('<tournament-list {is-admin}="app.isAdmin" {tournament}="tournament" />')({
+QUnit.test('Create button is disabled while posting data', function (assert) {
+	var done = assert.async();
+	var expectingRequest = true;
+	var vm = new ViewModel({
         app: {
             isAdmin: true
         },
@@ -45,8 +45,11 @@ QUnit.test('Create button is disabled while posting data', function () {
             date: '01/21/1987'
         }
     });
-    var resolveRequest;
 
+	
+	var frag = stache('<tournament-list {is-admin}="app.isAdmin" {tournament}="tournament" />')(vm);
+	var resolveRequest;
+	
     fixture('POST /services/tournaments', function (req, res) {
         QUnit.ok(expectingRequest, 'Request was made');
 
@@ -64,12 +67,14 @@ QUnit.test('Create button is disabled while posting data', function () {
     F('tournament-list .create-btn')
         .visible('Create button is visible')
         .attr('disabled', undefined, 'Create button is enabled')
-        .click()
-        .attr('disabled', 'disabled', 'Create button is disabled after click')
-        .click()
-        .then(function () {
-            resolveRequest({});
-        })
-        .attr('disabled', undefined,
-            'Create button is enabled after the request is resolved');
+				.click();
+	F('tournament-list .create-btn')
+			.attr('disabled', 'disabled', 'Create button is disabled')
+			.then(function() {
+				resolveRequest({});
+			})
+			.attr('disabled', undefined,
+		'Create button is enabled after the request is resolved');
+
+	done();
 });

@@ -19,7 +19,5 @@ module.exports = function(){
 			tag.src = "https://www.youtube.com/iframe_api";
 			document.head.appendChild(tag);
 		});
-
 	}
-
 };
