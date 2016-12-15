@@ -6,7 +6,7 @@
   "author": "Bitovi",
   "scripts": {
     "install": "node build.js",
-    "test": "testee test.html --browsers firefox --reporter Spec"
+    "test": "rm -rf ~/.mozilla && DEBUG=testee* testee test.html --browsers firefox --reporter Spec"
   },
   "main": "index.stache!done-autorender",
   "files": [
@@ -15,24 +15,22 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.5",
-    "can": "^3.0.0-pre.4",
-    "can-component": "^3.0.0-pre.15",
-    "can-compute-stream": "https://github.com/canjs/can-compute-stream.git#master",
-    "can-connect": "^0.6.0-pre.4",
-    "can-construct": "^3.0.0-pre.8",
-    "can-define": "https://github.com/canjs/can-define#type-compute-and-extensions",
-    "can-list": "^3.0.0-pre.7",
-    "can-map": "^3.0.0-pre.8",
-    "can-map-backup": "^3.0.0-pre.1",
-    "can-map-define": "^3.0.0-pre.2",
-    "can-route": "^3.0.0-pre.13",
-    "can-route-pushstate": "^3.0.0-pre.6",
-    "can-set": "^0.6.0-pre.2",
-    "can-stache": "^3.0.0-pre.15",
-    "can-util": "^3.0.0-pre.34",
-    "can-view-autorender": "^3.0.0-pre.4",
-    "can-view-model": "^3.0.0-pre.6",
+    "bootstrap": "^3.3.7",
+    "can-component": "^3.0.2",
+    "can-connect": "^1.0.6",
+    "can-construct": "^3.0.1",
+    "can-define": "^1.0.3",
+    "can-define-backup": "0.0.1",
+    "can-define-stream": "0.0.2",
+    "can-route": "^3.0.2",
+    "can-route-pushstate": "^3.0.0",
+    "can-set": "^1.0.1",
+    "can-stache": "^3.0.9",
+    "can-stream": "0.0.5",
+    "can-util": "^3.0.13",
+    "can-view-autorender": "^3.0.0",
+    "can-view-model": "^3.0.0",
+    "can-view-target": "^3.0.3",
     "done-autorender": "^0.9.0-pre.0",
     "done-component": "^0.6.0-pre.1",
     "done-css": "~2.1.0-pre.0",
@@ -40,18 +38,18 @@
     "done-ssr-middleware": "^0.4.0-pre.0",
     "funcunit": "^3.1.0-pre.1",
     "generator-donejs": "0.6.4",
-    "jquery": "^2.1.4",
+    "jquery": "^3.1.1",
     "moment": "^2.10.6",
-    "steal": "^0.15.0",
+    "steal": "^0.16.41",
     "steal-platform": "0.0.4",
     "steal-qunit": "^0.1.1",
-    "steal-stache": "^3.0.0-pre.3",
-    "steal-tools": "^0.15.0",
+    "steal-stache": "^3.0.0",
+    "steal-tools": "^0.16.0",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
     "donejs-cli": "^0.10.0-pre.0",
-    "can-fixture": "^0.4.0-pre.2",
+    "can-fixture": "1.0.7",
     "testee": "^0.2.4"
   },
   "system": {
@@ -59,9 +57,6 @@
       "node_modules/can-zone/register",
       "live-reload"
     ],
-    "map": {
-      "can/util/jquery/jquery": "jquery"
-    },
     "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",

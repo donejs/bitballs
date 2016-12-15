@@ -25,17 +25,67 @@
 var superMap = require('can-connect/can/super-map/');
 var tag = require('can-connect/can/tag/');
 var set = require("can-set");
-var CanMap = require('can-map');
-var CanList = require("can-list");
-require("can-map-define");
+var DefineMap = require('can-define/map/map');
+var DefineList = require("can-define/list/list");
 
-var User = CanMap.extend({});
+
+var User = DefineMap.extend('User', {
+	/**
+	 * @property {Number} bitballs/models/user.properties.id id
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A unique identifier.
+	 **/
+	id: 'number',
+	/**
+	 * @property {String} bitballs/models/user.properties.email email
+	 * @parent bitballs/models/user.properties
+	 *
+	 * Email address representing the user
+	 **/
+	email: 'string',
+	/**
+	 * @property {String} bitballs/models/user.properties.password password
+	 * @parent bitballs/models/user.properties
+	 *
+	 * Password for the user
+	 **/
+	password: 'string',
+	/**
+	 * @property {String} bitballs/models/user.properties.name name
+	 * @parent bitballs/models/user.properties
+	 *
+	 * User's full name as returned by the server
+	 **/
+	name: 'string',
+	/**
+	 * @property {Boolean} bitballs/models/user.properties.isAdmin isAdmin
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A boolean representing if the user has admin rights
+	 **/
+	isAdmin: 'boolean',
+	/**
+	 * @property {Boolean} bitballs/models/user.properties.verified verified
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A boolean representing if the user is verified
+	 **/
+	verified: 'boolean',
+	/**
+	 * @property {String} bitballs/models/user.properties.verificationHash verificationHash
+	 * @parent bitballs/models/user.properties
+	 *
+	 * A unique hash representing user verification
+	 **/
+	verificationHash: 'string'
+});
 
 /**
  * @constructor {can-list} bitballs/models/user.static.List List
  * @parent bitballs/models/user.static
  */
-User.List = CanList.extend({Map: User},{});
+User.List = DefineList.extend('UserList', {"#": User});
 
 /**
  * @property {set.Algebra} bitballs/models/user.static.algebra algebra
@@ -51,7 +101,10 @@ User.algebra = new set.Algebra(
 var userConnection = superMap({
   Map: User,
   List: User.List,
-  url: "/services/users",
+  url: {
+	resource: "/services/users",
+	contentType: "application/x-www-form-urlencoded"
+  },
   name: "user",
   algebra: User.algebra
 });
