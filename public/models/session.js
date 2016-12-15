@@ -12,14 +12,6 @@ var DefineList = require("can-define/list/list");
 var tag = require('can-connect/can/tag/');
 var User = require("./user");
 
-require( "can-connect/constructor/" );
-require( "can-connect/can/map/" );
-require( "can-connect/constructor/store/" );
-require( "can-connect/constructor/callbacks-once/" );
-require( "can-connect/data/callbacks/" );
-require( "can-connect/data/parse/" );
-require( "can-connect/data/url/" );
-
 
 var Session = DefineMap.extend('Session', {
 	/**
@@ -49,15 +41,14 @@ var Session = DefineMap.extend('Session', {
 Session.List = DefineList.extend('SessionList', {"#": Session});
 
 var behaviors = [
-	"constructor",
-	"can/map",
-	"constructor/store",
-	"data/callbacks",
-	"data/parse",
-	"data/url",
-	"constructor/callbacks-once"
+	require( "can-connect/constructor/" ),
+	require( "can-connect/can/map/" ),
+	require( "can-connect/constructor/store/" ),
+	require( "can-connect/constructor/callbacks-once/" ),
+	require( "can-connect/data/callbacks/" ),
+	require( "can-connect/data/parse/" ),
+	require( "can-connect/data/url/" )
 ];
-
 
 var options = {
 	ajax: $.ajax,
@@ -72,9 +63,8 @@ var options = {
 	}
 };
 
+Session.connection = connect( behaviors, options );
 
-var connection = connect( behaviors, options );
-
-tag('session-model', connection);
+tag('session-model', Session.connection);
 
 module.exports = Session;

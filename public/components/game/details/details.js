@@ -229,7 +229,6 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		var time = youtubePlayer.getCurrentTime();
 		youtubePlayer.pauseVideo();
 		this.stat = new Stat({
-
 			time: time,
 			playerId: player.id,
 			gameId: this.game.id,

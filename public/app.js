@@ -12,6 +12,9 @@ import "can-route-pushstate";
 import stache from "can-stache";
 import 'can-stache/helpers/route';
 import "./util/prefilter";
+import can from "can-namespace";
+
+window.can = can; // This is just for debugging.
 
 const AppViewModel = DefineMap.extend('App',
 {	
