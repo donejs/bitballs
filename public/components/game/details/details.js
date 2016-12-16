@@ -23,9 +23,10 @@
  *
  */
 
-var Component = require("can/component/component");
-var CanMap = require("can/map/");
-var List = require("can/list/");
+var Component = require("can-component");
+var DefineMap = require("can-define/map/");
+var DefineList = require("can-define/list/");
+var Session = require("bitballs/models/session");
 var Game = require("bitballs/models/game");
 var Stat = require("bitballs/models/stat");
 var youtubeAPI = require("bitballs/models/youtube");
@@ -34,8 +35,7 @@ var $ = require("jquery");
 
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
+require("can-route");
 
 /**
  * @constructor bitballs/components/game/details.ViewModel ViewModel
@@ -44,173 +44,169 @@ require("can/route/");
  * @description  A `<game-details>` component's viewModel.
  */
 
-exports.ViewModel = CanMap.extend(
-/**
- * @prototype
- */
+exports.ViewModel = DefineMap.extend('GameDetailsVM',
 {
-	define: {
-		/**
-		 * @property {Promise<bitballs/models/game>|undefined}
-		 *
-		 * Provides a Game instance with all the stats for the
-		 * game and all the player information!
-		 *
-		 * @signature `Promise<bitballs/models/game>`
-		 *
-		 *   Given a valid `gameId`, the game promise.
-		 *
-		 * @signature `undefined`
-		 *
-		 *   Given an invalid `gameId`, the game promise.
-		 *
-		 *
-		 * @body
-		 *
-		 * ```
-		 * var gameDetailsVM = new GameDetailsViewModel({
-		 *   gameId: 5
-		 * });
-		 * gameDetailsVM.attr("gamePromise").then(function(game){
-		 *   game.attr("date") //-> Date
-		 * })
-		 * ```
-		 *
-		 */
-		gamePromise: {
-			get: function() {
-				return Game.get({
-					id: this.attr("gameId"),
-					withRelated: ["stats",
-						"tournament",
-						"homeTeam.player1",
-						"homeTeam.player2",
-						"homeTeam.player3",
-						"homeTeam.player4",
-						"awayTeam.player1",
-						"awayTeam.player2",
-						"awayTeam.player3",
-						"awayTeam.player4"
-					]
-				});
-			}
-		},
-		/**
-		 * @property {bitballs/models/game}
-		 * 
-		 * Provides a game instance once the game promise resolves.
-		 */
-		game: {
-			get: function(last, set){
-				this.attr('gamePromise').then(set);
-			}
-		},
-		/**
-		 * @property {Object}
-		 * 
-		 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
-		 */
-		youtubePlayer: {
-			type: "*"
-		},
-		/**
-		 * @property {Array<{name: String}>}
-		 *
-		 * Array of statType objects from [bitballs/models/stat]
-		 */
-		statTypes: {
-			value: Stat.statTypes
-		},
-		/**
-		 * @property {Object<{home: Number, away: Number}>}
-		 * 
-		 * The final score of the game, which is totalled based on the
-		 * game stats.
-		 */
-		finalScore: {
-			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
-					var scores = {home: 0, away: 0};
-					game.attr("stats").each(function(stat){
-						if(stat.attr("type") === "1P") {
-							scores[playerMap[ stat.attr("playerId")]]++;
-						}
-						if(stat.attr("type") === "2P") {
-							scores[playerMap[ stat.attr("playerId")]] += 2;
-						}
-					});
-					return scores;
-				}
-			},
-			type:"*"
-		},
-		/**
-		 * @property {Object<{home: Number, away: Number}>}
-		 * 
-		 * The score of the game at the current time in the video,
-		 * which is totalled based on the game stats up to that point.
-		 */		
-		currentScore: {
-			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("stats")) {
-					var playerMap = this.attr("playerIdToHomeOrAwayMap");
-					var scores = {home: 0, away: 0};
-
-					var time = this.attr("time");
-
-					game.attr("stats").each(function(stat){
-						if(stat.attr("time") <= time) {
-							if(stat.attr("type") === "1P") {
-								scores[playerMap[ stat.attr("playerId")] ]++;
-							}
-							if(stat.attr("type") === "2P") {
-								scores[playerMap[ stat.attr("playerId")]] += 2;
-							}
-						}
-					});
-					return scores;
-				}
-			},
-			type:"*"
-		},
-		/**
-		 * @property {Object}
-		 *
-		 * An object mapping each player id to "home" or "away" to enable
-		 * totalling of scores based on stats.
-		 */
-		playerIdToHomeOrAwayMap: {
-			type: "*",
-			get: function(){
-				var game = this.attr("game");
-				if(game && game.attr("homeTeam") && game.attr("awayTeam")) {
-					var map = {};
-					for(var i = 1; i <= 4; i++) {
-						map[ game.attr("homeTeam").attr("player"+i+"Id") ] = "home";
-						map[ game.attr("awayTeam").attr("player"+i+"Id") ] = "away";
-					}
-					return map;
-				}
-			}
-		},
-		/**
-		 * @property {Object}
-		 *
-		 * An object of stats sorted by player id from [bitballs/models/stat]
-		 */
-		sortedStatsByPlayerId: {
-			type: "*",
-			get: function(){
-				var game = this.attr("game");
-				if(game) {
-					return game.sortedStatsByPlayerId();
-				}
-			}
+	/**
+	 * @property {Object}
+	 *
+	 * The [YouTube Player object](https://developers.google.com/youtube/js_api_reference).
+	 */
+	youtubePlayer: 'any',
+	/**
+	 * @property {String} object to hold the current duration
+	 */
+	duration: 'any',
+	/**
+	* @property {bitballs/models/session} bitballs/components/game/details.session session
+	* @parent bitballs/components/game/details.properties
+	*
+	* A [bitballs/models/session] instance used to track a `Session`
+	**/
+	session: Session,
+	/**
+	* @property {bitballs/models/stat} bitballs/components/game/details.stat stat
+	* @parent bitballs/components/game/details.properties
+	*
+	* A [bitballs/models/session] instance used to track a `stat`
+	**/
+	stat: Stat,
+	/**
+	 * @property {Promise<bitballs/models/game>|undefined}
+	 *
+	 * Provides a Game instance with all the stats for the
+	 * game and all the player information!
+	 *
+	 * @signature `Promise<bitballs/models/game>`
+	 *
+	 *   Given a valid `gameId`, the game promise.
+	 *
+	 * @signature `undefined`
+	 *
+	 *   Given an invalid `gameId`, the game promise.
+	 *
+	 *
+	 * @body
+	 *
+	 * ```
+	 * var gameDetailsVM = new GameDetailsViewModel({
+	 *   gameId: 5
+	 * });
+	 * gameDetailsVM.gamePromise.then(function(game){
+	 *   game.date //-> Date
+	 * })
+	 * ```
+	 *
+	 */
+	get gamePromise() {
+		return Game.get({
+			id: this.gameId,
+			withRelated: ["stats",
+				"tournament",
+				"homeTeam.player1",
+				"homeTeam.player2",
+				"homeTeam.player3",
+				"homeTeam.player4",
+				"awayTeam.player1",
+				"awayTeam.player2",
+				"awayTeam.player3",
+				"awayTeam.player4"
+			]
+		});
+	},
+	/**
+	 * @property {bitballs/models/game}
+	 *
+	 * Provides a game instance once the game promise resolves.
+	 */
+	game: {
+		get: function(last, set) {
+			this.gamePromise.then(set);
 		}
 	},
+	/**
+	 * @property {Array<{name: String}>}
+	 *
+	 * Array of statType objects from [bitballs/models/stat]
+	 */
+	statTypes: {
+		value: Stat.statTypes
+	},
+	/**
+	 * @property {Object<{home: Number, away: Number}>}
+	 *
+	 * The final score of the game, which is totalled based on the
+	 * game stats.
+	 */
+	get finalScore(){
+		var game = this.game;
+		if(game && game.stats) {
+			var playerMap = this.playerIdToHomeOrAwayMap;
+			var scores = {home: 0, away: 0};
+			game.stats.each(function(stat){
+				if(stat.type === "1P") {
+					scores[playerMap[stat.playerId]]++;
+				}
+				if(stat.type === "2P") {
+					scores[playerMap[ stat.playerId ]] += 2;
+				}
+			});
+			return scores;
+		}
+	},
+	/**
+	 * @property {Object<{home: Number, away: Number}>}
+	 *
+	 * The score of the game at the current time in the video,
+	 * which is totalled based on the game stats up to that point.
+	 */
+	get currentScore() {
+		var game = game;
+		if(game && game.stats) {
+			var playerMap = this.playerIdToHomeOrAwayMap;
+			var scores = {home: 0, away: 0};
+
+			var time = this.time;
+
+			game.stats.each(function(stat){
+				if(stat.time <= time) {
+					if(stat.type === "1P") {
+						scores[playerMap[ stat.playerId] ]++;
+					}
+					if(stat.type === "2P") {
+						scores[playerMap[ stat.playerId]] += 2;
+					}
+				}
+			});
+			return scores;
+		}
+	},
+	/**
+	 * @property {Object}
+	 *
+	 * An object mapping each player id to "home" or "away" to enable
+	 * totalling of scores based on stats.
+	 */
+	get playerIdToHomeOrAwayMap() {
+		var game = this.game;
+		if(game && game.homeTeam && game.awayTeam) {
+			var map = {};
+			for(var i = 1; i <= 4; i++) {
+				map[ game.homeTeam["player" + i + "Id"] ] = "home";
+				map[ game.awayTeam["player" + i + "Id"] ] = "away";
+			}
+			return map;
+		}
+	},
+	/**
+	 * @property {Object}
+	 *
+	 * An object of stats sorted by player id from [bitballs/models/stat]
+	 */
+	get sortedStatsByPlayerId() {
+		var game = this.game;
+		return game.sortedStatsByPlayerId();
+	},
+
 	/**
 	 * @function
 	 * @description Displays the stat menu for a particular player and time.
@@ -225,20 +221,20 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-		if(!this.attr("session") || !this.attr("session").isAdmin()) {
+		
+		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
-		var youtubePlayer = this.attr("youtubePlayer");
+		var youtubePlayer = this.youtubePlayer;
 		var time = youtubePlayer.getCurrentTime();
 		youtubePlayer.pauseVideo();
 
-
-		this.attr("stat", new Stat({
+		this.stat = new Stat({
 			time: time,
-			playerId: player.attr("id"),
-			gameId: this.attr("game.id"),
+			playerId: player.id,
+			gameId: this.game.id,
 			player: player
-		}));
+		});		
 	},
 	/**
 	 * @function
@@ -254,14 +250,13 @@ exports.ViewModel = CanMap.extend(
 	createStat: function(ev) {
 		ev.preventDefault();
 		var self = this;
-		var stat = this.attr("stat");
+		var stat = this.stat;
 
 
 		stat.save(function(){
-			self.removeAttr("stat");
+			self.stat = null;
 		}, function(e){
-			console.log(e);
-			self.removeAttr("stat");
+			self.stat = null;
 		});
 	},
 	/**
@@ -271,12 +266,12 @@ exports.ViewModel = CanMap.extend(
 	 * @body
 	 * Use in a template like:
 	 * ```
-	 * <button type="submit" class="btn btn-primary" >Add</button> 
+	 * <button type="submit" class="btn btn-primary" >Add</button>
 	 * <a class="btn btn-default" ($click)="removeStat()">Cancel</a>
 	 * ```
 	 */
 	removeStat: function(){
-		this.removeAttr("stat");
+		this.stat = null;
 	},
 	/**
 	 * @function
@@ -295,7 +290,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	addTime: function(time){
-		this.attr("stat.time", this.attr("stat.time")+time);
+		this.stat.time = this.stat.time + time;
 	},
 	/**
 	 * @function
@@ -312,9 +307,9 @@ exports.ViewModel = CanMap.extend(
 	 *   <a class="btn btn-default" ($click)="addTime(10)">+10 s</a>
 	 * </div>
 	 * ```
-	 */	
+	 */
 	minusTime: function(time){
-		this.attr("stat.time", this.attr("stat.time")-time);
+		this.stat.time = this.stat.time - time;
 	},
 	/**
 	 * @function
@@ -335,7 +330,7 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	gotoTimeMinus5: function(time, event) {
-		var player = this.attr("youtubePlayer");
+		var player = this.youtubePlayer;
 		if (player.seekTo) {
 			player.seekTo(time - 5, true);
 		}
@@ -347,13 +342,13 @@ exports.ViewModel = CanMap.extend(
 		}
 	},
 	/**
-	 * @function 
+	 * @function
 	 * @description Delete a stat from the database.
 	 * @param {bitballs/models/stat} stat The [bitballs/models/stat] to delete.
 	 * @param {event} event The event that triggered the deletion.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
@@ -369,35 +364,35 @@ exports.ViewModel = CanMap.extend(
 		}
 	},
 	/**
-	 * @function 
+	 * @function
 	 * @description  Get the percentage of total game time for a certain time for positioning stats.
 	 * @param  {Number} time The time of the stat.
 	 * @return {Number} The percentage through the total game time the current time is.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * <span style="left: \{{statPercent time}}%">
 	 * ```
 	 */
 	statPercent: function(time){
-		var duration = this.attr("duration");
+		var duration = this.duration;
 		if(duration) {
 			return time() / duration * 100;
 		} else {
 			return "0";
 		}
-
 	},
+	
 	/**
 	 * @function
 	 * @description Gets a list of stats for a player
-	 * @param  {String|can.compute<String>} id The id of the player.
-	 * @return {can.List} The list of stats for the player.
+	 * @param  {String|can-compute<String>} id The id of the player.
+	 * @return {can-list} The list of stats for the player.
 	 *
 	 * @body
-	 * 
+	 *
 	 * Use in a template like:
 	 * ```
 	 * \{{#eachOf statsForPlayerId(id)}}
@@ -406,26 +401,23 @@ exports.ViewModel = CanMap.extend(
 	 * ```
 	 */
 	statsForPlayerId: function(id){
-		if(typeof id === "function") {
-			id = id();
-		}
-		var statsById = this.attr("sortedStatsByPlayerId");
+		var statsById = this.sortedStatsByPlayerId;
 		if(statsById) {
-			return statsById[id] || new List();
+			return statsById[id] || new DefineList();
 		} else {
-			return new List();
+			return new DefineList();
 		}
 	}
 });
 
 exports.Component = Component.extend({
 	tag: "game-details",
-	template: require("./details.stache!"),
-	viewModel: exports.ViewModel,
+	view: require("./details.stache!"),
+	ViewModel: exports.ViewModel,
 	/**
-	 * @constructor {can.Component.events} bitballs/components/game/details.events Events
+	 * @constructor {can-component.events} bitballs/components/game/details.events Events
 	 * @parent bitballs/components/game/details
-	 * 
+	 *
 	 * @description A `<game-details>` component's events object.
 	 */
 	events: {
@@ -438,18 +430,19 @@ exports.Component = Component.extend({
 			youtubeAPI().then(function(YT){
 				self.YT = YT;
 			}).then(function () {
-				return self.scope.attr('gamePromise');
+
+				return self.viewModel.gamePromise;
 			}).then(function () {
 				var player = new self.YT.Player('youtube-player', {
 					height: '390',
 					width: '640',
-					videoId: self.scope.attr("game.videoUrl"),
+					videoId: self.viewModel.game.videoUrl,
 					events: {
 					  'onReady': self.onPlayerReady.bind(self),
 					  'onStateChange': self.onPlayerStateChange.bind(self)
 					}
 				});
-				self.scope.attr("youtubePlayer", player);
+				self.viewModel.youtubePlayer = player;
 			})["catch"](function(e){
 				if ( platform.isNode ) {
 					return;
@@ -472,16 +465,16 @@ exports.Component = Component.extend({
 		 * @description The onPlayerReady handler for the YouTube Player.
 		 */
 		onPlayerReady: function(){
-			var youtubePlayer = this.scope.attr("youtubePlayer"),
+			var youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
-			//this.scope.attr("youtubePlayer").playVideo();
+			youtubePlayer.playVideo();
 
 			// get duration
 			var getDuration = function(){
 				var duration = youtubePlayer.getDuration();
 				if(duration) {
-					self.scope.attr("duration", duration);
+					self.viewModel.duration = duration;
 				} else {
 					setTimeout(getDuration, 100);
 				}
@@ -495,12 +488,12 @@ exports.Component = Component.extend({
 		 */
 		onPlayerStateChange: function(ev){
 			var viewModel = this.viewModel,
-				player = viewModel.attr("youtubePlayer"),
+				player = viewModel.youtubePlayer,
 				self = this;
 			var timeUpdate = function(){
 				var currentTime = player.getCurrentTime();
-				if(viewModel.attr("stat")) {
-					viewModel.attr("stat").attr("time", currentTime);
+				if(viewModel.stat) {
+					viewModel.stat.time = currentTime;
 				}
 				self.timeUpdate = setTimeout(timeUpdate, 100);
 				self.updatePosition(currentTime);
@@ -508,14 +501,12 @@ exports.Component = Component.extend({
 
 
 			if(ev.data === self.YT.PlayerState.PLAYING) {
-				this.scope.attr("playing", true);
+				this.scope.playing = true;
 				timeUpdate();
 			} else {
-				this.scope.attr("playing", false);
+				this.scope.playing = false;
 				clearTimeout(this.timeUpdate);
 			}
-
-
 		},
 		/**
 		 * @function
@@ -523,14 +514,14 @@ exports.Component = Component.extend({
 		 * @description Updates the position of the cursor on the stats container.
 		 */
 		updatePosition: function(time){
-			var duration = this.scope.attr("duration");
+			var duration = this.scope.duration;
 			if(duration) {
-				this.viewModel.attr("time", time);
-				var fraction = time /duration;
-				var containers = this.element.find(".stats-container");
-				var width = containers.width();
-				var firstOffset = containers.first().offset();
-				var height = containers.last().offset().top - firstOffset.top + containers.last().height();
+				this.viewModel.time = time;
+				var fraction = time / duration;
+				var containers = this.element.getElementsByClassName("stats-container");
+				var width = $(containers[0]).width();
+				var firstOffset = $(containers[0]).offset();
+				var height = $(containers[containers.length - 1]).offset().top - firstOffset.top + $(containers[containers.length - 1]).height();
 				$("#player-pos").offset({
 					left: firstOffset.left + fraction*width,
 					top: firstOffset.top
@@ -542,15 +533,14 @@ exports.Component = Component.extend({
 		 * @description On time change, update the Youtube Player.
 		 */
 		"{stat} time": function(){
-			var time = this.scope.attr("stat.time");
+			var time = this.scope.stat.time;
 			if(typeof time === "number" && time >= 0) {
 
-				var player = this.scope.attr("youtubePlayer");
+				var player = this.scope.youtubePlayer;
 				var playerTime = player.getCurrentTime();
 				if(Math.abs(time-playerTime) > 2) {
 					player.seekTo(time, true);
 				}
-
 			}
 
 		},
@@ -559,7 +549,7 @@ exports.Component = Component.extend({
 		 * @description  On window resize, update the position of the cursor in the stats container.
 		 */
 		"{window} resize": function(){
-			var player = this.viewModel.attr("youtubePlayer"),
+			var player = this.viewModel.youtubePlayer,
 				currentTime;
 			if (player.getCurrentTime) {
 				currentTime = player.getCurrentTime();
@@ -574,7 +564,6 @@ exports.Component = Component.extend({
 			setTimeout(function(){
 				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
 			},1);
-
 		}
 	}
 });
