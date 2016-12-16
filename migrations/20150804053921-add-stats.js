@@ -4,7 +4,7 @@ exports.up = function(db, callback) {
  async.series([
  	db.createTable.bind(db, 'tournaments', {
       id: { type: 'int', primaryKey: true, autoIncrement: true },
-      date: 'date'
+      date: { type: 'date', notNull: true },
     }),
     db.createTable.bind(db, 'teams', {
       id: { type: 'int', primaryKey: true, autoIncrement: true },
@@ -22,13 +22,15 @@ exports.up = function(db, callback) {
       round: 'string',
       court: 'string',
       videoUrl: 'string',
-      homeTeamId: 'string',
-      awayTeamId: 'string'
+      homeTeamId: 'int',
+      awayTeamId: 'int'
     }),
     db.createTable.bind(db, 'stats', {
       id: { type: 'int', primaryKey: true, autoIncrement: true },
       gameId: 'int',
       playerId: 'int',
+      time: { type: 'int' },
+      value: {type: 'int'},
       type: 'string'
     })
   ], callback);
@@ -42,4 +44,3 @@ exports.down = function(db, callback) {
     db.dropTable.bind(db, 'stats')
   ], callback);
 };
-
