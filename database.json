@@ -1,5 +1,9 @@
 {
-  "dev": "postgres://localhost:5432/bitballs",
+  "dev": {
+    "driver": "sqlite3",
+    "filename": "sqlite.db"
+  },
+  "test": "postgres://localhost:5432/bitballs",
   "prod": {
   	"ENV": "DATABASE_URL",
   	"driver": "pg"

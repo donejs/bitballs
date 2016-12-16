@@ -1,7 +1,7 @@
 exports.up = function(db, callback) {
   db.createTable('players', {
     id: { type: 'int', primaryKey: true, autoIncrement: true },
-    name: 'string',
+    name: { type: 'string', notNull: true },
     weight: 'int',
     height: 'int',
     birthday: 'date',
