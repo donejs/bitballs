@@ -10,10 +10,10 @@ var connectionString = typeof dbEnvironmentConfig === 'string' ?
 if (typeof dbEnvironmentConfig.filename === 'string') {
 	connectionString = {
 		filename: dbEnvironmentConfig.filename
-	}
+	};
 	// Creates the database if needed
 	var driver = require(dbEnvironmentConfig.driver).verbose();
-	var db = new driver.Database(dbEnvironmentConfig.filename);
+	new driver.Database(dbEnvironmentConfig.filename);
 }
 
 
