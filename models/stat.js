@@ -1,4 +1,4 @@
-var bookshelf = require("../models/bookshelf");
+var bookshelf = require("./bookshelf");
 
 /**
  * @module {bookshelf.Model} models/stat Stat

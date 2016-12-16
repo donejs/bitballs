@@ -1,4 +1,4 @@
-var app = require("../services/app");
+var app = require("./app");
 var Team = require("../models/team");
 var adminOnly = require( "./adminOnly" );
 
