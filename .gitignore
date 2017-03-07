@@ -10,3 +10,5 @@ node_modules
 public/node_modules
 public/dist
 docs/
+public/dev-bundle.js
+public/dev-bundle.css
