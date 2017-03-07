@@ -42,24 +42,30 @@
     "generator-donejs": "0.6.4",
     "jquery": "^3.1.1",
     "moment": "^2.10.6",
-    "steal": "^0.16.41",
+    "steal": "^1.2.11",
     "steal-platform": "0.0.4",
     "steal-qunit": "^0.1.1",
     "steal-stache": "^3.0.0",
-    "steal-tools": "^0.16.0",
+    "steal-tools": "^1.1.2",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
-    "donejs-cli": "^0.10.0-pre.0",
     "can-fixture": "1.0.7",
+    "donejs-cli": "^0.10.0-pre.0",
+    "steal-less": "^1.1.0",
+    "steal-stache": "^3.0.5",
     "testee": "^0.2.4"
   },
-  "system": {
+  "steal": {
+    "plugins": [
+      "steal-less",
+      "steal-stache",
+      "done-component"
+    ],
     "configDependencies": [
       "node_modules/can-zone/register",
       "live-reload"
     ],
-    "npmAlgorithm": "flat",
     "npmIgnore": [
       "documentjs",
       "testee",
