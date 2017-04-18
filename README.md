@@ -140,6 +140,7 @@ createdb bitballs
 Next, create the database schema that the application expects by running:
 
 ```
+createdb bitballs
 npm run db-migrate
 ```
 
