@@ -38,7 +38,7 @@ var Tournament = require("bitballs/models/tournament");
 var Session = require("bitballs/models/session");
 var DefineMap = require("can-define/map/map");
 
-require("can-define-stream");
+var defineStreamKefir = require("can-define-stream-kefir");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-stache/helpers/route");
 
@@ -162,7 +162,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	/**
 	* @property {Array} bitballs/components/tournament/details.courtNames courtNames
 	* @parent bitballs/components/tournament/details.properties
-	* 
+	*
 	* A list of courtNames from the [bitballs/models/game.static.courtNames courtNames]
 	* list that are available.
 	**/
@@ -317,7 +317,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		if(!round) {
 			return teams;
 		}
-		
+
 		var remainingTeams = teams.slice(0);
 
 		games.forEach(function(game){
@@ -417,7 +417,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 			court: this.selectedCourt,
 			tournamentId: this.tournamentId
 		});
-		
+
 		game.save(function(){
 			self.game = new Game();
 		});
@@ -462,6 +462,8 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		team.destroy();
 	}
 });
+
+defineStreamKefir(exports.ViewModel);
 
 exports.Component = Component.extend({
 	tag: "tournament-details",
