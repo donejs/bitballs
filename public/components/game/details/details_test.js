@@ -97,19 +97,20 @@ QUnit.test('Deleting a stat does not change playback location', function (assert
 
 
     var vm = canViewModel($('game-details'));
-    vm.gotoTimeMinus5 =  function (){
+    var gotoTimeMinus5 = vm.__proto__.gotoTimeMinus5;  // jshint ignore:line
+    vm.__proto__.gotoTimeMinus5 =  function (){ // jshint ignore:line
         gotoCalled = true;
     };
 
-    $(vm).on('game', function(ev, game) {
+    vm.on('game', function(ev, game) {
         F.confirm(true);
-        done();
         F('.stat-point .destroy-btn')
             .exists('Destroy button exists')
             .click()
             .then(function () {
                 notOk(gotoCalled, 'Seek was not called');
+                vm.__proto__.gotoTimeMinus5 = gotoTimeMinus5; // jshint ignore:line
+                done();
             });
     });
-    vm.dispatch('game');
 });
