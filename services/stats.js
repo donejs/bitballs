@@ -99,7 +99,7 @@ var app = require("./app"),
 	adminOnly = require( "./adminOnly" );
 
 app.get('/services/stats', function(req, res){
-	Stat.collection().query(req.query).fetch().fetch().then(function(stats){
+	Stat.collection().query(req.query).fetch().then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });
