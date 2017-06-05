@@ -128,9 +128,7 @@ Stat.connection = superMap({
 	Map: Stat,
 	List: Stat.List,
 	url: {
-		getData: "/services/stats",
-		createData: "/services/stats",
-		destroyData: "/services/stats/{id}",
+		resource: "/services/stats",
 		contentType: "application/x-www-form-urlencoded"
 	},
 	name: "stat",

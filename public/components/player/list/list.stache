@@ -24,7 +24,7 @@
 								(saved)="removeEdit" (canceled)="removeEdit"/>
 						</td>
 					{{else}}
-						<td>{{name}}</td>
+						<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
 						<td>{{age}}</td>
 						<td>{{weight}}</td>
 						<td>{{height}}</td>

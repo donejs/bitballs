@@ -45,6 +45,12 @@ const AppViewModel = DefineMap.extend('App',
 	**/
 	tournamentId: 'number',
 	/**
+	* @property {Number} bitballs/app.playerId playerId
+	* @parent bitballs/app.properties
+	* Current player id
+	**/
+	playerId: 'number',
+	/**
 	* @property {Promise} bitballs/app.pagePromise pagePromise
 	* @parent bitballs/app.properties
 	* Promise object
@@ -61,7 +67,6 @@ const AppViewModel = DefineMap.extend('App',
 	get pageComponentConfig() {
 		var page = this.page;
 		if(this.gameId) {
-
 			return {
 				title: "Game",
 				componentName: "game-details",
@@ -75,6 +80,14 @@ const AppViewModel = DefineMap.extend('App',
 				componentName: "tournament-details",
 				attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
 				moduleName: "tournament/details/"
+			};
+
+		} else if(this.playerId) {
+			return {
+				title: "Player",
+				componentName: "player-details",
+				attributes: "{player-id}='./playerId' {^player-promise}='./pagePromise'",
+				moduleName: "player/details/"
 			};
 
 		} else if(page === "tournaments") {
@@ -196,6 +209,7 @@ stache.registerHelper("pageComponent", function(options){
 
 route('tournaments/{tournamentId}');
 route('games/{gameId}');
+route('players/{playerId}');
 route('{page}',{page: 'tournaments'});
 
 export default AppViewModel;
