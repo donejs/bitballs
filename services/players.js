@@ -100,7 +100,7 @@
  *
  *      {}
  */
-var app = require("../services/app");
+var app = require("./app");
 var Player = require("../models/player");
 var adminOnly = require( "./adminOnly" );
 

@@ -1,4 +1,4 @@
-var app = require("../services/app");
+var app = require("./app");
 var passport = require('passport');
 var User = require("../models/user");
 var _ = require("lodash");

@@ -1,4 +1,4 @@
-var bookshelf = require("../models/bookshelf");
+var bookshelf = require("./bookshelf");
 var Stat = require("./stat");
 var Team = require("./team");
 var Tournament = require("./tournament");

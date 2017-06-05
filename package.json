@@ -1,7 +1,7 @@
 {
   "name": "bitballs",
   "version": "0.3.1",
-  "description": "A basketball tournement app",
+  "description": "A basketball tournament app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/donejs/bitballs.git"
   },
   "keywords": [
     "node",
@@ -48,7 +48,7 @@
   "devDependencies": {
     "documentjs": "^0.3.3",
     "donejs": "^0.7.0-pre.1",
-    "donejs-cli": "^0.6.6",
+    "donejs-cli": "^0.10.0-pre.0",
     "donejs-deploy": "^0.4.1",
     "jshint": "^2.9.1",
     "maildev": "^0.12.1"

@@ -28,41 +28,42 @@
  * @demo public/components/player/list/list.html
  *
  **/
-var Component = require("can/component/");
+var Component = require("can-component");
 var template = require("./list.stache!");
-var CanMap = require("can/map/");
+var DefineMap = require("can-define/map/");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can/map/define/");
-require("can/route/");
-require("can/view/href/");
+require("can-route");
 
 var Player = require("bitballs/models/player");
 
-var ViewModel = exports.ViewModel = CanMap.extend(
-/** @prototype */
+var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
 {
-	define: {
-		/**
-		 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
-		 * @parent bitballs/components/player/list.properties
-		 *
-		 * Configures whether or not admin specific features are enabled.
-		 **/
-		isAdmin: {
-			type: 'boolean',
-			value: false
-		},
-		/**
-		 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
-		 * @parent bitballs/components/player/list.properties
-		 *
-		 * A [bitballs/models/player] model List.
-		 */
-		playersPromise: {
-			value: function(){
-				return Player.getList({orderBy: "name"});
-			}
+	/**
+	 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
+	 * @parent bitballs/components/player/list.properties
+	 *
+	 * Configures whether or not admin specific features are enabled.
+	 **/
+	isAdmin: {
+		type: 'boolean',
+		value: false
+	},
+	/**
+	 * @property {bitballs/models/Player} bitballs/models/player editingPlayer
+	 * 
+	 * holds the current player instance that is being edited
+	 */
+	editingPlayer: Player,
+	/**
+	 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
+	 * @parent bitballs/components/player/list.properties
+	 *
+	 * A [bitballs/models/player] model List.
+	 */
+	playersPromise: {
+		value: function(){
+			return Player.getList({orderBy: "name"});
 		}
 	},
 	/**
@@ -75,7 +76,8 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 *   component.
 	 */
 	editPlayer: function(player){
-		this.attr("editingPlayer", player);
+		player.backup();
+		this.editingPlayer = player;
 	},
 	/**
 	 * @function removeEdit
@@ -83,9 +85,8 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 	 * Deselects the [bitballs/models/player] model being edited.
 	 */
 	removeEdit: function(){
-		this.removeAttr("editingPlayer");
+		this.editingPlayer = null;
 	},
-
 	/**
 	 * @function
 	 * @description Delete a player from the database.
@@ -108,6 +109,6 @@ var ViewModel = exports.ViewModel = CanMap.extend(
 
 exports.Component = Component.extend({
 	tag: "player-list",
-	template: template,
-	viewModel: ViewModel
+	view: template,
+	ViewModel: ViewModel
 });

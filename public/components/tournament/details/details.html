@@ -7,7 +7,8 @@
     import "bitballs/models/fixtures/teams";
     import "bitballs/components/tournament/details/";
     import $ from 'jquery';
-    import stache from "can/view/stache/";
+    import stache from "can-stache";
+
 
     localStorage.clear();
     var template = stache('<tournament-details {is-admin}="true" {tournament-id}="id" />');

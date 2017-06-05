@@ -101,18 +101,10 @@ Clone this repo using git:
 git clone https://github.com/donejs/bitballs.git
 ```
 
-### Install Dependencies
-
-To install the project's JavaScript dependencies run:
+Navigate to the repository's directory
 
 ```
-npm install
-```
-
-Additionally DoneJS's command line utilities need to be installed globally:
-
-```
-npm install -g donejs-cli
+cd bitballs
 ```
 
 ### Prepare the Database
@@ -137,10 +129,18 @@ will persist its data to:
 createdb bitballs
 ```
 
-Next, create the database schema that the application expects by running:
+### Install Dependencies
+
+To install the project's JavaScript dependencies run:
 
 ```
-npm run db-migrate
+npm install
+```
+
+Additionally DoneJS's command line utilities need to be installed globally:
+
+```
+npm install -g donejs-cli
 ```
 
 ### Start the Server

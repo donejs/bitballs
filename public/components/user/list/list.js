@@ -29,12 +29,12 @@
  * @demo public/components/user/list/list.html
  */
 
-import Component from 'can/component/';
-import CanMap from 'can/map/';
-import 'can/map/define/';
+import Component from 'can-component';
+import DefineMap from 'can-define/map/map';
 import './list.less!';
 import template from './list.stache!';
 import User from "bitballs/models/user";
+import Session from "bitballs/models/session";
 
 /**
  * @constructor bitballs/components/user/list.ViewModel ViewModel
@@ -43,54 +43,51 @@ import User from "bitballs/models/user";
  * @description A `<user-list>` component's ViewModel.
  */
 
-export const ViewModel = CanMap.extend({
+export const ViewModel = DefineMap.extend({
 	/**
-	 * @prototype
+	 * @property {bitballs/models/session} session
+	 *   The session object if a user is logged in. The user must be an admin to view the user list.
 	 */
-	define: {
-		/**
-		 * @property {can.List<bitballs/models/user>}
-		 * 
-		 * Provides list of users, like:
-		 *
-		 *   {data: [{
-		 *   	"id": Int,
-		 *   	"email": String,
-		 *   	"isAdmin": Boolean,
-		 *   	"verified": Boolean
-		 *   }, ...]}
-		 *   
-		 */
-		users: {
-			get: function(list) {
-				if (list) {
-                    return list;
-                }
-				return User.getList({});
-			}
+	session: Session,
+	/**
+	 * @property {can-list<bitballs/models/user>}
+	 *
+	 * Provides list of users, like:
+	 *
+	 *   {data: [{
+	 *   	"id": Int,
+	 *   	"email": String,
+	 *   	"isAdmin": Boolean,
+	 *   	"verified": Boolean
+	 *   }, ...]}
+	 *
+	 */
+	users: {
+		get: function(list) {
+			if (list) {
+        		return list;
+      		}
+			return User.getList({});
 		}
-		/**
-		 * @property {bitballs/models/session} session 
-		 *   The session object if a user is logged in. The user must be an admin to view the user list.
-		 */
 	},
 	/**
 	 * @function
 	 *
 	 * Sets the user's admin status.
-	 * 
+	 *
 	 * @param {bitballs/models/user} user The user object that will be set or unset as an admin.
 	 * @param {Boolean} isAdmin Whether the user should be set as an admin.
 	 *
 	 * @return {Promise<bitballs/models/user} The save promise that resolves to a user.
 	 */
 	setAdmin: function(user, isAdmin) {
-		return user.attr("isAdmin", isAdmin).save();
+		user.isAdmin = isAdmin;
+		return user.save();
 	}
 });
 
 export default Component.extend({
 	tag: 'user-list',
-	viewModel: ViewModel,
-	template
+	ViewModel: ViewModel,
+	view: template
 });

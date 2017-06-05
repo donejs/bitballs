@@ -3,9 +3,9 @@ var PlayerList = require("./list");
 var defineFixtures = require("bitballs/models/fixtures/players").defineFixtures;
 var F = require('funcunit');
 var fixture = require('can-fixture');
-var stache = require("can/view/stache/");
+var stache = require("can-stache");
 var $ = require("jquery");
-
+var Player = require("bitballs/models/player");
 F.attach(QUnit);
 
 var vm;
@@ -24,23 +24,23 @@ QUnit.module("components/player/list/", {
 
 QUnit.test("players property loads players from server during instantiation", function (assert) {
 	var done = assert.async();
-	vm.attr("playersPromise").then(function (players) {
+	vm.playersPromise.then(function (players) {
 		assert.ok(players.length, "we got some players");
 		done();
 	});
 });
 
 QUnit.test("editPlayer sets editingPlayer to passed in player", function (assert) {
-	var player = { name: "Ryan" };
+	var player = new Player({ name: "Ryan" });
 	vm.editPlayer(player);
-	assert.deepEqual(vm.attr("editingPlayer").attr(), player, "editingPlayer was set");
+	assert.deepEqual(vm.editingPlayer, player, "editingPlayer was set");
 });
 
 QUnit.test("removeEdit removes editingPlayer", function (assert) {
 	var player = { name: "Ryan" };
-	vm.attr("editingPlayer", player);
+	vm.editingPlayer = player;
 	vm.removeEdit();
-	assert.notOk(vm.attr("editingPlayer"), "editingPlayer was removed");
+	assert.notOk(vm.editingPlayer, "editingPlayer was removed");
 });
 
 QUnit.test('Loading message shown while players list is loaded', function (assert) {

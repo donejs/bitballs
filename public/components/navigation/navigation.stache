@@ -3,22 +3,23 @@
 		<a href="/" class="pull-left main-logo">BitBalls</a>
 		<ul class="main-menu nav navbar-nav">
 		  <li role="presentation" {{#routeCurrent page='tournaments'}}class='active'{{/routeCurrent}}>
-				<a href="{{routeUrl page='tournaments'}}">Tournaments</a>
+				<a href="{{routeUrl ( page='tournaments' )}}">Tournaments</a>
 		  </li>
 		  <li role="presentation" {{#routeCurrent page='players'}}class='active'{{/routeCurrent}}>
-				<a href="{{routeUrl page='players'}}">Players</a>
+				<a href="{{routeUrl ( page='players' )}}">Players</a>
 		  </li>
 		</ul>
+	
 
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if app.session}}
 				{{#if app.session.isAdmin}}
 					<li {{#routeCurrent page='users'}}class='active'{{/routeCurrent}}>
-						<a href="{{routeUrl page='users'}}">Users</a>
+						<a href="{{routeUrl ( page='users' )}}">Users</a>
 					</li>
 				{{/if}}
 				<li {{#routeCurrent page='account'}}class='active'{{/routeCurrent}}>
-					<a href="{{routeUrl page='account'}}">Account</a>
+					<a href="{{routeUrl ( page='account' )}}">Account</a>
 				</li>
 				<li>
 					<a href="javascript://" ($click)="logout()">Logout</a>
@@ -55,7 +56,7 @@
 									>
 								</div>
 								<button type="submit" class="btn btn-primary btn-sm" >Login</button>
-								<a href="{{routeUrl page='register'}}"
+								<a href="{{routeUrl (page='register')}}"
 									class="register-btn btn btn-link"
 									($click)="closeDropdown( %element )"
 								>

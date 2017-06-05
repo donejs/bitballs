@@ -13,29 +13,29 @@
     </div>
     <div class="form-group">
       <label for="player-weight">Weight</label>
-      <input 
-      	type="number" 
-      	class="form-control" 
-      	id="player-weight" 
-      	placeholder="weight in pounds" 
+      <input
+      	type="number"
+      	class="form-control"
+      	id="player-weight"
+      	placeholder="weight in pounds"
       	{($value)}="numberToString(~player.weight)"/>
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
-      <input 
-      	type="number" 
-      	class="form-control" 
-      	id="player-height" 
+      <input
+      	type="number"
+      	class="form-control"
+      	id="player-height"
       	placeholder="height in inches (Ex: 71)" 
       	{($value)}="numberToString(~player.height)"/>
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
-      <input 
-      	type="date" 
-      	class="form-control" 
-      	id="player-birthday" 
-      	placeholder="day of birth" 
+      <input
+      	type="date"
+      	class="form-control"
+      	id="player-birthday"
+      	placeholder="day of birth"
       	{($value)}="player.birthDate"/>
     </div>
     <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>

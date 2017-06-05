@@ -94,7 +94,7 @@
  *
  *       {}
  */
-var app = require("../services/app"),
+var app = require("./app"),
 	Stat = require("../models/stat"),
 	adminOnly = require( "./adminOnly" );
 
