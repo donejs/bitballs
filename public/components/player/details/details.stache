@@ -1,1 +1,8 @@
-<p>{{log(stat)}}</p>
+<p>{{player.name}}</p>
+<p>age: {{player.age}}</p>
+<p>weight: {{player.weight}}lbs</p>
+<p>height: {{player.height}}"</p>
+
+{{#each stats.aggregated}}
+	<p>{{name}}: {{value}}</p>
+{{/each}}

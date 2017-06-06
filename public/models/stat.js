@@ -110,7 +110,43 @@ var Stat = DefineMap.extend('Stat',
  *
  * Methods on a List of stats.
  */
-Stat.List = DefineList.extend('StatsList', {"#": Stat});
+Stat.List = DefineList.extend('StatsList', {
+	"#": Stat,
+	get aggregated() {
+		let aggregated = {};
+
+		this.forEach(({ type }) => {
+			if (!aggregated[type]) {
+				aggregated[type] = 0;
+			}
+
+			aggregated[type]++;
+		});
+
+		let onePointers = aggregated['1P'] || 0;
+		let twoPointers = aggregated['2P'] || 0;
+		let onePointAttempts = aggregated['1PA'] || 0;
+		let twoPointAttempts = aggregated['2PA'] || 0;
+
+		return [
+	      ...Stat.statTypes.map(({ name }) => ({
+	          name,
+	          value: (aggregated[name] || 0).toFixed(0),
+	      })),
+	      {
+	        name: 'TP',
+	        value: (onePointers + twoPointers * 2).toFixed(0),
+	      },
+	      {
+	        name: 'FG%',
+	        value: (
+	          ( onePointers + twoPointers ) /
+	          ( onePointers + twoPointers + onePointAttempts + twoPointAttempts )
+	        * 100).toFixed(0) + '%'
+	      },
+	    ];
+	},
+});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra
