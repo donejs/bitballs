@@ -27,6 +27,7 @@
     "can-route-pushstate": "^3.0.0",
     "can-set": "^1.0.1",
     "can-stache": "^3.0.14",
+    "can-stache-converters": "^3.1.0",
     "can-util": "^3.1.0",
     "can-view-autorender": "^3.0.0",
     "can-view-model": "^3.0.0",

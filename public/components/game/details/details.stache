@@ -19,15 +19,15 @@
 
 	<table class="table table-condensed table-hover">
 	<tbody>
-	{{#eachOf game.teams}}
+	{{#each game.teams}}
 		<tr>
 			<th colspan="2">{{color}} - {{name}}</th>
 		</tr>
-		{{#eachOf players}}
+		{{#each players}}
 			<tr ($click)="showStatMenuFor(.,%element, %event)">
-				<td>{{name}}</div>
+				<td>{{name}}</td>
 				<td class="stats-container">
-					{{#eachOf statsForPlayerId(id)}}
+					{{#each statsForPlayerId(id)}}
 						<span ($click)="gotoTimeMinus5(time, %event)"
 							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
 							{{type}}
@@ -45,7 +45,7 @@
 	</table>
 	<div id="player-pos"/>
 
-	
+
 	{{#if stat}}
 
 	<div class="popover fade right in" role="tooltip" style="display: block;" id="add-stat">

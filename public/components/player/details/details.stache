@@ -1,8 +1,15 @@
-<p>{{player.name}}</p>
-<p>age: {{player.age}}</p>
-<p>weight: {{player.weight}}lbs</p>
-<p>height: {{player.height}}"</p>
+{{#player}}
+	<p>{{name}}</p>
+	<p>age: {{age}}</p>
+	<p>weight: {{weight}}lbs</p>
+	<p>height: {{height}}"</p>
+{{/player}}
 
-{{#each stats.aggregated}}
-	<p>{{name}}: {{value}}</p>
+{{#each tournaments}}
+	{{#if statsByTournament[id]}}
+		<p>{{year}} Tournament</p>
+		{{#each statsByTournament[id].aggregated}}
+			<p>{{name}}: {{value}}</p>
+		{{/each}}
+	{{/if}}
 {{/each}}
