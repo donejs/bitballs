@@ -470,3 +470,5 @@ exports.Component = Component.extend({
 	view: require("./details.stache!"),
 	ViewModel: exports.ViewModel
 });
+
+window.viewModel = require('can-view-model')

@@ -40,7 +40,7 @@
 								</button>
 							{{/if}}
 						</td>
-					{{/if}}
+					{{/eq}}
 				</tr>
 			{{else}}
 				<tr class="empty-list-placeholder"><td class="text-center lead" colspan="5">No Players</td></tr>

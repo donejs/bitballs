@@ -1,3 +1,5 @@
+<can-import from="can-stache-converters" />
+
 {{^if tournamentPromise.isRejected}}
 <h2>{{tournament.year}} Tournament</h2>
 <h3>Games</h3>
@@ -12,7 +14,7 @@
 	</tr>
 </thead>
 <tbody>
-	
+
 {{#games.getRoundsWithGames}}
 	<tr>
 		<td>{{.}}</td>
@@ -20,7 +22,9 @@
 			<td>
 				{{#games.getGameForRoundAndCourt ../. .}}
 					<a href="{{routeUrl ( gameId=id )}}">
-						{{#../teams.getById(homeTeamId)}}{{color}}{{/teams.getById}} v {{#../teams.getById(awayTeamId)}}{{color}}{{/teams.getById}}
+						{{#../teams.getById(homeTeamId)}}{{color}}{{/./teams@getById}}
+						v
+						{{#../teams.getById(awayTeamId)}}{{color}}{{/./teams@getById}}
 					</a>
 					{{#if isAdmin}}
 						<button type="button" class="btn btn-danger btn-xs"
@@ -57,7 +61,7 @@
 	    <select {($value)}="selectedCourt" class="form-control" id="game-court">
 		{{#games.getAvailableCourts(selectedRound)}}
 			<option value="{{.}}">{{.}}</option>
-		{{/games.getAvailableCourts}}
+		{{/ames@getAvailableCourts}}
 	    </select>
 	</div>
 
@@ -77,8 +81,6 @@
 	    	{{/each}}
 	    </select>
 	</div>
-
-
 
 	<div class="form-group">
 	    <label for="game-videoUrl">YouTube URL</label>
@@ -145,7 +147,6 @@
 	    		<option value="{{.}}">{{.}}</option>
 	    	{{/each}}
 	    </select>
-	  </div>
 	</div>
 
 	<div class="form-group">
@@ -156,7 +157,6 @@
 	    		<option value='{{id}}'>{{name}}</option>
 	    	{{/eachOf}}
 	    </select>
-	  </div>
 	</div>
 
 	<div class="form-group">
@@ -167,7 +167,6 @@
 	    		<option value='{{id}}'>{{name}}</option>
 	    	{{/eachOf}}
 	    </select>
-	  </div>
 	</div>
 
 	<div class="form-group">
@@ -178,7 +177,6 @@
 	    		<option value='{{id}}'>{{name}}</option>
 	    	{{/eachOf}}
 	    </select>
-	  </div>
 	</div>
 
 	<div class="form-group">
@@ -189,7 +187,6 @@
 	    		<option value='{{id}}'>{{name}}</option>
 	    	{{/eachOf}}
 	    </select>
-	  </div>
 	</div>
 
 	<button type="submit" class="btn btn-default" >Create</button>

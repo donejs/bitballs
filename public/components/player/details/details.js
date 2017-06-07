@@ -36,8 +36,7 @@ export const ViewModel = DefineMap.extend({
   **/
   get statsPromise() {
     return Stat.getList({
-      where: {playerId: this.playerId},
-      withRelated: ['game.tournament'],
+      where: {playerId: this.playerId}
     });
   },
   /**
