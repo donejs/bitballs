@@ -35,6 +35,7 @@ var Team = require("bitballs/models/team");
 var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
 var Tournament = require("bitballs/models/tournament");
+var Stat = require("bitballs/models/stat");
 var Session = require("bitballs/models/session");
 var DefineMap = require("can-define/map/map");
 
@@ -215,6 +216,29 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		get: function(set, resolve){
 			this.playersPromise.then(resolve);
 		}
+	},
+	/**
+	* @property {Promise<bitballs/models/stat.static.List>} bitballs/components/player/details.statPromise statsPromise
+	* @parent bitballs/components/player/details.properties
+	*
+	* A promise that fetches a [bitballs/models/stat.static.List stat List] based on
+	* [bitballs/components/player/details.ViewModel.prototype.playerId playerId].
+	**/
+	get statsPromise() {
+	  return Stat.getList({
+		// where: {tournamentId: this.tournamentId},
+	  });
+	},
+	/**
+	* @property {bitballs/models/stat.static.List} bitballs/components/player/details.stat stat
+	* @parent bitballs/components/player/details.properties
+	*
+	* A [bitballs/models/stat.static.List stat List] instance.
+	**/
+	stats: {
+	  get: function(lastSet, setVal){
+		this.statsPromise.then(setVal);
+	  }
 	},
 	/**
 	* @property {String|null} bitballs/components/tournament/details.userSelectedRound userSelectedRound

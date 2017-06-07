@@ -12,7 +12,7 @@
 	</tr>
 </thead>
 <tbody>
-	
+
 {{#games.getRoundsWithGames}}
 	<tr>
 		<td>{{.}}</td>
@@ -203,3 +203,29 @@
 {{else}}
 	Tournament not found.
 {{/if}}
+
+<h2>Stats</h2>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			{{#each statHeaders}}
+				<th>{{name}}</th>
+			{{/each}}
+		</tr>
+	</thead>
+	<tbody>
+		{{#each players}}
+			{{#if stats.byPlayer[id]}}
+				<tr>
+					<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
+					{{#each stats.byPlayer[id].aggregated}}
+						<td>{{value}}</td>
+					{{/each}}
+				</tr>
+			{{/if}}
+		{{else}}
+			<tr><td class="text-center lead">No Stats</td></tr>
+		{{/each}}
+	</tbody>
+</table>
