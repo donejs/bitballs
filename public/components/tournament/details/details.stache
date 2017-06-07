@@ -212,17 +212,19 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#each players}}
-			{{#if stats.byPlayer[id]}}
-				<tr>
-					<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
-					{{#each stats.byPlayer[id].aggregated}}
-						<td>{{value}}</td>
-					{{/each}}
-				</tr>
-			{{/if}}
+		{{#if stats.length}}
+			{{#each players}}
+				{{#if stats.byPlayer[id]}}
+					<tr>
+						<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
+						{{#each stats.byPlayer[id].aggregated}}
+							<td>{{value}}</td>
+						{{/each}}
+					</tr>
+				{{/if}}
+			{{/each}}
 		{{else}}
 			<tr><td class="text-center lead">No Stats</td></tr>
-		{{/each}}
+		{{/if}}
 	</tbody>
 </table>

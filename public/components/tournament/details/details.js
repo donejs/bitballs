@@ -237,7 +237,20 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	**/
 	stats: {
 	  get: function(lastSet, setVal){
-		this.statsPromise.then(setVal);
+		if (!this.games) {
+			return;
+		}
+
+		let games = [];
+		this.games.forEach(({ id }) => games.push(id));
+
+		this.statsPromise.then((stats) => {
+			stats = stats.filter(({ gameId }) =>
+				games.includes(gameId)
+			);
+
+			setVal(stats);
+		});
 	  }
 	},
 	/**
