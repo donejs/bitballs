@@ -112,6 +112,38 @@ var Stat = DefineMap.extend('Stat',
  */
 Stat.List = DefineList.extend('StatsList', {
 	"#": Stat,
+	get byPlayer() {
+		let players = {};
+
+		this.forEach((stat) => {
+			if (!players[stat.playerId]) {
+				players[stat.playerId] = new Stat.List();
+			}
+
+			players[stat.playerId].push(stat);
+		});
+
+		return players;
+	},
+	get players() {
+		return Object.keys(this.byPlayer).map((id) => ({ id }));
+	},
+	get byGame() {
+		let games = {};
+
+		this.forEach((stat) => {
+			if (!games[stat.gameId]) {
+				games[stat.gameId] = new Stat.List();
+			}
+
+			games[stat.gameId].push(stat);
+		});
+
+		return games;
+	},
+	get games() {
+		return Object.keys(this.byGame).map((id) => ({ id }));
+	},
 	get aggregated() {
 		let aggregated = {};
 
