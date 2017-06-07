@@ -5,6 +5,11 @@
 	<p>height: {{height}}"</p>
 {{/player}}
 
-{{#each stats.aggregated}}
-	<p>{{name}}: {{value}}</p>
+{{#each tournaments}}
+	{{#if statsByTournament[id]}}
+		<p>{{year}} Tournament</p>
+		{{#each statsByTournament[id].aggregated}}
+			<p>{{name}}: {{value}}</p>
+		{{/each}}
+	{{/if}}
 {{/each}}
