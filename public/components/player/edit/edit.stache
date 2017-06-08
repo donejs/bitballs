@@ -1,4 +1,4 @@
-<can-import from="bitballs/util/numberToString" />
+<can-import from="can-stache-converters" />
 
 {{#if isAdmin}}
   <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
@@ -18,7 +18,7 @@
       	class="form-control"
       	id="player-weight"
       	placeholder="weight in pounds"
-      	{($value)}="numberToString(~player.weight)"/>
+      	{($value)}="string-to-any(~player.weight)"/>
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
@@ -26,8 +26,8 @@
       	type="number"
       	class="form-control"
       	id="player-height"
-      	placeholder="height in inches (Ex: 71)" 
-      	{($value)}="numberToString(~player.height)"/>
+      	placeholder="height in inches (Ex: 71)"
+      	{($value)}="string-to-any(~player.height)"/>
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
