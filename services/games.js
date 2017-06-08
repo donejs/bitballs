@@ -1,8 +1,3 @@
-
-var app = require("./app");
-var Game = require("../models/game");
-var adminOnly = require( "./adminOnly" );
-
 /**
  * @module {function} services/games /services/games
  * @parent bitballs.services
@@ -101,7 +96,7 @@ var adminOnly = require( "./adminOnly" );
  *        "homeTeamId": 1
  *        "awayTeamId": 1
  * 		}
- * 
+ *
  *
  * @signature `DELETE /services/games`
  *   Deletes a game in the database. Only admins are allowed to delete games.
@@ -113,15 +108,21 @@ var adminOnly = require( "./adminOnly" );
  * 		{}
  */
 
+var app = require("./app");
+var Game = require("../models/game");
+var adminOnly = require( "./adminOnly" );
+var separateQuery = require("./separate-query");
 
 app.get('/services/games', function(req, res){
-	Game.collection().query(req.query).fetch().then(function(games){
+	var { query, fetch } = separateQuery(req.query);
+	Game.collection().query(query).fetch(fetch).then(function(games){
 		res.send({data: games.toJSON()});
 	});
 });
 
 app.get('/services/games/:id', function(req, res){
-	new Game({id: req.params.id}).fetch(req.query).then(function(game){
+	var { query, fetch } = separateQuery(req.query);
+	new Game({id: req.params.id}).query(query).fetch(fetch).then(function(game){
 		if(game){
 			res.send(game.toJSON());
 		}else {
@@ -136,7 +137,7 @@ app.put('/services/games/:id', adminOnly( "Must be an admin to update games" ), 
 	});
 });
 
-app['delete']('/services/games/:id', adminOnly( "Must be an admin to delete games" ), function(req, res){
+app.delete('/services/games/:id', adminOnly( "Must be an admin to delete games" ), function(req, res){
 	new Game({id: req.params.id}).destroy().then(function(game){
 		res.send({});
 	});
@@ -149,3 +150,5 @@ app.post('/services/games', adminOnly( "Must be an admin to create games" ), fun
 		res.status(500).send(e);
 	});
 });
+
+module.exports = Game;

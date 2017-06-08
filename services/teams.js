@@ -1,7 +1,3 @@
-var app = require("./app");
-var Team = require("../models/team");
-var adminOnly = require( "./adminOnly" );
-
 /**
  * @module {function} services/teams /services/teams
  * @parent bitballs.services
@@ -46,7 +42,7 @@ var adminOnly = require( "./adminOnly" );
  *            "player3Id": 3,
  *            "player4Id": 4
  *          }
- *         
+ *
  *   @param {JSON} JSONBody The raw JSON properties of a team object.
  *   @return {JSON} Returns JSON with all the properties of the newly created object, including its id.
  *
@@ -121,14 +117,22 @@ var adminOnly = require( "./adminOnly" );
  *
  *       {}
  */
+
+var app = require("./app");
+var Team = require("../models/team");
+var adminOnly = require( "./adminOnly" );
+var separateQuery = require("./separate-query");
+
 app.get('/services/teams', function(req, res){
-	Team.collection().query(req.query).fetch().then(function(teams){
+	var { query, fetch } = separateQuery(req.query);
+	Team.collection().query(query).fetch(fetch).then(function(teams){
 		res.send({data: teams.toJSON()});
 	});
 });
 
 app.get('/services/teams/:id', function(req, res){
-	new Team({id: req.params.id}).fetch().then(function(team){
+	var { query, fetch } = separateQuery(req.query);
+	new Team({id: req.params.id}).query(query).fetch(fetch).then(function(team){
 		res.send(team.toJSON());
 	});
 });
@@ -139,7 +143,7 @@ app.put('/services/teams/:id', adminOnly( "Must be an admin to update teams" ), 
 	});
 });
 
-app['delete']('/services/teams/:id', adminOnly( "Must be an admin to delete teams" ), function(req, res){
+app.delete('/services/teams/:id', adminOnly( "Must be an admin to delete teams" ), function(req, res){
 	new Team({id: req.params.id}).destroy().then(function(team){
 		res.send({});
 	});
@@ -152,3 +156,5 @@ app.post('/services/teams', adminOnly( "Must be an admin to create teams" ), fun
 		res.status(500).send(e);
 	});
 });
+
+module.exports = Team;

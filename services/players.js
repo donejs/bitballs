@@ -100,31 +100,22 @@
  *
  *      {}
  */
+
 var app = require("./app");
 var Player = require("../models/player");
 var adminOnly = require( "./adminOnly" );
-
-var clean = function(data){
-	if(data.name===''){
-		delete data.name;
-	}
-	if(data.weight) {
-		data.weight = parseInt(data.weight, 10);
-	}
-	if(data.height) {
-		data.height = parseInt(data.height, 10);
-	}
-	return data;
-};
+var separateQuery = require("./separate-query");
 
 app.get('/services/players', function(req, res){
-	Player.collection().query(req.query).fetch().then(function(players){
+	var { query, fetch } = separateQuery(req.query);
+	Player.collection().query(query).fetch(fetch).then(function(players){
 		res.send({data: players.toJSON()});
 	});
 });
 
 app.get('/services/players/:id', function(req, res){
-	new Player({id: req.params.id}).fetch().then(function(player){
+	var { query, fetch } = separateQuery(req.query);
+	new Player({id: req.params.id}).query(query).fetch(fetch).then(function(player){
 		res.send(player.toJSON());
 	});
 });
@@ -136,8 +127,7 @@ app.put('/services/players/:id', adminOnly( "Must be an admin to update players"
 	});
 });
 
-app['delete']('/services/players/:id', adminOnly( "Must be an admin to delete players" ), function(req, res){
-	console.log("DESTROYING", req.params.id);
+app.delete('/services/players/:id', adminOnly( "Must be an admin to delete players" ), function(req, res){
 	new Player({id: req.params.id}).destroy().then(function(player){
 		res.send({_destroyed: true});
 	});
@@ -152,3 +142,19 @@ app.post('/services/players', adminOnly( "Must be an admin to create players" ),
 });
 
 module.exports = Player;
+
+var clean = function(data){
+	if(data.name === ''){
+		delete data.name;
+	}
+
+	if(data.weight) {
+		data.weight = parseInt(data.weight, 10);
+	}
+
+	if(data.height) {
+		data.height = parseInt(data.height, 10);
+	}
+
+	return data;
+};

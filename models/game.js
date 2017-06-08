@@ -1,7 +1,4 @@
 var bookshelf = require("./bookshelf");
-var Stat = require("./stat");
-var Team = require("./team");
-var Tournament = require("./tournament");
 
 /**
  * @module {bookshelf.Model} models/game Game
@@ -33,6 +30,7 @@ var Game = bookshelf.Model.extend(
 	 * matches the `id` specified in the query.
 	 **/
 	stats: function(){
+		var Stat = require("./stat");
 		return this.hasMany(Stat,"gameId");
 	},
 	/**
@@ -42,6 +40,7 @@ var Game = bookshelf.Model.extend(
 	 * model with an `id` that matches the `homeTeamId` specified in the query.
 	 **/
 	homeTeam: function(){
+		var Team = require("./team");
 		return this.belongsTo(Team,"homeTeamId");
 	},
 	/**
@@ -51,6 +50,7 @@ var Game = bookshelf.Model.extend(
 	 * model with an `id` that matches the `awayTeamId` specified in the query.
 	 **/
 	awayTeam: function(){
+		var Team = require("./team");
 		return this.belongsTo(Team,"awayTeamId");
 	},
 	/**
@@ -60,6 +60,7 @@ var Game = bookshelf.Model.extend(
 	 * model with an `id` that matches the `tournamentId` specified in the query.
 	 **/
 	tournament: function(){
+		var Tournament = require("./tournament");
 		return this.belongsTo(Tournament, "tournamentId");
 	}
 });
