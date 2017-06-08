@@ -58,7 +58,7 @@
 
 	<div class="form-group">
 	    <label for="game-court">Court</label>
-	    <select {($value)}="selectedCourt" class="form-control" id="game-court">
+	    <select {($value)}="string-to-any(~selectedCourt)" class="form-control" id="game-court">
 		{{#games.getAvailableCourts(selectedRound)}}
 			<option value="{{.}}">{{.}}</option>
 		{{/ames@getAvailableCourts}}
