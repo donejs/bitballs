@@ -1,14 +1,3 @@
-var app = require("./app");
-var passport = require('passport');
-var User = require("../models/user");
-var _ = require("lodash");
-var bCrypt = require("bcrypt-nodejs");
-var LocalStrategy = require('passport-local').Strategy;
-var adminOnly = require( "./adminOnly" );
-var nodeMail = require( "./email" );
-var urls = require("../package.json").urls;
-var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
-var appUrl = urls[envKey];
 /**
  * @module {function} services/users /services/users
  * @parent bitballs.services
@@ -98,6 +87,19 @@ var appUrl = urls[envKey];
  * 		{}
  */
 
+var app = require("./app");
+var User = require("../models/user");
+var separateQuery = require("./separate-query");
+var _ = require("lodash");
+var passport = require('passport');
+var bCrypt = require("bcrypt-nodejs");
+var LocalStrategy = require('passport-local').Strategy;
+var adminOnly = require( "./adminOnly" );
+var nodeMail = require( "./email" );
+var urls = require("../package.json").urls;
+var envKey = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+var appUrl = urls[envKey];
+
 var omitSensitive = function ( user ) {
 	if ( user.toJSON ) {
 		user = user.toJSON();
@@ -114,9 +116,10 @@ var disallowAdminOnlyChanges = function ( onThis, withThis ) {
 };
 
 app.get('/services/users', adminOnly(), function( req, res ) {
+	var { query, fetch } = separateQuery(req.query);
 	User.collection().query(function(qb){
 		qb.orderBy('email','ASC');
-	}).fetch().then(function( users ){
+	}).query(query).fetch(fetch).then(function( users ){
 		users = _.map( users.toJSON(), function( user ) {
 			return omitSensitive( user );
 		});
@@ -134,7 +137,7 @@ passport.use('signup', new LocalStrategy({
 			'email' : username
 		}).fetch().then(function(user) {
 			if(user) {
-				console.log("POST USERS: use already exists" + username, user);
+				console.log("POST USERS: user already exists" + username, user);
 				done(null, false);
 			} else {
 				User.count().then( function ( numberOfUsers ) {
@@ -164,9 +167,6 @@ passport.use('signup', new LocalStrategy({
 		});
 	});
 }));
-
-
-
 
 app.post('/services/users',
 	function ( req, res, next ){
@@ -310,3 +310,5 @@ function ( req, res ) {
 		res.status( 500 ).send( err );
 	});
 });
+
+module.exports = User;

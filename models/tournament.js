@@ -1,5 +1,5 @@
-var bookshelf = require("./bookshelf"),
-	checkit = require('checkit');
+var bookshelf = require("./bookshelf");
+var checkit = require("checkit");
 
 /**
  * @module {bookshelf.Model} models/tournament Tournament
@@ -43,6 +43,17 @@ var Tournament = bookshelf.Model.extend(
 		return checkit({
 			date: ['required']
 		}).run(this.attributes);
+	},
+	/**
+	 * @function
+	 *
+	 * Informs Bookshelf.js that the `games` property will be a list of
+	 * [models/game] models with a `tournamentId` that
+	 * matches the `id` specified in the query.
+	 **/
+	games: function(){
+		var Game = require("./game");
+		return this.hasMany(Game,"tournamentId");
 	}
 });
 

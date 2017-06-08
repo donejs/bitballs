@@ -1,5 +1,5 @@
-var bookshelf = require("./bookshelf"),
-	checkit = require("checkit");
+var bookshelf = require("./bookshelf");
+var checkit = require("checkit");
 
 /**
  * @module {bookshelf.Model} models/player Player
@@ -30,8 +30,8 @@ var Player = bookshelf.Model.extend(
 	 * as the handler during initialization.
 	 **/
 	initialize: function(){
-		this.on('saving', this.validateSave);
-	},
+		 this.on('saving', this.validateSave);
+	 },
 	/**
 	 * @function
 	 *
@@ -43,6 +43,17 @@ var Player = bookshelf.Model.extend(
 		return checkit({
 			name: 'required'
 		}).run(this.attributes);
+	},
+	/**
+	 * @function
+	 *
+	 * Informs Bookshelf.js that the `stats` property will be a list of
+	 * [models/stat] models with a `playerId` that
+	 * matches the `id` specified in the query.
+	 **/
+	stats: function(){
+		var Stat = require("./stat");
+		return this.hasMany(Stat,"playerId");
 	}
 });
 

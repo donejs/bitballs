@@ -1,8 +1,3 @@
-var app = require("./app");
-var adminOnly = require( "./adminOnly" );
-var Tournament = require("../models/tournament");
-
-
 /**
  * @module {function} services/tournaments /services/tournaments
  * @parent bitballs.services
@@ -76,14 +71,22 @@ var Tournament = require("../models/tournament");
  *
  * 		{}
  */
+
+var app = require("./app");
+var Tournament = require("../models/tournament");
+var adminOnly = require( "./adminOnly" );
+var separateQuery = require("./separate-query");
+
 app.get('/services/tournaments', function(req, res){
-	Tournament.collection().query(req.query).fetch().then(function(tournaments){
+	var { query, fetch } = separateQuery(req.query);
+	Tournament.collection().query(query).fetch(fetch).then(function(tournaments){
 		res.send({data: tournaments.toJSON()});
 	});
 });
 
 app.get('/services/tournaments/:id', function(req, res){
-	new Tournament({id: req.params.id}).fetch().then(function(tournament){
+	var { query, fetch } = separateQuery(req.query);
+	new Tournament({id: req.params.id}).query(query).fetch(fetch).then(function(tournament){
 		if(tournament){
 			res.send(tournament.toJSON());
 		} else {
@@ -98,7 +101,7 @@ app.put('/services/tournaments/:id', adminOnly( "Must be an admin to update tour
 	});
 });
 
-app['delete']('/services/tournaments/:id', adminOnly( "Must be an admin to delete tournaments" ), function(req, res){
+app.delete('/services/tournaments/:id', adminOnly( "Must be an admin to delete tournaments" ), function(req, res){
 	new Tournament({id: req.params.id}).destroy().then(function(tournament){
 		res.send({});
 	});
@@ -111,3 +114,5 @@ app.post('/services/tournaments', adminOnly( "Must be an admin to create tournam
 		res.status(500).send(e);
 	});
 });
+
+module.exports = Tournament;

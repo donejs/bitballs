@@ -20,7 +20,7 @@ if ( process.argv.indexOf( "--develop" ) !== -1 ) {
 }
 
 module.exports = function ( to, from, subject, body, cb ) {
-  
+
   var transporter = nodemailer.createTransport( transportOpts );
 
   return transporter.sendMail({

@@ -94,18 +94,22 @@
  *
  *       {}
  */
-var app = require("./app"),
-	Stat = require("../models/stat"),
-	adminOnly = require( "./adminOnly" );
+
+var app = require("./app");
+var Stat = require("../models/stat");
+var adminOnly = require( "./adminOnly" );
+var separateQuery = require("./separate-query");
 
 app.get('/services/stats', function(req, res){
-	Stat.collection().query(req.query).fetch().then(function(stats){
+	var { query, fetch } = separateQuery(req.query);
+	Stat.collection().query(query).fetch(fetch).then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });
 
 app.get('/services/stats/:id', function(req, res){
-	new Stat({id: req.params.id}).fetch().then(function(stat){
+	var { query, fetch } = separateQuery(req.query);
+	new Stat({id: req.params.id}).query(query).fetch(fetch).then(function(stat){
 		res.send(stat.toJSON());
 	});
 });
@@ -116,7 +120,7 @@ app.put('/services/stats/:id', adminOnly( "Must be an admin to update stats" ), 
 	});
 });
 
-app['delete']('/services/stats/:id', adminOnly( "Must be an admin to delete stats" ), function(req, res){
+app.delete('/services/stats/:id', adminOnly( "Must be an admin to delete stats" ), function(req, res){
 	new Stat({id: req.params.id}).destroy().then(function(stat){
 		res.send({});
 	});
@@ -130,10 +134,12 @@ app.post('/services/stats', adminOnly( "Must be an admin to create stats" ), fun
 	});
 });
 
-// TODO: needed as we are now sending JSON?
+module.exports = Stat;
+
 var clean = function(data){
 	if(data.time) {
 		data.time = parseInt(data.time, 10);
 	}
+
 	return data;
 };
