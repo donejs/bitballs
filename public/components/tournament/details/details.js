@@ -301,18 +301,30 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		type: 'string',
 		stream: function(setStream) {
 			var vm = this;
-			var selectedRoundStream = this.stream(".selectedRound");
+			// if selectedRound changes, we should translate to an
+			// available selected court
 
-			return setStream.merge(selectedRoundStream).map(function(val) {
-				if(vm.games) {
-					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
-					if(selectedCourt[val]) {
-						return selectedCourt[val];
-					}
-					return selectedCourt[0]; //Reset it to the first court available.
-				}
-				return val;
+			var selectedRoundEvent = this.stream("selectedRound");
+			var setSelectedCourtEvent = setStream.map(function(selectedCourt){
+				return {type: "selectedCourt", value: selectedCourt};
 			});
+
+			return setSelectedCourtEvent.merge(selectedRoundEvent).scan(function(selectedCourt, event){
+				if(event.type === "selectedCourt") {
+					return event.value;
+				}
+				if(event.type === "selectedRound") {
+					var availableCourts = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
+					if(availableCourts) {
+						// make sure it's ok
+						if(availableCourts[selectedCourt-1]) {
+							return selectedCourt;
+						}
+						return availableCourts[0];
+					}
+
+				}
+			},"1");
 		}
 	},
 	/**
@@ -507,5 +519,3 @@ exports.Component = Component.extend({
 	view: require("./details.stache!"),
 	ViewModel: exports.ViewModel
 });
-
-window.viewModel = require('can-view-model')

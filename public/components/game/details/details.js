@@ -221,7 +221,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-		
+
 		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
@@ -234,7 +234,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			playerId: player.id,
 			gameId: this.game.id,
 			player: player
-		});		
+		});
 	},
 	/**
 	 * @function
@@ -384,7 +384,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			return "0";
 		}
 	},
-	
+
 	/**
 	 * @function
 	 * @description Gets a list of stats for a player
@@ -433,16 +433,20 @@ exports.Component = Component.extend({
 
 				return self.viewModel.gamePromise;
 			}).then(function () {
-				var player = new self.YT.Player('youtube-player', {
-					height: '390',
-					width: '640',
-					videoId: self.viewModel.game.videoUrl,
-					events: {
-					  'onReady': self.onPlayerReady.bind(self),
-					  'onStateChange': self.onPlayerStateChange.bind(self)
-					}
-				});
-				self.viewModel.youtubePlayer = player;
+				// this component might have been torn down, so check if there's
+				// actually a game
+				if(self.viewModel.game) {
+					var player = new self.YT.Player('youtube-player', {
+						height: '390',
+						width: '640',
+						videoId: self.viewModel.game.videoUrl,
+						events: {
+						  'onReady': self.onPlayerReady.bind(self),
+						  'onStateChange': self.onPlayerStateChange.bind(self)
+						}
+					});
+					self.viewModel.youtubePlayer = player;
+				}
 			})["catch"](function(e){
 				if ( platform.isNode ) {
 					return;
