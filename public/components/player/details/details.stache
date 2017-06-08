@@ -1,10 +1,31 @@
 {{#player}}
-	<p>{{name}}</p>
-	<p>age: {{age}}</p>
-	<p>weight: {{weight}}lbs</p>
-	<p>height: {{height}}"</p>
+	<h1>{{name}}</h1>
+	<ul class="player-stats">
+		<li>
+			<div>{{age}}</div>
+			<p>Age</p>
+		</li>
+		<li>
+			<div>{{weight}}lbs</div>
+			<p>Weight</p> 
+		</li>
+		<li>
+			<div>{{height}}"</div>
+			<p>Height</p>
+		</li>
+	</ul>
 {{/player}}
 
-{{#each stats.aggregated}}
-	<p>{{name}}: {{value}}</p>
+{{#each tournaments}}
+	{{#if statsByTournament[id]}}
+		<h2>{{year}} Tournament</h2>
+		<ul class="tournament-stats">
+		{{#each statsByTournament[id].aggregated}}
+			<li>
+				<p>{{name}}</p>
+				<div>{{value}}</div>
+			</li>
+		{{/each}}
+		</ul>
+	{{/if}}
 {{/each}}

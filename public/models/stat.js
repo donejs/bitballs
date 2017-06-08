@@ -155,28 +155,40 @@ Stat.List = DefineList.extend('StatsList', {
 			aggregated[type]++;
 		});
 
-		let onePointers = aggregated['1P'] || 0;
-		let twoPointers = aggregated['2P'] || 0;
-		let onePointAttempts = aggregated['1PA'] || 0;
-		let twoPointAttempts = aggregated['2PA'] || 0;
-
 		return [
-	      ...Stat.statTypes.map(({ name }) => ({
-	          name,
-	          value: (aggregated[name] || 0).toFixed(0),
-	      })),
-	      {
-	        name: 'TP',
-	        value: (onePointers + twoPointers * 2).toFixed(0),
-	      },
-	      {
-	        name: 'FG%',
-	        value: (
-	          ( onePointers + twoPointers ) /
-	          ( onePointers + twoPointers + onePointAttempts + twoPointAttempts ) *
-			  100).toFixed(0) + '%'
-	      },
-	    ];
+			...Stat.statTypes.map(({ name }) => ({
+				name,
+				value: (aggregated[name] || 0).toFixed(0),
+			})),
+			{
+				name: 'TP',
+				value: (function() {
+					let onePointers = aggregated['1P'] || 0;
+					let twoPointers = aggregated['2P'] || 0;
+
+					return (onePointers + twoPointers * 2).toFixed(0);
+				})()
+			},
+			{
+				name: 'FG%',
+				value: (function() {
+					let onePointers = aggregated['1P'] || 0;
+					let twoPointers = aggregated['2P'] || 0;
+					let onePointAttempts = aggregated['1PA'] || 0;
+					let twoPointAttempts = aggregated['2PA'] || 0;
+
+					let successes = onePointers + twoPointers;
+					let attempts = onePointAttempts + twoPointAttempts;
+					let rate = successes / ( successes + attempts );
+
+					if (isNaN(rate)) {
+						return '-';
+					}
+
+					return (rate * 100).toFixed(0) + '%';
+				})()
+			},
+		];
 	},
 });
 
