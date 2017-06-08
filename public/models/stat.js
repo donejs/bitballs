@@ -173,8 +173,8 @@ Stat.List = DefineList.extend('StatsList', {
 	        name: 'FG%',
 	        value: (
 	          ( onePointers + twoPointers ) /
-	          ( onePointers + twoPointers + onePointAttempts + twoPointAttempts )
-	        * 100).toFixed(0) + '%'
+	          ( onePointers + twoPointers + onePointAttempts + twoPointAttempts ) *
+			  100).toFixed(0) + '%'
 	      },
 	    ];
 	},
