@@ -57,6 +57,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	duration: 'any',
 	/**
+	 * @property {Number} time into the video playing in seconds
+	 */
+	time: 'number',
+	/**
 	* @property {bitballs/models/session} bitballs/components/game/details.session session
 	* @parent bitballs/components/game/details.properties
 	*
@@ -160,11 +164,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * which is totalled based on the game stats up to that point.
 	 */
 	get currentScore() {
-		var game = game;
+		var game = this.game;
 		if(game && game.stats) {
 			var playerMap = this.playerIdToHomeOrAwayMap;
 			var scores = {home: 0, away: 0};
-
 			var time = this.time;
 
 			game.stats.each(function(stat){
@@ -567,7 +570,7 @@ exports.Component = Component.extend({
 		"{viewModel} stat": function(vm, ev, newVal){
 			setTimeout(function(){
 				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
-			},1);
+			},0);
 		}
 	}
 });

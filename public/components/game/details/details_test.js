@@ -56,6 +56,53 @@ QUnit.test("correctly sums score", function() {
     });
 });
 
+QUnit.test("correctly sums the current score", function (assert) {
+    var done = assert.async();
+    var vm = this.vm;
+
+    vm.on('game', function whenGameIsLoaded () {
+        /*
+            We assume each game starts with zero scores.
+            So, no pickup games.
+        */
+        vm.time = 0;
+        assert.deepEqual(vm.currentScore, {
+            home: 0,
+            away: 0
+        }, 'Scores should zero at the beginning');
+
+        vm.time = Infinity;
+        assert.deepEqual(
+            vm.currentScore,
+            vm.finalScore,
+            'At the end of the game, the current score is the final score'
+        );
+
+        /*
+            NOTE: this is a bad test because the home/away numbers are
+            not described or easily inferred here.
+
+            Given the current fixture data, we are summing like this:
+            | Time | Home Points | Away Points |
+            |    0 |           0 |           0 | <initial>
+            |   20 |           1 |           0 |
+            |   40 |           3 |           0 |
+            |   60 |           3 |           1 | <final>
+
+            Therefore at time=50, home=3 and away=0.
+
+            TODO: move the testing data out of remote fixtures.
+        */
+        vm.time = 50;
+        assert.deepEqual(vm.currentScore, {
+            home: 3,
+            away: 0
+        }, 'Scores should reflect the sum for point stats');
+
+        done();
+    });
+});
+
 
 QUnit.test('A stat can only be deleted by an admin', function () {
 
