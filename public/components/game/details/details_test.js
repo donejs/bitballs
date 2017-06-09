@@ -97,7 +97,7 @@ QUnit.test("correctly sums the current score", function (assert) {
         assert.deepEqual(vm.currentScore, {
             home: 3,
             away: 0
-        }, 'Scores should reflect the sum for point stats')
+        }, 'Scores should reflect the sum for point stats');
 
         done();
     });
