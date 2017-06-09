@@ -108,11 +108,13 @@ export const ViewModel = DefineMap.extend({
     let statsByTournament = {};
     this.stats.forEach((stat) => {
       let tournamentId = mapGamesToTournaments[stat.gameId];
-      if (!statsByTournament[tournamentId]) {
-        statsByTournament[tournamentId] = new Stat.List();
-      }
+      if(tournamentId){
+        if (!statsByTournament[tournamentId]) {
+          statsByTournament[tournamentId] = new Stat.List();
+        }
 
-      statsByTournament[tournamentId].push(stat);
+        statsByTournament[tournamentId].push(stat);
+      }
     });
 
     return statsByTournament;
