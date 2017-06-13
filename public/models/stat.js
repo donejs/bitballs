@@ -29,7 +29,8 @@ import DefineMap from 'can-define/map/map';
 import DefineList from 'can-define/list/list';
 import Player from "bitballs/models/player";
 
-require("can-define-backup");
+import "can-define-backup";
+
 var Stat = DefineMap.extend('Stat',
 {
 	/**
