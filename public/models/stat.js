@@ -217,4 +217,4 @@ Stat.connection = superMap({
 
 tag("stat-model", Stat.connection);
 
-module.exports = Stat;
+export default Stat;

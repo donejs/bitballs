@@ -114,14 +114,18 @@ var adminOnly = require( "./adminOnly" );
 var separateQuery = require("./separate-query");
 
 app.get('/services/games', function(req, res){
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+    query = q.query,
+    fetch = q.fetch;
 	Game.collection().query(query).fetch(fetch).then(function(games){
 		res.send({data: games.toJSON()});
 	});
 });
 
 app.get('/services/games/:id', function(req, res){
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+    query = q.query,
+    fetch = q.fetch;
 	new Game({id: req.params.id}).query(query).fetch(fetch).then(function(game){
 		if(game){
 			res.send(game.toJSON());

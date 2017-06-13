@@ -30,7 +30,7 @@
  * @demo public/components/tournament/details/details.html
  *
  */
-import Component from "can-component";
+import CanComponent from "can-component";
 import Team from "bitballs/models/team";
 import Game from "bitballs/models/game";
 import Player from "bitballs/models/player";
@@ -44,7 +44,7 @@ import "bootstrap/dist/css/bootstrap.css!";
 import "can-stache/helpers/route";
 import tournamentDetailsView from "./details.stache!";
 
-exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
+export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 {
 	/**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
@@ -513,10 +513,10 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	}
 });
 
-defineStreamKefir(exports.ViewModel);
+defineStreamKefir(ViewModel);
 
-exports.Component = Component.extend({
+export const Component = CanComponent.extend({
 	tag: "tournament-details",
 	view: tournamentDetailsView,
-	ViewModel: exports.ViewModel
+	ViewModel: ViewModel
 });
