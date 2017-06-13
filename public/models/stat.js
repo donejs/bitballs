@@ -110,7 +110,87 @@ var Stat = DefineMap.extend('Stat',
  *
  * Methods on a List of stats.
  */
-Stat.List = DefineList.extend('StatsList', {"#": Stat});
+Stat.List = DefineList.extend('StatsList', {
+	"#": Stat,
+	get byPlayer() {
+		let players = {};
+
+		this.forEach((stat) => {
+			if (!players[stat.playerId]) {
+				players[stat.playerId] = new Stat.List();
+			}
+
+			players[stat.playerId].push(stat);
+		});
+
+		return players;
+	},
+	get players() {
+		return Object.keys(this.byPlayer).map((id) => ({ id }));
+	},
+	get byGame() {
+		let games = {};
+
+		this.forEach((stat) => {
+			if (!games[stat.gameId]) {
+				games[stat.gameId] = new Stat.List();
+			}
+
+			games[stat.gameId].push(stat);
+		});
+
+		return games;
+	},
+	get games() {
+		return Object.keys(this.byGame).map((id) => ({ id }));
+	},
+	get aggregated() {
+		let aggregated = {};
+
+		this.forEach(({ type }) => {
+			if (!aggregated[type]) {
+				aggregated[type] = 0;
+			}
+
+			aggregated[type]++;
+		});
+
+		return [
+			...Stat.statTypes.map(({ name }) => ({
+				name,
+				value: (aggregated[name] || 0).toFixed(0),
+			})),
+			{
+				name: 'TP',
+				value: (function() {
+					let onePointers = aggregated['1P'] || 0;
+					let twoPointers = aggregated['2P'] || 0;
+
+					return (onePointers + twoPointers * 2).toFixed(0);
+				})()
+			},
+			{
+				name: 'FG%',
+				value: (function() {
+					let onePointers = aggregated['1P'] || 0;
+					let twoPointers = aggregated['2P'] || 0;
+					let onePointAttempts = aggregated['1PA'] || 0;
+					let twoPointAttempts = aggregated['2PA'] || 0;
+
+					let successes = onePointers + twoPointers;
+					let attempts = onePointAttempts + twoPointAttempts;
+					let rate = successes / ( successes + attempts );
+
+					if (isNaN(rate)) {
+						return '-';
+					}
+
+					return (rate * 100).toFixed(0) + '%';
+				})()
+			},
+		];
+	},
+});
 
 /**
  * @property {set.Algebra} bitballs/models/stat.static.algebra algebra
@@ -128,9 +208,7 @@ Stat.connection = superMap({
 	Map: Stat,
 	List: Stat.List,
 	url: {
-		getData: "/services/stats",
-		createData: "/services/stats",
-		destroyData: "/services/stats/{id}",
+		resource: "/services/stats",
 		contentType: "application/x-www-form-urlencoded"
 	},
 	name: "stat",

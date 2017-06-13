@@ -3,6 +3,7 @@
 @group bitballs.clientModels Client Models
 @group bitballs.services Services
 @group bitballs.serviceModels Service Models
+@hide contents
 
 [![Build Status](https://travis-ci.org/donejs/bitballs.svg?branch=master)](https://travis-ci.org/donejs/bitballs)
 

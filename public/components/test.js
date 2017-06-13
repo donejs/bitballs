@@ -5,3 +5,4 @@ import './player/list/list_test';
 import './tournament/details/details_test';
 import './tournament/list/list_test';
 import './user/test';
+import './player/details/details-test';

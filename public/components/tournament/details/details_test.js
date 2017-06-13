@@ -1,10 +1,14 @@
 import QUnit from 'steal-qunit';
+import details from './details';
 import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import clone from 'steal-clone';
 import DefineMap from 'can-define/map/map';
+import Game from 'bitballs/models/game';
+import fixture from "can-fixture";
 
+var ViewModel = details.ViewModel;
 var vm;
 
 QUnit.module('components/tournament/details/', {
@@ -14,7 +18,7 @@ QUnit.module('components/tournament/details/', {
         defineTournamentFixtures();
         defineGameFixtures();
 
-        
+
         clone({
            'bitballs/models/tournament': {
              'default':  {
@@ -33,7 +37,7 @@ QUnit.module('components/tournament/details/', {
                 tournamentId: 2
             });
             done();
-        });   
+        });
     }
 });
 
@@ -45,49 +49,49 @@ QUnit.test('should load a tournament', (assert) => {
     });
 });
 
-// QUnit.test('The selected round defaults to the first available round', function () {
-//     var vm = new ViewModel();
-    
-//     var gamesResponse = { data: [] };
+QUnit.test('The selected round defaults to the first available round', function () {
+    var vm = new ViewModel();
 
-//     Game.courtNames.forEach(function (courtName) {
-//         gamesResponse.data.push({
-//             round: Game.roundNames[0],
-//             court: courtName
-//         });
-//     });
+    var gamesResponse = { data: [] };
 
-//     fixture('/services/games', function() {
-//         return gamesResponse;
-//     });
+    Game.courtNames.forEach(function (courtName) {
+        gamesResponse.data.push({
+            round: Game.roundNames[0],
+            court: courtName
+        });
+    });
 
-//     vm.on("selectedRound", function(){});
-//     QUnit.stop();
-//     vm.gamesPromise.then(function (games) {
-//         QUnit.start();
-//         QUnit.equal(vm.selectedRound, Game.roundNames[1],
-//             'The second round is selected');
-//     });
-// });
+    fixture('/services/games', function() {
+        return gamesResponse;
+    });
 
-// QUnit.test('The selected court defaults to the first available court', function () {
-//     var vm = new ViewModel();
-    
-//     var gamesResponse = { data: [{
-//         round: Game.roundNames[0],
-//         court: Game.courtNames[0]
-//     }] };
+    vm.on("selectedRound", function(){});
+    QUnit.stop();
+    vm.gamesPromise.then(function (games) {
+        QUnit.start();
+        QUnit.equal(vm.selectedRound, Game.roundNames[1],
+            'The second round is selected');
+    });
+});
 
-//     fixture('/services/games', function() {
-//         return gamesResponse;
-//     });
+QUnit.test('The selected court defaults to the first available court', function () {
+    var vm = new ViewModel();
 
-//     QUnit.stop();
-//     vm.on("selectedCourt", function(){});
-//     vm.gamesPromise.then(function (games) {
-//         QUnit.start();
-//         vm.on('selectedCourt', function(){});
-//         QUnit.equal(vm.selectedCourt, Game.courtNames[1],
-//             'The second court is selected');
-//     });
-// });
+    var gamesResponse = { data: [{
+        round: Game.roundNames[0],
+        court: Game.courtNames[0]
+    }] };
+
+    fixture('/services/games', function() {
+        return gamesResponse;
+    });
+
+    QUnit.stop();
+    vm.on("selectedCourt", function(){});
+    vm.gamesPromise.then(function (games) {
+        QUnit.start();
+        vm.on('selectedCourt', function(){});
+        QUnit.equal(vm.selectedCourt, Game.courtNames[0],
+            'The second court is selected');
+    });
+});

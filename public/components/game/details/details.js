@@ -57,6 +57,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	duration: 'any',
 	/**
+	 * @property {Number} time into the video playing in seconds
+	 */
+	time: 'number',
+	/**
 	* @property {bitballs/models/session} bitballs/components/game/details.session session
 	* @parent bitballs/components/game/details.properties
 	*
@@ -160,11 +164,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * which is totalled based on the game stats up to that point.
 	 */
 	get currentScore() {
-		var game = game;
+		var game = this.game;
 		if(game && game.stats) {
 			var playerMap = this.playerIdToHomeOrAwayMap;
 			var scores = {home: 0, away: 0};
-
 			var time = this.time;
 
 			game.stats.each(function(stat){
@@ -221,7 +224,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-		
+
 		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
@@ -234,7 +237,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			playerId: player.id,
 			gameId: this.game.id,
 			player: player
-		});		
+		});
 	},
 	/**
 	 * @function
@@ -384,7 +387,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			return "0";
 		}
 	},
-	
+
 	/**
 	 * @function
 	 * @description Gets a list of stats for a player
@@ -433,16 +436,20 @@ exports.Component = Component.extend({
 
 				return self.viewModel.gamePromise;
 			}).then(function () {
-				var player = new self.YT.Player('youtube-player', {
-					height: '390',
-					width: '640',
-					videoId: self.viewModel.game.videoUrl,
-					events: {
-					  'onReady': self.onPlayerReady.bind(self),
-					  'onStateChange': self.onPlayerStateChange.bind(self)
-					}
-				});
-				self.viewModel.youtubePlayer = player;
+				// this component might have been torn down, so check if there's
+				// actually a game
+				if(self.viewModel.game) {
+					var player = new self.YT.Player('youtube-player', {
+						height: '390',
+						width: '640',
+						videoId: self.viewModel.game.videoUrl,
+						events: {
+						  'onReady': self.onPlayerReady.bind(self),
+						  'onStateChange': self.onPlayerStateChange.bind(self)
+						}
+					});
+					self.viewModel.youtubePlayer = player;
+				}
 			})["catch"](function(e){
 				if ( platform.isNode ) {
 					return;
@@ -563,7 +570,7 @@ exports.Component = Component.extend({
 		"{viewModel} stat": function(vm, ev, newVal){
 			setTimeout(function(){
 				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
-			},1);
+			},0);
 		}
 	}
 });

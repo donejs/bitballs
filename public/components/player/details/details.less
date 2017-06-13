@@ -1,0 +1,53 @@
+@border: 1px solid #ddd;
+
+player-details {
+	display: block;
+	h1 {
+		margin-bottom: 20px;
+	}
+	h1, h2 {
+		font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+	}
+	.player-stats {
+		li {
+			border-left: @border;
+			width: 140px;
+			padding: 0 20px;
+			text-align: center;
+			&:last-child {
+				border-right: @border;
+			}
+		}
+	}
+
+	.tournament-stats {
+		border-bottom: @border;
+		padding-bottom: 10px;
+		li {
+			padding: 0 35px 10px 0;
+			p {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.player-stats, .tournament-stats {
+		display: flex;
+		flex-direction: row;
+		padding-left: 0;
+		list-style: none;
+		margin-bottom: 30px;
+		li {
+			p {
+				font-size: 16px;
+				font-weight: 400;
+				color: #c46d3d;
+			}
+			div {
+				font-size: 30px;
+				font-weight: 500;
+			}
+		}
+	}
+}
+

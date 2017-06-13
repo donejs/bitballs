@@ -1,6 +1,5 @@
 var bookshelf = require("./bookshelf");
-var Player = require("./player");
-var checkit = require('checkit');
+var checkit = require("checkit");
 
 /**
  * @module {bookshelf.Model} models/team Team
@@ -29,7 +28,7 @@ var Team = bookshelf.Model.extend(
 	},
 	/**
 	 * @function
-	 * 
+	 *
 	 * Validates fields and produces informative error messages
 	 * if the team can not be saved.
 	 */
@@ -44,10 +43,33 @@ var Team = bookshelf.Model.extend(
 	/**
 	 * @function
 	 *
+	 * Informs Bookshelf.js that the `homeGames` property will be a list of
+	 * [models/game] models with a `homeTeamId` that
+	 * matches the `id` specified in the query.
+	 **/
+	homeGames: function(){
+		var Game = require("./game");
+		return this.hasMany(Game,"homeTeamId");
+	},
+	/**
+	 * @function
+	 *
+	 * Informs Bookshelf.js that the `awayGames` property will be a list of
+	 * [models/game] models with a `awayTeamId` that
+	 * matches the `id` specified in the query.
+	 **/
+	awayGames: function(){
+		var Game = require("./game");
+		return this.hasMany(Game,"awayTeamId");
+	},
+	/**
+	 * @function
+	 *
 	 * Informs Bookshelf.js that the `player1` property will be a [models/player]
 	 * model with an `id` that matches the `player1Id` specified in the query.
 	 **/
 	player1: function(){
+		var Player = require("./player");
 		return this.belongsTo(Player,"player1Id");
 	},
 	/**
@@ -57,6 +79,7 @@ var Team = bookshelf.Model.extend(
 	 * model with an `id` that matches the `player2Id` specified in the query.
 	 **/
 	player2: function(){
+		var Player = require("./player");
 		return this.belongsTo(Player,"player2Id");
 	},
 	/**
@@ -66,6 +89,7 @@ var Team = bookshelf.Model.extend(
 	 * model with an `id` that matches the `player3Id` specified in the query.
 	 **/
 	player3: function(){
+		var Player = require("./player");
 		return this.belongsTo(Player,"player3Id");
 	},
 	/**
@@ -75,6 +99,7 @@ var Team = bookshelf.Model.extend(
 	 * model with an `id` that matches the `player4Id` specified in the query.
 	 **/
 	player4: function(){
+		var Player = require("./player");
 		return this.belongsTo(Player,"player4Id");
 	}
 });

@@ -1,4 +1,3 @@
-
 module.exports = function ( respObj, status ) {
   if ( typeof respObj === "string" ) {
     respObj = {

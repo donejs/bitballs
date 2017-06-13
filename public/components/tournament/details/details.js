@@ -35,10 +35,11 @@ var Team = require("bitballs/models/team");
 var Game = require("bitballs/models/game");
 var Player = require("bitballs/models/player");
 var Tournament = require("bitballs/models/tournament");
+var Stat = require("bitballs/models/stat");
 var Session = require("bitballs/models/session");
 var DefineMap = require("can-define/map/map");
 
-require("can-define-stream");
+var defineStreamKefir = require("can-define-stream-kefir");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-stache/helpers/route");
 
@@ -162,7 +163,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	/**
 	* @property {Array} bitballs/components/tournament/details.courtNames courtNames
 	* @parent bitballs/components/tournament/details.properties
-	* 
+	*
 	* A list of courtNames from the [bitballs/models/game.static.courtNames courtNames]
 	* list that are available.
 	**/
@@ -217,6 +218,42 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		}
 	},
 	/**
+	* @property {Promise<bitballs/models/stat.static.List>} bitballs/components/player/details.statPromise statsPromise
+	* @parent bitballs/components/player/details.properties
+	*
+	* A promise that fetches a [bitballs/models/stat.static.List stat List] based on
+	* [bitballs/components/player/details.ViewModel.prototype.playerId playerId].
+	**/
+	get statsPromise() {
+	  return Stat.getList({
+		// where: {tournamentId: this.tournamentId},
+	  });
+	},
+	/**
+	* @property {bitballs/models/stat.static.List} bitballs/components/player/details.stat stat
+	* @parent bitballs/components/player/details.properties
+	*
+	* A [bitballs/models/stat.static.List stat List] instance.
+	**/
+	stats: {
+	  get: function(lastSet, setVal){
+		if (!this.games) {
+			return;
+		}
+
+		let games = [];
+		this.games.forEach(({ id }) => games.push(id));
+
+		this.statsPromise.then((stats) => {
+			stats = stats.filter(({ gameId }) =>
+				games.includes(gameId)
+			);
+
+			setVal(stats);
+		});
+	  }
+	},
+	/**
 	* @property {String|null} bitballs/components/tournament/details.userSelectedRound userSelectedRound
 	* @parent bitballs/components/tournament/details.properties
 	*
@@ -264,18 +301,30 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		type: 'string',
 		stream: function(setStream) {
 			var vm = this;
-			var selectedRoundStream = this.stream(".selectedRound");
+			// if selectedRound changes, we should translate to an
+			// available selected court
 
-			return setStream.merge(selectedRoundStream).map(function(val) {
-				if(vm.games) {
-					var selectedCourt = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
-					if(selectedCourt[val]) {
-						return selectedCourt[val];
-					}
-					return selectedCourt[0]; //Reset it to the first court available.
-				}
-				return val;
+			var selectedRoundEvent = this.stream("selectedRound");
+			var setSelectedCourtEvent = setStream.map(function(selectedCourt){
+				return {type: "selectedCourt", value: selectedCourt};
 			});
+
+			return setSelectedCourtEvent.merge(selectedRoundEvent).scan(function(selectedCourt, event){
+				if(event.type === "selectedCourt") {
+					return event.value;
+				}
+				if(event.type === "selectedRound") {
+					var availableCourts = vm.games && vm.games.getAvailableCourts(vm.selectedRound);
+					if(availableCourts) {
+						// make sure it's ok
+						if(availableCourts[selectedCourt-1]) {
+							return selectedCourt;
+						}
+						return availableCourts[0];
+					}
+
+				}
+			},"1");
 		}
 	},
 	/**
@@ -317,7 +366,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		if(!round) {
 			return teams;
 		}
-		
+
 		var remainingTeams = teams.slice(0);
 
 		games.forEach(function(game){
@@ -417,7 +466,7 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 			court: this.selectedCourt,
 			tournamentId: this.tournamentId
 		});
-		
+
 		game.save(function(){
 			self.game = new Game();
 		});
@@ -462,6 +511,8 @@ exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		team.destroy();
 	}
 });
+
+defineStreamKefir(exports.ViewModel);
 
 exports.Component = Component.extend({
 	tag: "tournament-details",

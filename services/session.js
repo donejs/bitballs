@@ -1,9 +1,3 @@
-var app = require("./app");
-var passport = require('passport');
-var User = require("../models/user");
-var _ = require("lodash");
-var bCrypt = require("bcrypt-nodejs");
-
 /**
  * @module {function} services/session /services/session
  * @parent bitballs.services
@@ -24,7 +18,7 @@ var bCrypt = require("bcrypt-nodejs");
  *         "verified": Boolean  // Whether user has verified an email address
  *       }
  *     }
- * 		
+ *
  * @signature `POST /services/session`
  *   If a user object is provided with a valid password/email combination, logs in the current user and creates a session.
  *
@@ -37,7 +31,7 @@ var bCrypt = require("bcrypt-nodejs");
  *           }
  *         }
  *       }
- * 		    
+ *
  *  @return {JSON} An object containing the logged in user object with sensitive properties omitted.
  *
  *      {
@@ -59,6 +53,13 @@ var bCrypt = require("bcrypt-nodejs");
  *
  *      {}
  */
+
+var app = require("./app");
+var User = require("../models/user");
+var separateQuery = require("./separate-query");
+var _ = require("lodash");
+var passport = require('passport');
+var bCrypt = require("bcrypt-nodejs");
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
@@ -109,9 +110,11 @@ app.post('/services/session', function(req, res, next) {
 	var email = req.body.user.email,
 		password = req.body.user.password;
 
+	var { query, fetch } = separateQuery(req.query);
+
 	new User({
 		'email': email
-	}).fetch().then(function(user) {
+	}).query(query).fetch(fetch).then(function(user) {
 		if(user && isValidPassword(user, password)) {
 			req.logIn(user, function(err) {
 				if (err) {

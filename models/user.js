@@ -1,5 +1,5 @@
 var bookshelf = require("./bookshelf");
-var checkit = require('checkit');
+var checkit = require("checkit");
 
 /**
  * @module {bookshelf.Model} models/user User
