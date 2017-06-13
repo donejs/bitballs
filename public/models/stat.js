@@ -22,15 +22,14 @@
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-var superMap = require('can-connect/can/super-map/'),
-	tag = require('can-connect/can/tag/'),
-	set = require("can-set");
-var DefineMap = require('can-define/map/map');
-var DefineList = require('can-define/list/list');
-var Player = require("bitballs/models/player");
+import superMap from 'can-connect/can/super-map/';
+import tag from 'can-connect/can/tag/';
+import set from "can-set";
+import DefineMap from 'can-define/map/map';
+import DefineList from 'can-define/list/list';
+import Player from "bitballs/models/player";
 
 require("can-define-backup");
-
 var Stat = DefineMap.extend('Stat',
 {
 	/**

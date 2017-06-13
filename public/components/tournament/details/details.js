@@ -30,18 +30,19 @@
  * @demo public/components/tournament/details/details.html
  *
  */
-var Component = require("can-component");
-var Team = require("bitballs/models/team");
-var Game = require("bitballs/models/game");
-var Player = require("bitballs/models/player");
-var Tournament = require("bitballs/models/tournament");
-var Stat = require("bitballs/models/stat");
-var Session = require("bitballs/models/session");
-var DefineMap = require("can-define/map/map");
+import Component from "can-component";
+import Team from "bitballs/models/team";
+import Game from "bitballs/models/game";
+import Player from "bitballs/models/player";
+import Tournament from "bitballs/models/tournament";
+import Stat from "bitballs/models/stat";
+import Session from "bitballs/models/session";
+import DefineMap from "can-define/map/map";
 
-var defineStreamKefir = require("can-define-stream-kefir");
-require("bootstrap/dist/css/bootstrap.css!");
-require("can-stache/helpers/route");
+import defineStreamKefir from "can-define-stream-kefir";
+import "bootstrap/dist/css/bootstrap.css!";
+import "can-stache/helpers/route";
+import tournamentDetailsView from "./details.stache!";
 
 exports.ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 {
@@ -516,6 +517,6 @@ defineStreamKefir(exports.ViewModel);
 
 exports.Component = Component.extend({
 	tag: "tournament-details",
-	view: require("./details.stache!"),
+	view: tournamentDetailsView,
 	ViewModel: exports.ViewModel
 });
