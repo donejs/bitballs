@@ -7,7 +7,7 @@ module.exports = function(input) {
 	};
 
 	for (var key in input) {
-		if (fetchKeys.includes(key)) {
+		if (fetchKeys.indexOf(key) >= 0) {
 			output.fetch[key] = input[key];
 		}
 		else {

@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "firebase": "bitballs-e69ca",
+    "public": "./public/dist",
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
+    ]
+  }
+}
