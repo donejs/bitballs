@@ -10,7 +10,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - psql -c 'create database bitballs;' -U postgres
 before_deploy:
-  - git config --global user.email "jan@bitovi.com"
+  - git config --global user.email "justin@bitovi.com"
   - git config --global user.name "bitballs deploy bot"
   - node public/build
   - git add public/dist/ --force
