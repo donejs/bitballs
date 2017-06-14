@@ -110,7 +110,9 @@ app.post('/services/session', function(req, res, next) {
 	var email = req.body.user.email,
 		password = req.body.user.password;
 
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+		query = q.query,
+		fetch = q.fetch;
 
 	new User({
 		'email': email

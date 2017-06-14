@@ -86,6 +86,7 @@
       "bitballs/components/user/list/",
       "bitballs/components/game/details/",
       "bitballs/components/player/list/",
+      "bitballs/components/player/details/",
       "bitballs/components/404.component!"
     ],
     "plugins": [

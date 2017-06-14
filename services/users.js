@@ -116,7 +116,9 @@ var disallowAdminOnlyChanges = function ( onThis, withThis ) {
 };
 
 app.get('/services/users', adminOnly(), function( req, res ) {
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+	    query = q.query,
+	    fetch = q.fetch;
 	User.collection().query(function(qb){
 		qb.orderBy('email','ASC');
 	}).query(query).fetch(fetch).then(function( users ){

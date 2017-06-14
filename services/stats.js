@@ -101,14 +101,18 @@ var adminOnly = require( "./adminOnly" );
 var separateQuery = require("./separate-query");
 
 app.get('/services/stats', function(req, res){
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+	    query = q.query,
+	    fetch = q.fetch;
 	Stat.collection().query(query).fetch(fetch).then(function(stats){
 		res.send({data: stats.toJSON()});
 	});
 });
 
 app.get('/services/stats/:id', function(req, res){
-	var { query, fetch } = separateQuery(req.query);
+	var q = separateQuery(req.query),
+	    query = q.query,
+	    fetch = q.fetch;
 	new Stat({id: req.params.id}).query(query).fetch(fetch).then(function(stat){
 		res.send(stat.toJSON());
 	});
