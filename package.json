@@ -11,7 +11,9 @@
     "document": "documentjs -d",
     "test": "npm run jshint && cd public/ && npm test",
     "jshint": "jshint ./ --config .jshintrc",
-    "install": "node install.js && npm run db-migrate"
+    "install": "node install.js && npm run db-migrate",
+    "deploy": "firebase deploy",
+    "deploy:ci": "firebase deploy --token \"$FIREBASE_TOKEN\""
   },
   "dependencies": {
     "async": "^2.4.1",
@@ -48,34 +50,9 @@
     "documentjs": "^0.4.4",
     "donejs": "^1.0.0",
     "donejs-cli": "^1.0.1",
-    "donejs-deploy": "^0.4.1",
+    "firebase-tools": "^3.9.1",
     "jshint": "^2.9.1",
     "maildev": "^0.12.2"
-  },
-  "donejs": {
-    "deploy": {
-      "root": "public/dist",
-      "services": {
-        "production": {
-          "type": "firebase",
-          "config": {
-            "firebase": "bitballs-donejs",
-            "public": "./public/dist",
-            "headers": [
-              {
-                "source": "/**",
-                "headers": [
-                  {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    }
   },
   "urls": {
     "prod": "https://bitballs.herokuapp.com/",

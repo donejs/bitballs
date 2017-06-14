@@ -51,8 +51,9 @@
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
-    "donejs-cli": "^1.0.1",
     "can-fixture": "1.0.14",
+    "donejs-cli": "^1.0.1",
+    "firebase-tools": "^3.9.1",
     "testee": "^0.6.0"
   },
   "steal": {
@@ -68,7 +69,7 @@
     ],
     "envs": {
       "server-production": {
-        "renderingBaseURL": "https://bitballs-donejs.firebaseapp.com/"
+        "renderingBaseURL": "https://bitballs.firebaseapp.com/"
       }
     },
     "meta": {
