@@ -1,7 +1,7 @@
 language: node_js
 node_js: "6"
 addons:
-  firefox: latest
+  firefox: "51.0"
   postgresql: '9.4'
 install:
   - npm install
