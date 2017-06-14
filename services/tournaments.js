@@ -79,8 +79,8 @@ var separateQuery = require("./separate-query");
 
 app.get('/services/tournaments', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	Tournament.collection().query(query).fetch(fetch).then(function(tournaments){
 		res.send({data: tournaments.toJSON()});
 	});
@@ -88,8 +88,8 @@ app.get('/services/tournaments', function(req, res){
 
 app.get('/services/tournaments/:id', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	new Tournament({id: req.params.id}).query(query).fetch(fetch).then(function(tournament){
 		if(tournament){
 			res.send(tournament.toJSON());

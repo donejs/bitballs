@@ -125,8 +125,8 @@ var separateQuery = require("./separate-query");
 
 app.get('/services/teams', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	Team.collection().query(query).fetch(fetch).then(function(teams){
 		res.send({data: teams.toJSON()});
 	});
@@ -134,8 +134,8 @@ app.get('/services/teams', function(req, res){
 
 app.get('/services/teams/:id', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	new Team({id: req.params.id}).query(query).fetch(fetch).then(function(team){
 		res.send(team.toJSON());
 	});

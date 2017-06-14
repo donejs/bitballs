@@ -108,8 +108,8 @@ var separateQuery = require("./separate-query");
 
 app.get('/services/players', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	Player.collection().query(query).fetch(fetch).then(function(players){
 		res.send({data: players.toJSON()});
 	});
@@ -117,8 +117,8 @@ app.get('/services/players', function(req, res){
 
 app.get('/services/players/:id', function(req, res){
 	var q = separateQuery(req.query),
-    query = q.query,
-    fetch = q.fetch;
+	    query = q.query,
+	    fetch = q.fetch;
 	new Player({id: req.params.id}).query(query).fetch(fetch).then(function(player){
 		res.send(player.toJSON());
 	});
