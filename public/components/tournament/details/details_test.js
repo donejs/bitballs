@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-import details from './details';
+import {ViewModel} from './details';
 import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
@@ -8,7 +8,6 @@ import DefineMap from 'can-define/map/map';
 import Game from 'bitballs/models/game';
 import fixture from "can-fixture";
 
-var ViewModel = details.ViewModel;
 var vm;
 
 QUnit.module('components/tournament/details/', {
