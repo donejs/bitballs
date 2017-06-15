@@ -124,7 +124,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	game: {
 		get: function(last, set) {
-			this.gamePromise.then(set);
+			this.gamePromise.then(set, function(err){
+				console.log("GAME LOAD ERROR");
+				console.error(err);
+			});
 		}
 	},
 	/**
