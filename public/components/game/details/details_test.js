@@ -57,8 +57,8 @@ QUnit.test("correctly sums score", function() {
     });
 });
 
-QUnit.test("correctly sums the current score", function (assert) {
-    var done = assert.async();
+QUnit.test("correctly sums the current score", function () {
+    QUnit.stop();
     var vm = this.vm;
     console.log("ON GAME");
     vm.on('game', function whenGameIsLoaded () {
@@ -69,7 +69,7 @@ QUnit.test("correctly sums the current score", function (assert) {
         */
         vm.time = 0;
         console.log("TIME IS 0");
-        assert.deepEqual(vm.currentScore, {
+        QUnit.deepEqual(vm.currentScore, {
             home: 0,
             away: 0
         }, 'Scores should zero at the beginning');
@@ -77,7 +77,7 @@ QUnit.test("correctly sums the current score", function (assert) {
 
         vm.time = Infinity;
         console.log("TIME IS INFINITY");
-        assert.deepEqual(
+        QUnit.deepEqual(
             vm.currentScore,
             vm.finalScore,
             'At the end of the game, the current score is the final score'
@@ -101,12 +101,12 @@ QUnit.test("correctly sums the current score", function (assert) {
         console.log("setting time to 50");
         vm.time = 50;
         console.log("set time");
-        assert.deepEqual(vm.currentScore, {
+        QUnit.deepEqual(vm.currentScore, {
             home: 3,
             away: 0
         }, 'Scores should reflect the sum for point stats');
 
-        done();
+        QUnit.start();
     });
 });
 
