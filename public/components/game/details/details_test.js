@@ -60,19 +60,23 @@ QUnit.test("correctly sums score", function() {
 QUnit.test("correctly sums the current score", function (assert) {
     var done = assert.async();
     var vm = this.vm;
-
+    console.log("ON GAME");
     vm.on('game', function whenGameIsLoaded () {
+        console.log("GAME ON");
         /*
             We assume each game starts with zero scores.
             So, no pickup games.
         */
         vm.time = 0;
+        console.log("TIME IS 0");
         assert.deepEqual(vm.currentScore, {
             home: 0,
             away: 0
         }, 'Scores should zero at the beginning');
 
+
         vm.time = Infinity;
+        console.log("TIME IS INFINITY");
         assert.deepEqual(
             vm.currentScore,
             vm.finalScore,
