@@ -69,7 +69,7 @@
     ],
     "envs": {
       "server-production": {
-        "renderingBaseURL": "https://bitballs.firebaseapp.com/"
+        "renderingBaseURL": "https://bitballs-e69ca.firebaseapp.com/"
       }
     },
     "meta": {
