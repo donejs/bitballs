@@ -2,6 +2,7 @@ import QUnit from "steal-qunit";
 import Session from "models/session";
 import details from "./details";
 import { games } from "models/fixtures/games";
+import createGamesFixtures from "models/fixtures/games";
 import F from 'funcunit';
 import stache from 'can-stache';
 import fixture from 'can-fixture';
@@ -21,7 +22,7 @@ QUnit.module("bitballs/game/details/", {
     setup: function() {
         localStorage.clear();
         fixture.delay = 1;
-
+        createGamesFixtures();
         this.vm = new DetailsViewModel({
             gameId: 1,
             session: new Session()
@@ -93,7 +94,9 @@ QUnit.test("correctly sums the current score", function (assert) {
 
             TODO: move the testing data out of remote fixtures.
         */
+        console.log("setting time to 50");
         vm.time = 50;
+        console.log("set time");
         assert.deepEqual(vm.currentScore, {
             home: 3,
             away: 0
