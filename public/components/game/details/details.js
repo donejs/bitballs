@@ -124,7 +124,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	game: {
 		get: function(last, set) {
-			this.gamePromise.then(set);
+			this.gamePromise.then(set, function(err){
+				console.log("GAME LOAD ERROR");
+				console.error(err);
+			});
 		}
 	},
 	/**
@@ -466,12 +469,18 @@ exports.Component = Component.extend({
 		"removed": function(){
 			// timeUpdate could be running
 			clearTimeout(this.timeUpdate);
+			// hack to prevent youtube stuff from running if this element
+			// was removed from the page
+			this.removedFromDOM = true;
 		},
 		/**
 		 * @function
 		 * @description The onPlayerReady handler for the YouTube Player.
 		 */
 		onPlayerReady: function(){
+			if(this.removedFromDOM) {
+				return true;
+			}
 			var youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
