@@ -156,6 +156,7 @@ donejs start
 Navigate to [http://localhost:5000/register](http://localhost:5000/register)
 in your browser and follow the instructions.
 
+
 ### Enjoy
 
 You're finished! Explore some of the app's features:
