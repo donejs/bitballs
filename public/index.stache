@@ -14,7 +14,8 @@
 		</div>
 		{{#isProduction}}
 			<script
-				src="{{joinBase 'node_modules/steal/steal.production.js'}}"
+				src="{{joinBase 'node_modules/steal/steal.js'}}"
+				env="production"
 				main="bitballs/index.stache!done-autorender">
 			</script>
 		{{else}}
