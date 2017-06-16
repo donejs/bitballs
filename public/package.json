@@ -5,7 +5,6 @@
   "homepage": "",
   "author": "Bitovi",
   "scripts": {
-    "install": "node build.js",
     "test": "rm -rf ~/.mozilla && DEBUG=testee:* testee test.html --browsers firefox --reporter Spec"
   },
   "main": "index.stache!done-autorender",
