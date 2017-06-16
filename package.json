@@ -1,6 +1,6 @@
 {
   "name": "bitballs",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A basketball tournament app",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "pg": "4.5.6"
   },
   "engines": {
-    "node": "0.12.2"
+    "node": "^5.10.1"
   },
   "repository": {
     "type": "git",
