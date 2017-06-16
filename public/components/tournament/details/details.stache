@@ -15,31 +15,31 @@
 </thead>
 <tbody>
 
-{{#games.getRoundsWithGames}}
-	<tr>
-		<td>{{.}}</td>
-		{{#each courtNames}}
-			<td>
-				{{#games.getGameForRoundAndCourt ../. .}}
-					<a href="{{routeUrl ( gameId=id )}}">
-						{{#../teams.getById(homeTeamId)}}{{color}}{{/./teams@getById}}
-						v
-						{{#../teams.getById(awayTeamId)}}{{color}}{{/./teams@getById}}
-					</a>
-					{{#if isAdmin}}
-						<button type="button" class="btn btn-danger btn-xs"
-							($click)="deleteGame(.)"
-							{{#isDestroying}}disabled{{/isDestroying}}>
-								<span class='glyphicon glyphicon-remove'/>
-						</button>
-					{{/if}}
-				{{/games.getGameForRoundAndCourt}}
-			</td>
-		{{/each}}
-	</tr>
-{{else}}
-	<tr><td class="text-center lead" colspan="5">No Games</td></tr>
-{{/games.getRoundsWithGames}}
+	{{#each ~games.getRoundsWithGames()}}
+		<tr>
+			<td>{{.}}</td>
+			{{#each courtNames}}
+				<td>
+					{{#games.getGameForRoundAndCourt(../.,.)}}
+						<a href="{{routeUrl ( gameId=id )}}">
+							{{#../teams.getById(homeTeamId)}}{{color}}{{/./teams@getById}}
+							v
+							{{#../teams.getById(awayTeamId)}}{{color}}{{/./teams@getById}}
+						</a>
+						{{#if isAdmin}}
+							<button type="button" class="btn btn-danger btn-xs"
+								($click)="deleteGame(.)"
+								{{#isDestroying}}disabled{{/isDestroying}}>
+									<span class='glyphicon glyphicon-remove'/>
+							</button>
+						{{/if}}
+					{{/games.getGameForRoundAndCourt}}
+				</td>
+			{{/each}}
+		</tr>
+	{{else}}
+		<tr><td class="text-center lead" colspan="5">No Games</td></tr>
+	{{/each}}
 </tbody>
 </table>
 
