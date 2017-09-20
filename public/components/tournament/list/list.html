@@ -7,7 +7,7 @@
 	import stache from "can/view/stache";
 
 	localStorage.clear();
-	var template = stache('<tournament-list {is-admin}="true"/>');
+	var template = stache('<tournament-list isAdmin:from="true"/>');
 
 	$("#main").html(template());
 </script>

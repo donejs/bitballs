@@ -5,7 +5,7 @@
 
   <session-model get="{}">
   	{{#if isResolved}}
-  	<user-list {session}="./value"></user-list>
+  	<user-list session:from="./value"></user-list>
   	{{/if}}
   </session-model>
 </script>

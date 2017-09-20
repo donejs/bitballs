@@ -5,7 +5,7 @@ import "bitballs/components/player/list/";
 import "bitballs/models/fixtures/players";
 import stache from "can-stache";
 
-var template = stache('<player-list {is-admin}="true"/>');
+var template = stache('<player-list isAdmin:from="true"/>');
 
 $("#main").html( template() );
 </script>

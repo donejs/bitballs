@@ -2,7 +2,7 @@
   <can-import from="bitballs/components/user/details/" />
   <can-import from="bitballs/models/user" />
 
-  <user-details {(session)}="session"></user-details>
+  <user-details session:bind="session"></user-details>
 
   {{#if session.user}}
   	{{#unless session.user.verified}}
@@ -10,7 +10,7 @@
 	  	<h2>User Verification</h2>
 		<button type="button"
                 class="btn btn-default"
-                ($click)="session.user.verified = true">
+                on:click="session.user.verified = true">
 			Verify User
 		</button>
 	{{/unless}}
