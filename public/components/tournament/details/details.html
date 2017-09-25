@@ -11,7 +11,7 @@
 
 
     localStorage.clear();
-    var template = stache('<tournament-details {is-admin}="true" {tournament-id}="id" />');
+    var template = stache('<tournament-details isAdmin:from="true" tournamentId:from="id" />');
 
     $("#main").html( template({ id: 2 }) );
 </script>

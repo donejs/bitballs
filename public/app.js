@@ -70,7 +70,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Game",
 				componentName: "game-details",
-				attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
+				attributes: "gameId:from='./gameId'  session:from='./session' gamePromise:to='./pagePromise'",
 				moduleName: "game/details/"
 			};
 
@@ -78,7 +78,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournament",
 				componentName: "tournament-details",
-				attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
+				attributes: "tournamentId:from='./tournamentId' isAdmin:from='./isAdmin' tournamentPromise:to='./pagePromise'",
 				moduleName: "tournament/details/"
 			};
 
@@ -86,7 +86,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Player",
 				componentName: "player-details",
-				attributes: "{player-id}='./playerId' {^player-promise}='./pagePromise'",
+				attributes: "playerId:from='./playerId' playerPromise:to='./pagePromise'",
 				moduleName: "player/details/"
 			};
 
@@ -94,7 +94,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournaments",
 				componentName: "tournament-list",
-				attributes: "{is-admin}='./isAdmin'",
+				attributes: "isAdmin:from='./isAdmin'",
 				moduleName: "tournament/list/"
 			};
 
@@ -102,7 +102,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Users List",
 				componentName: "user-list",
-				attributes: "{session}='./session'",
+				attributes: "session:from='./session'",
 				moduleName: "user/list/"
 			};
 
@@ -110,7 +110,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Account",
 				componentName: "user-details",
-				attributes: "{(session)}='./session'",
+				attributes: "session:bind='./session'",
 				moduleName: "user/details/"
 			};
 
@@ -118,7 +118,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Players",
 				componentName: "player-list",
-				attributes: "{is-admin}='./isAdmin'",
+				attributes: "isAdmin:from='./isAdmin'",
 				moduleName: "player/list/"
 			};
 

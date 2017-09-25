@@ -13,7 +13,7 @@
 		{{/default}}
 	{{/switch}}
 </h2>
-<form ($submit)="saveUser(%event)" action="">
+<form on:submit="saveUser(%event)" action="">
 	<div class="form-group">
 		<label for="user-email">
 			Email
@@ -25,14 +25,14 @@
 					class="form-control"
 					id="user-email"
 					{{^if user.isNew}}disabled{{/if}}
-					{($value)}="user.email" />
+					value:bind="user.email" />
 			</div>
 		{{else}}
 			<input
 				class="form-control"
 				id="user-email"
 				{{^if user.isNew}}disabled{{/if}}
-				{($value)}="user.email" />
+				value:bind="user.email" />
 		{{/is}}
 	</div>
 
@@ -53,7 +53,7 @@
 				class="form-control"
 				type="password"
 				id="user-password"
-				{($value)}="user.password" />
+				value:bind="user.password" />
 		</div>
 		{{#unless user.isNew}}
 			<div class="form-group">
@@ -64,7 +64,7 @@
 					class="form-control"
 					type="password"
 					id="user-new-password"
-					{($value)}="user.newPassword">
+					value:bind="user.newPassword">
 			</div>
 		{{/unless}}
 		<button type="submit" {{#if user.isSaving}}disabled{{/if}} class="btn btn-default">
@@ -75,7 +75,7 @@
 	{{#unless user.isNew}}
 		<br>
 		<br>
-		<div class="btn btn-danger" ($click)="deleteUser()">DELETE ACCOUNT</div>
+		<div class="btn btn-danger" on:click="deleteUser()">DELETE ACCOUNT</div>
 	{{/unless}}
 
 	{{#if savePromise.isRejected}}

@@ -25,9 +25,9 @@
                 {{isAdmin}}
               {{else}}
                 <input type="checkbox"
-                  ($change)="setAdmin( ., %element.checked )"
-                  {$checked}="isAdmin"
-                  {$disabled}="isSaving"
+                  on:change="setAdmin( ., %element.checked )"
+                  checked:from="isAdmin"
+                  disabled:from="isSaving"
                 >
               {{/is}}
             </td>

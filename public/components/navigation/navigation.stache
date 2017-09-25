@@ -22,7 +22,7 @@
 					<a href="{{routeUrl ( page='account' )}}">Account</a>
 				</li>
 				<li>
-					<a href="javascript://" ($click)="logout()">Logout</a>
+					<a href="javascript://" on:click="logout()">Logout</a>
 				</li>
 			{{else}}
 				<li class="dropdown">
@@ -37,13 +37,13 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<form ($submit)="createSession(%event)" action="">
+							<form on:submit="createSession(%event)" action="">
 								<div class="form-group form-group-sm">
 									<input
 										class="form-control"
 										id="user-email"
 										placeholder="email"
-										{($value)}="loginSession.user.email"
+										value:bind="loginSession.user.email"
 									>
 								</div>
 								<div class="form-group form-group-sm">
@@ -52,13 +52,13 @@
 										class="form-control"
 										type="password"
 										id="user-password"
-										{($value)}="loginSession.user.password"
+										value:bind="loginSession.user.password"
 									>
 								</div>
 								<button type="submit" class="btn btn-primary btn-sm" >Login</button>
 								<a href="{{routeUrl (page='register')}}"
 									class="register-btn btn btn-link"
-									($click)="closeDropdown( %element )"
+									on:click="closeDropdown( %element )"
 								>
 									or register
 								</a>

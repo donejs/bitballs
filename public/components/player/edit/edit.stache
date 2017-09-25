@@ -1,7 +1,7 @@
 <can-import from="can-stache-converters" />
 
 {{#if isAdmin}}
-  <form class="edit-form" ($submit)="savePlayer(%event,%element)" action="">
+  <form class="edit-form" on:submit="savePlayer(%event,%element)" action="">
     {{#if player.isNew}}
       <h3>Create Player</h3>
     {{else}}
@@ -9,7 +9,7 @@
     {{/if}}
     <div class="form-group">
       <label for="player-name">Name</label>
-      <input type="text" class="form-control" id="player-name" placeholder="fullname" {($value)}="player.name"/>
+      <input type="text" class="form-control" id="player-name" placeholder="fullname" value:bind="player.name"/>
     </div>
     <div class="form-group">
       <label for="player-weight">Weight</label>
@@ -18,7 +18,7 @@
       	class="form-control"
       	id="player-weight"
       	placeholder="weight in pounds"
-      	{($value)}="string-to-any(~player.weight)"/>
+      	value:bind="string-to-any(~player.weight)"/>
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
@@ -27,7 +27,7 @@
       	class="form-control"
       	id="player-height"
       	placeholder="height in inches (Ex: 71)"
-      	{($value)}="string-to-any(~player.height)"/>
+      	value:bind="string-to-any(~player.height)"/>
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
@@ -36,11 +36,11 @@
       	class="form-control"
       	id="player-birthday"
       	placeholder="day of birth"
-      	{($value)}="player.birthDate"/>
+      	value:bind="player.birthDate"/>
     </div>
     <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
     {{#unless player.isNew}}
-      <a class="btn btn-default" ($click)="cancel(%element)">Cancel</a>
+      <a class="btn btn-default" on:click="cancel(%element)">Cancel</a>
     {{/unless}}
     {{#if savePromise.isRejected}}
       {{#each savePromise.reason.responseJSON}}

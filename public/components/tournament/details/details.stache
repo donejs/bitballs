@@ -28,7 +28,7 @@
 					</a>
 					{{#if isAdmin}}
 						<button type="button" class="btn btn-danger btn-xs"
-							($click)="deleteGame(.)"
+							on:click="deleteGame(.)"
 							{{#isDestroying}}disabled{{/isDestroying}}>
 								<span class='glyphicon glyphicon-remove'/>
 						</button>
@@ -45,11 +45,11 @@
 
 {{#if isAdmin}}
 <h4>New Game</h4>
-<form ($submit)="createGame(%event)" action="">
+<form on:submit="createGame(%event)" action="">
 
 	<div class="form-group">
 	    <label for="game-round">Round</label>
-	    <select {($value)}="selectedRound" class="form-control" id="game-round">
+	    <select value:bind="selectedRound" class="form-control" id="game-round">
 	    	{{#games.getAvailableRounds}}
 	    		<option value="{{.}}">{{.}}</option>
 	    	{{/games.getAvailableRounds}}
@@ -58,7 +58,7 @@
 
 	<div class="form-group">
 	    <label for="game-court">Court</label>
-	    <select {($value)}="string-to-any(~selectedCourt)" class="form-control" id="game-court">
+	    <select value:bind="string-to-any(~selectedCourt)" class="form-control" id="game-court">
 		{{#games.getAvailableCourts(selectedRound)}}
 			<option value="{{.}}">{{.}}</option>
 		{{/ames@getAvailableCourts}}
@@ -67,14 +67,14 @@
 
 	<div class="form-group">
 	    <label for="game-home">Home team</label>
-	    <select {($value)}="game.homeTeamId" class="form-control" id="game-home">
+	    <select value:bind="game.homeTeamId" class="form-control" id="game-home">
 	    	<option value=''/>
 	    	{{#each ~availableTeamFor("home", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
 	    	{{/each}}
 	    </select>
 		<label for="game-away">Away team</label>
-	    <select {($value)}="game.awayTeamId" class="form-control" id="game-away">
+	    <select value:bind="game.awayTeamId" class="form-control" id="game-away">
 	    	<option value=''/>
 	    	{{#each ~availableTeamFor("away", selectedRound)}}
 	    		<option value='{{id}}'>{{color}} - {{name}}</option>
@@ -84,7 +84,7 @@
 
 	<div class="form-group">
 	    <label for="game-videoUrl">YouTube URL</label>
-	    <input type="text" class="form-control" id="game-videoUrl" placeholder="https://www.youtube.com/watch?v=y5z1Ym2uJfs" {($value)}="{game.videoUrl}"/>
+	    <input type="text" class="form-control" id="game-videoUrl" placeholder="https://www.youtube.com/watch?v=y5z1Ym2uJfs" value:bind="{game.videoUrl}"/>
 	</div>
 
 	<button type="submit" class="btn btn-default" >Create</button>
@@ -118,7 +118,7 @@
 		{{#if isAdmin}}
 			<td>
 				<button type="button" class="btn btn-danger"
-					($click)="deleteTeam(.)"
+					on:click="deleteTeam(.)"
 					{{#isDestroying}}disabled{{/isDestroying}}>
 						<span class='glyphicon glyphicon-remove'/>
 				</button>
@@ -133,16 +133,16 @@
 
 {{#if isAdmin}}
 <h4>New Team</h4>
-<form ($submit)="createTeam(%event)" action="">
+<form on:submit="createTeam(%event)" action="">
 
 	<div class="form-group">
 	    <label for="team-name">Name</label>
-	    <input type="text" class="form-control" id="team-name" placeholder="team name" {($value)}="team.name"/>
+	    <input type="text" class="form-control" id="team-name" placeholder="team name" value:bind="team.name"/>
 	</div>
 
 	<div class="form-group">
 	    <label for="team-color">Color</label>
-	    <select {($value)}="team.color" class="form-control" id="team-color">
+	    <select value:bind="team.color" class="form-control" id="team-color">
 	    	{{#each availableColors}}
 	    		<option value="{{.}}">{{.}}</option>
 	    	{{/each}}
@@ -151,7 +151,7 @@
 
 	<div class="form-group">
 	    <label for="team-player1">Player 1</label>
-	    <select {($value)}="team.player1Id" class="form-control" id="team-player1">
+	    <select value:bind="team.player1Id" class="form-control" id="team-player1">
 	    	<option value=''/>
 	    	{{#eachOf ~availablePlayersFor(team,1)}}
 	    		<option value='{{id}}'>{{name}}</option>
@@ -161,7 +161,7 @@
 
 	<div class="form-group">
 	    <label for="team-player2">Player 2</label>
-	    <select {($value)}="team.player2Id" class="form-control" id="team-player2">
+	    <select value:bind="team.player2Id" class="form-control" id="team-player2">
 	    	<option value=''/>
 	    	{{#eachOf ~availablePlayersFor(team,2)}}
 	    		<option value='{{id}}'>{{name}}</option>
@@ -171,7 +171,7 @@
 
 	<div class="form-group">
 	    <label for="team-player3">Player 3</label>
-	    <select {($value)}="team.player3Id" class="form-control" id="team-player3">
+	    <select value:bind="team.player3Id" class="form-control" id="team-player3">
 	    	<option value=''/>
 	    	{{#eachOf ~availablePlayersFor(team,3)}}
 	    		<option value='{{id}}'>{{name}}</option>
@@ -181,7 +181,7 @@
 
 	<div class="form-group">
 	    <label for="team-player4">Player 4</label>
-	    <select {($value)}="team.player4Id" class="form-control" id="team-player4">
+	    <select value:bind="team.player4Id" class="form-control" id="team-player4">
 	    	<option value=''/>
 	    	{{#eachOf ~availablePlayersFor(team,4)}}
 	    		<option value='{{id}}'>{{name}}</option>
