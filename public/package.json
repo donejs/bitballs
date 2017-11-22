@@ -8,7 +8,7 @@
     "install": "node build.js",
     "test": "rm -rf ~/.mozilla && DEBUG=testee:* testee test.html --browsers firefox --reporter Spec"
   },
-  "main": "index.stache!done-autorender",
+  "main": "bitballs/index.stache!done-autorender",
   "files": [
     "."
   ],

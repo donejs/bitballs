@@ -5,6 +5,7 @@ export const games = {
     videoUrl: "AEUULIs_UWE",
     homeTeamId: 1,
     round: "Round 1",
+    court: "1",
     tournament: {
         id: 1,
         date: "2012-01-01"
