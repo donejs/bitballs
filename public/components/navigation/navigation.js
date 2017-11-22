@@ -33,6 +33,7 @@ var Component = require("can-component");
 var Session = require("bitballs/models/session");
 var User = require("bitballs/models/user");
 var $ = require("jquery");
+global.jQuery = window.jQuery = $;
 var DefineMap = require("can-define/map/map");
 
 require("bootstrap/dist/css/bootstrap.css!");
