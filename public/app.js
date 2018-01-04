@@ -195,7 +195,6 @@ const AppViewModel = DefineMap.extend('App',
 });
 
 stache.registerHelper("pageComponent", function(scope, options){
-	window.OPTIONS = options;
 	var pageComponent = options.context.pageComponentConfig,
 		helpers = scope.templateContext.helpers,
 		template =
