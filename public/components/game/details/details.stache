@@ -25,16 +25,16 @@
 			<th colspan="2">{{color}} - {{name}}</th>
 		</tr>
 		{{#each(players)}}
-			<tr on:click="showStatMenuFor(.,scope.element, scope.event)">
+			<tr on:click="scope.root.showStatMenuFor(this,scope.element, scope.event)">
 				<td>{{name}}</td>
 				<td class="stats-container">
-					{{#each(statsForPlayerId(id))}}
-						<span on:click="gotoTimeMinus5(time, scope.event)"
-							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
+					{{#each(scope.root.statsForPlayerId(id))}}
+						<span on:click="scope.root.gotoTimeMinus5(time, scope.event)"
+							class="stat-point stat-{{type}}" style="left: {{scope.root.statPercent(time)}}%">
 							{{type}}
-							{{#if session.isAdmin }}
+							{{#if(scope.root.session.isAdmin())}}
 								<span class="destroy-btn glyphicon glyphicon-trash"
-									on:click="deleteStat(., scope.event)"></span>
+									on:click="scope.root.deleteStat(this, scope.event)"></span>
 							{{/if}}
 						</span>
 					{{/each}}
@@ -47,13 +47,14 @@
 	<div id="player-pos"/>
 
 
-	{{#if stat}}
+	{{#if(stat)}}
+	<h1>THERE ARE STATs</h1>
 
 	<div class="popover fade right in" role="tooltip" style="display: block;" id="add-stat">
 		<div class="arrow" style="top: 50%;"></div>
 		<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
 		<div class="popover-content">
-			<form on:submit="createStat(scope.event)" action="">
+			<form on:submit="scope.root.createStat(scope.event)" action="">
 				<label for="stat-type">Type</label>
 			    <select value:bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>

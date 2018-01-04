@@ -36,6 +36,7 @@ var $ = require("jquery");
 require("./details.less!");
 require("bootstrap/dist/css/bootstrap.css!");
 require("can-route");
+require("../../../inserted-removed");
 
 /**
  * @constructor bitballs/components/game/details.ViewModel ViewModel
@@ -60,6 +61,13 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * @property {Number} time into the video playing in seconds
 	 */
 	time: 'number',
+	/**
+	 * @property {Boolean} [autoplay=true] the video when the element is inserted.
+	 */
+	autoplay: {
+		type: 'booolean',
+		value: true
+	},
 	/**
 	* @property {bitballs/models/session} bitballs/components/game/details.session session
 	* @parent bitballs/components/game/details.properties
@@ -227,7 +235,6 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-
 		if(!this.session || !this.session.isAdmin()) {
 			return;
 		}
@@ -385,7 +392,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	statPercent: function(time){
 		var duration = this.duration;
 		if(duration) {
-			return time() / duration * 100;
+			return time / duration * 100;
 		} else {
 			return "0";
 		}
@@ -418,7 +425,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 
 exports.Component = Component.extend({
 	tag: "game-details",
-	view: require("./details.stache!"),
+	view: require("./details.stache"),
 	ViewModel: exports.ViewModel,
 	/**
 	 * @constructor {can-component.events} bitballs/components/game/details.events Events
@@ -481,10 +488,13 @@ exports.Component = Component.extend({
 			if(this.removedFromDOM) {
 				return true;
 			}
-			var youtubePlayer = this.scope.youtubePlayer,
+			var autoplay = this.viewModel.autoplay,
+				youtubePlayer = this.scope.youtubePlayer,
 				self = this;
 
-			youtubePlayer.playVideo();
+			if(autoplay) {
+				youtubePlayer.playVideo();
+			}
 
 			// get duration
 			var getDuration = function(){
