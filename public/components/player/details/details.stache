@@ -7,7 +7,7 @@
 		</li>
 		<li>
 			<div>{{weight}}lbs</div>
-			<p>Weight</p> 
+			<p>Weight</p>
 		</li>
 		<li>
 			<div>{{height}}"</div>
@@ -16,11 +16,11 @@
 	</ul>
 {{/player}}
 
-{{#each tournaments}}
-	{{#if statsByTournament[id]}}
+{{#each(tournaments)}}
+	{{#if(statsByTournament[id])}}
 		<h2>{{year}} Tournament</h2>
 		<ul class="tournament-stats">
-		{{#each statsByTournament[id].aggregated}}
+		{{#each(statsByTournament[id].aggregated)}}
 			<li>
 				<p>{{name}}</p>
 				<div>{{value}}</div>

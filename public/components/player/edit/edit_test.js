@@ -154,7 +154,7 @@ QUnit.module('components/player/edit/', function(hooks){
 		var vm = new DefineMap({
 			isAdmin: false
 		});
-		var frag = stache('<player-edit {is-admin}="isAdmin" />')(vm);
+		var frag = stache('<player-edit isAdmin:from="isAdmin" />')(vm);
 
 		QUnit.equal($('player-edit .edit-form', frag).length, 0,
 			'Form is excluded for non-admin user');

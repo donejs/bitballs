@@ -112,12 +112,11 @@ QUnit.test("correctly sums the current score", function () {
 
 
 QUnit.test('A stat can only be deleted by an admin', function () {
-
     var session = new Session({user: new User({ isAdmin: false }) });
 
     var vm = this.vm;
     vm.session = session;
-    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')(vm);
+    var frag = stache('<game-details gameId:from="gameId" session:from="session" />')(vm);
 
     $('#qunit-fixture').html(frag);
 
@@ -132,18 +131,16 @@ QUnit.test('A stat can only be deleted by an admin', function () {
         .size(6, 'Destroy buttons are inserted')
         .click()
         .size(5, 'Clicking the destroy button removed a stat');
-
-
 });
 
 
 QUnit.test('Deleting a stat does not change playback location', function (assert) {
     var done = assert.async();
     var gotoCalled = false;
-    var frag = stache('<game-details {game-id}="gameId" {session}="session" />')({
+    var frag = stache('<game-details gameId:from="gameId" session:from="session" />')({
         gameId: this.vm.gameId,
         session: new Session({
-            isAdmin: true
+            user: new User({isAdmin: true})
         })
     });
 

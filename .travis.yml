@@ -1,29 +1,31 @@
 language: node_js
 node_js: '6'
+sudo: required
+dist: trusty
 addons:
-  firefox: '51.0'
+  firefox: 52.3.0
   postgresql: '9.4'
 install:
-  - npm install
+- npm install
 before_install:
-  - 'export DISPLAY=:99.0'
-  - sh -e /etc/init.d/xvfb start
-  - psql -c 'create database bitballs;' -U postgres
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- psql -c 'create database bitballs;' -U postgres
+script:
+- sudo sh -c 'dbus-uuidgen > /etc/machine-id'
 before_deploy:
-  - git config --global user.email "justin@bitovi.com"
-  - git config --global user.name "bitballs deploy bot"
-  - node public/build
-  - git add public/dist/ --force
-  - git commit -m "Updating build."
-  - node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+- git config --global user.email "justin@bitovi.com"
+- git config --global user.name "bitballs deploy bot"
+- node public/build
+- git add public/dist/ --force
+- git commit -m "Updating build."
+- node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
 deploy:
   skip_cleanup: true
   provider: heroku
   app: bitballs
   api_key:
-    - secure: >-
-        SEicX9HVwNyw5941BfA64mq7dEJG/lOI4bPMt5Vyep0B1wxFI2UCy5a5y7/LbrgtuUNQOHRmHv9I63crTOL4HNto6G1qE5IckuWzhMTMcOP95CsQLP9ah0r5UncyCaxem0t7TdgOyjC2W0pG3Hji4owEWmJDIqqzd78hioHsze97XUQIICExJcPbN9EPxgxRQXlVwP4grE+Ng8HleQQ66eUn+ho0ayuhO4UZ4HGIKGqwRwO/7iF6tIUmp3ZOx77VU3XcUHdwwdZBi3ua9rT6XRJ+gqFmGb+1rvyWFOuMNcFJMVteYe9u3wYsE1vXQYj3cdL1A09tIfTLgZorYMNo0LTkA0MLU2tpsZ9NP6N4enDZkoH/h8H6duYsjV3QwM4CjCmfcHRiazEcxwetIrM95xRdsvB8G9hqK2CA0HFVvj1y7HWjEQXD3rQzGrCNhaIlYsbHKpOKmPC8tJyup2ECM9quuTRKA5aucTrDohBL7Yg0nJdytFEWhPKn8FPW4SEL1nZuMrf43lYo81EIB4Ic4IXIXct4DYxT38Ym8Cme5KqK4wYtNGwCMx4H733WmysHVktsPUODW2DyPlI5NwyStWrzNrgitjZ42hTqw1YpKeJrmuPV7Yirhr4thm3lswJEKg8SUmygelmuS19derxEunU3GaS4dTzk4LE+ea2GE5Y=
+    secure: "eQg48vbV7bfZ86eJ+e9oTt8hU18zS6frECUOr+v4J8paLEnBhSaKYnAAQolhAiS+aWfs9ZwAuvSbGtyKoDiTfdtlIfemFqufTRWVHVMJUUEcRpgTPZ8ooq1vkIMdVQUXEEnu1bO9cnLBJzxbDw84qOsFE7bNUyUeT0a6gnrGMleL0FRXNy9qNU5MO1DaQhOOA5JyOt666+W26bRyDnVnNNMrrB6fv4dY2M9oR40EYiQ0WcrzuXxSgpm/WHU+DPSfw/2rqbq0leOjpMZCJZh4XDTc02P9X31YgKAJhChI4OApdZbEpunbH7U2qu7VzN8pYxl0YqKM7/8he4IjO5bG+92Y1daVwmJ4gV0YjIrVrDaBs+n0El47ktY19IEuOBxkbDXJ9yNnREyEQx8DZofDOdfiWol6Ra0BORZowrcwssvFPA/ZDrqQTCKsAY7sPlaRMJqLPz0dJOyRVNlFXbnccvWHLuqDLQIiMnH0ZrfZ/Ggst83t9sBrECrju8b6ZpgNncaaDIejYdU1we+2JtCIUGLciCFQIXBmkYCFTTD07KGcxOZS1kImdWYTfpWPx2irJmouZ3e0eFuIqW47p6jek1XewRhxmsKrpwz7C3nmMBeByOVO8KdFE+fpjjxJDcTjAyCC2MnXCTHkq6NO7IRKoftvdBneS4HkqcnkH/MPKBg="
 env:
   global:
-    - secure: >-
-        T1a7ss3xIM8W1o3ceXTHl+sf+cyU5Z485Tfp+TGxL5yXzx5aeNKGvlVct4p0kBNEgbOeb/i940Lq1LFtVmqP/rRsdqW+dxV52O4QaGKZJsBbiNGCod+PdtcQFy+MNiIfM1fdLVEQcjctPi/DF4ugqHoq/0ShPQJXevVD4MFmB4ph3nCyH2zjPnokWWpFIDXTyyIHQyXq9ol9cFmHBkYdAYHd5Lo9NKpbHIjx2Fzb9qiFJq26MMBomgZT1l884TS9c9bwQHumzjJy0GZEyhNE/AReycNTEo33CkcD/OAQ7arNsU2c2/yVHVUcXUJSmIGDDbL/OC1/9tjTB/TWjMrkyxvv/5omO5pQpcdM0ed1aGjH2EBUhWlyjY5zivsyr3NlbYfeG/aLsjns6N0VDpcGtqRlvYhg2DQkjbTW4BIoDSBrxTM5k+ERnrRinI46FzPHObFt4i74o4TGlEsWTKLKnKxUhVWpfyiD2XItE7yF+Ol+guelvlYTNK/2J62aVURN5LZWKtsS98JeEOJS4TXt3d/osFxyBOFwIU/AHp09bg6sOTfaj6gZkz2n81TaezVwWR6Ly55AsACqbAWmSKO0X72OEGWDeT0kQ4CyrYV9XRRqzBpQB0EftBxAgLaUPilT7UMH7W8iU2zu06s931+KNSDdB4aUJuuSwpETWz1oQjo=
+  - secure: T1a7ss3xIM8W1o3ceXTHl+sf+cyU5Z485Tfp+TGxL5yXzx5aeNKGvlVct4p0kBNEgbOeb/i940Lq1LFtVmqP/rRsdqW+dxV52O4QaGKZJsBbiNGCod+PdtcQFy+MNiIfM1fdLVEQcjctPi/DF4ugqHoq/0ShPQJXevVD4MFmB4ph3nCyH2zjPnokWWpFIDXTyyIHQyXq9ol9cFmHBkYdAYHd5Lo9NKpbHIjx2Fzb9qiFJq26MMBomgZT1l884TS9c9bwQHumzjJy0GZEyhNE/AReycNTEo33CkcD/OAQ7arNsU2c2/yVHVUcXUJSmIGDDbL/OC1/9tjTB/TWjMrkyxvv/5omO5pQpcdM0ed1aGjH2EBUhWlyjY5zivsyr3NlbYfeG/aLsjns6N0VDpcGtqRlvYhg2DQkjbTW4BIoDSBrxTM5k+ERnrRinI46FzPHObFt4i74o4TGlEsWTKLKnKxUhVWpfyiD2XItE7yF+Ol+guelvlYTNK/2J62aVURN5LZWKtsS98JeEOJS4TXt3d/osFxyBOFwIU/AHp09bg6sOTfaj6gZkz2n81TaezVwWR6Ly55AsACqbAWmSKO0X72OEGWDeT0kQ4CyrYV9XRRqzBpQB0EftBxAgLaUPilT7UMH7W8iU2zu06s931+KNSDdB4aUJuuSwpETWz1oQjo=

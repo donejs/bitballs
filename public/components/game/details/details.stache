@@ -1,5 +1,6 @@
-{{^if gamePromise.isRejected}}
+<can-import from="can-stache-route-helpers" />
 
+{{^if(gamePromise.isRejected)}}
 	<div class="row">
 	  	<div class="col-md-8">
 			<div class='youtube-container'>
@@ -7,7 +8,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<h3> <a href="{{routeUrl (tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
+			<h3> <a href="{{routeUrl(tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
 			<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
 			<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p>
 			<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
@@ -19,21 +20,21 @@
 
 	<table class="table table-condensed table-hover">
 	<tbody>
-	{{#each game.teams}}
+	{{#each(game.teams)}}
 		<tr>
 			<th colspan="2">{{color}} - {{name}}</th>
 		</tr>
-		{{#each players}}
-			<tr ($click)="showStatMenuFor(.,%element, %event)">
+		{{#each(players)}}
+			<tr on:click="scope.root.showStatMenuFor(this,scope.element, scope.event)">
 				<td>{{name}}</td>
 				<td class="stats-container">
-					{{#each statsForPlayerId(id)}}
-						<span ($click)="gotoTimeMinus5(time, %event)"
-							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
+					{{#each(scope.root.statsForPlayerId(id))}}
+						<span on:click="scope.root.gotoTimeMinus5(time, scope.event)"
+							class="stat-point stat-{{type}}" style="left: {{scope.root.statPercent(time)}}%">
 							{{type}}
-							{{#if session.isAdmin }}
+							{{#if(scope.root.session.isAdmin())}}
 								<span class="destroy-btn glyphicon glyphicon-trash"
-									($click)="deleteStat(., %event)"></span>
+									on:click="scope.root.deleteStat(this, scope.event)"></span>
 							{{/if}}
 						</span>
 					{{/each}}
@@ -46,15 +47,16 @@
 	<div id="player-pos"/>
 
 
-	{{#if stat}}
+	{{#if(stat)}}
+	<h1>THERE ARE STATs</h1>
 
 	<div class="popover fade right in" role="tooltip" style="display: block;" id="add-stat">
 		<div class="arrow" style="top: 50%;"></div>
 		<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
 		<div class="popover-content">
-			<form ($submit)="createStat(%event)" action="">
+			<form on:submit="scope.root.createStat(scope.event)" action="">
 				<label for="stat-type">Type</label>
-			    <select {($value)}="stat.type" class="form-control" id="stat-type">
+			    <select value:bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>
 			    	{{#statTypes}}
 			    		<option value="{{name}}">{{name}}</option>
@@ -65,17 +67,17 @@
 				    <label for="stat-time">Time (seconds)</label>
 				    <div class="row">
 				    	<div class="col-xs-6">
-				    		<input type="text" class="form-control" id="stat-time" {($value)}="stat.time"/>
+				    		<input type="text" class="form-control" id="stat-time" value:bind="stat.time"/>
 			    		</div>
 			    		<div class="col-xs-6">
-			    		<a class="btn btn-default" ($click)="minusTime(10)">-10 s</a>
-			    			<a class="btn btn-default" ($click)="minusTime(2)">-2 s</a>
-			    			<a class="btn btn-default" ($click)="addTime(2)">+2 s</a>
-			    			<a class="btn btn-default" ($click)="addTime(10)">+10 s</a>
+			    		<a class="btn btn-default" on:click="minusTime(10)">-10 s</a>
+			    			<a class="btn btn-default" on:click="minusTime(2)">-2 s</a>
+			    			<a class="btn btn-default" on:click="addTime(2)">+2 s</a>
+			    			<a class="btn btn-default" on:click="addTime(10)">+10 s</a>
 			    		</div>
 				    </div>
 				</div>
-				<button type="submit" class="btn btn-primary" >Add</button> <a class="btn btn-default" ($click)="removeStat()">Cancel</a>
+				<button type="submit" class="btn btn-primary" >Add</button> <a class="btn btn-default" on:click="removeStat()">Cancel</a>
 			</form>
 		</div>
 	</div>

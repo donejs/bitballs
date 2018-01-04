@@ -100,7 +100,9 @@ var Stat = DefineMap.extend('Stat',
 		set: function(newVal){
 			return Math.round(newVal);
 		}
-	}
+	},
+
+	value: 'any'
 });
 
 

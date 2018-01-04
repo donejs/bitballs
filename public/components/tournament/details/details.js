@@ -41,8 +41,8 @@ import DefineMap from "can-define/map/map";
 
 import defineStreamKefir from "can-define-stream-kefir";
 import "bootstrap/dist/css/bootstrap.css!";
-import "can-stache/helpers/route";
-import tournamentDetailsView from "./details.stache!";
+import "can-stache-route-helpers";
+import tournamentDetailsView from "./details.stache";
 
 export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 {
@@ -152,7 +152,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 			return Team.colors;
 		} else {
 			var allColors = Team.colors.slice(0);
-			teams.each(function(team){
+			teams.forEach(function(team){
 				var index = allColors.indexOf(team.color);
 				if(index !== -1) {
 					allColors.splice(index, 1);
@@ -338,7 +338,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		var map = {};
 		var teams = this.teams;
 		if(teams) {
-			teams.each(function(team){
+			teams.forEach(function(team){
 				map[team.id] = team;
 			});
 		}
@@ -403,7 +403,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 		if(allPlayers && teams) {
 			var usedIds = {};
 
-			teams.each(function(tm){
+			teams.forEach(function(tm){
 				if(tm !== team) {
 					[1,2,3,4].forEach(function(index){
 						usedIds[tm["player"+index+"Id"]] = true;
@@ -456,7 +456,6 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	 * will be called on.
 	 **/
 	createGame: function(ev) {
-
 		ev.preventDefault();
 
 		var self = this;

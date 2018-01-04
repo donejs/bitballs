@@ -10,7 +10,7 @@ import route from 'can-route';
 import Session from './models/session';
 import "can-route-pushstate";
 import stache from "can-stache";
-import 'can-stache/helpers/route';
+import 'can-stache-route-helpers';
 import "./util/prefilter";
 import can from "can-namespace";
 
@@ -70,7 +70,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Game",
 				componentName: "game-details",
-				attributes: "{game-id}='./gameId'  {session}='./session' {^game-promise}='./pagePromise'",
+				attributes: "gameId:from='./gameId'  session:from='./session' gamePromise:to='./pagePromise'",
 				moduleName: "game/details/"
 			};
 
@@ -78,7 +78,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournament",
 				componentName: "tournament-details",
-				attributes: "{tournament-id}='./tournamentId' {is-admin}='./isAdmin' {^tournament-promise}='./pagePromise'",
+				attributes: "tournamentId:from='./tournamentId' isAdmin:from='./isAdmin' tournamentPromise:to='./pagePromise'",
 				moduleName: "tournament/details/"
 			};
 
@@ -86,7 +86,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Player",
 				componentName: "player-details",
-				attributes: "{player-id}='./playerId' {^player-promise}='./pagePromise'",
+				attributes: "playerId:from='./playerId' playerPromise:to='./pagePromise'",
 				moduleName: "player/details/"
 			};
 
@@ -94,7 +94,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournaments",
 				componentName: "tournament-list",
-				attributes: "{is-admin}='./isAdmin'",
+				attributes: "isAdmin:from='./isAdmin'",
 				moduleName: "tournament/list/"
 			};
 
@@ -102,7 +102,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Users List",
 				componentName: "user-list",
-				attributes: "{session}='./session'",
+				attributes: "session:from='./session'",
 				moduleName: "user/list/"
 			};
 
@@ -110,7 +110,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Account",
 				componentName: "user-details",
-				attributes: "{(session)}='./session'",
+				attributes: "session:bind='./session'",
 				moduleName: "user/details/"
 			};
 
@@ -118,7 +118,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Players",
 				componentName: "player-list",
-				attributes: "{is-admin}='./isAdmin'",
+				attributes: "isAdmin:from='./isAdmin'",
 				moduleName: "player/list/"
 			};
 
@@ -194,17 +194,18 @@ const AppViewModel = DefineMap.extend('App',
 
 });
 
-stache.registerHelper("pageComponent", function(options){
+stache.registerHelper("pageComponent", function(scope, options){
 	var pageComponent = options.context.pageComponentConfig,
+		helpers = scope.templateContext.helpers,
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"{{#with ../.}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
+					"{{#with scope.root}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +
 			"</can-import>";
-	return stache(template)(this, options.helpers, options.nodeList);
+	return stache(template)(scope, helpers, options.nodeList);
 });
 
 route('tournaments/{tournamentId}');

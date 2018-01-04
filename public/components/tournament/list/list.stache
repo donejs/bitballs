@@ -3,12 +3,12 @@
 	{{#if isPending}}
 		<div class='info'>Loading</div>
 	{{/if}}
-	{{#each value}}
-		<h3><a href='{{routeUrl ( tournamentId=id )}}'>{{year}}</a>
+	{{#each(value)}}
+		<h3><a href='{{routeUrl(tournamentId=id)}}'>{{year}}</a>
 			{{#if isAdmin}}
 			<button type="button" class="btn btn-danger"
-				($click)="deleteTournament(.)"
-				{{#isDestroying}}disabled{{/isDestroying}}>
+				on:click="scope.rootdeleteTournament(this)"
+				{{#isDestroying()}}disabled{{/isDestroying}}>
 					<span class='glyphicon glyphicon-remove'/>
 			</button>
 			{{/if}}
@@ -17,9 +17,9 @@
 		<div class="text-center lead">No Tournaments</div>
 	{{/each}}
 </tournament-model>
-{{#if isAdmin}}
+{{#if(isAdmin)}}
 <h2>New Tournament</h2>
-<form ($submit)="createTournament(%event)" action="">
+<form on:submit="createTournament(scope.event)" action="">
 	<div class="form-group">
 		<label for="tournament-date">Date</label>
 		<input
@@ -27,8 +27,8 @@
 			class="form-control"
 			id="tournament-date"
 			placeholder="date"
-			{($value)}="tournament.date"/>
-	</div> 
+			value:bind="tournament.date"/>
+	</div>
 	<button type="submit" class="create-btn btn btn-default" {{#if savePromise.isPending}}disabled{{/if}}>Create</button>
 	{{#if savePromise.isRejected}}
 		{{#each savePromise.reason.responseJSON}}

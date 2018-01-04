@@ -33,7 +33,6 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-
 if ( process.argv.indexOf( "--develop" ) !== -1 ) {
   //is dev mode so do live reload
   var child = exec( path.join("node_modules",".bin","steal-tools live-reload"), {
