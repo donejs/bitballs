@@ -1,5 +1,6 @@
-{{^if gamePromise.isRejected}}
+<can-import from="can-stache-route-helpers" />
 
+{{^if(gamePromise.isRejected)}}
 	<div class="row">
 	  	<div class="col-md-8">
 			<div class='youtube-container'>
@@ -7,7 +8,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<h3> <a href="{{routeUrl (tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
+			<h3> <a href="{{routeUrl(tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
 			<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
 			<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p>
 			<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
@@ -19,21 +20,21 @@
 
 	<table class="table table-condensed table-hover">
 	<tbody>
-	{{#each game.teams}}
+	{{#each(game.teams)}}
 		<tr>
 			<th colspan="2">{{color}} - {{name}}</th>
 		</tr>
-		{{#each players}}
-			<tr on:click="showStatMenuFor(.,%element, %event)">
+		{{#each(players)}}
+			<tr on:click="showStatMenuFor(.,scope.element, scope.event)">
 				<td>{{name}}</td>
 				<td class="stats-container">
-					{{#each statsForPlayerId(id)}}
-						<span on:click="gotoTimeMinus5(time, %event)"
+					{{#each(statsForPlayerId(id))}}
+						<span on:click="gotoTimeMinus5(time, scope.event)"
 							class="stat-point stat-{{type}}" style="left: {{statPercent time}}%">
 							{{type}}
 							{{#if session.isAdmin }}
 								<span class="destroy-btn glyphicon glyphicon-trash"
-									on:click="deleteStat(., %event)"></span>
+									on:click="deleteStat(., scope.event)"></span>
 							{{/if}}
 						</span>
 					{{/each}}
@@ -52,7 +53,7 @@
 		<div class="arrow" style="top: 50%;"></div>
 		<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
 		<div class="popover-content">
-			<form on:submit="createStat(%event)" action="">
+			<form on:submit="createStat(scope.event)" action="">
 				<label for="stat-type">Type</label>
 			    <select value:bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>

@@ -149,7 +149,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		if(game && game.stats) {
 			var playerMap = this.playerIdToHomeOrAwayMap;
 			var scores = {home: 0, away: 0};
-			game.stats.each(function(stat){
+			game.stats.forEach(function(stat){
 				if(stat.type === "1P") {
 					scores[playerMap[stat.playerId]]++;
 				}
@@ -173,7 +173,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			var scores = {home: 0, away: 0};
 			var time = this.time;
 
-			game.stats.each(function(stat){
+			game.stats.forEach(function(stat){
 				if(stat.time <= time) {
 					if(stat.type === "1P") {
 						scores[playerMap[ stat.playerId] ]++;
