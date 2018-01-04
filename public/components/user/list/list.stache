@@ -1,4 +1,4 @@
-{{#session.isAdmin}}
+{{#if(session.isAdmin)}}
   <table class="table">
     <thead>
       <tr>
@@ -36,4 +36,4 @@
       {{/if}}
     </tbody>
   </table>
-{{/session.isAdmin}}
+{{/if}}

@@ -2,14 +2,15 @@
 <can-import from="bitballs/models/fixtures/games" />
 <can-import from="bitballs/components/game/details/" />
 
-<game-details game-id="1" session="{session}"></games-details>
+<game-details gameId:from="'1'" session:bind="session" autoplay:from="false"></games-details>
 </script>
 
 <script src="../../../node_modules/steal/steal.js" main="@empty" id='demo-source'>
-import $ from "jquery";
 import Session from "bitballs/models/session";
+import canViewModel from 'can-view-model';
 import 'can-component';
 import 'can-view-autorender';
 
-$('#demo-html').viewModel().session = new Session({user: {isAdmin: true}});
+let vm = canViewModel('#demo-html');
+vm.session = new Session({user: {isAdmin: true}});
 </script>
