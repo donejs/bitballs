@@ -10,7 +10,7 @@ import route from 'can-route';
 import Session from './models/session';
 import "can-route-pushstate";
 import stache from "can-stache";
-import 'can-stache-route-helpers';
+import 'can-stache/helpers/route';
 import "./util/prefilter";
 import can from "can-namespace";
 
@@ -194,19 +194,17 @@ const AppViewModel = DefineMap.extend('App',
 
 });
 
-stache.registerHelper("pageComponent", function(scope, options){
-	window.OPTIONS = options;
+stache.registerHelper("pageComponent", function(options){
 	var pageComponent = options.context.pageComponentConfig,
-		helpers = scope.templateContext.helpers,
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"{{#with scope.root}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
+					"{{#with ../.}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +
 			"</can-import>";
-	return stache(template)(scope, helpers, options.nodeList);
+	return stache(template)(this, options.helpers, options.nodeList);
 });
 
 route('tournaments/{tournamentId}');
