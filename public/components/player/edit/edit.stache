@@ -1,16 +1,15 @@
 <can-import from="can-stache-converters" />
 
-{{#if(isAdmin)}}
-  <form class="edit-form" on:submit="savePlayer(scope.event, scope.element)" action="POST">
-    {{#if(player.isNew())}}
+{{#if isAdmin}}
+  <form class="edit-form" on:submit="savePlayer(%event,%element)" action="">
+    {{#if player.isNew}}
       <h3>Create Player</h3>
     {{else}}
       <h3>Update Player</h3>
     {{/if}}
     <div class="form-group">
       <label for="player-name">Name</label>
-      <input type="text" class="form-control" id="player-name"
-        placeholder="fullname" value:bind="player.name" />
+      <input type="text" class="form-control" id="player-name" placeholder="fullname" value:bind="player.name"/>
     </div>
     <div class="form-group">
       <label for="player-weight">Weight</label>
@@ -19,7 +18,7 @@
       	class="form-control"
       	id="player-weight"
       	placeholder="weight in pounds"
-      	value:bind="string-to-any(~player.weight)" />
+      	value:bind="string-to-any(~player.weight)"/>
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
@@ -28,7 +27,7 @@
       	class="form-control"
       	id="player-height"
       	placeholder="height in inches (Ex: 71)"
-      	value:bind="string-to-any(~player.height)" />
+      	value:bind="string-to-any(~player.height)"/>
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
@@ -37,14 +36,14 @@
       	class="form-control"
       	id="player-birthday"
       	placeholder="day of birth"
-      	value:bind="player.birthDate" />
+      	value:bind="player.birthDate"/>
     </div>
-    <button type="submit" class="btn btn-primary" >{{#if player.isNew()}}Create{{else}}Update{{/if}}</button>
-    {{#unless(player.isNew)}}
+    <button type="submit" class="btn btn-primary" >{{#player.isNew}}Create{{else}}Update{{/player.isNew}}</button>
+    {{#unless player.isNew}}
       <a class="btn btn-default" on:click="cancel(%element)">Cancel</a>
     {{/unless}}
-    {{#if(savePromise.isRejected)}}
-      {{#each(savePromise.reason.responseJSON)}}
+    {{#if savePromise.isRejected}}
+      {{#each savePromise.reason.responseJSON}}
         <p class="text-danger">{{.}}</p>
       {{/each}}
     {{/if}}

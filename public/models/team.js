@@ -140,7 +140,7 @@ Team.List = DefineList.extend('TeamsList',
 	get idMap() {
 		var map = {};
 
-		this.forEach(function(team){
+		this.each(function(team){
 			map[team.id] = team;
 		});
 

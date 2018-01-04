@@ -48,8 +48,8 @@
   "license": "MIT",
   "devDependencies": {
     "documentjs": "^0.4.4",
-    "donejs": "^2.0.0-pre.0",
-    "donejs-cli": "^2.0.0-pre.0",
+    "donejs": "^1.0.0",
+    "donejs-cli": "^1.0.1",
     "firebase-tools": "^3.9.1",
     "jshint": "^2.9.1",
     "maildev": "^0.12.2"

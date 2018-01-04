@@ -5,10 +5,8 @@ logs
 *.log
 npm-debug.log*
 
-package-lock.json
 node_modules
 .env
 public/node_modules
 public/dist
-public/package-lock.json
 docs/

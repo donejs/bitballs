@@ -33,7 +33,7 @@ var DefineMap = require("can-define/map/map");
 var Tournament = require("bitballs/models/tournament");
 
 require("bootstrap/dist/css/bootstrap.css!");
-require("can-stache-route-helpers");
+require("can-stache/helpers/route");
 
 exports.ViewModel = DefineMap.extend('TournamentList',
 /** @prototype */
@@ -87,7 +87,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 		var promise = this.tournament.save().then(function(player) {
 			self.tournament = new Tournament();
 		});
-
+		
 		this.savePromise = promise;
 		return promise;
 	},

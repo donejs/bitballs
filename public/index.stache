@@ -1,22 +1,21 @@
-<html lang="en">
+<html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>{{title}}</title>
 	</head>
 	<body>
-		<can-import from="~/app.less" />
-		<can-import from="~/app" export-as="viewModel" />
-		<can-import from="~/components/navigation/navigation" />
+		<can-import from="bitballs/app.less!" />
+		<can-import from="bitballs/app" export-as="viewModel" />
+		<can-import from="bitballs/components/navigation/navigation" />
 		<div class="container">
 			<bitballs-navigation app:from="." />
-			{{{pageComponent(scope)}}}
+			{{{pageComponent}}}
 
 		</div>
-		{{#isProduction()}}
-			<script src="{{joinBase('steal.production.js')}}"></script>
+		{{#isProduction}}
+			<script src="{{joinBase 'steal.production.js'}}"></script>
 		{{else}}
-			<script src="/node_modules/steal/steal.js"
-				main="bitballs/index.stache!done-autorender"></script>
+			<script src="/node_modules/steal/steal.js" main="bitballs/index.stache!done-autorender"></script>
 		{{/isProduction}}
 	</body>
 </html>
