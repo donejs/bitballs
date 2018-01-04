@@ -118,7 +118,7 @@ Player.List = DefineList.extend('PlayerList',
 	 **/
 	get idMap() {
 		var map = {};
-		this.each(function(player){
+		this.forEach(function(player){
 			map[player.id] = player;
 		});
 
