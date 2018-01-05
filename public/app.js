@@ -191,7 +191,6 @@ const AppViewModel = DefineMap.extend('App',
 		}
 		return false;
 	}
-
 });
 
 stache.registerHelper("pageComponent", function(scope, options){
