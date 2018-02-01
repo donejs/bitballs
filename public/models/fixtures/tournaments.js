@@ -1,6 +1,6 @@
 import fixture from 'can-fixture';
 import $ from 'jquery';
-import can  from 'can-util';
+import assign from 'can-assign';
 
 export const tournaments = {
     data: [
@@ -20,7 +20,8 @@ export const tournaments = {
 
 export const defineFixtures = function () {
     fixture('POST /services/tournaments', function (req) {
-        var data = can.extend({}, req.data, {
+        var data = assign({}, req.data);
+        assign(data, {
             date: new Date(req.data.date),
             id: tournaments.data[tournaments.data.length - 1].id + 1
         });

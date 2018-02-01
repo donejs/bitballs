@@ -13,8 +13,7 @@ var Stat = require("bitballs/models/stat").default;
 var Tournament = require("./tournament");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
-var can = require("can-util");
-
+var canReflect = require("can-reflect");
 
 var Game = DefineMap.extend('Game',
 {
@@ -113,7 +112,7 @@ var Game = DefineMap.extend('Game',
 	get players() {
 		var players = [];
 		this.teams.forEach(function(team){
-			[].push.apply(players, can.makeArray( team.players ) );
+			[].push.apply(players, canReflect.toArray( team.players ) );
 		});
 		return new Player.List(players);
 	},
