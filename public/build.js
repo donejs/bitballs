@@ -1,9 +1,17 @@
+var path = require("path");
 var stealTools = require("steal-tools");
 
-var buildPromise = stealTools.build({
-  config: __dirname + "/package.json!npm"
-},{
-  bundleAssets: true
-});
+var config = {
+  config: path.join(__dirname, "package.json!npm")
+};
 
-module.exports = buildPromise;
+module.exports = stealTools
+  .build(config, {
+    bundleAssets: true
+  })
+  .then(function() {
+    return stealTools.optimize(config, {
+      target: 'web',
+      bundleAssets: true
+    });
+  });
