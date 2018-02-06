@@ -59,6 +59,17 @@ exports.ViewModel = DefineMap.extend("PlayerEditVM",
 		Type: Player,
 		Value: Player
 	},
+  /**
+   * @property {Boolean} bitballs/components/player/edit.isNewPlayer isNewPlayer
+   * @parent bitballs/components/player/edit.properties
+   *
+   * Whether the player has not been created yet.
+   */
+  isNewPlayer: {
+    get: function isNew() {
+      return this.player.isNew();
+    }
+  },
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/edit.savePromise savePromise
 	 * @parent bitballs/components/player/edit.properties

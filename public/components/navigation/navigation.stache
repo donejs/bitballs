@@ -2,10 +2,10 @@
 	<div class="navbar-collapse" id="bs-example-navbar-collapse-1">
 		<a href="/" class="pull-left main-logo">BitBalls</a>
 		<ul class="main-menu nav navbar-nav">
-		  <li role="presentation" {{#routeCurrent(page='tournaments')}}class='active'{{/routeCurrent}}>
+		  <li role="presentation" {{#is(app.page, 'tournaments')}}class='active'{{/is}}>
 				<a href="{{routeUrl(page='tournaments')}}">Tournaments</a>
 		  </li>
-		  <li role="presentation" {{#routeCurrent(page='players')}}class='active'{{/routeCurrent}}>
+		  <li role="presentation" {{#is(app.page, 'players')}}class='active'{{/is}}>
 				<a href="{{routeUrl(page='players')}}">Players</a>
 		  </li>
 		</ul>
@@ -14,11 +14,11 @@
 		<ul class="session-menu nav navbar-nav navbar-right">
 			{{#if(app.session)}}
 				{{#if(app.session.isAdmin)}}
-					<li {{#routeCurrent(page='users')}}class='active'{{/routeCurrent}}>
+					<li {{#is(app.page, 'users')}}class='active'{{/is}}>
 						<a href="{{routeUrl(page='users')}}">Users</a>
 					</li>
 				{{/if}}
-				<li {{#routeCurrent(page='account')}}class='active'{{/routeCurrent}}>
+				<li {{#is(app.page, 'account')}}class='active'{{/is}}>
 					<a href="{{routeUrl(page='account')}}">Account</a>
 				</li>
 				<li>
@@ -41,7 +41,7 @@
 								<div class="form-group form-group-sm">
 									<input
 										class="form-control"
-										id="user-email"
+										id="user-email-nav"
 										placeholder="email"
 										value:bind="scope.root.loginSession.user.email"
 									>
@@ -51,7 +51,7 @@
 										placeholder="password"
 										class="form-control"
 										type="password"
-										id="user-password"
+										id="user-password-nav"
 										value:bind="loginSession.user.password"
 									>
 								</div>

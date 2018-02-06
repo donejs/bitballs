@@ -141,9 +141,12 @@ const AppViewModel = DefineMap.extend('App',
 		serialize: false,
 		value: function() {
 			var self = this;
-			Session.get({}).then(function(session){
-				self.session = session;
-			});
+      Session.get({})
+        .then(function(session){
+          self.session = session;
+        }, function() {
+          self.session = null;
+        });
 		}
 	},
 	/**
@@ -175,22 +178,21 @@ const AppViewModel = DefineMap.extend('App',
 		}
 	},
 	/**
-	 * @function isAdmin
-     *
-	 * @return {Boolean} The value of `user.isAdmin` on the [bitballs/app.session]
-	 * model, if present. Otherwise, `false`.
+	 * @property {Boolean} bitballs/app.isAdmin isAdmin
+   *
+   * Whether the logged in user has an admin role.
 	 */
-	isAdmin: function (){
-		var session = this.session;
-		if(session) {
-			if(session.user) {
-				return session.user.isAdmin;
-			} else {
-				return false;
-			}
-		}
-		return false;
-	}
+  isAdmin: {
+    get: function get() {
+      var session = this.session;
+
+      if (session && session.user) {
+        return session.user.isAdmin;
+      } else {
+        return false;
+      }
+    }
+  }
 });
 
 stache.registerHelper("pageComponent", function(scope, options){

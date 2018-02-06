@@ -95,6 +95,38 @@ exports.ViewModel = DefineMap.extend({
 			return val;
 		}
 	},
+  /**
+   * @property {String}
+   *
+   * The status of the user. One of the following:
+   *
+   *  - "new": user has not been created
+   *  - "pending": user has been created, but has not verified their email address
+   *  - "verified": user has verified their email address
+   *
+   *  With a new user, the component shows a registration form.
+   *  With a pending user, the component shows the email address.
+   *  With a verified user, the component shows a form allowing the user to change their password.
+   */
+  get userStatus() {
+    if (this.user.isNew()) {
+      return "new";
+    }
+    if (!this.user.verified) {
+      return "pending";
+    }
+    return "verified";
+  },
+  /**
+   * @property {Boolean}
+   *
+   * Whether the user has not been created yet.
+   */
+  isNewUser: {
+    get: function get() {
+      return this.user.isNew();
+    }
+  },
 	/**
 	 * @function saveUser
 	 *
@@ -110,7 +142,7 @@ exports.ViewModel = DefineMap.extend({
 	 *
 	 */
 	saveUser: function(ev) {
-        if(ev) { ev.preventDefault(); }
+    if(ev) { ev.preventDefault(); }
 		var self = this,
 			isNew = this.user.isNew(),
 			promise = this.user.save().then(function(user) {
@@ -132,29 +164,7 @@ exports.ViewModel = DefineMap.extend({
 		this.savePromise = promise;
 		return promise;
 	},
-	/**
-	 * @property {String}
-	 *
-	 * The status of the user. One of the following:
-	 *
-	 *  - "new": user has not been created
-	 *  - "pending": user has been created, but has not verified their email address
-	 *  - "verified": user has verified their email address
-	 *
-	 *  With a new user, the component shows a registration form.
-	 *  With a pending user, the component shows the email address.
-	 *  With a verified user, the component shows a form allowing the user to change their password.
-	 */
-	get userStatus() {
-		if (this.user.isNew()) {
-			return "new";
-		}
-		if (!this.user.verified) {
-			return "pending";
-		}
-		return "verified";
-	},
-	/**
+  /**
 	 * @function deleteUser
 	 *
 	 * Confirms that the user would like to delete his or her account, then

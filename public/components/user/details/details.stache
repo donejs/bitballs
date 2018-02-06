@@ -24,14 +24,14 @@
 				<input
 					class="form-control"
 					id="user-email"
-					{{^if(user.isNew())}}disabled{{/if}}
+					{{^if(isNewUser)}}disabled{{/if}}
 					value:bind="user.email" />
 			</div>
 		{{else}}
 			<input
 				class="form-control"
 				id="user-email"
-				{{^if(user.isNew())}}disabled{{/if}}
+				{{^if(isNewUser)}}disabled{{/if}}
 				value:bind="user.email" />
 		{{/is}}
 	</div>
@@ -43,7 +43,7 @@
 	{{else}}
 		<div class="form-group">
 			<label for="user-password">
-				{{#if(user.isNew())}}
+				{{#if(isNewUser)}}
 					Password
 				{{else}}
 					Current Password
@@ -55,7 +55,7 @@
 				id="user-password"
 				value:bind="user.password" />
 		</div>
-		{{#unless(user.isNew())}}
+		{{#unless(isNewUser)}}
 			<div class="form-group">
 				<label for="user-new-password">
 					New Password
@@ -68,11 +68,11 @@
 			</div>
 		{{/unless}}
 		<button type="submit" {{#if(user.isSaving())}}disabled{{/if}} class="btn btn-default">
-			{{#if(user.isNew())}}Create{{else}}Update{{/if}}
+			{{#if(isNewUser)}}Create{{else}}Update{{/if}}
 		</button>
 	{{/is}}
 
-	{{#unless(user.isNew())}}
+	{{#unless(isNewUser)}}
 		<br>
 		<br>
 		<div class="btn btn-danger" on:click="deleteUser()">DELETE ACCOUNT</div>
