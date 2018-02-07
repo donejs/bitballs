@@ -1,5 +1,6 @@
 <html lang="en">
 	<head>
+		<base href="/">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>{{title}}</title>
 	</head>
@@ -7,14 +8,14 @@
 		<can-import from="~/app.less" />
 		<can-import from="~/app" export-as="viewModel" />
 		<can-import from="~/components/navigation/navigation" />
+
 		<div class="container">
 			<bitballs-navigation app:from="." />
 			{{{pageComponent(scope)}}}
-
 		</div>
 
 		{{#is(env.NODE_ENV, "production")}}
-			<script src="{{joinBase('steal.production.js')}}"></script>
+			<script src="dist/bundles/web/bitballs/index.js"></script>
 		{{else}}
 			<script src="/node_modules/steal/steal.js"
 				main="bitballs/index.stache!done-autorender"></script>

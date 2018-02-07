@@ -21,6 +21,7 @@ var Player = DefineMap.extend('Player', {
 	 * A unique identifier.
 	 **/
 	id: 'number',
+
 	/**
 	 * @property {String} bitballs/models/player.properties.birthday birthday
 	 * @parent bitballs/models/player.properties
@@ -49,6 +50,14 @@ var Player = DefineMap.extend('Player', {
 	 * The height of a player in inches.
 	 **/
 	height: 'number',
+
+  // flag set by the api when a player is destroyed
+  _destroyed: 'boolean',
+
+  profile: 'any',
+
+  startRank: 'any',
+
 	/**
 	 * @function
 	 *

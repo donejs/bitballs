@@ -18,10 +18,14 @@
 		{{#if playersPromise.isResolved}}
 			{{#each playersPromise.value}}
 				<tr>
-					{{#eq . editingPlayer}}
+					{{#eq . ../editingPlayer}}
 						<td>
-							<player-edit player="{.}" isAdmin:from="isAdmin"
-								on:saved="removeEdit" on:canceled="removeEdit"/>
+							<player-edit
+								player:from="."
+								isAdmin:from="../isAdmin"
+								on:saved="../removeEdit()"
+								on:canceled="../removeEdit()"
+							/>
 						</td>
 					{{else}}
 						<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
@@ -29,12 +33,12 @@
 						<td>{{weight}}</td>
 						<td>{{height}}</td>
 						<td>
-							{{#if isAdmin}}
-								<button type="button" class="btn btn-default" on:click="editPlayer(.)">
+							{{#if ../isAdmin}}
+								<button type="button" class="btn btn-default" on:click="../editPlayer(.)">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
 								<button type="button" class="btn btn-danger"
-									on:click="deletePlayer(.)"
+									on:click="../deletePlayer(.)"
 									{{#isDestroying}}disabled{{/isDestroying}}>
 									<span class='glyphicon glyphicon-remove'/>
 								</button>
@@ -49,5 +53,5 @@
 	</tbody>
 </table>
 {{#if isAdmin}}
-<player-edit isAdmin:from="isAdmin"/>
+	<player-edit isAdmin:from="isAdmin"/>
 {{/if}}

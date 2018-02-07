@@ -2,7 +2,7 @@
 
 {{#if(isAdmin)}}
   <form class="edit-form" on:submit="savePlayer(scope.event, scope.element)" action="POST">
-    {{#if(player.isNew())}}
+    {{#if(isNewPlayer)}}
       <h3>Create Player</h3>
     {{else}}
       <h3>Update Player</h3>
@@ -39,8 +39,8 @@
       	placeholder="day of birth"
       	value:bind="player.birthDate" />
     </div>
-    <button type="submit" class="btn btn-primary" >{{#if player.isNew()}}Create{{else}}Update{{/if}}</button>
-    {{#unless(player.isNew)}}
+    <button type="submit" class="btn btn-primary" >{{#if(isNewPlayer)}}Create{{else}}Update{{/if}}</button>
+    {{#unless(isNewPlayer)}}
       <a class="btn btn-default" on:click="cancel(%element)">Cancel</a>
     {{/unless}}
     {{#if(savePromise.isRejected)}}
