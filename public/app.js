@@ -209,9 +209,9 @@ stache.registerHelper("pageComponent", function(scope, options){
 	return stache(template)(scope, helpers, options.nodeList);
 });
 
-route('tournaments/{tournamentId}');
-route('games/{gameId}');
-route('players/{playerId}');
-route('{page}',{page: 'tournaments'});
+route.register('tournaments/{tournamentId}');
+route.register('games/{gameId}');
+route.register('players/{playerId}');
+route.register('{page}',{page: 'tournaments'});
 
 export default AppViewModel;
