@@ -3,23 +3,21 @@ node_js: '6'
 sudo: required
 dist: trusty
 addons:
-  firefox: 52.3.0
-  postgresql: '9.4'
+  firefox: latest
 install:
-- npm install
+  - npm install
 before_install:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- psql -c 'create database bitballs;' -U postgres
+  - 'export DISPLAY=:99.0'
+  - sh -e /etc/init.d/xvfb start
 script:
-- sudo sh -c 'dbus-uuidgen > /etc/machine-id'
+  - sudo sh -c 'dbus-uuidgen > /etc/machine-id'
 before_deploy:
-- git config --global user.email "justin@bitovi.com"
-- git config --global user.name "bitballs deploy bot"
-- node public/build
-- git add public/dist/ --force
-- git commit -m "Updating build."
-- node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+  - git config --global user.email "justin@bitovi.com"
+  - git config --global user.name "bitballs deploy bot"
+  - node public/build
+  - git add public/dist/ --force
+  - git commit -m "Updating build."
+  - node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
 deploy:
   skip_cleanup: true
   provider: heroku
