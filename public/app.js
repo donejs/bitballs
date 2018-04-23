@@ -20,6 +20,14 @@ if(typeof window !== "undefined") {
 
 const AppViewModel = DefineMap.extend('App',
 {
+	env: {
+		default: () => ({NODE_ENV:'development'}),
+		set: function(newVal){
+			console.log("ENV IS SET TO ", newVal);
+			return newVal;
+		},
+		serialize: false
+  	},
 	/**
 	* @property {String} bitballs/app.title title
 	* @parent bitballs/app.properties
@@ -143,12 +151,12 @@ const AppViewModel = DefineMap.extend('App',
 		serialize: false,
 		default: function() {
 			var self = this;
-      Session.get({})
-        .then(function(session){
-          self.session = session;
-        }, function() {
-          self.session = null;
-        });
+			Session.get({})
+				.then(function(session){
+					self.session = session;
+				}, function() {
+					self.session = null;
+				});
 		}
 	},
 	/**
@@ -208,7 +216,7 @@ stache.registerHelper("pageComponent", function(scope, options){
 					"Loading..." +
 				"{{/if}}" +
 			"</can-import>";
-	return stache(template)(scope, helpers, options.nodeList);
+	return stache(template)(scope, options.nodeList);
 });
 
 route.register('tournaments/{tournamentId}');

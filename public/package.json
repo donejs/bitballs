@@ -29,7 +29,7 @@
     "can-route": "^4.0.1",
     "can-route-pushstate": "^4.0.1",
     "can-set": "^1.5.1",
-    "can-stache": "^4.0.2",
+    "can-stache": "^4.3.3",
     "can-stache-converters": "^4.0.1",
     "can-stache-route-helpers": "<2",
     "can-view-autorender": "^4.0.0",
