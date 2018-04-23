@@ -9,7 +9,8 @@ var tag = require('can-connect/can/tag/');
 var moment = require("moment");
 var set = require("can-set");
 var DefineList = require('can-define/list/list');
-var DefineMap = require('can-define-backup');
+var DefineMap = require("can-define/map/map");
+var defineBackup = require('can-define-backup');
 
 
 
@@ -111,6 +112,7 @@ var Player = DefineMap.extend('Player', {
 		}
 	}
 });
+defineBackup(Player);
 
 /**
  * @constructor {can-list} bitballs/models/player.static.List List

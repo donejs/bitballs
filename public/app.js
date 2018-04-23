@@ -14,7 +14,9 @@ import 'can-stache-route-helpers';
 import "./util/prefilter";
 import can from "can-namespace";
 
-window.can = can; // This is just for debugging.
+if(typeof window !== "undefined") {
+	window.can = can; // This is just for debugging.
+}
 
 const AppViewModel = DefineMap.extend('App',
 {
@@ -56,7 +58,7 @@ const AppViewModel = DefineMap.extend('App',
 	* Promise object
 	**/
 	pagePromise: {
-		value: undefined,
+		default: undefined,
 		serialize: false
 	},
 	/**
@@ -139,7 +141,7 @@ const AppViewModel = DefineMap.extend('App',
 	**/
 	session: {
 		serialize: false,
-		value: function() {
+		default: function() {
 			var self = this;
       Session.get({})
         .then(function(session){
