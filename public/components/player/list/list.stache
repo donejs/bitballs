@@ -39,7 +39,7 @@
 								</button>
 								<button type="button" class="btn btn-danger"
 									on:click="../deletePlayer(.)"
-									{{#isDestroying}}disabled{{/isDestroying}}>
+									{{#isDestroying()}}disabled{{/isDestroying}}>
 									<span class='glyphicon glyphicon-remove'/>
 								</button>
 							{{/if}}
