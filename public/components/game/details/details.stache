@@ -25,16 +25,16 @@
 			<th colspan="2">{{color}} - {{name}}</th>
 		</tr>
 		{{#each(players)}}
-			<tr on:click="scope.root.showStatMenuFor(this,scope.element, scope.event)">
+			<tr on:click="scope.vm.showStatMenuFor(this,scope.element, scope.event)">
 				<td>{{name}}</td>
 				<td class="stats-container">
-					{{#each(scope.root.statsForPlayerId(id))}}
-						<span on:click="scope.root.gotoTimeMinus5(time, scope.event)"
-							class="stat-point stat-{{type}}" style="left: {{scope.root.statPercent(time)}}%">
+					{{#each(scope.vm.statsForPlayerId(id))}}
+						<span on:click="scope.vm.gotoTimeMinus5(time, scope.event)"
+							class="stat-point stat-{{type}}" style="left: {{scope.vm.statPercent(time)}}%">
 							{{type}}
-							{{#if(scope.root.session.isAdmin())}}
+							{{#if(scope.vm.session.isAdmin())}}
 								<span class="destroy-btn glyphicon glyphicon-trash"
-									on:click="scope.root.deleteStat(this, scope.event)"></span>
+									on:click="scope.vm.deleteStat(this, scope.event)"></span>
 							{{/if}}
 						</span>
 					{{/each}}
@@ -54,9 +54,9 @@
 		<div class="arrow" style="top: 50%;"></div>
 		<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
 		<div class="popover-content">
-			<form on:submit="scope.root.createStat(scope.event)" action="">
+			<form on:submit="scope.vm.createStat(scope.event)" action="">
 				<label for="stat-type">Type</label>
-			    <select value:bind="stat.type" class="form-control" id="stat-type">
+			    <select bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>
 			    	{{#statTypes}}
 			    		<option value="{{name}}">{{name}}</option>
@@ -67,7 +67,7 @@
 				    <label for="stat-time">Time (seconds)</label>
 				    <div class="row">
 				    	<div class="col-xs-6">
-				    		<input type="text" class="form-control" id="stat-time" value:bind="stat.time"/>
+				    		<input type="text" class="form-control" id="stat-time" bind="stat.time"/>
 			    		</div>
 			    		<div class="col-xs-6">
 			    		<a class="btn btn-default" on:click="minusTime(10)">-10 s</a>

@@ -102,7 +102,7 @@ var Stat = DefineMap.extend('Stat',
 		}
 	},
 
-	value: 'any'
+	default: 'any'
 });
 
 
@@ -160,11 +160,11 @@ Stat.List = DefineList.extend('StatsList', {
 		return [
 			...Stat.statTypes.map(({ name }) => ({
 				name,
-				value: (aggregated[name] || 0).toFixed(0),
+				default: (aggregated[name] || 0).toFixed(0),
 			})),
 			{
 				name: 'TP',
-				value: (function() {
+				default: (function() {
 					let onePointers = aggregated['1P'] || 0;
 					let twoPointers = aggregated['2P'] || 0;
 
@@ -173,7 +173,7 @@ Stat.List = DefineList.extend('StatsList', {
 			},
 			{
 				name: 'FG%',
-				value: (function() {
+				default: (function() {
 					let onePointers = aggregated['1P'] || 0;
 					let twoPointers = aggregated['2P'] || 0;
 					let onePointAttempts = aggregated['1PA'] || 0;

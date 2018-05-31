@@ -66,7 +66,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	autoplay: {
 		type: 'booolean',
-		value: true
+		default: true
 	},
 	/**
 	* @property {bitballs/models/session} bitballs/components/game/details.session session
@@ -144,7 +144,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * Array of statType objects from [bitballs/models/stat]
 	 */
 	statTypes: {
-		value: Stat.statTypes
+		default: Stat.statTypes
 	},
 	/**
 	 * @property {Object<{home: Number, away: Number}>}

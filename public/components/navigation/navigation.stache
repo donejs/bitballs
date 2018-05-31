@@ -22,7 +22,7 @@
 					<a href="{{routeUrl(page='account')}}">Account</a>
 				</li>
 				<li>
-					<a href="javascript://" on:click="scope.root.logout()">Logout</a>
+					<a href="javascript://" on:click="scope.vm.logout()">Logout</a>
 				</li>
 			{{else}}
 				<li class="dropdown">
@@ -37,13 +37,13 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<form on:submit="scope.root.createSession(scope.event)" action="">
+							<form on:submit="scope.vm.createSession(scope.event)" action="">
 								<div class="form-group form-group-sm">
 									<input
 										class="form-control"
 										id="user-email-nav"
 										placeholder="email"
-										value:bind="scope.root.loginSession.user.email"
+										bind="loginSession.user.email"
 									>
 								</div>
 								<div class="form-group form-group-sm">
@@ -52,13 +52,13 @@
 										class="form-control"
 										type="password"
 										id="user-password-nav"
-										value:bind="loginSession.user.password"
+										bind="loginSession.user.password"
 									>
 								</div>
 								<button type="submit" class="btn btn-primary btn-sm" >Login</button>
 								<a href="{{routeUrl(page='register')}}"
 									class="register-btn btn btn-link"
-									on:click="scope.root.closeDropdown(scope.element)"
+									on:click="scope.vm.closeDropdown(scope.element)"
 								>
 									or register
 								</a>

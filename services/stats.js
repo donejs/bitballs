@@ -21,7 +21,7 @@
  *         playerId: Int,   // Related player
  *         type: String,    // "1P", "1PA", etc
  *         time: Int,       // time of stat in seconds
- *         value: Int,      // Not currently used, but available.
+ *         default: Int,      // Not currently used, but available.
  *       }, ...]}
  *
  * @signature `POST /services/stats`
@@ -60,7 +60,7 @@
  *         playerId: Int,   // Related player
  *         type: String,    // "1P", "1PA", etc
  *         time: Int,       // time of stat in seconds
- *         value: Int,      // Not currently used, but available.
+ *         default: Int,      // Not currently used, but available.
  *       }
  *
  * @signature `PUT /services/stats/:id`

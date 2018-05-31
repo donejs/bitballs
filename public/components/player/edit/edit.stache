@@ -10,7 +10,7 @@
     <div class="form-group">
       <label for="player-name">Name</label>
       <input type="text" class="form-control" id="player-name"
-        placeholder="fullname" value:bind="player.name" />
+        placeholder="fullname" bind="player.name" />
     </div>
     <div class="form-group">
       <label for="player-weight">Weight</label>
@@ -19,7 +19,7 @@
       	class="form-control"
       	id="player-weight"
       	placeholder="weight in pounds"
-      	value:bind="string-to-any(~player.weight)" />
+      	bind="string-to-any(~player.weight)" />
     </div>
     <div class="form-group">
       <label for="player-height">Height</label>
@@ -28,7 +28,7 @@
       	class="form-control"
       	id="player-height"
       	placeholder="height in inches (Ex: 71)"
-      	value:bind="string-to-any(~player.height)" />
+      	bind="string-to-any(~player.height)" />
     </div>
     <div class="form-group">
       <label for="player-birthday">Birthday</label>
@@ -37,7 +37,7 @@
       	class="form-control"
       	id="player-birthday"
       	placeholder="day of birth"
-      	value:bind="player.birthDate" />
+      	bind="player.birthDate" />
     </div>
     <button type="submit" class="btn btn-primary" >{{#if(isNewPlayer)}}Create{{else}}Update{{/if}}</button>
     {{#unless(isNewPlayer)}}

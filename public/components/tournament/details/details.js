@@ -63,7 +63,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	**/
 	isAdmin: {
 		type: 'boolean',
-		value: false
+		default: false
 	},
 	/**
 	* @property {Number} bitballs/components/tournament/details.tournamentId tournamentId
@@ -178,7 +178,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/game] instance used to create a `Game`.
 	**/
 	game: {
-		Value: Game
+		Default: Game
 	},
 	/**
 	* @property {bitballs/models/session} bitballs/components/tournament/details.session session
@@ -194,7 +194,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/team] instance used to create a `Team`.
 	**/
 	team: {
-		Value: Team
+		Default: Team
 	},
 	/**
 	* @property {Promise<bitballs/models/player.static.List>} bitballs/components/tournament/details.playersPromise playersPromise
@@ -203,7 +203,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A promise that resolves to a [bitballs/models/player.static.List Team List].
 	**/
 	playersPromise: {
-		value: function(){
+		default: function(){
 			return Player.getList({orderBy: "name"});
 		}
 	},
@@ -261,7 +261,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* The round selection made by the user.
 	**/
 	userSelectedRound: {
-		value: null
+		default: null
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedRound selectedRound
@@ -288,7 +288,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* The court selection made by the user.
 	**/
 	userSelectedCourt: {
-		value: null
+		default: null
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedCourt selectedCourt
@@ -307,7 +307,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 
 			var selectedRoundEvent = this.stream("selectedRound");
 			var setSelectedCourtEvent = setStream.map(function(selectedCourt){
-				return {type: "selectedCourt", value: selectedCourt};
+				return {type: "selectedCourt", default: selectedCourt};
 			});
 
 			return setSelectedCourtEvent.merge(selectedRoundEvent).scan(function(selectedCourt, event){

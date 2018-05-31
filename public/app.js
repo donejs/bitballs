@@ -22,10 +22,6 @@ const AppViewModel = DefineMap.extend('App',
 {
 	env: {
 		default: () => ({NODE_ENV:'development'}),
-		set: function(newVal){
-			console.log("ENV IS SET TO ", newVal);
-			return newVal;
-		},
 		serialize: false
   	},
 	/**
@@ -211,7 +207,7 @@ stache.registerHelper("pageComponent", function(scope, options){
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"{{#with scope.root}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
+					"{{#with scope.top}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +

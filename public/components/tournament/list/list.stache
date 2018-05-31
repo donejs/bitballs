@@ -27,7 +27,7 @@
 			class="form-control"
 			id="tournament-date"
 			placeholder="date"
-			value:bind="tournament.date"/>
+			bind="tournament.date"/>
 	</div>
 	<button type="submit" class="create-btn btn btn-default" {{#if savePromise.isPending}}disabled{{/if}}>Create</button>
 	{{#if savePromise.isRejected}}
