@@ -1,11 +1,12 @@
 <h2>Tournaments</h2>
-<tournament-model get-list="{}">
-	{{#if isPending}}
-		<div class='info'>Loading</div>
-	{{/if}}
-	{{#each(value)}}
+
+{{#if tournamentsPromise.isPending}}
+	<div class='info'>Loading</div>
+{{/if}}
+{{#if tournamentsPromise.isResolved}}
+	{{#each(tournamentsPromise.value)}}
 		<h3><a href='{{routeUrl(tournamentId=id)}}'>{{year}}</a>
-			{{#if isAdmin}}
+			{{#if ../isAdmin}}
 			<button type="button" class="btn btn-danger"
 				on:click="scope.rootdeleteTournament(this)"
 				{{#isDestroying()}}disabled{{/isDestroying}}>
@@ -16,7 +17,8 @@
 	{{else}}
 		<div class="text-center lead">No Tournaments</div>
 	{{/each}}
-</tournament-model>
+{{/if}}
+
 {{#if(isAdmin)}}
 <h2>New Tournament</h2>
 <form on:submit="createTournament(scope.event)" action="">

@@ -207,7 +207,7 @@ stache.registerHelper("pageComponent", function(scope, options){
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{#if isResolved}}" +
-					"{{#with scope.top}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
+					"{{#with .}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
 				"{{else}}" +
 					"Loading..." +
 				"{{/if}}" +
