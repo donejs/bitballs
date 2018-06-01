@@ -43,7 +43,7 @@
 										class="form-control"
 										id="user-email-nav"
 										placeholder="email"
-										bind="loginSession.user.email"
+										value:bind="loginSession.user.email"
 									>
 								</div>
 								<div class="form-group form-group-sm">
@@ -52,7 +52,7 @@
 										class="form-control"
 										type="password"
 										id="user-password-nav"
-										bind="loginSession.user.password"
+										value:bind="loginSession.user.password"
 									>
 								</div>
 								<button type="submit" class="btn btn-primary btn-sm" >Login</button>

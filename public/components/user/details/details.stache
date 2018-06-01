@@ -25,14 +25,14 @@
 					class="form-control"
 					id="user-email"
 					{{^if(isNewUser)}}disabled{{/if}}
-					bind="user.email" />
+					value:bind="user.email" />
 			</div>
 		{{else}}
 			<input
 				class="form-control"
 				id="user-email"
 				{{^if(isNewUser)}}disabled{{/if}}
-				bind="user.email" />
+				value:bind="user.email" />
 		{{/is}}
 	</div>
 
@@ -53,7 +53,7 @@
 				class="form-control"
 				type="password"
 				id="user-password"
-				bind="user.password" />
+				value:bind="user.password" />
 		</div>
 		{{#unless(isNewUser)}}
 			<div class="form-group">
@@ -64,7 +64,7 @@
 					class="form-control"
 					type="password"
 					id="user-new-password"
-					bind="user.newPassword">
+					value:bind="user.newPassword">
 			</div>
 		{{/unless}}
 		<button type="submit" {{#if(user.isSaving())}}disabled{{/if}} class="btn btn-default">

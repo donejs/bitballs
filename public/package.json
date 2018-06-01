@@ -20,7 +20,7 @@
     "can-component": "^4.0.0",
     "can-connect": "^2.0.1",
     "can-construct": "^3.2.3",
-    "can-debug": "^1.0.0",
+    "can-debug": "^1.0.4",
     "can-define": "^2.0.0",
     "can-define-backup": "^1.0.0",
     "can-define-stream-kefir": "^1.0.0",

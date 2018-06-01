@@ -8,7 +8,7 @@
 		<h3><a href='{{routeUrl(tournamentId=id)}}'>{{year}}</a>
 			{{#if ../isAdmin}}
 			<button type="button" class="btn btn-danger"
-				on:click="scope.rootdeleteTournament(this)"
+				on:click="../deleteTournament(this)"
 				{{#isDestroying()}}disabled{{/isDestroying}}>
 					<span class='glyphicon glyphicon-remove'/>
 			</button>
@@ -29,13 +29,13 @@
 			class="form-control"
 			id="tournament-date"
 			placeholder="date"
-			bind="tournament.date"/>
+			value:bind="tournament.date"/>
 	</div>
 	<button type="submit" class="create-btn btn btn-default" {{#if savePromise.isPending}}disabled{{/if}}>Create</button>
-	{{#if savePromise.isRejected}}
+	{{# if(savePromise.isRejected) }}
 		{{#each savePromise.reason.responseJSON}}
 			<p class="text-danger">{{.}}</p>
 		{{/each}}
-	{{/if}}
+	{{/ if }}
 </form>
 {{/if}}
