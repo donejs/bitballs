@@ -171,7 +171,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		if(game && game.stats) {
 			var playerMap = this.playerIdToHomeOrAwayMap;
 			var scores = {home: 0, away: 0};
-			var time = this.time;
+			var time = this.youtubePlayerTime;
 
 			game.stats.forEach(function(stat){
 				if(stat.time <= time) {
@@ -455,6 +455,12 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	},
 	youtubePlayerTime: {
 		value: function(prop) {
+			// this allows the playerTime to be set directly for testing
+			if(prop.lastSet.value) {
+				prop.resolve(prop.lastSet.value);
+			}
+
+			// Wait until the playing state changes, and then check the youtube player state
 			var timer,
 				// when paused, we will still change the position
 				checkTime = 300;

@@ -33,7 +33,7 @@
     "can-route-pushstate": "^4.0.1",
     "can-stache": "^4.3.3",
     "can-stache-converters": "^4.0.1",
-    "can-stache-route-helpers": "<2",
+    "can-stache-route-helpers": "^1.0.0",
     "can-super-model": "^1.0.0",
     "can-view-autorender": "^5.0.0-pre.0",
     "can-view-model": "^4.0.0",
@@ -57,7 +57,7 @@
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
-    "can-fixture": "^2.0.2",
+    "can-fixture": "^3.0.0-pre.11",
     "donejs-cli": "^2.0.0",
     "firebase-tools": "^3.9.1",
     "testee": "^0.7.0"

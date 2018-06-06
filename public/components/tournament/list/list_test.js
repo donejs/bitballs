@@ -46,10 +46,10 @@ QUnit.test('Create button is disabled while posting data', function (assert) {
         }
     });
 
-	
+
 	var frag = stache('<tournament-list isAdmin:from="app.isAdmin" tournament:from="tournament" />')(vm);
 	var resolveRequest;
-	
+
     fixture('POST /services/tournaments', function (req, res) {
         QUnit.ok(expectingRequest, 'Request was made');
 
@@ -71,10 +71,11 @@ QUnit.test('Create button is disabled while posting data', function (assert) {
 	F('tournament-list .create-btn')
 			.attr('disabled', 'disabled', 'Create button is disabled')
 			.then(function() {
-				resolveRequest({});
+				resolveRequest({id: 9910911});
 			})
 			.attr('disabled', undefined,
-		'Create button is enabled after the request is resolved');
+		'Create button is enabled after the request is resolved').then(function(){
+			done();
+		});
 
-	done();
 });
