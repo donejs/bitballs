@@ -54,14 +54,6 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 */
 	youtubePlayer: 'any',
 	/**
-	 * @property {String} object to hold the current duration
-	 */
-	duration: 'any',
-	/**
-	 * @property {Number} time into the video playing in seconds
-	 */
-	time: 'number',
-	/**
 	 * @property {Boolean} [autoplay=true] the video when the element is inserted.
 	 */
 	autoplay: {
@@ -144,7 +136,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * Array of statType objects from [bitballs/models/stat]
 	 */
 	statTypes: {
-		default: Stat.statTypes
+		default: () => Stat.statTypes
 	},
 	/**
 	 * @property {Object<{home: Number, away: Number}>}
@@ -303,7 +295,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	addTime: function(time){
-		this.stat.time = this.stat.time + time;
+		this.youtubePlayer.seekTo(this.youtubePlayer.getCurrentTime() + time, true);
 	},
 	/**
 	 * @function
@@ -322,7 +314,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	minusTime: function(time){
-		this.stat.time = this.stat.time - time;
+		this.youtubePlayer.seekTo(this.youtubePlayer.getCurrentTime() - time, true);
 	},
 	/**
 	 * @function
@@ -386,11 +378,11 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 *
 	 * Use in a template like:
 	 * ```
-	 * <span style="left: \{{statPercent time}}%">
+	 * <span style="left: \{{ statPercent time }}%">
 	 * ```
 	 */
 	statPercent: function(time){
-		var duration = this.duration;
+		var duration = this.youtubePlayerDuration;
 		if(duration) {
 			return time / duration * 100;
 		} else {
@@ -408,9 +400,9 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 *
 	 * Use in a template like:
 	 * ```
-	 * \{{#eachOf statsForPlayerId(id)}}
-	 * \{{type}}
-	 * \{{/each}}
+	 * \{{# each(statsForPlayerId(id)) }}
+	 * \{{ type }}
+	 * \{{/ each }}
 	 * ```
 	 */
 	statsForPlayerId: function(id){
@@ -420,176 +412,207 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		} else {
 			return new DefineList();
 		}
-	}
-});
+	},
 
-exports.Component = Component.extend({
-	tag: "game-details",
-	view: require("./details.stache"),
-	ViewModel: exports.ViewModel,
-	/**
-	 * @constructor {can-component.events} bitballs/components/game/details.events Events
-	 * @parent bitballs/components/game/details
-	 *
-	 * @description A `<game-details>` component's events object.
-	 */
-	events: {
-		/**
-		 * @function
-		 * @description Initializes the YouTube player upon insertion.
-		 */
-		inserted: function(){
-			var self = this;
-			youtubeAPI().then(function(YT){
-				self.YT = YT;
-			}).then(function () {
+	// hold onto the actual element
+	element: "any",
 
-				return self.viewModel.gamePromise;
-			}).then(function () {
-				// this component might have been torn down, so check if there's
-				// actually a game
-				if(self.viewModel.game) {
-					var player = new self.YT.Player('youtube-player', {
-						height: '390',
-						width: '640',
-						videoId: self.viewModel.game.videoUrl,
-						events: {
-						  'onReady': self.onPlayerReady.bind(self),
-						  'onStateChange': self.onPlayerStateChange.bind(self)
-						}
-					});
-					self.viewModel.youtubePlayer = player;
-				}
-			})["catch"](function(e){
-				if ( platform.isNode ) {
-					return;
-				}
-				setTimeout(function(){
-					throw e;
-				},1);
+	// VIDEO RELATED PROPERTIES
+	YT: "any",
+	youtubePlayerDuration: {
+		value: function(prop) {
+			//if(this.removedFromDOM) {
+			//	return true;
+			//}
+			var timer;
+			prop.listenTo('youtubePlayerReady',function(){
+				var getDuration = () => {
+					var duration = this.youtubePlayer.getDuration();
+					if(duration) {
+						prop.resolve(duration);
+					} else {
+						timer = setTimeout(getDuration, 100);
+					}
+				};
+				getDuration();
 			});
-		},
-		/**
-		 * @function removed
-		 * @description Cleans up after player events.
-		 */
-		"removed": function(){
+			return function(){
+				clearTimeout(timer)
+			}
+		}
+	},
+	youtubePlayerIsPlaying: {
+		value: function(prop) {
+			prop.listenTo('youtubePlayerStateChange',function(event){
+				console.log(event.youtube.data);
+				if(event.youtube.data === this.YT.PlayerState.PLAYING) {
+					prop.resolve(true)
+				} else {
+					prop.resolve(false)
+				}
+			});
+		}
+	},
+	youtubePlayerTime: {
+		value: function(prop) {
+			var timer,
+				// when paused, we will still change the position
+				checkTime = 300;
+
+			var timeUpdate = () => {
+				prop.resolve(this.youtubePlayer.getCurrentTime());
+				timer = setTimeout(timeUpdate, 50);
+			};
+
+			prop.listenTo('youtubePlayerIsPlaying',function(ev, isPlaying){
+				clearTimeout(timer);
+				checkTime = isPlaying ? 50 : 300;
+				timeUpdate();
+			});
+			return function(){
+				clearTimeout(timer)
+			}
+		}
+	},
+	cursorPosition: {
+		value: function(prop){
+
+			var resolve = () => {
+				var time = this.youtubePlayerTime;
+				var duration = this.youtubePlayerDuration;
+				if(time && duration) {
+					var fraction = time / duration;
+					var containers = this.element.getElementsByClassName("stats-container");
+					var width = $(containers[0]).width();
+					var firstOffset = $(containers[0]).offset();
+					var height = $(containers[containers.length - 1]).offset().top -
+								firstOffset.top + $(containers[containers.length - 1]).outerHeight();
+					prop.resolve({
+						left: firstOffset.left + fraction*width,
+						top: firstOffset.top,
+						height: height
+					});
+				} else {
+					prop.resolve({
+						left: 0,
+						top: 0,
+						height: 0
+					})
+				}
+			};
+			prop.listenTo("youtubePlayerTime",resolve);
+			prop.listenTo("youtubePlayerDuration",resolve);
+			prop.listenTo(window,"resize", resolve);
+			resolve();
+		}
+	},
+	addStatPosition: {
+		value: function(prop){
+			var resolve = () => {
+				prop.resolve( $(this.element).find(".stats-container:first").offset() )
+			};
+			prop.listenTo(window,"resize", resolve);
+			resolve();
+		}
+	},
+	get players(){
+		var game = this.game,
+			players = [];
+		if(game) {
+			game.teams.forEach(function(team){
+				team.players.forEach(function(player) {
+					players.push(player);
+				})
+			});
+		}
+		return players;
+	},
+	get addStatArrowPosition() {
+		var index = 0;
+		if(this.stat) {
+			for(var i = 0 ; i < this.players.length; i++) {
+				if(this.stat.playerId === this.players[i].id) {
+					index = i;
+				}
+			}
+		}
+		var containers = this.element.getElementsByClassName("stats-container");
+		var first = $(containers[0]).offset(),
+			height = $(containers[0]).outerHeight();
+
+		return {
+			top: $(containers[index]).offset().top - first.top + (height/2)
+		};
+	},
+
+	connectedCallback(el) {
+		this.element = el;
+		youtubeAPI().then((YT) => {
+			this.YT = YT;
+		}).then(() => {
+			return this.gamePromise;
+		}).then( () => {
+			// this component might have been torn down, so check if there's
+			// actually a game
+			if(this.game) {
+				var player = new this.YT.Player('youtube-player', {
+					height: '390',
+					width: '640',
+					videoId: this.game.videoUrl,
+					events: {
+					  'onReady': () => {
+						  this.dispatch("youtubePlayerReady");
+					  },
+					  'onStateChange': (data) => {
+						  this.dispatch({type: "youtubePlayerStateChange", youtube: data});
+					  }
+					}
+				});
+				this.youtubePlayer = player;
+			}
+		})["catch"](function(e){
+			if ( platform.isNode ) {
+				return;
+			}
+			setTimeout(function(){
+				throw e;
+			},1);
+		});
+
+
+
+		// side effectually start the player
+		this.listenTo("youtubePlayerReady", () => {
+			var autoplay = this.autoplay;
+			if(autoplay && !this.removedFromDOM) {
+				this.youtubePlayer.playVideo();
+			}
+		});
+
+		// When the player time changes, update the state time
+		this.listenTo("youtubePlayerTime", (ev, time)=> {
+			if(this.stat) {
+				this.stat.time = time;
+			}
+		})
+
+		return () => {
+			this.dispatch("disconnected");
 			// timeUpdate could be running
 			clearTimeout(this.timeUpdate);
 			// hack to prevent youtube stuff from running if this element
 			// was removed from the page
 			this.removedFromDOM = true;
-		},
-		/**
-		 * @function
-		 * @description The onPlayerReady handler for the YouTube Player.
-		 */
-		onPlayerReady: function(){
-			if(this.removedFromDOM) {
-				return true;
-			}
-			var autoplay = this.viewModel.autoplay,
-				youtubePlayer = this.scope.youtubePlayer,
-				self = this;
-
-			if(autoplay) {
-				youtubePlayer.playVideo();
-			}
-
-			// get duration
-			var getDuration = function(){
-				var duration = youtubePlayer.getDuration();
-				if(duration) {
-					self.viewModel.duration = duration;
-				} else {
-					setTimeout(getDuration, 100);
-				}
-			};
-			getDuration();
-		},
-		/**
-		 * @function
-		 * @description The handler for when the YouTube Player state changes.
-		 * Updates the time in the viewModel as the time changes in the video.
-		 */
-		onPlayerStateChange: function(ev){
-			var viewModel = this.viewModel,
-				player = viewModel.youtubePlayer,
-				self = this;
-			var timeUpdate = function(){
-				var currentTime = player.getCurrentTime();
-				if(viewModel.stat) {
-					viewModel.stat.time = currentTime;
-				}
-				self.timeUpdate = setTimeout(timeUpdate, 100);
-				self.updatePosition(currentTime);
-			};
-
-
-			if(ev.data === self.YT.PlayerState.PLAYING) {
-				this.scope.playing = true;
-				timeUpdate();
-			} else {
-				this.scope.playing = false;
-				clearTimeout(this.timeUpdate);
-			}
-		},
-		/**
-		 * @function
-		 * @param  {Number} time The current time.
-		 * @description Updates the position of the cursor on the stats container.
-		 */
-		updatePosition: function(time){
-			var duration = this.scope.duration;
-			if(duration) {
-				this.viewModel.time = time;
-				var fraction = time / duration;
-				var containers = this.element.getElementsByClassName("stats-container");
-				var width = $(containers[0]).width();
-				var firstOffset = $(containers[0]).offset();
-				var height = $(containers[containers.length - 1]).offset().top - firstOffset.top + $(containers[containers.length - 1]).height();
-				$("#player-pos").offset({
-					left: firstOffset.left + fraction*width,
-					top: firstOffset.top
-				}).height(height);
-			}
-		},
-		/**
-		 * @function
-		 * @description On time change, update the Youtube Player.
-		 */
-		"{stat} time": function(){
-			var time = this.scope.stat.time;
-			if(typeof time === "number" && time >= 0) {
-
-				var player = this.scope.youtubePlayer;
-				var playerTime = player.getCurrentTime();
-				if(Math.abs(time-playerTime) > 2) {
-					player.seekTo(time, true);
-				}
-			}
-
-		},
-		/**
-		 * @function
-		 * @description  On window resize, update the position of the cursor in the stats container.
-		 */
-		"{window} resize": function(){
-			var player = this.viewModel.youtubePlayer,
-				currentTime;
-			if (player.getCurrentTime) {
-				currentTime = player.getCurrentTime();
-				this.updatePosition(currentTime);
-			}
-		},
-		/**
-		 * @function
-		 * @description When a stat is added, show the stat menu.
-		 */
-		"{viewModel} stat": function(vm, ev, newVal){
-			setTimeout(function(){
-				$("#add-stat").offset( $(".stats-container:first").offset() ).show();
-			},0);
 		}
-	}
+	},
+
+
+	// Side effectual methods.  These should be called as a result of `connectedCallback()` above
+
+});
+
+exports.Component = Component.extend({
+	tag: "game-details",
+	view: require("./details.stache"),
+	ViewModel: exports.ViewModel
 });

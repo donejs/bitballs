@@ -18,13 +18,13 @@
  *
  * ```
  * var Stat = require("bitballs/models/stat");
- * Stat.getList({where: {gameId: 5}}).then(function(stats){ ... });
+ * Stat.getList({where: {gameId: 5 }}).then(function(stats){ ... });
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-import superMap from 'can-connect/can/super-map/';
-import tag from 'can-connect/can/tag/';
-import set from "can-set";
+import superModel from 'can-super-model';
+import QueryLogic from "can-query-logic";
+import bookshelfService from "./bookshelf-service";
 import DefineMap from 'can-define/map/map';
 import DefineList from 'can-define/list/list';
 import Player from "bitballs/models/player";
@@ -58,7 +58,7 @@ var Stat = DefineMap.extend('Stat',
 	 * @parent bitballs/models/stat.properties
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {type: 'number', identity: true},
 	/**
 	 * @property {bitballs/models/player} bitballs/models/stat.properties.player player
 	 * @parent bitballs/models/player.properties
@@ -194,19 +194,8 @@ Stat.List = DefineList.extend('StatsList', {
 	},
 });
 
-/**
- * @property {set.Algebra} bitballs/models/stat.static.algebra algebra
- * @parent bitballs/models/stat.static
- *
- * Set Algebra
- */
-Stat.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('sortBy')
-);
 
-Stat.connection = superMap({
-	idProp: "id",
+Stat.connection = superModel({
 	Map: Stat,
 	List: Stat.List,
 	url: {
@@ -214,9 +203,9 @@ Stat.connection = superMap({
 		contentType: "application/x-www-form-urlencoded"
 	},
 	name: "stat",
-	algebra: Stat.algebra
+	queryLogic: new QueryLogic(Stat, bookshelfService),
+	updateInstanceWithAssignDeep: true
 });
 
-tag("stat-model", Stat.connection);
 
 export default Stat;

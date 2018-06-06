@@ -205,11 +205,11 @@ stache.registerHelper("pageComponent", function(scope, options){
 		helpers = scope.templateContext.helpers,
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
-				"{{#if isResolved}}" +
-					"{{#with .}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
-				"{{else}}" +
+				"{{# if(isResolved) }}" +
+					"{{# with(this) }}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/ with }}" +
+				"{{ else }}" +
 					"Loading..." +
-				"{{/if}}" +
+				"{{/ if }}" +
 			"</can-import>";
 	return stache(template)(scope, options.nodeList);
 });

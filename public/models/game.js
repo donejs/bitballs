@@ -4,9 +4,8 @@
  *
  * @group bitballs/models/game.properties 0 properties
  */
-var superMap = require('can-connect/can/super-map/');
-var set = require("can-set");
-var tag = require('can-connect/can/tag/');
+var superModel = require('can-super-model');
+var QueryLogic = require("can-query-logic");
 var Team = require("bitballs/models/team");
 var Player = require("bitballs/models/player");
 var Stat = require("bitballs/models/stat").default;
@@ -14,6 +13,7 @@ var Tournament = require("./tournament");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var canReflect = require("can-reflect");
+var bookshelfService = require("./bookshelf-service").default;
 
 var Game = DefineMap.extend('Game',
 {
@@ -35,7 +35,7 @@ var Game = DefineMap.extend('Game',
 	 * @parent bitballs/models/game.properties
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {identity: true, type: 'number'},
 	/**
 	 * @property {Number} bitballs/models/game.properties.tournamentId tournamentId
 	 * @parent bitballs/models/game.properties
@@ -125,7 +125,7 @@ var Game = DefineMap.extend('Game',
 		Type: Stat.List,
 		set: function(stats){
 			if (stats) {
-				stats.__listSet = {where: {gameId: this.id }};
+				stats[Stat.connection.listQueryProp] = {filter: {gameId: this.id }};
 			}
 
 			return stats;
@@ -282,28 +282,18 @@ Game.List = DefineList.extend('GamesList',
 	}
 });
 
-/**
- * @property {set.Algebra} bitballs/models/game.static.algebra algebra
- * @parent bitballs/models/game.static
- *
- * Set Algebra
- */
-Game.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('sortBy')
-);
 
-Game.connection = superMap({
-  Map: Game,
-  List: Game.List,
-  url: {
+Game.connection = superModel({
+	Map: Game,
+	List: Game.List,
+	url: {
 		resource: "/services/games",
 		contentType: "application/x-www-form-urlencoded"
 	},
-  name: "game",
-  algebra: Game.algebra,
+	name: "game",
+	queryLogic: new QueryLogic(Game, bookshelfService),
+	updateInstanceWithAssignDeep: true
 });
 
-tag("game-model", Game.connection);
 
 module.exports = Game;

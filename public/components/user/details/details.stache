@@ -1,53 +1,53 @@
 <h2>
-	{{#switch(userStatus)}}
-		{{#case("new")}}
+	{{# switch(userStatus) }}
+		{{# case("new") }}
 			Register New User
-		{{/case}}
+		{{/ case }}
 
-		{{#case("pending")}}
+		{{# case("pending") }}
 			Verify User
-		{{/case}}
+		{{/ case }}
 
-		{{#default}}
+		{{# default }}
 			Update User
-		{{/default}}
-	{{/switch}}
+		{{/ default }}
+	{{/ switch }}
 </h2>
 <form on:submit="saveUser(scope.event)" action="POST">
 	<div class="form-group">
 		<label for="user-email">
 			Email
 		</label>
-		{{#is(userStatus, "verified")}}
+		{{# is(userStatus, "verified") }}
 			<div class="input-group has-success has-feedback">
 				<span class="input-group-addon">verified!</span>
 				<input
 					class="form-control"
 					id="user-email"
-					{{^if(isNewUser)}}disabled{{/if}}
+					{{^ if(isNewUser) }}disabled{{/ if }}
 					value:bind="user.email" />
 			</div>
-		{{else}}
+		{{ else }}
 			<input
 				class="form-control"
 				id="user-email"
-				{{^if(isNewUser)}}disabled{{/if}}
+				{{^ if(isNewUser) }}disabled{{/ if }}
 				value:bind="user.email" />
-		{{/is}}
+		{{/ is }}
 	</div>
 
-	{{#is(userStatus, "pending")}}
+	{{# is(userStatus, "pending") }}
 		<div class="form-group">
 			<label>We've sent you an email. Please verify your account by clicking on the link in the email.</label>
 		</div>
-	{{else}}
+	{{ else }}
 		<div class="form-group">
 			<label for="user-password">
-				{{#if(isNewUser)}}
+				{{# if(isNewUser) }}
 					Password
-				{{else}}
+				{{ else }}
 					Current Password
-				{{/if}}
+				{{/ if }}
 			</label>
 			<input
 				class="form-control"
@@ -55,7 +55,7 @@
 				id="user-password"
 				value:bind="user.password" />
 		</div>
-		{{#unless(isNewUser)}}
+		{{# unless(isNewUser) }}
 			<div class="form-group">
 				<label for="user-new-password">
 					New Password
@@ -66,21 +66,21 @@
 					id="user-new-password"
 					value:bind="user.newPassword">
 			</div>
-		{{/unless}}
-		<button type="submit" {{#if(user.isSaving())}}disabled{{/if}} class="btn btn-default">
-			{{#if(isNewUser)}}Create{{else}}Update{{/if}}
+		{{/ unless }}
+		<button type="submit" {{# if(user.isSaving()) }}disabled{{/ if }} class="btn btn-default">
+			{{# if(isNewUser) }}Create{{ else }}Update{{/ if }}
 		</button>
-	{{/is}}
+	{{/ is }}
 
-	{{#unless(isNewUser)}}
+	{{# unless(isNewUser) }}
 		<br>
 		<br>
 		<div class="btn btn-danger" on:click="deleteUser()">DELETE ACCOUNT</div>
-	{{/unless}}
+	{{/ unless }}
 
-	{{#if(savePromise.isRejected)}}
-		{{#each(savePromise.reason.responseJSON)}}
-			<p class="text-danger">{{.}}</p>
-		{{/each}}
-	{{/if}}
+	{{# if(savePromise.isRejected) }}
+		{{# each(savePromise.reason.responseJSON) }}
+			<p class="text-danger">{{ . }}</p>
+		{{/ each }}
+	{{/ if }}
 </form>

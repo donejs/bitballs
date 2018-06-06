@@ -18,13 +18,13 @@
  *
  * ```
  * var User = require("bitballs/models/user");
- * User.getList({where: {gameId: 5}}).then(function(users){ ... });
+ * User.getList({where: {gameId: 5 }}).then(function(users){ ... });
  * new User({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-var superMap = require('can-connect/can/super-map/');
-var tag = require('can-connect/can/tag/');
-var set = require("can-set");
+var superModel = require('can-super-model');
+var QueryLogic = require("can-query-logic");
+var bookshelfService = require("./bookshelf-service").default;
 var DefineMap = require('can-define/map/map');
 var DefineList = require("can-define/list/list");
 
@@ -36,7 +36,7 @@ var User = DefineMap.extend('User', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {type: 'number', identity: true},
 	/**
 	 * @property {String} bitballs/models/user.properties.email email
 	 * @parent bitballs/models/user.properties
@@ -95,28 +95,19 @@ var User = DefineMap.extend('User', {
  */
 User.List = DefineList.extend('UserList', {"#": User});
 
-/**
- * @property {set.Algebra} bitballs/models/user.static.algebra algebra
- * @parent bitballs/models/user.static
- *
- * Set Algebra
- */
-User.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('sortBy')
-);
+User.queryLogic = new QueryLogic(User, bookshelfService);
 
-User.connection = superMap({
-  Map: User,
-  List: User.List,
-  url: {
-	resource: "/services/users",
-	contentType: "application/x-www-form-urlencoded"
-  },
-  name: "user",
-  algebra: User.algebra
+User.connection = superModel({
+	Map: User,
+	List: User.List,
+	url: {
+		resource: "/services/users",
+		contentType: "application/x-www-form-urlencoded"
+	},
+	name: "user",
+	queryLogic: User.queryLogic,
+	updateInstanceWithAssignDeep: true
 });
 
-tag("user-model", User.connection);
 
 module.exports = User;

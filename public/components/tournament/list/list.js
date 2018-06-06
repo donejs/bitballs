@@ -41,7 +41,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 
 	tournamentsPromise: {
 		default: function(){
-			return Tournament.getList({});
+			return Tournament.getList({orderBy: "date"});
 		}
 	},
 	/**
