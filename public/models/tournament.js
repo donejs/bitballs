@@ -4,9 +4,9 @@
  *
  * @group bitballs/models/tournament.properties 0 properties
  */
-var superMap = require('can-connect/can/super-map/');
-var tag = require('can-connect/can/tag/');
-var set = require("can-set");
+var superModel = require('can-super-model');
+var QueryLogic = require("can-query-logic");
+var bookshelfService = require("./bookshelf-service").default;
 var moment = require('moment');
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
@@ -19,7 +19,7 @@ var Tournament = DefineMap.extend('Tournament', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {type: 'number', identity: true},
 	/**
 	 * @property {String} bitballs/models/tournament.properties.date date
 	 * @parent bitballs/models/tournament.properties
@@ -66,28 +66,17 @@ var Tournament = DefineMap.extend('Tournament', {
  */
 Tournament.List = DefineList.extend('TournamentList', {"#": Tournament});
 
-/**
- * @property {set.Algebra} bitballs/models/tournament.static.algebra algebra
- * @parent bitballs/models/tournament.static
- *
- * Set Algebra
- */
-Tournament.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('sortBy')
-);
 
-Tournament.connection = superMap({
-  Map: Tournament,
-  List: Tournament.List,
-  url: {
+Tournament.connection = superModel({
+	Map: Tournament,
+	List: Tournament.List,
+	url: {
 		resource: "/services/tournaments",
 		contentType: "application/x-www-form-urlencoded"
 	},
-  name: "tournament",
-  algebra: Tournament.algebra
+	name: "tournament",
+	queryLogic: new QueryLogic(Tournament, bookshelfService),
+	updateInstanceWithAssignDeep: true
 });
-
-tag("tournament-model", Tournament.connection);
 
 module.exports = Tournament;

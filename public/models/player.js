@@ -4,14 +4,13 @@
  *
  * @group bitballs/models/player.properties 0 properties
  */
-var superMap = require('can-connect/can/super-map/');
-var tag = require('can-connect/can/tag/');
+var superModel = require('can-super-model');
+var QueryLogic = require("can-query-logic");
+var bookshelfService = require("./bookshelf-service").default;
 var moment = require("moment");
-var set = require("can-set");
 var DefineList = require('can-define/list/list');
-var DefineMap = require('can-define-backup');
-
-
+var DefineMap = require("can-define/map/map");
+var defineBackup = require('can-define-backup');
 
 var Player = DefineMap.extend('Player', {
 	/**
@@ -20,7 +19,7 @@ var Player = DefineMap.extend('Player', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {type: 'number', identity: true},
 
 	/**
 	 * @property {String} bitballs/models/player.properties.birthday birthday
@@ -51,12 +50,12 @@ var Player = DefineMap.extend('Player', {
 	 **/
 	height: 'number',
 
-  // flag set by the api when a player is destroyed
-  _destroyed: 'boolean',
+	// flag set by the api when a player is destroyed
+	_destroyed: 'boolean',
 
-  profile: 'any',
+	profile: 'any',
 
-  startRank: 'any',
+	startRank: 'any',
 
 	/**
 	 * @function
@@ -111,6 +110,7 @@ var Player = DefineMap.extend('Player', {
 		}
 	}
 });
+defineBackup(Player);
 
 /**
  * @constructor {can-list} bitballs/models/player.static.List List
@@ -147,28 +147,19 @@ Player.List = DefineList.extend('PlayerList',
 	}
 });
 
-/**
- * @property {set.Algebra} bitballs/models/player.static.algebra algebra
- * @parent bitballs/models/player.static
- *
- * Set Algebra
- */
-Player.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('orderBy')
-);
-
-Player.connection = superMap({
-  Map: Player,
-  List: Player.List,
-  url: {
-	resource: "/services/players",
-	contentType: 'application/x-www-form-urlencoded'
-  },
-  name: "player",
-  algebra: Player.algebra
+Player.connection = superModel({
+	Map: Player,
+	List: Player.List,
+	url: {
+		resource: "/services/players",
+		contentType: 'application/x-www-form-urlencoded'
+	},
+	name: "player",
+	queryLogic: new QueryLogic(Player, bookshelfService),
+	updateInstanceWithAssignDeep: true
 });
 
-tag("player-model", Player.connection);
+
+
 
 module.exports = Player;

@@ -4,8 +4,8 @@
 
   <user-details session:bind="session"></user-details>
 
-  {{#if session.user}}
-  	{{#unless session.user.verified}}
+  {{# if(session.user) }}
+  	{{# unless(session.user.verified) }}
 	  	<hr />
 	  	<h2>User Verification</h2>
 		<button type="button"
@@ -13,8 +13,8 @@
                 on:click="session.user.verified = true">
 			Verify User
 		</button>
-	{{/unless}}
-  {{/if}}
+	{{/ unless }}
+  {{/ if }}
 
 </script>
 
@@ -28,7 +28,7 @@ import canViewModel from 'can-view-model';
 var password,
     vm = DefineMap.extend({
 	session: {
-		value: null
+		default: null
 	}
 });
 

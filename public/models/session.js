@@ -5,11 +5,12 @@
  * @group bitballs/models/session.properties 0 properties
  */
 
-var connect = require("can-connect");
+var restModel = require('can-rest-model');
+var QueryLogic = require("can-query-logic");
+var bookshelfService = require("./bookshelf-service").default;
 var $ = require("jquery");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
-var tag = require('can-connect/can/tag/');
 var User = require("./user");
 
 
@@ -40,17 +41,8 @@ var Session = DefineMap.extend('Session', {
  */
 Session.List = DefineList.extend('SessionList', {"#": Session});
 
-var behaviors = [
-	require( "can-connect/constructor/" ),
-	require( "can-connect/can/map/" ),
-	require( "can-connect/constructor/store/" ),
-	require( "can-connect/constructor/callbacks-once/" ),
-	require( "can-connect/data/callbacks/" ),
-	require( "can-connect/data/parse/" ),
-	require( "can-connect/data/url/" )
-];
 
-var options = {
+Session.connection = restModel({
 	ajax: $.ajax,
 	Map: Session,
 	List: Session.List,
@@ -60,11 +52,9 @@ var options = {
 		createData: "/services/session",
 		destroyData: "/services/session",
 		contentType: "application/x-www-form-urlencoded"
-	}
-};
-
-Session.connection = connect( behaviors, options );
-
-tag('session-model', Session.connection);
+	},
+	queryLogic: new QueryLogic(Session, bookshelfService),
+	updateInstanceWithAssignDeep: true
+});
 
 module.exports = Session;

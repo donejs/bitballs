@@ -72,7 +72,7 @@ var ViewModel = DefineMap.extend('NavigationVM',
 	 * is used for two-way binding the login form's username and password.
 	 */
 	loginSession: {
-		value: function(){
+		default: function(){
 			return new Session({user: new User()});
 		}
 	},

@@ -4,9 +4,9 @@
   <can-import from="bitballs/models/session" />
 
   <session-model get="{}">
-  	{{#if(isResolved)}}
+  	{{# if(isResolved) }}
   	<user-list session:from="./value"></user-list>
-  	{{/if}}
+  	{{/ if }}
   </session-model>
 </script>
 <script src="../../../node_modules/steal/steal.js"

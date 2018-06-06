@@ -1,4 +1,4 @@
-{{#if(session.isAdmin)}}
+{{# if(session.isAdmin() ) }}
   <table class="table">
     <thead>
       <tr>
@@ -9,31 +9,35 @@
       </tr>
     </thead>
     <tbody>
-      {{#if users.isPending}}
+      {{# if(users.isPending) }}
         <tr class="info">
           <td colspan="4">LOADING...</td>
         </tr>
-      {{/if}}
-      {{#if users.isResolved}}
-        {{#each users.value}}
+      {{/ if }}
+      {{# if(users.isResolved) }}
+        {{# each(users.value) }}
           <tr>
-            <td>{{id}}</td>
-            <td>{{email}}</td>
-            <td>{{verified}}</td>
+            <td>{{ id }}</td>
+            <td>{{ email }}</td>
+            <td>{{ verified }}</td>
             <td>
-              {{#is id session.user.id}}
-                {{isAdmin}}
-              {{else}}
+              {{# is(id, ../session.user.id) }}
+                {{ isAdmin }}
+              {{ else }}
+                {{# if(../session.user.isAdmin) }}
                 <input type="checkbox"
-                  on:change="setAdmin( ., %element.checked )"
+                  on:change="../setAdmin( ., scope.element.checked )"
                   checked:from="isAdmin"
-                  disabled:from="isSaving"
+                  disabled:from="isSaving()"
                 >
-              {{/is}}
+                {{ else }}
+                  {{ isAdmin }}
+                {{/ if }}
+              {{/ is }}
             </td>
           </tr>
-        {{/each}}
-      {{/if}}
+        {{/ each }}
+      {{/ if }}
     </tbody>
   </table>
-{{/if}}
+{{/ if }}

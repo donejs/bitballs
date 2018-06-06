@@ -1,23 +1,25 @@
 <h2>Tournaments</h2>
-<tournament-model get-list="{}">
-	{{#if isPending}}
-		<div class='info'>Loading</div>
-	{{/if}}
-	{{#each(value)}}
-		<h3><a href='{{routeUrl(tournamentId=id)}}'>{{year}}</a>
-			{{#if isAdmin}}
+
+{{# if(tournamentsPromise.isPending) }}
+	<div class='info'>Loading</div>
+{{/ if }}
+{{# if(tournamentsPromise.isResolved) }}
+	{{# each(tournamentsPromise.value) }}
+		<h3><a href='{{ routeUrl(tournamentId=id) }}'>{{ year }}</a>
+			{{# if(../isAdmin) }}
 			<button type="button" class="btn btn-danger"
-				on:click="scope.rootdeleteTournament(this)"
-				{{#isDestroying()}}disabled{{/isDestroying}}>
+				on:click="../deleteTournament(this)"
+				{{# isDestroying() }}disabled{{/ isDestroying }}>
 					<span class='glyphicon glyphicon-remove'/>
 			</button>
-			{{/if}}
+			{{/ if }}
 		</h3>
-	{{else}}
+	{{ else }}
 		<div class="text-center lead">No Tournaments</div>
-	{{/each}}
-</tournament-model>
-{{#if(isAdmin)}}
+	{{/ each }}
+{{/ if }}
+
+{{# if(isAdmin) }}
 <h2>New Tournament</h2>
 <form on:submit="createTournament(scope.event)" action="">
 	<div class="form-group">
@@ -29,11 +31,11 @@
 			placeholder="date"
 			value:bind="tournament.date"/>
 	</div>
-	<button type="submit" class="create-btn btn btn-default" {{#if savePromise.isPending}}disabled{{/if}}>Create</button>
-	{{#if savePromise.isRejected}}
-		{{#each savePromise.reason.responseJSON}}
-			<p class="text-danger">{{.}}</p>
-		{{/each}}
-	{{/if}}
+	<button type="submit" class="create-btn btn btn-default" {{# if(savePromise.isPending) }}disabled{{/ if }}>Create</button>
+	{{# if(savePromise.isRejected) }}
+		{{# each(savePromise.reason.responseJSON) }}
+			<p class="text-danger">{{ . }}</p>
+		{{/ each }}
+	{{/ if }}
 </form>
-{{/if}}
+{{/ if }}

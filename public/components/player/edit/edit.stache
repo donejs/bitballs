@@ -1,12 +1,12 @@
 <can-import from="can-stache-converters" />
 
-{{#if(isAdmin)}}
+{{# if(isAdmin) }}
   <form class="edit-form" on:submit="savePlayer(scope.event, scope.element)" action="POST">
-    {{#if(isNewPlayer)}}
+    {{# if(isNewPlayer) }}
       <h3>Create Player</h3>
-    {{else}}
+    {{ else }}
       <h3>Update Player</h3>
-    {{/if}}
+    {{/ if }}
     <div class="form-group">
       <label for="player-name">Name</label>
       <input type="text" class="form-control" id="player-name"
@@ -39,14 +39,14 @@
       	placeholder="day of birth"
       	value:bind="player.birthDate" />
     </div>
-    <button type="submit" class="btn btn-primary" >{{#if(isNewPlayer)}}Create{{else}}Update{{/if}}</button>
-    {{#unless(isNewPlayer)}}
+    <button type="submit" class="btn btn-primary" >{{# if(isNewPlayer) }}Create{{ else }}Update{{/ if }}</button>
+    {{# unless(isNewPlayer) }}
       <a class="btn btn-default" on:click="cancel(%element)">Cancel</a>
-    {{/unless}}
-    {{#if(savePromise.isRejected)}}
-      {{#each(savePromise.reason.responseJSON)}}
-        <p class="text-danger">{{.}}</p>
-      {{/each}}
-    {{/if}}
+    {{/ unless }}
+    {{# if(savePromise.isRejected) }}
+      {{# each(savePromise.reason.responseJSON) }}
+        <p class="text-danger">{{ . }}</p>
+      {{/ each }}
+    {{/ if }}
   </form>
-{{/if}}
+{{/ if }}

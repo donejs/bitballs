@@ -44,9 +44,11 @@ import "bootstrap/dist/css/bootstrap.css!";
 import "can-stache-route-helpers";
 import tournamentDetailsView from "./details.stache";
 
-export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
+export const ViewModel = DefineMap.extend('TournamentDetails',
 {
-	/**
+	// when we create a team, we save the promise to know if there's an error
+	teamSavePromise: {type: "any"},
+   /**
 	* @property {Promise<bitballs/models/tournament>} bitballs/components/tournament/details.tournamentPromise tournamentPromise
 	* @parent bitballs/components/tournament/details.properties
 	*
@@ -63,7 +65,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	**/
 	isAdmin: {
 		type: 'boolean',
-		value: false
+		default: false
 	},
 	/**
 	* @property {Number} bitballs/components/tournament/details.tournamentId tournamentId
@@ -134,8 +136,8 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/team.static.List Team List] instance.
 	**/
 	teams: {
-		get: function(lastSet, setVal){
-			this.teamsPromise.then(setVal);
+		get: function(lastSet, resolve){
+			this.teamsPromise.then(resolve);
 		}
 	},
 	/**
@@ -178,7 +180,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/game] instance used to create a `Game`.
 	**/
 	game: {
-		Value: Game
+		Default: Game
 	},
 	/**
 	* @property {bitballs/models/session} bitballs/components/tournament/details.session session
@@ -194,7 +196,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/team] instance used to create a `Team`.
 	**/
 	team: {
-		Value: Team
+		Default: Team
 	},
 	/**
 	* @property {Promise<bitballs/models/player.static.List>} bitballs/components/tournament/details.playersPromise playersPromise
@@ -203,7 +205,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A promise that resolves to a [bitballs/models/player.static.List Team List].
 	**/
 	playersPromise: {
-		value: function(){
+		default: function(){
 			return Player.getList({orderBy: "name"});
 		}
 	},
@@ -226,6 +228,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* [bitballs/components/player/details.ViewModel.prototype.playerId playerId].
 	**/
 	get statsPromise() {
+	  // currently, we can't request stats through a multi-relationship
 	  return Stat.getList({
 		// where: {tournamentId: this.tournamentId},
 	  });
@@ -237,7 +240,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* A [bitballs/models/stat.static.List stat List] instance.
 	**/
 	stats: {
-	  get: function(lastSet, setVal){
+	  get: function(lastSet, resolve){
 		if (!this.games) {
 			return;
 		}
@@ -250,32 +253,32 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 				games.includes(gameId)
 			);
 
-			setVal(stats);
+			resolve(stats);
 		});
 	  }
-	},
-	/**
-	* @property {String|null} bitballs/components/tournament/details.userSelectedRound userSelectedRound
-	* @parent bitballs/components/tournament/details.properties
-	*
-	* The round selection made by the user.
-	**/
-	userSelectedRound: {
-		value: null
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedRound selectedRound
 	* @parent bitballs/components/tournament/details.properties
 	*
-	* The [bitballs/components/tournament/details.ViewModel.prototype.userSelectedRound userSelectedRound]
+	* The user selected round
 	* or the first value in the list returned from [bitballs/models/game.static.List.prototype.getAvailableRounds getAvailableRounds].
 	**/
 	selectedRound: {
-		type: 'string',
-		stream: function(setStream) {
+		value({lastSet, resolve, listenTo}) {
+			listenTo("firstAvailableRound", (ev, firstAvailableRound) => {
+				resolve(firstAvailableRound);
+			});
+			// initial firstAvailableRound
+			resolve(this.firstAvailableRound);
+			listenTo(lastSet, function(lastSetRound){
+				resolve(lastSetRound);
+			});
+		}
+		/*stream: function(setStream) {
 			var firstAvailableRoundStream = this.stream('.firstAvailableRound');
 			return setStream.merge(firstAvailableRoundStream);
-		}
+		}*/
 	},
 	get firstAvailableRound() {
 		var availableRounds = this.games && this.games.getAvailableRounds()[0];
@@ -288,7 +291,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* The court selection made by the user.
 	**/
 	userSelectedCourt: {
-		value: null
+		default: null
 	},
 	/**
 	* @property {String} bitballs/components/tournament/details.selectedCourt selectedCourt
@@ -299,15 +302,44 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 	* given the [bitballs/components/tournament/details.ViewModel.prototype.selectedRound selectedRound].
 	**/
 	selectedCourt: {
-		type: 'string',
-		stream: function(setStream) {
-			var vm = this;
+		value({lastSet, resolve, listenTo}) {
+			// we need the list of games
+			var games;
+			listenTo("games", function(ev, loadedGames){
+				games = loadedGames;
+			});
+			games = this.games;
+
+			var lastSelectedCourt = resolve("1");
+
 			// if selectedRound changes, we should translate to an
 			// available selected court
+			listenTo("selectedRound", (ev, selectedRound) => {
+				// if we haven't loaded games ... then just ignore for now
+				if(games) {
+					// court names are strings
+					var availableCourts = games.getAvailableCourts(selectedRound);
+					// if the currentCourt is still available
+					if( availableCourts.indexOf(lastSelectedCourt) >= 0 ) {
+						// do nothing
+					} else {
+						lastSelectedCourt = resolve(availableCourts[0]);
+					}
+				}
+			});
+
+			listenTo(lastSet, function(lastSetCourt){
+
+				lastSelectedCourt = resolve(lastSetCourt);
+			});
+		}
+		/*stream: function(setStream) {
+			var vm = this;
+
 
 			var selectedRoundEvent = this.stream("selectedRound");
 			var setSelectedCourtEvent = setStream.map(function(selectedCourt){
-				return {type: "selectedCourt", value: selectedCourt};
+				return {type: "selectedCourt", default: selectedCourt};
 			});
 
 			return setSelectedCourtEvent.merge(selectedRoundEvent).scan(function(selectedCourt, event){
@@ -326,7 +358,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails', {sealed: false},
 
 				}
 			},"1");
-		}
+		}*/
 	},
 	/**
 	* @property {Object} bitballs/components/tournament/details.teamIdMap teamIdMap

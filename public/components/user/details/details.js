@@ -69,7 +69,7 @@ exports.ViewModel = DefineMap.extend({
 	 * 	If the user is not currently logged in, `null`.
 	 */
 	session: {
-		value: null
+		default: null
 	},
 	/**
 	* @property {Promise} bitballs/components/user/details.savePromise savePromise
@@ -87,7 +87,7 @@ exports.ViewModel = DefineMap.extend({
 	 *
 	 */
 	user: {
-		Value: User,
+		Default: User,
 		get: function(val) {
 			if (this.session) {
 				return this.session.user;

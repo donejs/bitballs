@@ -12,13 +12,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#playersPromise.isPending}}
+		{{# playersPromise.isPending }}
 			<tr class='info'><td colspan='5'>Loading</td></tr>
-		{{/playersPromise.isPending}}
-		{{#if playersPromise.isResolved}}
-			{{#each playersPromise.value}}
+		{{/ playersPromise.isPending }}
+		{{# if(playersPromise.isResolved) }}
+			{{# each(playersPromise.value) }}
 				<tr>
-					{{#eq . ../editingPlayer}}
+					{{# eq(this,../editingPlayer) }}
 						<td>
 							<player-edit
 								player:from="."
@@ -27,31 +27,31 @@
 								on:canceled="../removeEdit()"
 							/>
 						</td>
-					{{else}}
-						<td><a href='{{routeUrl ( playerId=id )}}'>{{name}}</a></td>
-						<td>{{age}}</td>
-						<td>{{weight}}</td>
-						<td>{{height}}</td>
+					{{ else }}
+						<td><a href='{{ routeUrl ( playerId=id ) }}'>{{ name }}</a></td>
+						<td>{{ age }}</td>
+						<td>{{ weight }}</td>
+						<td>{{ height }}</td>
 						<td>
-							{{#if ../isAdmin}}
+							{{# if(../isAdmin) }}
 								<button type="button" class="btn btn-default" on:click="../editPlayer(.)">
 									<span class='glyphicon glyphicon-edit'/>
 								</button>
 								<button type="button" class="btn btn-danger"
 									on:click="../deletePlayer(.)"
-									{{#isDestroying}}disabled{{/isDestroying}}>
+									{{# isDestroying() }}disabled{{/ isDestroying }}>
 									<span class='glyphicon glyphicon-remove'/>
 								</button>
-							{{/if}}
+							{{/ if }}
 						</td>
-					{{/eq}}
+					{{/ eq }}
 				</tr>
-			{{else}}
+			{{ else }}
 				<tr class="empty-list-placeholder"><td class="text-center lead" colspan="5">No Players</td></tr>
-			{{/each}}
-		{{/if}}
+			{{/ each }}
+		{{/ if }}
 	</tbody>
 </table>
-{{#if isAdmin}}
+{{# if(isAdmin) }}
 	<player-edit isAdmin:from="isAdmin"/>
-{{/if}}
+{{/ if }}

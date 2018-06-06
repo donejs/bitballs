@@ -1,6 +1,6 @@
 <can-import from="can-stache-route-helpers" />
 
-{{^if(gamePromise.isRejected)}}
+{{^ if(gamePromise.isRejected) }}
 	<div class="row">
 	  	<div class="col-md-8">
 			<div class='youtube-container'>
@@ -8,59 +8,57 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<h3> <a href="{{routeUrl(tournamentId=game.tournamentId)}}">{{game.tournament.year}}</a> - {{game.round}} - Court {{game.court}}</h3>
-			<p>HOME: {{game.homeTeam.color}} - {{game.homeTeam.name}}</p>
-			<p>AWAY: {{game.awayTeam.color}} - {{game.awayTeam.name}}</p>
-			<p>Final Score {{finalScore.home}} - {{finalScore.away}}</p>
-			<p>Current Score {{currentScore.home}} - {{currentScore.away}}</p>
-	        <p></p>
+			<h3> <a href="{{ routeUrl(tournamentId=game.tournamentId) }}">{{ game.tournament.year }}</a> - {{ game.round }} - Court {{ game.court }}</h3>
+			<p>HOME: {{ game.homeTeam.color }} - {{ game.homeTeam.name }}</p>
+			<p>AWAY: {{ game.awayTeam.color }} - {{ game.awayTeam.name }}</p>
+			<p>Final Score {{ finalScore.home }} - {{ finalScore.away }}</p>
+			<p>Current Score {{ currentScore.home }} - {{ currentScore.away }}</p>
 		</div>
 
 	</div>
 
 	<table class="table table-condensed table-hover">
 	<tbody>
-	{{#each(game.teams)}}
+	{{# each(game.teams) }}
 		<tr>
-			<th colspan="2">{{color}} - {{name}}</th>
+			<th colspan="2">{{ color }} - {{ name }}</th>
 		</tr>
-		{{#each(players)}}
-			<tr on:click="scope.root.showStatMenuFor(this,scope.element, scope.event)">
-				<td>{{name}}</td>
+		{{# each(players) }}
+			<tr on:click="scope.vm.showStatMenuFor(this,scope.element, scope.event)">
+				<td>{{ name }}</td>
 				<td class="stats-container">
-					{{#each(scope.root.statsForPlayerId(id))}}
-						<span on:click="scope.root.gotoTimeMinus5(time, scope.event)"
-							class="stat-point stat-{{type}}" style="left: {{scope.root.statPercent(time)}}%">
-							{{type}}
-							{{#if(scope.root.session.isAdmin())}}
+					{{# each(scope.vm.statsForPlayerId(id)) }}
+						<span on:click="scope.vm.gotoTimeMinus5(time, scope.event)"
+							class="stat-point stat-{{ type }}" style="left: {{ scope.vm.statPercent(time) }}%">
+							{{ type }}
+							{{# if(scope.vm.session.isAdmin()) }}
 								<span class="destroy-btn glyphicon glyphicon-trash"
-									on:click="scope.root.deleteStat(this, scope.event)"></span>
-							{{/if}}
+									on:click="scope.vm.deleteStat(this, scope.event)"></span>
+							{{/ if }}
 						</span>
-					{{/each}}
+					{{/ each }}
 				</td>
 			</tr>
-		{{/each}}
-	{{/each}}
+		{{/ each }}
+	{{/ each }}
 	</tbody>
 	</table>
-	<div id="player-pos"/>
+	<div id="player-pos" style="left: {{cursorPosition.left}}px; top: {{cursorPosition.top}}px; height: {{cursorPosition.height}}px"/>
 
 
-	{{#if(stat)}}
-	<h1>THERE ARE STATs</h1>
+	{{# if(stat) }}
 
-	<div class="popover fade right in" role="tooltip" style="display: block;" id="add-stat">
-		<div class="arrow" style="top: 50%;"></div>
-		<h3 class="popover-title">Add Stat for {{stat.player.name}}</h3>
+	<div class="popover fade right in" role="tooltip" style="display: block; left: {{addStatPosition.left}}px; top: {{addStatPosition.top}}px;" id="add-stat">
+		<div class="arrow" style="top: {{addStatArrowPosition.top}}px;"></div>
+		<h3 class="popover-title">Add Stat for {{ stat.player.name }}</h3>
 		<div class="popover-content">
-			<form on:submit="scope.root.createStat(scope.event)" action="">
+			<form on:submit="scope.vm.createStat(scope.event)" action="">
 				<label for="stat-type">Type</label>
 			    <select value:bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>
-			    	{{#statTypes}}
-			    		<option value="{{name}}">{{name}}</option>
-			    	{{/statTypes}}
+			    	{{# statTypes }}
+			    		<option value="{{ name }}">{{ name }}</option>
+			    	{{/ statTypes }}
 			    </select>
 
 				<div class="form-group">
@@ -82,7 +80,7 @@
 		</div>
 	</div>
 
-	{{/if}}
-{{else}}
+	{{/ if }}
+{{ else }}
 	Game not found.
-{{/if}}
+{{/ if }}

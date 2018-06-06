@@ -39,6 +39,11 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 /** @prototype */
 {
 
+	tournamentsPromise: {
+		default: function(){
+			return Tournament.getList({orderBy: "date"});
+		}
+	},
 	/**
 	* @property {bitballs/models/tournament} bitballs/components/tournament/list.tournament tournament
 	* @parent bitballs/components/tournament/list.properties
@@ -48,7 +53,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 	**/
 	tournament: {
 		Type: Tournament,
-		Value: Tournament
+		Default: Tournament
 	},
 	/**
 	* @property {Boolean} bitballs/components/tournament/list.isAdmin isAdmin
@@ -58,7 +63,7 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 	**/
 	isAdmin: {
 		type: 'boolean',
-		value: false,
+		default: false
 	},
 	/**
 	* @property {Promise<Tournament>} bitballs/components/tournament/list.savePromise savePromise
@@ -114,6 +119,5 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 exports.Component = Component.extend({
 	tag: "tournament-list",
 	view: require("./list.stache!"),
-	ViewModel: exports.ViewModel,
-	leakScope: false
+	ViewModel: exports.ViewModel
 });

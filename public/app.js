@@ -12,12 +12,17 @@ import "can-route-pushstate";
 import stache from "can-stache";
 import 'can-stache-route-helpers';
 import "./util/prefilter";
-import can from "can-namespace";
 
-window.can = can; // This is just for debugging.
+//!steal-remove-start
+import "can-debug";
+//!steal-remove-end
 
 const AppViewModel = DefineMap.extend('App',
 {
+	env: {
+		default: () => ({NODE_ENV:'development'}),
+		serialize: false
+  	},
 	/**
 	* @property {String} bitballs/app.title title
 	* @parent bitballs/app.properties
@@ -56,7 +61,7 @@ const AppViewModel = DefineMap.extend('App',
 	* Promise object
 	**/
 	pagePromise: {
-		value: undefined,
+		default: undefined,
 		serialize: false
 	},
 	/**
@@ -139,14 +144,14 @@ const AppViewModel = DefineMap.extend('App',
 	**/
 	session: {
 		serialize: false,
-		value: function() {
+		default: function() {
 			var self = this;
-      Session.get({})
-        .then(function(session){
-          self.session = session;
-        }, function() {
-          self.session = null;
-        });
+			Session.get({})
+				.then(function(session){
+					self.session = session;
+				}, function() {
+					self.session = null;
+				});
 		}
 	},
 	/**
@@ -197,16 +202,15 @@ const AppViewModel = DefineMap.extend('App',
 
 stache.registerHelper("pageComponent", function(scope, options){
 	var pageComponent = options.context.pageComponentConfig,
-		helpers = scope.templateContext.helpers,
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
-				"{{#if isResolved}}" +
-					"{{#with scope.root}}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/with}}" +
-				"{{else}}" +
+				"{{# if(isResolved) }}" +
+					"{{# with(this) }}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/ with }}" +
+				"{{ else }}" +
 					"Loading..." +
-				"{{/if}}" +
+				"{{/ if }}" +
 			"</can-import>";
-	return stache(template)(scope, helpers, options.nodeList);
+	return stache(template)(scope, options.nodeList);
 });
 
 route.register('tournaments/{tournamentId}');

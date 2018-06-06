@@ -90,7 +90,7 @@ QUnit.test('The selected court defaults to the first available court', function 
     vm.gamesPromise.then(function (games) {
         QUnit.start();
         vm.on('selectedCourt', function(){});
-        QUnit.equal(vm.selectedCourt, Game.courtNames[0],
+        QUnit.equal(vm.selectedCourt, Game.courtNames[1],
             'The second court is selected');
     });
 });

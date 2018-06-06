@@ -47,14 +47,14 @@ var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
 	 **/
 	isAdmin: {
 		type: 'boolean',
-		value: false
+		default: false
 	},
 	/**
 	 * @property {bitballs/models/Player} bitballs/models/player editingPlayer
-	 * 
+	 *
 	 * holds the current player instance that is being edited
 	 */
-	editingPlayer: Player,
+	editingPlayer: {Type: Player, default: null},
 	/**
 	 * @property {Promise<bitballs/models/player>} bitballs/components/player/list.playersPromise playersPromise
 	 * @parent bitballs/components/player/list.properties
@@ -62,7 +62,7 @@ var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
 	 * A [bitballs/models/player] model List.
 	 */
 	playersPromise: {
-		value: function(){
+		default: function(){
 			return Player.getList({orderBy: "name"});
 		}
 	},

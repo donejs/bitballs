@@ -1,14 +1,14 @@
 import QUnit from "steal-qunit";
-import Session from "models/session";
+import Session from "~/models/session";
 import details from "./details";
-import { games } from "models/fixtures/games";
-import createGamesFixtures from "models/fixtures/games";
+import { games } from "~/models/fixtures/games";
+import createGamesFixtures from "~/models/fixtures/games";
 import F from 'funcunit';
 import stache from 'can-stache';
 import fixture from 'can-fixture';
 import $ from 'jquery';
 import canViewModel from 'can-view-model';
-import User from "models/user";
+import User from "~/models/user";
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
@@ -67,7 +67,7 @@ QUnit.test("correctly sums the current score", function () {
             We assume each game starts with zero scores.
             So, no pickup games.
         */
-        vm.time = 0;
+        vm.youtubePlayerTime = 0;
         console.log("TIME IS 0");
         QUnit.deepEqual(vm.currentScore, {
             home: 0,
@@ -75,7 +75,7 @@ QUnit.test("correctly sums the current score", function () {
         }, 'Scores should zero at the beginning');
 
 
-        vm.time = Infinity;
+        vm.youtubePlayerTime = Infinity;
         console.log("TIME IS INFINITY");
         QUnit.deepEqual(
             vm.currentScore,
@@ -99,7 +99,7 @@ QUnit.test("correctly sums the current score", function () {
             TODO: move the testing data out of remote fixtures.
         */
         console.log("setting time to 50");
-        vm.time = 50;
+        vm.youtubePlayerTime = 50;
         console.log("set time");
         QUnit.deepEqual(vm.currentScore, {
             home: 3,

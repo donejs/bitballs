@@ -4,9 +4,9 @@
  *
  * @group bitballs/models/team.properties 0 properties
  */
-var superMap = require('can-connect/can/super-map/');
-var tag = require('can-connect/can/tag/');
-var set = require("can-set");
+var superModel = require('can-super-model');
+var QueryLogic = require("can-query-logic");
+var bookshelfService = require("./bookshelf-service").default;
 var Player = require("./player");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
@@ -25,7 +25,7 @@ var Team = DefineMap.extend('Team', {
 	 *
 	 * A unique identifier.
 	 **/
-	id: 'number',
+	id: {type: 'number', identity: true},
 	/**
 	 * @property {Number} bitballs/models/team.properties.tournamentId tournamentId
 	 * @parent bitballs/models/team.properties
@@ -175,28 +175,16 @@ Team.List = DefineList.extend('TeamsList',
 	}
 });
 
-/**
- * @property {set.Algebra} bitballs/models/team.static.algebra algebra
- * @parent bitballs/models/team.static
- *
- * Set Algebra
- */
-Team.algebra = new set.Algebra(
-	new set.Translate("where","where"),
-	set.comparators.sort('sortBy')
-);
-
-var teamConnection = superMap({
-  Map: Team,
-  List: Team.List,
-  url: {
+superModel({
+	Map: Team,
+	List: Team.List,
+	url: {
 		resource: "/services/teams",
 		contentType: "application/x-www-form-urlencoded"
 	},
-  name: "team",
-  algebra: Team.algebra
+	name: "team",
+	queryLogic: new QueryLogic(Team, bookshelfService),
+	updateInstanceWithAssignDeep: true
 });
-
-tag("team-model", teamConnection);
 
 module.exports = Team;

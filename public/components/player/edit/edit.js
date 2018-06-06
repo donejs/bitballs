@@ -47,7 +47,7 @@ exports.ViewModel = DefineMap.extend("PlayerEditVM",
 	**/
 	isAdmin: {
 		type: 'boolean',
-		value: false
+		default: false
 	},
 	/**
 	* @property {bitballs/models/player} bitballs/components/player/edit.player player
@@ -57,7 +57,7 @@ exports.ViewModel = DefineMap.extend("PlayerEditVM",
 	**/
 	player: {
 		Type: Player,
-		Value: Player
+		Default: Player
 	},
   /**
    * @property {Boolean} bitballs/components/player/edit.isNewPlayer isNewPlayer

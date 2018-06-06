@@ -2,29 +2,29 @@
 	<div class="navbar-collapse" id="bs-example-navbar-collapse-1">
 		<a href="/" class="pull-left main-logo">BitBalls</a>
 		<ul class="main-menu nav navbar-nav">
-		  <li role="presentation" {{#is(app.page, 'tournaments')}}class='active'{{/is}}>
-				<a href="{{routeUrl(page='tournaments')}}">Tournaments</a>
+		  <li role="presentation" {{# is(app.page, 'tournaments') }}class='active'{{/ is }}>
+				<a href="{{ routeUrl(page='tournaments') }}">Tournaments</a>
 		  </li>
-		  <li role="presentation" {{#is(app.page, 'players')}}class='active'{{/is}}>
-				<a href="{{routeUrl(page='players')}}">Players</a>
+		  <li role="presentation" {{# is(app.page, 'players') }}class='active'{{/ is }}>
+				<a href="{{ routeUrl(page='players') }}">Players</a>
 		  </li>
 		</ul>
 
 
 		<ul class="session-menu nav navbar-nav navbar-right">
-			{{#if(app.session)}}
-				{{#if(app.session.isAdmin)}}
-					<li {{#is(app.page, 'users')}}class='active'{{/is}}>
-						<a href="{{routeUrl(page='users')}}">Users</a>
+			{{# if(app.session) }}
+				{{# if(app.session.isAdmin() ) }}
+					<li {{# is(app.page, 'users') }}class='active'{{/ is }}>
+						<a href="{{ routeUrl(page='users') }}">Users</a>
 					</li>
-				{{/if}}
-				<li {{#is(app.page, 'account')}}class='active'{{/is}}>
-					<a href="{{routeUrl(page='account')}}">Account</a>
+				{{/ if }}
+				<li {{# is(app.page, 'account') }}class='active'{{/ is }}>
+					<a href="{{ routeUrl(page='account') }}">Account</a>
 				</li>
 				<li>
-					<a href="javascript://" on:click="scope.root.logout()">Logout</a>
+					<a href="javascript://" on:click="scope.vm.logout()">Logout</a>
 				</li>
-			{{else}}
+			{{ else }}
 				<li class="dropdown">
 					<a href="javascript://"
 						class="dropdown-toggle"
@@ -37,13 +37,13 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<form on:submit="scope.root.createSession(scope.event)" action="">
+							<form on:submit="scope.vm.createSession(scope.event)" action="">
 								<div class="form-group form-group-sm">
 									<input
 										class="form-control"
 										id="user-email-nav"
 										placeholder="email"
-										value:bind="scope.root.loginSession.user.email"
+										value:bind="loginSession.user.email"
 									>
 								</div>
 								<div class="form-group form-group-sm">
@@ -56,20 +56,20 @@
 									>
 								</div>
 								<button type="submit" class="btn btn-primary btn-sm" >Login</button>
-								<a href="{{routeUrl(page='register')}}"
+								<a href="{{ routeUrl(page='register') }}"
 									class="register-btn btn btn-link"
-									on:click="scope.root.closeDropdown(scope.element)"
+									on:click="scope.vm.closeDropdown(scope.element)"
 								>
 									or register
 								</a>
-								{{#if(sessionPromise.isRejected)}}
-									<p class="text-danger">{{sessionPromise.reason.responseJSON.message}}</p>
-								{{/if}}
+								{{# if(sessionPromise.isRejected) }}
+									<p class="text-danger">{{ sessionPromise.reason.responseJSON.message }}</p>
+								{{/ if }}
 							</form>
 						</li>
 					</ul>
 				</li>
-			{{/if}}
+			{{/ if }}
 		</ul>
 	</div>
 </nav>
