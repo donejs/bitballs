@@ -14,7 +14,7 @@ import 'can-stache-route-helpers';
 import "./util/prefilter";
 
 //!steal-remove-start
-import can from "can-debug";
+import "can-debug";
 //!steal-remove-end
 
 const AppViewModel = DefineMap.extend('App',
@@ -202,7 +202,6 @@ const AppViewModel = DefineMap.extend('App',
 
 stache.registerHelper("pageComponent", function(scope, options){
 	var pageComponent = options.context.pageComponentConfig,
-		helpers = scope.templateContext.helpers,
 		template =
 			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
 				"{{# if(isResolved) }}" +

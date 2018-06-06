@@ -437,18 +437,17 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 				getDuration();
 			});
 			return function(){
-				clearTimeout(timer)
-			}
+				clearTimeout(timer);
+			};
 		}
 	},
 	youtubePlayerIsPlaying: {
 		value: function(prop) {
 			prop.listenTo('youtubePlayerStateChange',function(event){
-				console.log(event.youtube.data);
 				if(event.youtube.data === this.YT.PlayerState.PLAYING) {
-					prop.resolve(true)
+					prop.resolve(true);
 				} else {
-					prop.resolve(false)
+					prop.resolve(false);
 				}
 			});
 		}
@@ -476,8 +475,8 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 				timeUpdate();
 			});
 			return function(){
-				clearTimeout(timer)
-			}
+				clearTimeout(timer);
+			};
 		}
 	},
 	cursorPosition: {
@@ -503,7 +502,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 						left: 0,
 						top: 0,
 						height: 0
-					})
+					});
 				}
 			};
 			prop.listenTo("youtubePlayerTime",resolve);
@@ -515,7 +514,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	addStatPosition: {
 		value: function(prop){
 			var resolve = () => {
-				prop.resolve( $(this.element).find(".stats-container:first").offset() )
+				prop.resolve( $(this.element).find(".stats-container:first").offset() );
 			};
 			prop.listenTo(window,"resize", resolve);
 			resolve();
@@ -528,7 +527,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			game.teams.forEach(function(team){
 				team.players.forEach(function(player) {
 					players.push(player);
-				})
+				});
 			});
 		}
 		return players;
@@ -600,7 +599,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			if(this.stat) {
 				this.stat.time = time;
 			}
-		})
+		});
 
 		return () => {
 			this.dispatch("disconnected");
@@ -609,7 +608,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			// hack to prevent youtube stuff from running if this element
 			// was removed from the page
 			this.removedFromDOM = true;
-		}
+		};
 	},
 
 

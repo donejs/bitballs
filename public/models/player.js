@@ -11,7 +11,6 @@ var moment = require("moment");
 var DefineList = require('can-define/list/list');
 var DefineMap = require("can-define/map/map");
 var defineBackup = require('can-define-backup');
-var canReflect = require("can-reflect");
 
 var Player = DefineMap.extend('Player', {
 	/**

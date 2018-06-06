@@ -273,7 +273,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 			resolve(this.firstAvailableRound);
 			listenTo(lastSet, function(lastSetRound){
 				resolve(lastSetRound);
-			})
+			});
 		}
 		/*stream: function(setStream) {
 			var firstAvailableRoundStream = this.stream('.firstAvailableRound');
