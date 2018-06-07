@@ -48,7 +48,7 @@
     "generator-donejs": "2.0.0",
     "jquery": "^3.1.1",
     "moment": "^2.10.6",
-    "steal": "2.0.0-pre.1",
+    "steal": "^2.0.0-pre.1",
     "steal-less": "^1.2.0",
     "steal-platform": "0.0.4",
     "steal-qunit": "^1.0.1",
