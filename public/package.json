@@ -8,7 +8,7 @@
     "install": "node build.js",
     "test": "rm -rf ~/.mozilla && testee test.html --browsers firefox --reporter Spec"
   },
-  "main": "bitballs/index.stache!done-autorender/no-zone",
+  "main": "bitballs/index.stache!done-autorender",
   "files": [
     "."
   ],
@@ -42,7 +42,7 @@
     "done-autorender": "^2.0.0",
     "done-component": "^2.0.0",
     "done-css": "^3.0.2",
-    "done-serve": "^2.0.0",
+    "done-serve": "^3.0.0-pre.0",
     "done-ssr-middleware": "^2.0.0",
     "funcunit": "^3.5.0",
     "generator-donejs": "2.0.0",
