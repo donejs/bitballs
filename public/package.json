@@ -43,7 +43,7 @@
     "done-component": "^2.0.0",
     "done-css": "^3.0.2",
     "done-serve": "^3.0.0-pre.0",
-    "done-ssr-middleware": "^2.0.0",
+    "done-ssr-middleware": "^3.0.0-pre.0",
     "funcunit": "^3.5.0",
     "generator-donejs": "2.0.0",
     "jquery": "^3.1.1",
@@ -53,7 +53,7 @@
     "steal-platform": "0.0.4",
     "steal-qunit": "^1.0.1",
     "steal-stache": "^4.0.1",
-    "steal-tools": "^2.0.0-pre.2",
+    "steal-tools": "^2.0.0-pre.4",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {
