@@ -223,7 +223,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * Use this in a template like:
 	 *
 	 * ```
-	 * <tr ($click)="showStatMenuFor(.,%element, %event)">
+	 * <tr ($click)="showStatMenuFor(.,scope.element, scope.event)">
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
@@ -249,7 +249,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 * @body
 	 * Use in a template like:
 	 * ```
-	 * <span ($click)="gotoTimeMinus5(time, %event)">
+	 * <span ($click)="gotoTimeMinus5(time, scope.event)">
 	 * ```
 	 */
 	createStat: function(ev) {
@@ -356,7 +356,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 	 *
 	 * Use in a template like:
 	 * ```
-	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., %event)"></span>
+	 * <span class="destroy-btn glyphicon glyphicon-trash" ($click)="deleteStat(., scope.event)"></span>
 	 * ```
 	 */
 	deleteStat: function (stat, event) {
@@ -458,6 +458,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 			if(prop.lastSet.value) {
 				prop.resolve(prop.lastSet.value);
 			}
+			// use listenTo to update with last set
 
 			// Wait until the playing state changes, and then check the youtube player state
 			var timer,
@@ -466,7 +467,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 
 			var timeUpdate = () => {
 				prop.resolve(this.youtubePlayer.getCurrentTime());
-				timer = setTimeout(timeUpdate, 50);
+				timer = setTimeout(timeUpdate, checkTime);
 			};
 
 			prop.listenTo('youtubePlayerIsPlaying',function(ev, isPlaying){
@@ -602,6 +603,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 		});
 
 		return () => {
+			this.stopListening();
 			this.dispatch("disconnected");
 			// timeUpdate could be running
 			clearTimeout(this.timeUpdate);

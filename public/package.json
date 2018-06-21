@@ -6,9 +6,9 @@
   "author": "Bitovi",
   "scripts": {
     "install": "node build.js",
-    "test": "rm -rf ~/.mozilla && DEBUG=testee:* testee test.html --browsers firefox --reporter Spec"
+    "test": "rm -rf ~/.mozilla && testee test.html --browsers firefox --reporter Spec"
   },
-  "main": "bitballs/index.stache!done-autorender/no-zone",
+  "main": "bitballs/index.stache!done-autorender",
   "files": [
     "."
   ],
@@ -18,7 +18,7 @@
     "bootstrap": "^3.3.7",
     "can-assign": "^1.1.1",
     "can-component": "^4.0.0",
-    "can-connect": "^3.0.0-pre.6",
+    "can-connect": "^3.0.0-pre.14",
     "can-construct": "^3.2.3",
     "can-debug": "^1.0.4",
     "can-define": "^2.0.0",
@@ -42,18 +42,18 @@
     "done-autorender": "^2.0.0",
     "done-component": "^2.0.0",
     "done-css": "^3.0.2",
-    "done-serve": "^2.0.0",
-    "done-ssr-middleware": "^2.0.0",
+    "done-serve": "^3.0.0-pre.0",
+    "done-ssr-middleware": "^3.0.0-pre.0",
     "funcunit": "^3.5.0",
     "generator-donejs": "2.0.0",
     "jquery": "^3.1.1",
     "moment": "^2.10.6",
-    "steal": "2.0.0-pre.1",
+    "steal": "^2.0.0-pre.1",
     "steal-less": "^1.2.0",
     "steal-platform": "0.0.4",
     "steal-qunit": "^1.0.1",
     "steal-stache": "^4.0.1",
-    "steal-tools": "^2.0.0-pre.2",
+    "steal-tools": "^2.0.0-pre.4",
     "yeoman-environment": "^1.2.7"
   },
   "devDependencies": {

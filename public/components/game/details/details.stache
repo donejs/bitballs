@@ -43,13 +43,13 @@
 	{{/ each }}
 	</tbody>
 	</table>
-	<div id="player-pos" style="left: {{cursorPosition.left}}px; top: {{cursorPosition.top}}px; height: {{cursorPosition.height}}px"/>
+	<div id="player-pos" style="left: {{ cursorPosition.left }}px; top: {{ cursorPosition.top }}px; height: {{ cursorPosition.height }}px"/>
 
 
 	{{# if(stat) }}
 
-	<div class="popover fade right in" role="tooltip" style="display: block; left: {{addStatPosition.left}}px; top: {{addStatPosition.top}}px;" id="add-stat">
-		<div class="arrow" style="top: {{addStatArrowPosition.top}}px;"></div>
+	<div class="popover fade right in" role="tooltip" style="display: block; left: {{ addStatPosition.left }}px; top: {{ addStatPosition.top }}px;" id="add-stat">
+		<div class="arrow" style="top: {{ addStatArrowPosition.top }}px;"></div>
 		<h3 class="popover-title">Add Stat for {{ stat.player.name }}</h3>
 		<div class="popover-content">
 			<form on:submit="scope.vm.createStat(scope.event)" action="">
