@@ -18,7 +18,7 @@
     "bootstrap": "^3.3.7",
     "can-assign": "^1.1.1",
     "can-component": "^4.0.0",
-    "can-connect": "^3.0.0-pre.6",
+    "can-connect": "^3.0.0-pre.14",
     "can-construct": "^3.2.3",
     "can-debug": "^1.0.4",
     "can-define": "^2.0.0",

@@ -410,13 +410,15 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 				remainingTeams.removeById(game.awayTeamId);
 			}
 		});
+		if(this.game) {
+			var opposite = name === "home" ? "away" : "home",
+				oppositeId = this.game[opposite+"TeamId"];
 
-		var opposite = name === "home" ? "away" : "home",
-			oppositeId = this.game[opposite+"TeamId"];
-
-		if(oppositeId) {
-			remainingTeams.removeById(oppositeId);
+			if(oppositeId) {
+				remainingTeams.removeById(oppositeId);
+			}
 		}
+
 		return remainingTeams;
 	},
 	/**
@@ -443,12 +445,14 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 				}
 			});
 
+			if(team) {
+				[1,2,3,4].forEach(function(index){
+					if(index !== number) {
+						usedIds[team["player"+index+"Id"]] = true;
+					}
+				});
+			}
 
-			[1,2,3,4].forEach(function(index){
-				if(index !== number) {
-					usedIds[team["player"+index+"Id"]] = true;
-				}
-			});
 			return allPlayers.filter(function(player){
 				return !usedIds[player.id];
 			});
@@ -474,8 +478,12 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 		}
 		this.team.tournamentId = this.tournamentId;
 
-		this.teamSavePromise = this.team.save(function(){
+		var team = this.team;
+		this.team = null;
+		this.teamSavePromise = team.save(function(){
 			self.team = new Team();
+		}, function(){
+			this.team = team;
 		});
 
 	},
@@ -498,6 +506,8 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 			court: this.selectedCourt,
 			tournamentId: this.tournamentId
 		});
+		
+		this.game = null;
 
 		game.save(function(){
 			self.game = new Game();
