@@ -11,7 +11,7 @@
 
 		<div class="container">
 			<bitballs-navigation app:from="." />
-			{{{ pageComponent(scope) }}}
+			{{ { pageComponent(scope) } }}
 		</div>
 
 		{{# is(env.NODE_ENV, "production") }}
