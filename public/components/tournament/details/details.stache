@@ -207,23 +207,23 @@
 	<thead>
 		<tr>
 			<th>Name</th>
-			{{# each(statHeaders) }}
+			{{# each(stats.types) }}
 				<th>{{ name }}</th>
 			{{/ each }}
 		</tr>
 	</thead>
 	<tbody>
 		{{# if(stats.length) }}
-			{{# each(players) }}
-				{{# if(stats.byPlayer[id]) }}
+			{{# for (player of players) }}
+				{{# if(stats.byPlayer[player.id]) }}
 					<tr>
-						<td><a href='{{ routeUrl(playerId=id) }}'>{{ name }}</a></td>
-						{{# each(stats.byPlayer[id].aggregated) }}
-							<td>{{ value }}</td>
-						{{/ each }}
+						<td><a href='{{ routeUrl(playerId=player.id) }}'>{{ player.name }}</a></td>
+						{{# for (s of stats.byPlayer[player.id].aggregated) }}
+							<td>{{ s.value }}</td>
+						{{/ for }}
 					</tr>
 				{{/ if }}
-			{{/ each }}
+			{{/ for }}
 		{{ else }}
 			<tr><td class="text-center lead">No Stats</td></tr>
 		{{/ if }}
