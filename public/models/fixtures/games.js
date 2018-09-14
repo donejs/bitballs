@@ -144,6 +144,12 @@ export const games = {
         type: "2P",
         playerId: 8,
         time: 120
+    },
+    {
+        id: 7,
+        type: "C",
+        playerId: 3,
+        time: 122
     }]
 };
 

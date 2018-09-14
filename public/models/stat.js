@@ -49,7 +49,8 @@ var Stat = DefineMap.extend('Stat',
 			{ name: "Ast"},
 			{ name: "Stl"},
 			{ name: "Blk"},
-			{ name: "To"}
+			{ name: "To"},
+			{ name: "C" }
 		]
 },
 {
@@ -102,7 +103,7 @@ var Stat = DefineMap.extend('Stat',
 		}
 	},
 
-	default: 'any'
+	value: 'any'
 });
 
 
@@ -114,6 +115,9 @@ var Stat = DefineMap.extend('Stat',
  */
 Stat.List = DefineList.extend('StatsList', {
 	"#": Stat,
+	get types() {
+		return Stat.statTypes;
+	},
 	get byPlayer() {
 		let players = {};
 
@@ -160,11 +164,11 @@ Stat.List = DefineList.extend('StatsList', {
 		return [
 			...Stat.statTypes.map(({ name }) => ({
 				name,
-				default: (aggregated[name] || 0).toFixed(0),
+				value: (aggregated[name] || 0).toFixed(0),
 			})),
 			{
 				name: 'TP',
-				default: (function() {
+				value: (function() {
 					let onePointers = aggregated['1P'] || 0;
 					let twoPointers = aggregated['2P'] || 0;
 
@@ -173,7 +177,7 @@ Stat.List = DefineList.extend('StatsList', {
 			},
 			{
 				name: 'FG%',
-				default: (function() {
+				value: (function() {
 					let onePointers = aggregated['1P'] || 0;
 					let twoPointers = aggregated['2P'] || 0;
 					let onePointAttempts = aggregated['1PA'] || 0;
