@@ -4,7 +4,7 @@
  *
  * @group bitballs/models/game.properties 0 properties
  */
-import { DefineMap, DefineList, canReflect, superModel, QueryLogic } from "can";
+import { DefineMap, DefineList, Reflect as canReflect, superModel, QueryLogic } from "can";
 import Team from "bitballs/models/team";
 import Player from "bitballs/models/player";
 import Stat from "bitballs/models/stat";

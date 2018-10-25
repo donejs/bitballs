@@ -22,7 +22,8 @@
     "bookshelf": "^0.10.3",
     "checkit": "^0.7.0",
     "cookie-parser": "^1.4.1",
-    "db-migrate": "^0.9.26",
+    "db-migrate": "^0.11.3",
+    "db-migrate-pg": "^0.4.0",
     "ejs": "^2.3.1",
     "express": "^4.15.3",
     "express-session": "^1.11.3",
@@ -31,10 +32,10 @@
     "nodemailer": "^2.7.2",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
-    "pg": "4.5.6"
+    "pg": "^7.5.0"
   },
   "engines": {
-    "node": "6.11.0"
+    "node": "10.10.0"
   },
   "repository": {
     "type": "git",
@@ -48,8 +49,8 @@
   "license": "MIT",
   "devDependencies": {
     "documentjs": "^0.4.4",
-    "donejs": "^2.0.0-pre.0",
-    "donejs-cli": "^2.0.0-pre.0",
+    "donejs": "^3.0.0-pre.0",
+    "donejs-cli": "^3.0.0-pre.0",
     "firebase-tools": "^3.9.1",
     "jshint": "^2.9.1",
     "maildev": "^0.12.2"
