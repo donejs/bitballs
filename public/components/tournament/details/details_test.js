@@ -1,12 +1,11 @@
 import QUnit from 'steal-qunit';
-import {ViewModel} from './details';
+import { ViewModel } from './details';
 import defineTournamentFixtures from 'bitballs/models/fixtures/tournaments';
 import 'bitballs/models/fixtures/players';
 import defineGameFixtures  from 'bitballs/models/fixtures/games';
 import clone from 'steal-clone';
-import DefineMap from 'can-define/map/map';
+import { DefineMap, fixture } from "can";
 import Game from 'bitballs/models/game';
-import fixture from "can-fixture";
 
 var vm;
 
@@ -22,6 +21,7 @@ QUnit.module('components/tournament/details/', {
            'bitballs/models/tournament': {
              'default':  {
                get: function() {
+                 console.log('we are here...');
                    return Promise.resolve(new DefineMap({
                        name: 'Test Name'
                    }));

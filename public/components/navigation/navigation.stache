@@ -1,3 +1,5 @@
+<can-import from="can-stache-route-helpers" />
+
 <nav class="navbar navbar-default">
 	<div class="navbar-collapse" id="bs-example-navbar-collapse-1">
 		<a href="/" class="pull-left main-logo">BitBalls</a>

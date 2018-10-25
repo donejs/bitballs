@@ -28,16 +28,13 @@
  * @demo public/components/player/edit/edit.html
  *
  **/
-var Component = require("can-component");
-var Player = require("bitballs/models/player");
-var DefineMap = require("can-define/map/map");
-
-require("bootstrap/dist/css/bootstrap.css!");
-require('can-define-backup');
-require("can-construct");
+import { Component, Construct, DefineMap, defineBackup } from "can";
+import Player from "bitballs/models/player";
+import view from "./edit.stache";
+import "bootstrap/dist/css/bootstrap.css";
 
 
-exports.ViewModel = DefineMap.extend("PlayerEditVM",
+export const ViewModel = DefineMap.extend("PlayerEditVM",
 {
 	/**
 	* @property {Boolean} bitballs/components/player/edit.isAdmin isAdmin
@@ -126,8 +123,8 @@ exports.ViewModel = DefineMap.extend("PlayerEditVM",
 	}
 });
 
-exports.Component = Component.extend({
+export const PlayerEdit = Component.extend({
 	tag: "player-edit",
-	view: require("./edit.stache!"),
-	ViewModel: exports.ViewModel
+	view,
+	ViewModel
 });

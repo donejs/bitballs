@@ -28,11 +28,9 @@
  *
  * @demo public/components/user/list/list.html
  */
-
-import Component from 'can-component';
-import DefineMap from 'can-define/map/map';
-import './list.less!';
-import template from './list.stache!';
+import { Component, DefineMap  } from "can";
+import './list.less';
+import view from './list.stache';
 import User from "bitballs/models/user";
 import Session from "bitballs/models/session";
 
@@ -88,6 +86,6 @@ export const ViewModel = DefineMap.extend({
 
 export default Component.extend({
 	tag: 'user-list',
-	ViewModel: ViewModel,
-	view: template
+	view,
+	ViewModel,
 });

@@ -22,14 +22,9 @@
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-import superModel from 'can-super-model';
-import QueryLogic from "can-query-logic";
+import { DefineMap, DefineList, QueryLogic, superModel, defineBackup } from "can";
 import bookshelfService from "./bookshelf-service";
-import DefineMap from 'can-define/map/map';
-import DefineList from 'can-define/list/list';
 import Player from "bitballs/models/player";
-
-import "can-define-backup";
 
 var Stat = DefineMap.extend('Stat',
 {

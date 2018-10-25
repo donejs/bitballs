@@ -1,4 +1,4 @@
-<can-import from="can-stache-converters" />
+<can-import from="can-stache-route-helpers" />
 
 {{^ if(tournamentPromise.isRejected) }}
 <h2>{{ tournament.year }} Tournament</h2>
@@ -116,7 +116,7 @@
 		<td>{{# ../players.getById(player2Id) }}{{ name }}{{/ }}</td>
 		<td>{{# ../players.getById(player3Id) }}{{ name }}{{/ }}</td>
 		<td>{{# ../players.getById(player4Id) }}{{ name }}{{/ }}</td>
-		{{# if(../isAdmin) }}
+		{{# if(scope.vm.isAdmin) }}
 			<td>
 				<button type="button" class="btn btn-danger"
 					on:click="../deleteTeam(.)"
@@ -127,7 +127,7 @@
 		{{/ if }}
 	</tr>
 {{ else }}
-	<tr><td class="text-center lead" colspan="{{# if(../isAdmin) }}6{{ else }}7{{/ if }}">No Teams</td></tr>
+	<tr><td class="text-center lead" colspan="{{# if(scope.vm.isAdmin) }}6{{ else }}7{{/ if }}">No Teams</td></tr>
 {{/ each }}
 </tbody>
 </table>

@@ -1,4 +1,4 @@
-import fixture from 'can-fixture';
+import { fixture } from 'can';
 
 export const players = {
 	data: [{

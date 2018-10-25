@@ -29,17 +29,16 @@
  * @demo public/components/navigation/navigation.html
  *
  */
-var Component = require("can-component");
-var Session = require("bitballs/models/session");
-var User = require("bitballs/models/user");
-var $ = require("jquery");
-global.jQuery = $;
-var DefineMap = require("can-define/map/map");
+import { Component, DefineMap } from "can";
+import Session from "bitballs/models/session";
+import User from "bitballs/models/user";
+import view from "./navigation.stache";
+import $ from "jquery";
+steal.loader.global.jQuery = $;
 
-require("bootstrap/dist/css/bootstrap.css!");
-require("bootstrap/js/dropdown");
-require("can-route");
-require("./navigation.less!");
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/js/dropdown";
+import "./navigation.less";
 
 
 var ViewModel = DefineMap.extend('NavigationVM',
@@ -60,7 +59,7 @@ var ViewModel = DefineMap.extend('NavigationVM',
 	sessionPromise: 'any',
 	/**
 	 * @property {bitballs/models/session} bitballs/models/session session
-	 * 
+	 *
 	 * Current session for the app
 	 */
 	session: Session,
@@ -114,10 +113,10 @@ var ViewModel = DefineMap.extend('NavigationVM',
 	}
 });
 
-Component.extend({
+const Navigation = Component.extend({
 	tag: "bitballs-navigation",
-	view: require("./navigation.stache!"),
-	ViewModel: ViewModel
+	view,
+	ViewModel
 });
 
-exports.ViewModel = ViewModel;
+export { Navigation, ViewModel };

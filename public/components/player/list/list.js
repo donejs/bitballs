@@ -28,16 +28,12 @@
  * @demo public/components/player/list/list.html
  *
  **/
-var Component = require("can-component");
-var template = require("./list.stache!");
-var DefineMap = require("can-define/map/");
+import { Component, DefineMap } from "can";
+import Player from "bitballs/models/player";
+import view from "./list.stache";
+import "bootstrap/dist/css/bootstrap.css";
 
-require("bootstrap/dist/css/bootstrap.css!");
-require("can-route");
-
-var Player = require("bitballs/models/player");
-
-var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
+export const ViewModel = DefineMap.extend('PlayerListVM',
 {
 	/**
 	 * @property {Boolean} bitballs/components/player/list.isAdmin isAdmin
@@ -107,8 +103,8 @@ var ViewModel = exports.ViewModel = DefineMap.extend('PlayerListVM',
 	}
 });
 
-exports.Component = Component.extend({
+export const PlayerList = Component.extend({
 	tag: "player-list",
-	view: template,
-	ViewModel: ViewModel
+	view,
+	ViewModel
 });

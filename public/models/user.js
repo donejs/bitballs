@@ -22,11 +22,8 @@
  * new User({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-var superModel = require('can-super-model');
-var QueryLogic = require("can-query-logic");
-var bookshelfService = require("./bookshelf-service").default;
-var DefineMap = require('can-define/map/map');
-var DefineList = require("can-define/list/list");
+import { superModel, QueryLogic, DefineMap, DefineList } from "can";
+import bookshelfService from "./bookshelf-service";
 
 
 var User = DefineMap.extend('User', {
@@ -110,4 +107,4 @@ User.connection = superModel({
 });
 
 
-module.exports = User;
+export default User;

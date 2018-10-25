@@ -28,14 +28,11 @@
  * @demo public/components/user/details/details.html
  */
 
-var Component = require("can-component"),
-	User = require("bitballs/models/user"),
-	Session = require("bitballs/models/session"),
-	route = require("can-route"),
-	DefineMap = require("can-define/map/map");
-
-require("bootstrap/dist/css/bootstrap.css!");
-require("can-route");
+import { Component, DefineMap, route } from "can";
+import User from "bitballs/models/user";
+import Session from "bitballs/models/session";
+import "bootstrap/dist/css/bootstrap.css";
+import view from "./details.stache!";
 
 /**
  * @constructor bitballs/components/user/details.ViewModel ViewModel
@@ -44,7 +41,7 @@ require("can-route");
  * @description  A `<user-details>` component's viewModel.
  */
 
-exports.ViewModel = DefineMap.extend({
+export const ViewModel = DefineMap.extend({
 	/**
 	 * @property {bitballs/models/session|null}
 	 *
@@ -184,8 +181,8 @@ exports.ViewModel = DefineMap.extend({
 	}
 });
 
-exports.Component = Component.extend({
+export const UserDetails = Component.extend({
 	tag: "user-details",
-	view: require("./details.stache!"),
-	ViewModel: exports.ViewModel
+	view,
+	ViewModel
 });

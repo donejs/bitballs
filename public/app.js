@@ -4,17 +4,22 @@
  *
  * @group bitballs/app.properties 0 properties
  */
-import DefineMap from "can-define/map/map";
+import {
+	DefineMap,
+	route,
+	stache
+} from "can";
 import "bootstrap/dist/css/bootstrap.css!";
-import route from 'can-route';
 import Session from './models/session';
-import "can-route-pushstate";
-import stache from "can-stache";
-import 'can-stache-route-helpers';
+import RoutePushstate from "can-route-pushstate";
+import "can-stache-route-helpers";
 import "./util/prefilter";
+import debug from 'can-debug#?./is-dev';
 
 //!steal-remove-start
-import "can-debug";
+if(debug) {
+	debug();
+}
 //!steal-remove-end
 
 const AppViewModel = DefineMap.extend('App',
@@ -213,6 +218,7 @@ stache.registerHelper("pageComponent", function(scope, options){
 	return stache(template)(scope, options.nodeList);
 });
 
+route.urlData = new RoutePushstate();
 route.register('tournaments/{tournamentId}');
 route.register('games/{gameId}');
 route.register('players/{playerId}');

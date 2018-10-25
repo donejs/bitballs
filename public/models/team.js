@@ -4,12 +4,9 @@
  *
  * @group bitballs/models/team.properties 0 properties
  */
-var superModel = require('can-super-model');
-var QueryLogic = require("can-query-logic");
-var bookshelfService = require("./bookshelf-service").default;
-var Player = require("./player");
-var DefineMap = require("can-define/map/map");
-var DefineList = require("can-define/list/list");
+import { DefineMap, DefineList, superModel, QueryLogic } from "can";
+import bookshelfService from "./bookshelf-service";
+import Player from "./player";
 
 var Team = DefineMap.extend('Team', {
 	/**
@@ -187,4 +184,4 @@ superModel({
 	updateInstanceWithAssignDeep: true
 });
 
-module.exports = Team;
+export default Team;

@@ -1,14 +1,11 @@
 import $ from 'jquery';
-import stache from 'can-stache';
-import fixture from 'can-fixture';
+import { stache, fixture } from "can";
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
-import tournamentList from './list';
+import { ViewModel } from './list';
 import defineFixtures from 'bitballs/models/fixtures/tournaments';
 
 F.attach(QUnit);
-
-var ViewModel = tournamentList.ViewModel;
 
 QUnit.module('components/tournament/list/', {
 	beforeEach: function () {

@@ -1,15 +1,12 @@
 import QUnit from 'steal-qunit';
-import playerEdit from 'bitballs/components/player/edit/edit';
+import { DefineMap, stache } from "can";
+import { ViewModel } from 'bitballs/components/player/edit/edit';
 import Player from 'bitballs/models/player';
 import F from 'funcunit';
 import $ from "jquery";
 import './edit';
-import stache from "can-stache";
-import DefineMap from "can-define/map/map";
 
 import defineFixtures from 'bitballs/models/fixtures/players';
-
-var ViewModel = playerEdit.ViewModel;
 
 F.attach(QUnit);
 
@@ -128,7 +125,7 @@ QUnit.module('components/player/edit/', function(hooks){
 		var player = vm.player;
 
 		player.backup();
-		
+
 		assert.equal(player.name, initialName, 'Initial name is correct');
 		assert.equal(player.weight, initialWeight, 'Initial weight is correct');
 		assert.equal(player.height, initialHeight, 'Initial height is correct');
