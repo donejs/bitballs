@@ -84,8 +84,10 @@ export const ViewModel = DefineMap.extend({
 	}
 });
 
-export default Component.extend({
+export const UserList = Component.extend({
 	tag: 'user-list',
 	view,
 	ViewModel,
 });
+
+export { UserList as Component };

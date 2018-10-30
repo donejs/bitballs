@@ -13,6 +13,7 @@
     "INLINE_CACHE": true,
     "canWait": true,
     "confirm": true,
+    "steal": true,
     "YT": true
   },
   "curly": true,

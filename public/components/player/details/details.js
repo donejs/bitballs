@@ -120,8 +120,10 @@ export const ViewModel = DefineMap.extend({
   },
 });
 
-export default Component.extend({
+export const PlayerDetails = Component.extend({
   tag: 'player-details',
   ViewModel,
   view
 });
+
+export { PlayerDetails as Component };

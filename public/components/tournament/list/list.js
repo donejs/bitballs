@@ -122,3 +122,5 @@ export const TournamentList = Component.extend({
 	view,
 	ViewModel
 });
+
+export { TournamentList as Component };

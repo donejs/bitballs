@@ -186,3 +186,5 @@ export const UserDetails = Component.extend({
 	view,
 	ViewModel
 });
+
+export { UserDetails as Component };

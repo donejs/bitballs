@@ -4,17 +4,13 @@
  *
  * @group bitballs/app.properties 0 properties
  */
-import {
-	DefineMap,
-	route,
-	stache
-} from "can";
+import { DefineMap, route, value } from "can";
 import "bootstrap/dist/css/bootstrap.css!";
 import Session from './models/session';
 import RoutePushstate from "can-route-pushstate";
 import "can-stache-route-helpers";
 import "./util/prefilter";
-import debug from 'can-debug#?./is-dev';
+import debug from 'can-debug#?is-dev';
 
 //!steal-remove-start
 if(debug) {
@@ -80,7 +76,11 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Game",
 				componentName: "game-details",
-				attributes: "gameId:from='./gameId'  session:from='./session' gamePromise:to='./pagePromise'",
+				viewModel: () => ({
+					gameId: value.from(this, "gameId"),
+					session: value.from(this, "session"),
+					gamePromise: value.to(this, "pagePromise")
+				}),
 				moduleName: "game/details/"
 			};
 
@@ -88,7 +88,11 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournament",
 				componentName: "tournament-details",
-				attributes: "tournamentId:from='./tournamentId' isAdmin:from='./isAdmin' tournamentPromise:to='./pagePromise'",
+				viewModel: () => ({
+					tournamentId: value.from(this, "tournamentId"),
+					isAdmin: value.from(this, "isAdmin"),
+					tournamentPromise: value.to(this, "pagePromise")
+				}),
 				moduleName: "tournament/details/"
 			};
 
@@ -96,7 +100,10 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Player",
 				componentName: "player-details",
-				attributes: "playerId:from='./playerId' playerPromise:to='./pagePromise'",
+				viewModel: () => ({
+					playerId: value.from(this, "playerId"),
+					playerPromise: value.to(this, "pagePromise")
+				}),
 				moduleName: "player/details/"
 			};
 
@@ -104,7 +111,9 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Tournaments",
 				componentName: "tournament-list",
-				attributes: "isAdmin:from='./isAdmin'",
+				viewModel: () => ({
+					isAdmin: value.from(this, "isAdmin")
+				}),
 				moduleName: "tournament/list/"
 			};
 
@@ -112,7 +121,9 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Users List",
 				componentName: "user-list",
-				attributes: "session:from='./session'",
+				viewModel: () => ({
+					session: value.from(this, "session")
+				}),
 				moduleName: "user/list/"
 			};
 
@@ -120,7 +131,9 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Account",
 				componentName: "user-details",
-				attributes: "session:bind='./session'",
+				viewModel: () => ({
+					session: value.bind(this, "session")
+				}),
 				moduleName: "user/details/"
 			};
 
@@ -128,7 +141,9 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Players",
 				componentName: "player-list",
-				attributes: "isAdmin:from='./isAdmin'",
+				viewModel: () => ({
+					isAdmin: value.from(this, "isAdmin")
+				}),
 				moduleName: "player/list/"
 			};
 
@@ -136,7 +151,7 @@ const AppViewModel = DefineMap.extend('App',
 			return {
 				title: "Page Not Found",
 				componentName: "four-0-four",
-				attributes: "",
+				viewModel: () => ({}),
 				moduleName: "404.component!",
 				statusCode: 404
 			};
@@ -202,20 +217,14 @@ const AppViewModel = DefineMap.extend('App',
         return false;
       }
     }
-  }
-});
+  },
 
-stache.registerHelper("pageComponent", function(scope, options){
-	var pageComponent = options.context.pageComponentConfig,
-		template =
-			"<can-import from='bitballs/components/" + pageComponent.moduleName + "'>" +
-				"{{# if(isResolved) }}" +
-					"{{# with(this) }}<"+pageComponent.componentName + " " + pageComponent.attributes + "/>{{/ with }}" +
-				"{{ else }}" +
-					"Loading..." +
-				"{{/ if }}" +
-			"</can-import>";
-	return stache(template)(scope, options.nodeList);
+	get pageComponent() {
+		var moduleName = "bitballs/components/" + this.pageComponentConfig.moduleName;
+		return steal.import(moduleName).then(({Component}) => {
+			return new Component({ viewModel: this.pageComponentConfig.viewModel() });
+		});
+	}
 });
 
 route.urlData = new RoutePushstate();

@@ -108,3 +108,5 @@ export const PlayerList = Component.extend({
 	view,
 	ViewModel
 });
+
+export { PlayerList as Component };

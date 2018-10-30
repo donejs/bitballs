@@ -559,3 +559,5 @@ export const TournamentDetails = Component.extend({
 	view: tournamentDetailsView,
 	ViewModel
 });
+
+export { TournamentDetails as Component };

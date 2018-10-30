@@ -119,4 +119,4 @@ const Navigation = Component.extend({
 	ViewModel
 });
 
-export { Navigation, ViewModel };
+export { Navigation, Navigation as Component, ViewModel };

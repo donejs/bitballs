@@ -22,7 +22,7 @@
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-import { DefineMap, DefineList, QueryLogic, superModel, defineBackup } from "can";
+import { DefineMap, DefineList, QueryLogic, superModel } from "can";
 import bookshelfService from "./bookshelf-service";
 import Player from "bitballs/models/player";
 

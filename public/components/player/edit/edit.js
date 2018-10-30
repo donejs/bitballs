@@ -28,7 +28,7 @@
  * @demo public/components/player/edit/edit.html
  *
  **/
-import { Component, Construct, DefineMap, defineBackup } from "can";
+import { Component, DefineMap } from "can";
 import Player from "bitballs/models/player";
 import view from "./edit.stache";
 import "bootstrap/dist/css/bootstrap.css";
@@ -128,3 +128,5 @@ export const PlayerEdit = Component.extend({
 	view,
 	ViewModel
 });
+
+export { PlayerEdit as Component };

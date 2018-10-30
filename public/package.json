@@ -22,7 +22,7 @@
     "can-route-pushstate": "^5.0.7",
     "can-stache-route-helpers": "^1.1.1",
     "can-view-autorender": "^5.0.0",
-    "can-zone": "^0.6.16",
+    "can-zone": "^1.0.0",
     "done-autorender": "^2.4.1",
     "done-component": "^2.2.0",
     "done-css": "^3.0.2",

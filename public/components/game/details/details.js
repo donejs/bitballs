@@ -622,3 +622,5 @@ export const GameDetails = Component.extend({
 	view,
 	ViewModel
 });
+
+export { GameDetails as Component };
