@@ -8,10 +8,4 @@ var config = {
 module.exports = stealTools
   .build(config, {
     bundleAssets: true
-  })
-  .then(function() {
-    return stealTools.optimize(config, {
-      target: 'web',
-      bundleAssets: true
-    });
   });

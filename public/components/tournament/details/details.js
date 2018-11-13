@@ -30,19 +30,17 @@
  * @demo public/components/tournament/details/details.html
  *
  */
-import CanComponent from "can-component";
+import { Component, DefineMap, defineStreamKefir, stacheConverters, stache } from "can";
 import Team from "bitballs/models/team";
 import Game from "bitballs/models/game";
 import Player from "bitballs/models/player";
 import Tournament from "bitballs/models/tournament";
 import Stat from "bitballs/models/stat";
 import Session from "bitballs/models/session";
-import DefineMap from "can-define/map/map";
-
-import defineStreamKefir from "can-define-stream-kefir";
-import "bootstrap/dist/css/bootstrap.css!";
-import "can-stache-route-helpers";
+import "bootstrap/dist/css/bootstrap.css";
 import tournamentDetailsView from "./details.stache";
+
+stache.addConverter(stacheConverters);
 
 export const ViewModel = DefineMap.extend('TournamentDetails',
 {
@@ -506,7 +504,7 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 			court: this.selectedCourt,
 			tournamentId: this.tournamentId
 		});
-		
+
 		this.game = null;
 
 		game.save(function(){
@@ -556,8 +554,10 @@ export const ViewModel = DefineMap.extend('TournamentDetails',
 
 defineStreamKefir(ViewModel);
 
-export const Component = CanComponent.extend({
+export const TournamentDetails = Component.extend({
 	tag: "tournament-details",
 	view: tournamentDetailsView,
-	ViewModel: ViewModel
+	ViewModel
 });
+
+export { TournamentDetails as Component };

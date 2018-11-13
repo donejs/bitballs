@@ -4,16 +4,12 @@
  *
  * @group bitballs/models/game.properties 0 properties
  */
-var superModel = require('can-super-model');
-var QueryLogic = require("can-query-logic");
-var Team = require("bitballs/models/team");
-var Player = require("bitballs/models/player");
-var Stat = require("bitballs/models/stat").default;
-var Tournament = require("./tournament");
-var DefineMap = require("can-define/map/map");
-var DefineList = require("can-define/list/list");
-var canReflect = require("can-reflect");
-var bookshelfService = require("./bookshelf-service").default;
+import { DefineMap, DefineList, Reflect as canReflect, superModel, QueryLogic } from "can";
+import Team from "bitballs/models/team";
+import Player from "bitballs/models/player";
+import Stat from "bitballs/models/stat";
+import Tournament from "./tournament";
+import bookshelfService from "./bookshelf-service";
 
 var Game = DefineMap.extend('Game',
 {
@@ -296,4 +292,4 @@ Game.connection = superModel({
 });
 
 
-module.exports = Game;
+export default Game;

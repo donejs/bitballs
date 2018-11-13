@@ -28,14 +28,15 @@
  * @demo public/components/tournament/list/list.html
  *
  */
-var Component = require("can-component");
-var DefineMap = require("can-define/map/map");
-var Tournament = require("bitballs/models/tournament");
+import {
+	Component, DefineMap
+} from "can";
+import Tournament from "bitballs/models/tournament";
+import view from "./list.stache";
+import "bootstrap/dist/css/bootstrap.css!";
+import "can-stache-route-helpers";
 
-require("bootstrap/dist/css/bootstrap.css!");
-require("can-stache-route-helpers");
-
-exports.ViewModel = DefineMap.extend('TournamentList',
+export const ViewModel = DefineMap.extend('TournamentList',
 /** @prototype */
 {
 
@@ -116,8 +117,10 @@ exports.ViewModel = DefineMap.extend('TournamentList',
 	}
 });
 
-exports.Component = Component.extend({
+export const TournamentList = Component.extend({
 	tag: "tournament-list",
-	view: require("./list.stache!"),
-	ViewModel: exports.ViewModel
+	view,
+	ViewModel
 });
+
+export { TournamentList as Component };

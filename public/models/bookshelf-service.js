@@ -1,14 +1,14 @@
-import transform from "can-key/transform/transform";
+import { key } from "can";
 
 const bookshelfService = {
     toQuery(params) {
-        return transform(params, {
+        return key.transform(params, {
             where: "filter",
             orderBy: "sort"
         });
     },
     toParams(query){
-        return transform(query, {
+        return key.transform(query, {
             filter: "where",
             sort: "orderBy"
         });

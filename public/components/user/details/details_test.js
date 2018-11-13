@@ -1,8 +1,6 @@
 import QUnit from 'steal-qunit';
-import user from 'bitballs/components/user/details/';
+import { ViewModel } from 'bitballs/components/user/details/';
 import 'bitballs/models/fixtures/users';
-
-var ViewModel = user.ViewModel;
 
 QUnit.module('components/user/', {
 	beforeEach: function() {
@@ -22,7 +20,7 @@ QUnit.test('create new user', function(assert) {
 
 	// session is not created before user is saved:
 	assert.ok(vm.user.isNew(), 'User should be new.');
-	
+
 	assert.equal(vm.session, null, 'Session should not exist before user gets created.');
 
 	vm.saveUser().then(function(){

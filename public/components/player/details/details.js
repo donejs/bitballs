@@ -1,5 +1,4 @@
-import Component from 'can-component';
-import DefineMap from 'can-define/map/';
+import { Component, DefineMap } from 'can';
 import './details.less';
 import view from './details.stache';
 import Game from 'bitballs/models/game';
@@ -121,8 +120,10 @@ export const ViewModel = DefineMap.extend({
   },
 });
 
-export default Component.extend({
+export const PlayerDetails = Component.extend({
   tag: 'player-details',
   ViewModel,
   view
 });
+
+export { PlayerDetails as Component };

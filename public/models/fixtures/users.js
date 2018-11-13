@@ -1,4 +1,4 @@
-import fixture from 'can-fixture';
+import { fixture } from "can";
 
 fixture("POST /services/users", function(request, response){
 	console.log('[fixture] request', request);

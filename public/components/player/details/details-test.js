@@ -1,7 +1,7 @@
 import QUnit from 'steal-qunit';
 import F from 'funcunit';
 import {ViewModel} from './details';
-import fixture from 'can-fixture';
+import { fixture } from 'can';
 
 F.attach(QUnit);
 

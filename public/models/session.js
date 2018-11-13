@@ -5,13 +5,15 @@
  * @group bitballs/models/session.properties 0 properties
  */
 
-var restModel = require('can-rest-model');
-var QueryLogic = require("can-query-logic");
-var bookshelfService = require("./bookshelf-service").default;
-var $ = require("jquery");
-var DefineMap = require("can-define/map/map");
-var DefineList = require("can-define/list/list");
-var User = require("./user");
+import {
+	restModel,
+	QueryLogic,
+	DefineMap,
+	DefineList
+} from "can";
+import bookshelfService from "./bookshelf-service";
+import $ from "jquery";
+import User from "./user";
 
 
 var Session = DefineMap.extend('Session', {
@@ -57,4 +59,4 @@ Session.connection = restModel({
 	updateInstanceWithAssignDeep: true
 });
 
-module.exports = Session;
+export default Session;

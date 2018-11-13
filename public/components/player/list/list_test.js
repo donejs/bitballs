@@ -1,11 +1,11 @@
-var QUnit = require("steal-qunit");
-var PlayerList = require("./list");
-var defineFixtures = require("bitballs/models/fixtures/players").defineFixtures;
-var F = require('funcunit');
-var fixture = require('can-fixture');
-var stache = require("can-stache");
-var $ = require("jquery");
-var Player = require("bitballs/models/player");
+import QUnit from "steal-qunit";
+import Player from "bitballs/models/player";
+import { ViewModel } from "./list";
+import defineFixtures from "bitballs/models/fixtures/players";
+import F from "funcunit";
+import { fixture, stache } from "can";
+import $ from "jquery";
+
 F.attach(QUnit);
 
 var vm;
@@ -14,7 +14,7 @@ QUnit.module("components/player/list/", {
 		localStorage.clear();
 		fixture.delay = 1;
 		defineFixtures();
-		vm = new PlayerList.ViewModel();
+		vm = new ViewModel();
 	},
 	afterEach: function () {
 		defineFixtures();

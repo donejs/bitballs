@@ -23,20 +23,18 @@
  *
  */
 
-var Component = require("can-component");
-var DefineMap = require("can-define/map/");
-var DefineList = require("can-define/list/");
-var Session = require("bitballs/models/session");
-var Game = require("bitballs/models/game");
-var Stat = require("bitballs/models/stat").default;
-var youtubeAPI = require("bitballs/models/youtube");
-var platform = require( "steal-platform" );
-var $ = require("jquery");
+import { Component, DefineMap, DefineList } from "can";
+import Session from "bitballs/models/session";
+import Game from "bitballs/models/game";
+import Stat from "bitballs/models/stat";
+import youtubeAPI from "bitballs/models/youtube";
+import platform from "steal-platform";
+import $ from "jquery";
+import view from "./details.stache";
+import "./details.less";
+import "bootstrap/dist/css/bootstrap.css";
+import "../../../inserted-removed";
 
-require("./details.less!");
-require("bootstrap/dist/css/bootstrap.css!");
-require("can-route");
-require("../../../inserted-removed");
 
 /**
  * @constructor bitballs/components/game/details.ViewModel ViewModel
@@ -45,7 +43,7 @@ require("../../../inserted-removed");
  * @description  A `<game-details>` component's viewModel.
  */
 
-exports.ViewModel = DefineMap.extend('GameDetailsVM',
+export const ViewModel = DefineMap.extend('GameDetailsVM',
 {
 	/**
 	 * @property {Object}
@@ -419,6 +417,7 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 
 	// VIDEO RELATED PROPERTIES
 	YT: "any",
+	removedFromDOM: "boolean",
 	youtubePlayerDuration: {
 		value: function(prop) {
 			//if(this.removedFromDOM) {
@@ -618,8 +617,10 @@ exports.ViewModel = DefineMap.extend('GameDetailsVM',
 
 });
 
-exports.Component = Component.extend({
+export const GameDetails = Component.extend({
 	tag: "game-details",
-	view: require("./details.stache"),
-	ViewModel: exports.ViewModel
+	view,
+	ViewModel
 });
+
+export { GameDetails as Component };

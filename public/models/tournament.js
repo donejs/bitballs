@@ -4,12 +4,11 @@
  *
  * @group bitballs/models/tournament.properties 0 properties
  */
-var superModel = require('can-super-model');
-var QueryLogic = require("can-query-logic");
-var bookshelfService = require("./bookshelf-service").default;
-var moment = require('moment');
-var DefineMap = require("can-define/map/map");
-var DefineList = require("can-define/list/list");
+import {
+	superModel, QueryLogic, DefineMap, DefineList
+} from "can";
+import bookshelfService from "./bookshelf-service";
+import moment from "moment";
 
 
 var Tournament = DefineMap.extend('Tournament', {
@@ -35,8 +34,7 @@ var Tournament = DefineMap.extend('Tournament', {
 	 * JavaScript Date object.
 	 **/
 	get jsDate() {
-		var date = this.date;
-		return date ? moment(date).toDate() : null;
+		return moment(this.date).toDate() || null;
 	},
 	/**
 	 * @property {Date} bitballs/models/tournament.properties.year year
@@ -55,8 +53,8 @@ var Tournament = DefineMap.extend('Tournament', {
 	 * A formatted output of [bitballs/models/tournament.properties.date].
 	 **/
 	get prettyDate() {
-		var date = this.date;
-		return date ? moment(date).toDate() : null;
+		var date = new Date(this.date);
+		return isNaN(date) ? null : date;
 	}
 });
 
@@ -79,4 +77,4 @@ Tournament.connection = superModel({
 	updateInstanceWithAssignDeep: true
 });
 
-module.exports = Tournament;
+export default Tournament;

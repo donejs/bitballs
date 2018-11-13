@@ -1,13 +1,11 @@
 import QUnit from "steal-qunit";
 import Session from "~/models/session";
-import details from "./details";
+import { ViewModel as DetailsViewModel } from "./details";
 import { games } from "~/models/fixtures/games";
 import createGamesFixtures from "~/models/fixtures/games";
 import F from 'funcunit';
-import stache from 'can-stache';
-import fixture from 'can-fixture';
+import { fixture, stache, viewModel as canViewModel } from "can";
 import $ from 'jquery';
-import canViewModel from 'can-view-model';
 import User from "~/models/user";
 
 var deepEqual = QUnit.deepEqual,
@@ -15,8 +13,6 @@ var deepEqual = QUnit.deepEqual,
     notOk = QUnit.notOk;
 
 F.attach(QUnit);
-
-var DetailsViewModel = details.ViewModel;
 
 QUnit.module("bitballs/game/details/", {
     setup: function() {

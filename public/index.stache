@@ -11,11 +11,16 @@
 
 		<div class="container">
 			<bitballs-navigation app:from="." />
-			{{{ pageComponent(scope) }}}
+
+			{{# if(pageComponent.isResolved) }}
+				{{pageComponent.value}}
+			{{ else }}
+				Loading...
+			{{/ if }}
 		</div>
 
 		{{# is(env.NODE_ENV, "production") }}
-			<script src="dist/bundles/web/bitballs/index.js"></script>
+			<script src="dist/steal.production.js"></script>
 		{{ else }}
 			<script src="/node_modules/steal/steal.js"
 				main="bitballs/index.stache!done-autorender"></script>
