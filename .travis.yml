@@ -22,6 +22,9 @@ before_deploy:
 - git commit -m "Updating build."
 - npm run deploy:ci
 deploy:
+  skip_cleanup: true
+  provider: heroku
+  app: bitballs
   api_key:
     secure: G5xLgZeIDFhFjuBmq9RBDrQofyVI2v14eKdhCqH+U1WaVP4hhniGnxgDEjmilb6Zb7V9EPyyF5JNtHQgjIuJ06bK3dSSKpt3SLU74/w74EaQpdhxq7Xx+497xnBHfIhwA+8fg2RnLcppR2F+6IAYn55rfEIg92Cx81M/Cirm5sHccVQ6dV2/Sj2dWezAaG6VJQStH2z3E9ZwJrOd9wjf69H5KCG0onT2+syjs8EaE43QyBVo1GffhuEOaHrhI9vL19ctpOMTlzps3W3VE6sYr3LqFkxz+xPOstej++LqQSgdhheFh9F4H7NjsSc+9iZzM0KngHw0xKZ5b2mKZTBzR+u+JRpU30qLWmgcEV38z8i5SfOO8lPEHghh6msGbwZpVLPBLYRVnRWjAHHxslqaDEwNmb/2YdX9LTKdzsnFpYRGLVJIMGoCjTIvDV6lmyfMnxww8+W44Oh5Jh1XR5vkb6P0rIKTW3mwgx2o8vQcSRD+mUReCwA0EnLLaCBxZKG0Uku/zqe8skvFGVZMZfTBBMJ9GEIqPvh0ckYwGWcBmP+c+nFk+fxLl+3Fya86NWl1FaN/KeUIssmj/iVpsAy/nmVuPiwrgCnz+k0PG5WU3DbxiPVGn1+SlLQ/ncgu5yit0XfTiqAtt+FA/UxHTN5wZldvV/ppylTm36vWShqFKmI=
 env:
