@@ -154,6 +154,9 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 				if(stat.type === "2P") {
 					scores[playerMap[ stat.playerId ]] += 2;
 				}
+				if(stat.type === "C") {
+					scores[playerMap[ stat.playerId]]--;
+				}
 			});
 			return scores;
 		}
@@ -178,6 +181,9 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 					}
 					if(stat.type === "2P") {
 						scores[playerMap[ stat.playerId]] += 2;
+					}
+					if(stat.type === "C") {
+						scores[playerMap[ stat.playerId]]--;
 					}
 				}
 			});
@@ -380,7 +386,7 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	statPercent: function(time){
-		var duration = this.youtubePlayerDuration;
+		var duration = this.youtubePlayerDuration || this.game.lastTime * 1.1;
 		if(duration) {
 			return time / duration * 100;
 		} else {

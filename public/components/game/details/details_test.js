@@ -7,6 +7,7 @@ import F from 'funcunit';
 import { fixture, stache, viewModel as canViewModel } from "can";
 import $ from 'jquery';
 import User from "~/models/user";
+import Stat from "~/models/stat";
 
 var deepEqual = QUnit.deepEqual,
     ok = QUnit.ok,
@@ -46,7 +47,7 @@ QUnit.test("correctly sums score", function() {
     var vm = this.vm;
     vm.on("game", function(ev, game) {
         deepEqual(vm.finalScore, {
-            home: 3,
+            home: 2,
             away: 5
         });
         QUnit.start();
@@ -88,7 +89,9 @@ QUnit.test("correctly sums the current score", function () {
             |    0 |           0 |           0 | <initial>
             |   20 |           1 |           0 |
             |   40 |           3 |           0 |
-            |   60 |           3 |           1 | <final>
+            |   60 |           3 |           1 | 
+            |  122 |           2 |           1 | <-1 for cursing>
+            |  122 |           2 |           1 | <final>
 
             Therefore at time=50, home=3 and away=0.
 
@@ -104,6 +107,21 @@ QUnit.test("correctly sums the current score", function () {
 
         QUnit.start();
     });
+});
+
+QUnit.test('Game lastTime uses stat events as a fallback', function () {
+    QUnit.stop();
+    var vm = this.vm;
+
+    // last stat time is 122
+    vm.on("game", function() {
+        vm.youtubePlayerTime = 0;
+        QUnit.notEqual(vm.game.lastTime, 0);
+
+        QUnit.start();
+    });
+
+
 });
 
 
@@ -124,9 +142,9 @@ QUnit.test('A stat can only be deleted by an admin', function () {
             vm.session.user.isAdmin = true;
             ok(true, 'The user is given admin privileges');
         })
-        .size(6, 'Destroy buttons are inserted')
+        .size(7, 'Destroy buttons are inserted')
         .click()
-        .size(5, 'Clicking the destroy button removed a stat');
+        .size(6, 'Clicking the destroy button removed a stat');
 });
 
 

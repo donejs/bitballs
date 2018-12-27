@@ -171,6 +171,15 @@ var Game = DefineMap.extend('Game',
 			});
 			return playerIds;
 		}
+	},
+
+	/**
+	* @property {Number} 
+	* Gives the last time for a stat event during this game.
+	**/
+	get lastTime() {
+		if (!this.stats) return 0;
+		return this.stats.reduce((time, s) => s.time > time ? s.time : time, 0);
 	}
 });
 

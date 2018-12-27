@@ -16,16 +16,16 @@
 	</ul>
 {{/ player }}
 
-{{# each(tournaments) }}
-	{{# if(statsByTournament[id]) }}
-		<h2>{{ year }} Tournament</h2>
+{{# for (tournament of tournaments) }}
+	{{# if(this.statsByTournament[tournament.id]) }}
+		<h2>{{ tournament.year }} Tournament</h2>
 		<ul class="tournament-stats">
-		{{# each(statsByTournament[id].aggregated) }}
+		{{# for (stat of statsByTournament[tournament.id].aggregated) }}
 			<li>
-				<p>{{ name }}</p>
-				<div>{{ value }}</div>
+				<p>{{ stat.name }}</p>
+				<div>{{ stat.value }}</div>
 			</li>
-		{{/ each }}
+		{{/ for }}
 		</ul>
 	{{/ if }}
-{{/ each }}
+{{/ for }}
