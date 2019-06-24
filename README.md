@@ -148,7 +148,7 @@ npm install -g donejs-cli
 With all the prerequisite setup completed the server can be started by running:
 
 ```
-donejs start
+donejs develop
 ```
 
 ### Register a User
