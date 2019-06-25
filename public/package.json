@@ -23,7 +23,7 @@
     "can-stache-route-helpers": "^1.1.1",
     "can-view-autorender": "^5.0.0",
     "can-zone": "^1.0.0",
-    "done-autorender": "^2.4.1",
+    "done-autorender": "^2.6.3",
     "done-component": "^2.2.0",
     "done-css": "^3.0.2",
     "done-serve": "^3.0.0-pre.3",
