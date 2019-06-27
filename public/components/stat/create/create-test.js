@@ -1,10 +1,18 @@
 import QUnit from 'steal-qunit';
-import { ViewModel } from './create';
+import StatCreate from './create';
+import F from "funcunit"
 
 // ViewModel unit tests
 QUnit.module('~/components/stat/create');
 
-QUnit.test('Has message', function(){
-  var vm = new ViewModel();
-  QUnit.equal(vm.message, 'This is the stat-create component');
+QUnit.test("preventCreatingStat", function(assert){
+    var statCreate = new StatCreate();
+
+    assert.ok( statCreate.preventCreatingStat() );
+
+
+    statCreate.statType = "1P";
+    statCreate.statPlayerId = 1;
+
+    assert.ok(! statCreate.preventCreatingStat() );
 });

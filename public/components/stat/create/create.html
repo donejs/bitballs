@@ -1,18 +1,22 @@
-<script id="demo-html" can-autorender type="text/stache">
-    <can-import from="bitballs/models/fixtures/games" />
-    <can-import from="bitballs/components/game/details/" />
+<script src="../../../node_modules/steal/steal.js">
+
+import Game from "~/models/game";
+import gameData from "~/models/fixtures/game-data"
+import {fixture} from "can";
+var game = new Game(gameData)
+
+import StatCreate from "~/components/stat/create/";
+
+var element = new StatCreate();
+
+element.initialize({game});
+
+document.body.append(element);
 
 
-    <stat-create gameId:raw="1" session:bind="session" autoplay:from="false"></stat-create>
-</script>
+fixture("POST /services/stats", function(request){
+    console.log("creating!!");
+    return {...request.data, id: Math.random()};
+})
 
-<my-stat-create></my-stat-create>
-
-<script src="../../../node_modules/steal/steal.js" main="~/components/stat/create/" id='demo-source'>
-    import Session from "bitballs/models/session";
-    import { Component, viewModel } from "can";
-    import 'can-view-autorender';
-
-    let vm = viewModel('#demo-html');
-    vm.session = new Session({user: {isAdmin: true }});
 </script>

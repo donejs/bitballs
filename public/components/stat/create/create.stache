@@ -1,1 +1,25 @@
-<p>{{message}}</p>
+
+
+<form on:submit="this.createStat(scope.event)">
+    <div>
+        <input type="radio"
+            checked:from="eq(this.statPlayerId, this.game.homeTeam.player1Id)"
+            on:change="this.statPlayerId = this.game.homeTeam.player1Id">
+            {{ this.game.homeTeam.player1.name }}
+        <input type="radio"
+            checked:from="eq(this.statPlayerId, this.game.homeTeam.player2Id)"
+            on:change="this.statPlayerId = this.game.homeTeam.player2Id">
+            {{ this.game.homeTeam.player2.name }}
+    </div>
+
+    <div>
+        <input type="radio"
+            checked:from="eq(this.statType, '1P')"
+            on:change="this.statType = '1P'"> 1P
+
+        <input type="radio"
+            checked:from="eq(this.statType, '2P')"
+            on:change="this.statType = '2P'"> 2P
+    </div>
+    <button disabled:from="this.preventCreatingStat()">Create Stat</button>
+</form>
