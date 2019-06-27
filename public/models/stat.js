@@ -35,16 +35,16 @@ var Stat = DefineMap.extend('Stat',
 	 * has the short name of the stat.  Ex: `{name: "1P"}`.
 	 */
 	statTypes: [
-			{ name: "1P"},
-			{ name: "1PA"},
-			{ name: "2P"},
-			{ name: "2PA"},
-			{ name: "ORB"},
-			{ name: "DRB"},
-			{ name: "Ast"},
-			{ name: "Stl"},
-			{ name: "Blk"},
-			{ name: "To"}
+			{ name: "1P",  displayName: "1 point"},
+			{ name: "1PA", displayName: "1 point attempt"},
+			{ name: "2P",  displayName: "2 point"},
+			{ name: "2PA", displayName: "2 point attempt"},
+			{ name: "ORB", displayName: "Offensive rebound"},
+			{ name: "DRB", displayName: "Defensive rebound"},
+			{ name: "Ast", displayName: "Assist"},
+			{ name: "Stl", displayName: "Steal"},
+			{ name: "Blk", displayName: "Block"},
+			{ name: "To",  displayName: "Turnover"}
 		]
 },
 {

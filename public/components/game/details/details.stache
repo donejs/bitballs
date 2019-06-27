@@ -24,8 +24,9 @@
 			<th colspan="2">{{ color }} - {{ name }}</th>
 		</tr>
 		{{# each(players) }}
-			<tr on:click="scope.vm.showStatMenuFor(this,scope.element, scope.event)">
-				<td>{{ name }}</td>
+			<tr>
+				<td>{{ name }} <button style="float: right;" on:click="scope.vm.showStatMenuFor(this,scope.element, scope.event)" class="btn btn-primary" >Add Stat</button></td>
+				<!-- <td><button class="btn btn-primary" >Add Stat</button></td> -->
 				<td class="stats-container">
 					{{# each(scope.vm.statsForPlayerId(id)) }}
 						<span on:click="scope.vm.gotoTimeMinus5(time, scope.event)"
@@ -57,7 +58,7 @@
 			    <select value:bind="stat.type" class="form-control" id="stat-type">
 			    	<option value=""/>
 			    	{{# statTypes }}
-			    		<option value="{{ name }}">{{ name }}</option>
+			    		<option value="{{ name }}">{{ displayName }}</option>
 			    	{{/ statTypes }}
 			    </select>
 
