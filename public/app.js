@@ -20,6 +20,11 @@ if(debug) {
 
 const AppViewModel = DefineMap.extend('App',
 {
+  init() {
+    this.bind('statId', () => {
+      can.queues.logStack();
+    });
+  },
 	env: {
 		default: () => ({NODE_ENV:'development'}),
 		serialize: false
@@ -44,6 +49,12 @@ const AppViewModel = DefineMap.extend('App',
 	* Current GameID
 	**/
 	gameId: 'number',
+	/**
+	 * @property {Number} bitballs/app.statId statId
+	 * @parent bitballs/app.properties
+	 * Current StatID
+	 **/
+	statId: 'number',
 	/**
 	* @property {Number} bitballs/app.tournamentId tournamentId
 	* @parent bitballs/app.properties
@@ -73,13 +84,16 @@ const AppViewModel = DefineMap.extend('App',
 	get pageComponentConfig() {
 		var page = this.page;
 		if(this.gameId) {
+      console.log('gameId', this.gameId,
+                  'statId', this.statId);
 			return {
 				title: "Game",
 				componentName: "game-details",
 				viewModel: () => ({
 					gameId: value.from(this, "gameId"),
 					session: value.from(this, "session"),
-					gamePromise: value.to(this, "pagePromise")
+					gamePromise: value.to(this, "pagePromise"),
+					statId: value.to(this, "statId"),
 				}),
 				moduleName: "game/details/"
 			};
@@ -227,8 +241,10 @@ const AppViewModel = DefineMap.extend('App',
 	}
 });
 
+// can.queues.log('flush');
 route.urlData = new RoutePushstate();
 route.register('tournaments/{tournamentId}');
+route.register('games/{gameId}/{statId}');
 route.register('games/{gameId}');
 route.register('players/{playerId}');
 route.register('{page}',{page: 'tournaments'});
