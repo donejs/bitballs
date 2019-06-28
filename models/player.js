@@ -54,6 +54,10 @@ var Player = bookshelf.Model.extend(
 	stats: function(){
 		var Stat = require("./stat");
 		return this.hasMany(Stat,"playerId");
+	},
+	games: function(){
+		var Game = require("./game");
+		return this.hasMany(Game,"playerId");
 	}
 });
 
