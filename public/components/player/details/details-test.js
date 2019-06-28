@@ -51,5 +51,4 @@ QUnit.test('should map stats to game ID', function (assert) {
 });
 
 QUnit.test('should group stats by tournament', function (assert) {
-    let tournamentStats = this.tournamentStats;
 });
