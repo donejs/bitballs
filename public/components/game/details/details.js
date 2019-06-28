@@ -225,7 +225,7 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 	 * ```
 	 */
 	showStatMenuFor: function(player, element, event){
-		if(!this.session || !this.session.isAdmin()) {
+		if(!this.session.user) {
 			return;
 		}
 		var youtubePlayer = this.youtubePlayer;
@@ -236,7 +236,8 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 			time: time,
 			playerId: player.id,
 			gameId: this.game.id,
-			player: player
+			player: player,
+			creatorId: this.session.user.id
 		});
 	},
 	/**
@@ -548,6 +549,9 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 		return {
 			top: $(containers[index]).offset().top - first.top + (height/2)
 		};
+	},
+	createdBy: function(stat) {
+		return this.session && (this.session.isAdmin() || stat.creatorId === this.session.user.id);
 	},
 
 	connectedCallback(el) {

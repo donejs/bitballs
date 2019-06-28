@@ -25,6 +25,7 @@
 import { DefineMap, DefineList, QueryLogic, superModel } from "can";
 import bookshelfService from "./bookshelf-service";
 import Player from "bitballs/models/player";
+import User from "bitballs/models/user";
 
 var Stat = DefineMap.extend('Stat',
 {
@@ -96,6 +97,23 @@ var Stat = DefineMap.extend('Stat',
 			return Math.round(newVal);
 		}
 	},
+	/**
+	 * @property {bitballs/models/user} bitballs/models/stat.properties.creator creator
+	 * @parent bitballs/models/user.properties
+	 *
+	 * User related to the stats
+	 */
+	creator: {
+		Type: User,
+		serialize: false
+	},
+	/**
+	 * @property {Number} bitballs/models/stat.properties.creatorId creatorId
+	 * @parent bitballs/models/stat.properties
+	 * 
+	 * The user that created the stat.
+	 */
+	creatorId: 'number',
 
 	default: 'any'
 });
