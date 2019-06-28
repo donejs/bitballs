@@ -1,22 +1,73 @@
+
+
+
+<my-demo></my-demo>
 <script src="../../../node_modules/steal/steal.js">
 
 import Game from "~/models/game";
 import gameData from "~/models/fixtures/game-data"
-import {fixture} from "can";
-var game = new Game(gameData)
-
+import {fixture, StacheDefineElement, type} from "can";
 import StatCreate from "~/components/stat/create/";
 
-var element = new StatCreate();
 
-element.initialize({game});
+var game = new Game(gameData);
 
-document.body.append(element);
+class MyDemo extends StacheDefineElement {
+    static view = `
+        Time: <input value:bind="this.demoTime"/>
+        <br>
+        <br>
+        <stat-create time:bind="this.demoTime" game:from="this.game">
+    `;
+
+    static define = {
+        demoTime: {type: type.convert(Number), default: 0},
+        game: {
+            get default(){
+                var gameObj = {}
+
+                // gameObj.gameObject = game;
+                //
+                // gameObj.HomeTeamPlayers = [
+                //     game.homeTeam.player1,
+                //     game.homeTeam.player2,
+                //     game.homeTeam.player3,
+                //     game.homeTeam.player4
+                // ];
+                //
+                // gameObj.awayTeamPlayers = [
+                //     game.homeTeam.player1,
+                //     game.homeTeam.player2,
+                //     game.homeTeam.player3,
+                //     game.homeTeam.player4
+                // ];
+                //
+                // console.log(game, 'game obj');
+                // console.log(game.homeTeam, 'home');
+                // console.log(game.awayTeam, 'away');
+                return game;
+            }
+        }
+    };
+}
+
+customElements.define("my-demo", MyDemo);
+
+var myDemo = new MyDemo();
+myDemo.initialize({game});
+var createStatEl = new StatCreate();
+
+createStatEl.initialize({game});
+// document.body.append(element);
+
+
+
+
 
 
 fixture("POST /services/stats", function(request){
     console.log("creating!!");
     return {...request.data, id: Math.random()};
-})
+});
 
 </script>

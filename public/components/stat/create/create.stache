@@ -1,25 +1,166 @@
+<div class="create-stat" style="padding:0 50px">
+    <h1>Add Stat</h1>
+    <form on:submit="this.createStat(scope.event)">
+        <div class="form-group">
+            <label for="stat-time">Time (seconds)</label>
+            <div class="row">
+                <div class="col-xs-3">
+                    <input type="text" class="form-control" id="stat-time"
+                        value:from="this.floor(this.time)"
+                        value:to="this.time"
+                        value="0"/>
+                    <a class="btn btn-default" on:click="this.minusTime(10)">-10 s</a>
+                    <a class="btn btn-default" on:click="this.minusTime(2)">-2 s</a>
+                    <a class="btn btn-default" on:click="this.addTime(2)">+2 s</a>
+                    <a class="btn btn-default" on:click="this.addTime(10)">+10 s</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="form-group">
+            <label>Home Team</label>
+            <label class="radio-inline">
+                <input class="form-check-input" type="radio"
+                checked:from="eq(this.statPlayerId, this.game.homeTeam.player1Id)"
+                on:change="this.statPlayerId = this.game.homeTeam.player1Id">
+                {{ this.game.homeTeam.player1.name }}
+            </label>
 
-<form on:submit="this.createStat(scope.event)">
-    <div>
-        <input type="radio"
-            checked:from="eq(this.statPlayerId, this.game.homeTeam.player1Id)"
-            on:change="this.statPlayerId = this.game.homeTeam.player1Id">
-            {{ this.game.homeTeam.player1.name }}
-        <input type="radio"
-            checked:from="eq(this.statPlayerId, this.game.homeTeam.player2Id)"
-            on:change="this.statPlayerId = this.game.homeTeam.player2Id">
-            {{ this.game.homeTeam.player2.name }}
-    </div>
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.homeTeam.player2Id)"
+                on:change="this.statPlayerId = this.game.homeTeam.player2Id">
+                {{ this.game.homeTeam.player2.name }}
+            </label>
 
-    <div>
-        <input type="radio"
-            checked:from="eq(this.statType, '1P')"
-            on:change="this.statType = '1P'"> 1P
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.homeTeam.player3Id)"
+                on:change="this.statPlayerId = this.game.homeTeam.player3Id">
+                {{ this.game.homeTeam.player3.name }}
+            </label>
 
-        <input type="radio"
-            checked:from="eq(this.statType, '2P')"
-            on:change="this.statType = '2P'"> 2P
-    </div>
-    <button disabled:from="this.preventCreatingStat()">Create Stat</button>
-</form>
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.homeTeam.player4Id)"
+                on:change="this.statPlayerId = this.game.homeTeam.player4Id">
+                {{ this.game.homeTeam.player4.name }}
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Away Team</label>
+
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.awayTeam.player1Id)"
+                on:change="this.statPlayerId = this.game.awayTeam.player1Id">
+                {{ this.game.awayTeam.player1.name }}
+            </label>
+
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.awayTeam.player2Id)"
+                on:change="this.statPlayerId = this.game.awayTeam.player2Id">
+                {{ this.game.awayTeam.player2.name }}
+            </label>
+
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.awayTeam.player3Id)"
+                on:change="this.statPlayerId = this.game.awayTeam.player3Id">
+                {{ this.game.awayTeam.player3.name }}
+            </label>
+
+            <label class="radio-inline">
+            <input type="radio"
+                checked:from="eq(this.statPlayerId, this.game.awayTeam.player4Id)"
+                on:change="this.statPlayerId = this.game.awayTeam.player4Id">
+                {{ this.game.awayTeam.player4.name }}
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Stat Types</label>
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, '1P')"
+                on:change="this.statType = '1P'"
+                >
+                1 Point
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, '1PA')"
+                on:change="this.statType = '1PA'"
+                >
+                1 Point Attempt
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, '2P')"
+                on:change="this.statType = '2P'"
+                >
+                2 Points
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, '2PA')"
+                on:change="this.statType = '2PA'"
+                >
+                2 Point Attempt
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'ORB')"
+                on:change="this.statType = 'ORB'"
+                >
+                Offensive Rebound
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'DRB')"
+                on:change="this.statType = 'DRB'"
+                >
+                Defensive Rebound
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'Ast')"
+                on:change="this.statType = 'Ast'"
+                >
+                Assist
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'Stl')"
+                on:change="this.statType = 'Stl'"
+                >
+                Steal
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'Blk')"
+                on:change="this.statType = 'Blk'"
+                >
+                Block
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio"
+                checked:from="eq(this.statType, 'To')"
+                on:change="this.statType = 'To'"
+                >
+                Turnover
+            </label>
+        </label>
+        </div>
+        <button disabled:from="this.preventCreatingStat()">Create Stat</button>
+    </form>
+</div>

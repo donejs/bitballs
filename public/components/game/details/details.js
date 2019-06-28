@@ -457,6 +457,14 @@ export const ViewModel = DefineMap.extend('GameDetailsVM',
 			if(prop.lastSet.value) {
 				prop.resolve(prop.lastSet.value);
 			}
+
+            prop.listenTo(prop.lastSet, (value)=>{
+                if(this.youtubePlayer) {
+                    this.youtubePlayer.seekTo(value, true);
+                }
+
+            })
+
 			// use listenTo to update with last set
 
 			// Wait until the playing state changes, and then check the youtube player state

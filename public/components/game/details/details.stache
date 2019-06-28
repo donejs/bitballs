@@ -1,4 +1,5 @@
 <can-import from="can-stache-route-helpers" />
+<can-import from="~/components/stat/create/create" />
 
 {{^ if(gamePromise.isRejected) }}
 	<div class="row">
@@ -6,6 +7,7 @@
 			<div class='youtube-container'>
 				<div id="youtube-player"/>
 			</div>
+
 		</div>
 		<div class="col-md-4">
 			<h3> <a href="{{ routeUrl(tournamentId=game.tournamentId) }}">{{ game.tournament.year }}</a> - {{ game.round }} - Court {{ game.court }}</h3>
@@ -14,7 +16,9 @@
 			<p>Final Score {{ finalScore.home }} - {{ finalScore.away }}</p>
 			<p>Current Score {{ currentScore.home }} - {{ currentScore.away }}</p>
 		</div>
-
+		{{# if(this.game)}}
+			<stat-create time:bind="this.youtubePlayerTime" game:from="this.game"/>
+		{{/ if }}
 	</div>
 
 	<table class="table table-condensed table-hover">
