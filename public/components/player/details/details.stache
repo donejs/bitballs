@@ -16,16 +16,27 @@
 	</ul>
 {{/ player }}
 
-{{# each(tournaments) }}
-	{{# if(statsByTournament[id]) }}
-		<h2>{{ year }} Tournament</h2>
-		<ul class="tournament-stats">
-		{{# each(statsByTournament[id].aggregated) }}
-			<li>
-				<p>{{ name }}</p>
-				<div>{{ value }}</div>
-			</li>
-		{{/ each }}
-		</ul>
-	{{/ if }}
-{{/ each }}
+<h2>Overall Stats</h2>
+{{# for(statType of stats.aggregated) }} 
+
+	<span class="stats"><b>	{{statType.name}}:</b> {{statType.default}}</span>
+{{/ for }}
+
+<h2>Stats by Year</h2>
+
+<table class="stats">
+	<tr>
+		<th><b>Year</b></th>
+		{{# for(statType of stats.aggregated) }} 
+			<th>{{statType.name}}</th>
+		{{/ for }}
+	</tr>
+	{{# for(tournament of tournamentStats) }} 
+		<tr>
+			<td>{{ tournament.year }}</td>
+			{{# for(stat of tournament.stats.aggregated)}}
+			<td>{{stat.default}}</td>
+			{{/ for}}
+		</tr>
+	{{/ for}}
+</table>

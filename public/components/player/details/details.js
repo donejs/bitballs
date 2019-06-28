@@ -70,6 +70,9 @@ export const ViewModel = DefineMap.extend({
       this.gamesPromise.then(setVal);
     }
   },
+  statTypes: {
+		default: () => Stat.statTypes
+	},
   /**
   * @property {Promise<bitballs/models/stat.static.List>} bitballs/components/player/details.statPromise statsPromise
   * @parent bitballs/components/player/details.properties
@@ -79,7 +82,10 @@ export const ViewModel = DefineMap.extend({
   **/
   get statsPromise() {
     return Stat.getList({
-      where: {playerId: this.playerId}
+      where: {playerId: this.playerId},
+      withRelated: [
+        'game.tournament'
+      ]
     });
   },
   /**
@@ -94,9 +100,32 @@ export const ViewModel = DefineMap.extend({
     }
   },
 
+  get tournamentStats() {
+    if (!this.stats) {
+      return null;
+    }
+  
+    let playerTournaments = [];
+    this.stats.forEach((stat) => {
+      let statTournament = stat.game.tournament;
+      statTournament.year = new Date(statTournament.date).getFullYear();
+
+      let tournament = playerTournaments.find((tournament) => tournament.id === statTournament.id);
+      let statModel = new Stat(stat);
+      if(tournament) {
+        tournament.stats.push(statModel);
+      }
+      else {
+        statTournament.stats =  new Stat.List([statModel]);
+        playerTournaments.push(statTournament);
+      }
+    });
+    return playerTournaments;
+  },
+
   get statsByTournament() {
-    if (!this.games || !this.stats) {
-        return null;
+    if (!this.games || !this.stats || !this.tournaments) {
+      return null;
     }
 
     let mapGamesToTournaments = {};
@@ -104,7 +133,8 @@ export const ViewModel = DefineMap.extend({
       mapGamesToTournaments[id] = tournamentId;
     });
 
-    let statsByTournament = {};
+    let statsByTournament = [];
+
     this.stats.forEach((stat) => {
       let tournamentId = mapGamesToTournaments[stat.gameId];
       if(tournamentId){
@@ -115,7 +145,6 @@ export const ViewModel = DefineMap.extend({
         statsByTournament[tournamentId].push(stat);
       }
     });
-
     return statsByTournament;
   },
 });

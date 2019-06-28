@@ -22,7 +22,7 @@
  * new Stat({gameId: 6, playerId: 15, type: "1P", time: 60}).save()
  * ```
  */
-import { DefineMap, DefineList, QueryLogic, superModel } from "can";
+import { DefineMap, DefineList, QueryLogic, realtimeRestModel } from "can";
 import bookshelfService from "./bookshelf-service";
 import Player from "bitballs/models/player";
 
@@ -152,7 +152,7 @@ Stat.List = DefineList.extend('StatsList', {
 			aggregated[type]++;
 		});
 
-		return [
+		let aggregatedStats = [
 			...Stat.statTypes.map(({ name }) => ({
 				name,
 				default: (aggregated[name] || 0).toFixed(0),
@@ -186,11 +186,12 @@ Stat.List = DefineList.extend('StatsList', {
 				})()
 			},
 		];
+		return aggregatedStats;
 	},
 });
 
 
-Stat.connection = superModel({
+Stat.connection = realtimeRestModel({
 	Map: Stat,
 	List: Stat.List,
 	url: {

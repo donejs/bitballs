@@ -2,6 +2,7 @@ import QUnit from 'steal-qunit';
 import F from 'funcunit';
 import {ViewModel} from './details';
 import { fixture } from 'can';
+import stats from '../../../models/fixtures/stats';
 
 F.attach(QUnit);
 
@@ -9,6 +10,7 @@ F.attach(QUnit);
 QUnit.module('bitballs/components/player/details', {
     beforeEach: function(){
         localStorage.clear();
+        this.stats = stats;
     }
 });
 
@@ -46,4 +48,8 @@ QUnit.test('should map stats to game ID', function (assert) {
         assert.deepEqual(val[1].serialize(), WANTED_STATS);
         done();
     });
+});
+
+QUnit.test('should group stats by tournament', function (assert) {
+    let tournamentStats = this.tournamentStats;
 });
