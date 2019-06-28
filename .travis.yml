@@ -23,6 +23,8 @@ before_deploy:
 - node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
 deploy:
   skip_cleanup: true
+  on:
+    all_branches: true 
   provider: heroku
   app: bitballs
   api_key:
