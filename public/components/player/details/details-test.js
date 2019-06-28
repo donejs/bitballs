@@ -49,6 +49,3 @@ QUnit.test('should map stats to game ID', function (assert) {
         done();
     });
 });
-
-QUnit.test('should group stats by tournament', function (assert) {
-});
