@@ -98,6 +98,7 @@
 var app = require("./app");
 var Stat = require("../models/stat");
 var adminOnly = require( "./adminOnly" );
+var loggedIn = require( "./loggedIn" );
 var separateQuery = require("./separate-query");
 
 app.get('/services/stats', function(req, res){
@@ -124,13 +125,26 @@ app.put('/services/stats/:id', adminOnly( "Must be an admin to update stats" ), 
 	});
 });
 
-app.delete('/services/stats/:id', adminOnly( "Must be an admin to delete stats" ), function(req, res){
-	new Stat({id: req.params.id}).destroy().then(function(stat){
-		res.send({});
+app.delete('/services/stats/:id', function(req, res){
+	new Stat({id: req.params.id})
+		.fetch()
+		.then(stat => {
+			return Promise.all([stat, stat.get("creatorId")]);
+		})
+		.then(([stat, creatorId]) => {
+			debugger;
+			if ( req.isAdmin || req.user.attributes.id === creatorId ) {
+				stat.destroy()
+					.then(() => {
+						res.send({});
+					});
+			} else {
+				res.status( status || 404 ).end();
+			}
+		});
 	});
-});
 
-app.post('/services/stats', adminOnly( "Must be an admin to create stats" ), function(req, res) {
+app.post('/services/stats', loggedIn( "Must be logged in to create stats" ), function(req, res) {
 	new Stat(clean(req.body)).save().then(function(stat){
 		res.send({id: stat.get('id')});
 	}, function(e){

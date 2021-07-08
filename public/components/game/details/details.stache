@@ -31,7 +31,7 @@
 						<span on:click="scope.vm.gotoTimeMinus5(time, scope.event)"
 							class="stat-point stat-{{ type }}" style="left: {{ scope.vm.statPercent(time) }}%">
 							{{ type }}
-							{{# if(scope.vm.session.isAdmin()) }}
+							{{# if(scope.vm.createdBy(this)) }}
 								<span class="destroy-btn glyphicon glyphicon-trash"
 									on:click="scope.vm.deleteStat(this, scope.event)"></span>
 							{{/ if }}
