@@ -19,16 +19,16 @@ follow the steps outlined below.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Setup Environment](#setup-environment)
-  - [Installing PostgreSQL on OSX](#installing-postgresql-on-osx)
-  - [Installing PostgreSQL on Linux](#installing-postgresql-on-linux)
-  - [Installing PostgreSQL on Windows](#installing-postgresql-on-windows)
-- [Download Source](#download-source)
-- [Install Dependencies](#install-dependencies)
-- [Prepare the Database](#prepare-the-database)
-- [Start the Server](#start-the-server)
-- [Register a User](#register-a-user)
-- [Enjoy](#enjoy)
+- [Setup Environment](#Setup-Environment)
+  - [Installing PostgreSQL on OSX](#Installing-PostgreSQL-on-OSX)
+  - [Installing PostgreSQL on Linux](#Installing-PostgreSQL-on-Linux)
+  - [Installing PostgreSQL on Windows](#Installing-PostgreSQL-on-Windows)
+- [Download Source](#Download-Source)
+- [Prepare the Database](#Prepare-the-Database)
+- [Install Dependencies](#Install-Dependencies)
+- [Start the Server](#Start-the-Server)
+- [Register a User](#Register-a-User)
+- [Enjoy](#Enjoy)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -150,11 +150,14 @@ With all the prerequisite setup completed the server can be started by running:
 ```
 donejs develop
 ```
+Running the develop command will serve the node app at [http://localhost:5000](http://localhost:5000), and a mail server at [http://localhost:1080](http://localhost:1080). You'll need the mail server in order to verify a new user.
 
 ### Register a User
 
 Navigate to [http://localhost:5000/register](http://localhost:5000/register)
 in your browser and follow the instructions.
+
+Once you've created a new user, navigate to [http://localhost:1080](http://localhost:1080), and click the verification link in the email. You will now be able to sign in with the user account you created.
 
 ### Enjoy
 
