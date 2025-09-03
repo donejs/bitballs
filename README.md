@@ -15,11 +15,78 @@ privileges, RESTful services, and ORM models.
 To run the Bitballs app locally, run its tests, or generate its documentation
 follow the steps outlined below.
 
+## Quick Start with Docker (Recommended)
+
+The easiest way to run Bitballs is using Docker. This approach automatically sets up the database, runs migrations, and starts the application.
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/) (usually included with Docker Desktop)
+
+### Running the Application
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/donejs/bitballs.git
+   cd bitballs
+   ```
+
+2. Start the application:
+   ```bash
+   docker-compose up
+   ```
+
+3. Open your browser and navigate to [http://localhost:5001](http://localhost:5001)
+
+That's it! The application will automatically:
+- Set up a PostgreSQL database
+- Run database migrations to create all required tables
+- Install dependencies
+- Start the Node.js application
+
+### Docker Commands
+
+- **Start the application**: `docker-compose up`
+- **Start in background**: `docker-compose up -d`
+- **Stop the application**: `docker-compose down`
+- **Reset database**: `docker-compose down -v` (removes all data)
+- **View logs**: `docker-compose logs app` or `docker-compose logs db`
+- **Rebuild after code changes**: `docker-compose up --build`
+
+### Configuration
+
+The Docker setup uses environment variables for configuration. Default values are set in `docker-compose.yml`, but you can override them by creating a `.env` file (see `.env.example` for reference).
+
+Key environment variables:
+- `DB_HOST`: Database hostname (default: `db`)
+- `DB_USER`: Database username (default: `postgres`) 
+- `DB_PASSWORD`: Database password (default: `postgres`)
+- `DB_NAME`: Database name (default: `bitballs`)
+- `DATABASE_URL`: Complete database connection string (overrides individual DB_* vars)
+
+### Troubleshooting Docker
+
+**Port already in use**: If you get port conflicts, you can change the ports in `docker-compose.yml` or stop other services using those ports.
+
+**Database connection issues**: The application automatically waits for the database to be ready and runs migrations. If you see connection errors, try running `docker-compose down -v` to reset the database and start fresh.
+
+**Module not found errors**: If you encounter missing module errors, rebuild the image with `docker-compose up --build`.
+
+## Manual Setup (Alternative)
+
+If you prefer to set up the environment manually without Docker, follow these instructions:
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Setup Environment](#setup-environment)
+- [Quick Start with Docker (Recommended)](#quick-start-with-docker-recommended)
+  - [Prerequisites](#prerequisites)
+  - [Running the Application](#running-the-application)
+  - [Docker Commands](#docker-commands)
+- [Manual Setup (Alternative)](#manual-setup-alternative)
+  - [Setup Environment](#setup-environment)
   - [Installing PostgreSQL on OSX](#installing-postgresql-on-osx)
   - [Installing PostgreSQL on Linux](#installing-postgresql-on-linux)
   - [Installing PostgreSQL on Windows](#installing-postgresql-on-windows)
@@ -153,7 +220,7 @@ donejs develop
 
 ### Register a User
 
-Navigate to [http://localhost:5000/register](http://localhost:5000/register)
+Navigate to [http://localhost:5001/register](http://localhost:5001/register) (Docker) or [http://localhost:5000/register](http://localhost:5000/register) (manual setup)
 in your browser and follow the instructions.
 
 ### Enjoy

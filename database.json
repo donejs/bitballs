@@ -1,5 +1,8 @@
 {
-  "dev": "postgres://localhost:5432/bitballs",
+  "dev": {
+    "ENV": "DATABASE_URL",
+    "driver": "pg"
+  },
   "prod": {
   	"ENV": "DATABASE_URL",
   	"driver": "pg"
