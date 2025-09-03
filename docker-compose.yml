@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.5
+    environment:
+      POSTGRES_DB: bitballs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: bitballs
+      DATABASE_URL: postgres://postgres:postgres@db:5432/bitballs
+      NODE_ENV: development
+    ports:
+      - "5001:5000"
+    # Remove volume mount for production, or use selective mounting for development
+    # volumes:
+    #   - .:/app
+    #   - /app/node_modules  # Preserve node_modules in container
+
+volumes:
+  pgdata:
