@@ -41,6 +41,16 @@ var Stat = bookshelf.Model.extend(
 	player: function(){
 		var Player = require("./player");
 		return this.belongsTo(Player,"playerId");
+	},
+	/**
+	 * @function
+	 *
+	 * Informs Bookshelf.js that the `creator` property will be a [models/user]
+	 * model with an `id` that matches the `creatorId` specified in the query.
+	 **/
+	creator: function() {
+		var User = require("./user");
+		return this.belongsTo(User, "creatorId");
 	}
 });
 
